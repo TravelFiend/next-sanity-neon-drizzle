@@ -11,18 +11,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set Environment Variables for Vercel
-        run: |
-          echo "VERCEL_ORG_ID=${{ secrets.ORG_ID }}" >> $GITHUB_ENV
-          echo "VERCEL_PROJECT_ID=${{ secrets.PROJECT_ID }}" >> $GITHUB_ENV
-
       - name: Deploy to Vercel
         id: vercel-deploy
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
 
-      - name: Get Preview URL
+      - name: Output Preview URL
         run: |
           echo "Preview URL: ${{ steps.vercel-deploy.outputs.preview-url }}"
