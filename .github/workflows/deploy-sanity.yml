@@ -1,0 +1,55 @@
+name: Deploy Sanity Studio
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+jobs:
+  sanity-deploy:
+    name: Deploy Sanity Studio
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.10.0
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.4
+
+      - name: Install dependencies with Bun
+        run: bun install
+
+      - name: Deploy Sanity Studio to Development
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_EDITOR_TOKEN }}
+          SANITY_STUDIO_PROJECT: ${{ secrets.SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DEV_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DEV_DATASET }}
+          SANITY_STUDIO_HOSTNAME_DEV: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
+        run: |
+          echo "SANITY_PROJECT_ID=$SANITY_PROJECT_ID"
+          echo "NEXT_PUBLIC_SANITY_DEV_DATASET=$NEXT_PUBLIC_SANITY_DEV_DATASET"
+          bun add -g @sanity/cli
+          sanity deploy --dataset $NEXT_PUBLIC_SANITY_DEV_DATASET --project $SANITY_PROJECT_ID --hostname $SANITY_STUDIO_HOSTNAME_DEV --no-prompts
+
+      - name: Deploy Sanity Studio to Production
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_EDITOR_TOKEN }}
+          SANITY_STUDIO_PROJECT: ${{ secrets.SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_PROD_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_PROD_DATASET }}
+          SANITY_STUDIO_HOSTNAME_PROD: ${{ secrets.SANITY_STUDIO_HOSTNAME_PROD }}
+        run: |
+          echo "SANITY_PROJECT_ID=$SANITY_PROJECT_ID"
+          echo "NEXT_PUBLIC_SANITY_PROD_DATASET=$NEXT_PUBLIC_SANITY_PROD_DATASET"
+          bun add -g @sanity/cli
+          sanity deploy --dataset $NEXT_PUBLIC_SANITY_PROD_DATASET --project $SANITY_PROJECT_ID --hostname $SANITY_STUDIO_HOSTNAME_PROD --no-prompts
+

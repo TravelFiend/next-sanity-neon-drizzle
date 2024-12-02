@@ -1,0 +1,41 @@
+name: Benchmarks
+
+on:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.10.0
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.4
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Run Linter
+        run: bun test:lint
+
+      - name: Check Formatting
+        run: bun test:prettier
+
+      - name: Run Tests
+        run: bun test
+
+      - name: Print Summary
+        run: |
+          echo "Linting: $(if [[ ${TEST_LINTER_EXIT_CODE} -eq 0 ]]; then echo '✅'; else echo '❌'; fi)"
+          echo "Formatting: $(if [[ ${TEST_FORMATTER_EXIT_CODE} -eq 0 ]]; then echo '✅'; else echo '❌'; fi)"
+          echo "Tests: $(if [[ ${TEST_SUITE_EXIT_CODE} -eq 0 ]]; then echo '✅'; else echo '❌'; fi)"
