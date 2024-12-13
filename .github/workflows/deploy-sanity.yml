@@ -35,4 +35,4 @@ jobs:
           SANITY_STUDIO_PROJECT: 'ihpejoz1'
           NEXT_PUBLIC_SANITY_DEV_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DEV_DATASET }}
           SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
-        run: bun run deploy
+        run: bun run deploy:sanity
