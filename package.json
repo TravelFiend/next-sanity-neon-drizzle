@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy:sanity": "sanity deploy --dataset development --project ihpejoz1 --hostname mjm-fe-dev --no-prompts",
     "lint": "eslint --fix src/**/*.{js,jsx}",
     "format": "prettier --write src/**/*.{js,jsx}",
     "test:lint": "next lint",
@@ -14,7 +13,7 @@
   },
   "dependencies": {
     "@sanity/image-url": "^1.0.2",
-    "@sanity/vision": "^3.39.1",
+    "@sanity/vision": "3.67.1",
     "next": "14.2.10",
     "next-sanity": "^9.0.12",
     "prettier-plugin-tailwindcss": "^0.5.14",
