@@ -29,37 +29,10 @@ jobs:
       - name: Install dependencies with Bun
         run: bun install
 
-      - name: Deploy to Development Dataset
+      - name: Deploy Sanity Studio
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
+          SANITY_STUDIO_PROJECT: 'ihpejoz1'
           NEXT_PUBLIC_SANITY_DEV_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DEV_DATASET }}
-          SANITY_PROJECT_ID: 'ihpejoz1'
-          SANITY_STUDIO_HOSTNAME_DEV: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
-        run: |
-          echo "SANITY_STUDIO_HOSTNAME_DEV: $SANITY_STUDIO_HOSTNAME_DEV"
-          export SANITY_AUTH_TOKEN=$SANITY_AUTH_TOKEN
-          echo "Deploying to Development Dataset"
-          bunx sanity deploy \
-            --dataset $NEXT_PUBLIC_SANITY_DEV_DATASET \
-            --project $SANITY_PROJECT_ID \
-            --hostname $SANITY_STUDIO_HOSTNAME_DEV \
-            --no-prompts \
-            --debug
-
-      - name: Deploy to Production Dataset
-        if: github.ref == 'refs/heads/main'
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
-          NEXT_PUBLIC_SANITY_PROD_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_PROD_DATASET }}
-          SANITY_PROJECT_ID: 'ihpejoz1'
-          SANITY_STUDIO_HOSTNAME_PROD: ${{ secrets.SANITY_STUDIO_HOSTNAME_PROD }}
-        run: |
-          echo "SANITY_STUDIO_HOSTNAME_PROD: $SANITY_STUDIO_HOSTNAME_PROD"
-          export SANITY_AUTH_TOKEN=$SANITY_AUTH_TOKEN
-          echo "Deploying to Production Dataset"
-          bunx sanity deploy \
-            --dataset $NEXT_PUBLIC_SANITY_PROD_DATASET \
-            --project $SANITY_PROJECT_ID \
-            --hostname $SANITY_STUDIO_HOSTNAME_PROD \
-            --no-prompts \
-            --debug
+          SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
+        run: bun run deploy
