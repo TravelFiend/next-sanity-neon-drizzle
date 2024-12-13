@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy:sanity": "sanity deploy --dataset ${process.env.NEXT_PUBLIC_SANITY_DEV_DATASET} --project ${process.env.SANITY_PROJECT_ID} --hostname ${process.env.SANITY_STUDIO_HOSTNAME_DEV} --no-prompts",
+    "deploy:sanity": "sanity deploy --dataset $NEXT_PUBLIC_SANITY_DEV_DATASET --project $SANITY_PROJECT_ID --hostname $SANITY_STUDIO_HOSTNAME_DEV --no-prompts",
     "lint": "eslint --fix src/**/*.{js,jsx}",
     "format": "prettier --write src/**/*.{js,jsx}",
     "test:lint": "next lint",
