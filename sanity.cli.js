@@ -4,7 +4,7 @@ export default defineCliConfig({
   api: {
     projectId: 'ihpejoz1',
     // Use the `SANITY_DATASET` environment variable, or fall back to 'production' as default
-    dataset: process.env.NEXT_PUBLIC_SANITY_DEV_DATASET || 'production'
+    dataset: 'development'
   },
   /**
    * Enable auto-updates for studios.
