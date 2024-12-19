@@ -15,7 +15,7 @@ const config = defineConfig([
     basePath: '/admin',
     subtitle: "Don't you even think about changin' anything here boy",
     projectId: 'ihpejoz1',
-    dataset: process.env.NEXT_PUBLIC_SANITY_PROD_DATASET,
+    dataset: 'production',
     plugins: [
       structureTool({
         structure,
@@ -31,7 +31,7 @@ const config = defineConfig([
     basePath: '/dev-admin',
     subtitle: "Fuck it, do whatever, I don't care",
     projectId: 'ihpejoz1',
-    dataset: process.env.NEXT_PUBLIC_SANITY_DEV_DATASET,
+    dataset: 'development',
     plugins: [
       structureTool({
         structure,
