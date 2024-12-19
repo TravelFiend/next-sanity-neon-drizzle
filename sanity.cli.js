@@ -3,7 +3,6 @@ import { defineCliConfig } from 'sanity/cli';
 export default defineCliConfig({
   api: {
     projectId: 'ihpejoz1',
-    // Use the `SANITY_DATASET` environment variable, or fall back to 'production' as default
     dataset: 'development'
   },
   /**
