@@ -25,14 +25,8 @@ jobs:
       - name: Install Dependencies
         run: bun install
 
-      - name: Debug - Check SANITY_TOKEN
-        run: |
-          if [ -z "$SANITY_TOKEN" ]; then
-            echo "SANITY_TOKEN is NOT set";
-            exit 1;
-          else
-            echo "SANITY_TOKEN is set";
-          fi
+      - name: Debug - List Sanity Projects
+        run: bun run sanity projects list
         env:
           SANITY_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
 
@@ -40,4 +34,3 @@ jobs:
         run: bun run sanity deploy --no-interactive
         env:
           SANITY_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
-
