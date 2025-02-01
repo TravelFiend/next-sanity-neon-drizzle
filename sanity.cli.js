@@ -5,7 +5,7 @@ export default defineCliConfig({
     projectId: 'ihpejoz1',
     dataset: 'development'
   },
-  studioHost: process.env.SANITY_STUDIO_HOSTNAME,
+  studioHost: 'mjm-fe-dev',
   project: {
     basePath: '/admin'
   },
