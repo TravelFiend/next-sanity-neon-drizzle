@@ -5,7 +5,7 @@ const Home = () => {
   console.log({
     mom: 'fuck this',
     projectId: process.env.SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DEV_DATASET,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'development',
     apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION
   });
 
