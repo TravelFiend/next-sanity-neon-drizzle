@@ -8,6 +8,9 @@ jobs:
   deploy-sanity:
     runs-on: ubuntu-latest
 
+    env:
+      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
