@@ -6,3 +6,4 @@ next-env.d.ts
 next.config.ts
 bun.lockb
 .env*
+README.md
