@@ -1,9 +1,8 @@
 name: Deploy Sanity on Merge
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   deploy-sanity:
