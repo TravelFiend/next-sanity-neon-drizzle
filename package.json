@@ -18,7 +18,7 @@
     "next-sanity": "^9.0.12",
     "react": "^18",
     "react-dom": "^18",
-    "sanity": "^3.67.1",
+    "sanity": "^3.72.1",
     "styled-components": "^6.1.13",
     "tailwind-merge": "^2.6.0"
   },
@@ -26,7 +26,7 @@
     "@happy-dom/global-registrator": "^16.7.2",
     "@sanity/color-input": "^4.0.3",
     "@sanity/eslint-config-studio": "^4.0.0",
-    "@sanity/vision": "3.71.2",
+    "@sanity/vision": "3.72.1",
     "@tailwindcss/postcss": "^4.0.0",
     "@testing-library/react": "^15.0.5",
     "@testing-library/user-event": "^14.5.2",
