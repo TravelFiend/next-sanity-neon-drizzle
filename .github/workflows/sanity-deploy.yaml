@@ -1,8 +1,9 @@
 name: Deploy Sanity on Merge
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
 
 jobs:
   deploy-sanity:
@@ -26,7 +27,7 @@ jobs:
         run: bun install
 
       - name: Deploy Sanity Studio
-        run: bun run sanity deploy --no-interactive
+        run: bun run sanity deploy --token $SANITY_TOKEN --no-interactive
         env:
-          # Make sure SANITY_TOKEN is added as a secret in your repo settings
           SANITY_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
+
