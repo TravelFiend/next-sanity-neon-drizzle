@@ -26,6 +26,6 @@ jobs:
         run: bun install
 
       - name: Deploy Sanity Studio
-        run: bun run sanity deploy --dataset production --no-interactive --hostname mjm-fe-dev
+        run: bun run sanity deploy --dataset production --yes --hostname mjm-fe-dev
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
