@@ -25,21 +25,6 @@ jobs:
       - name: Install Dependencies
         run: bun install
 
-      - name: Debug - Sanity Version
-        run: bun run sanity --version
-        env:
-          SANITY_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
-
-      - name: Sanity Login with Token
-        run: echo "$SANITY_TOKEN" | bun run sanity login --with-token
-        env:
-          SANITY_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
-
-      - name: Debug - List Sanity Projects
-        run: bun run sanity projects list
-        env:
-          SANITY_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
-
       - name: Deploy Sanity Studio
         run: bun run sanity deploy --no-interactive
         env:
