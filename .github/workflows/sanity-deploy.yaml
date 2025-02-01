@@ -1,15 +1,16 @@
-name: Deploy Sanity on Merge
+name: Deploy Sanity on Push to Main
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
 
 jobs:
-  deploy-sanity:
+  deploy-sanity-main:
     runs-on: ubuntu-latest
 
     env:
-      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
+      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_PROD }}
 
     steps:
       - name: Checkout Repository
@@ -18,12 +19,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22.4.1'  # Adjust this if needed
+          node-version: '22.4.1'
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: '1.1.38'  # Adjust this if needed
+          bun-version: '1.1.38'
 
       - name: Install Dependencies
         run: bun install
