@@ -6,7 +6,7 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'logo',
+      name: 'companyLogo',
       title: 'Company Logo',
       type: 'image',
       options: {
@@ -19,8 +19,21 @@ export default defineType({
       type: 'array',
       of: [
         defineArrayMember({
-          type: 'reference',
-          to: [{ type: 'colors' }]
+          name: 'navLink',
+          title: 'Nav Link',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'linkText',
+              title: 'Link Text',
+              type: 'string'
+            }),
+            defineField({
+              name: 'href',
+              title: 'href',
+              type: 'string'
+            })
+          ]
         })
       ]
     })

@@ -1,7 +1,9 @@
+import Image from 'next/image';
+import client from '../../sanity/config/client-config';
 import '../app.css';
-// import Image from 'next/image';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
+import { urlFor } from '../../lib/sanity';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -10,15 +12,38 @@ export const metadata = {
   description: 'Music, Art, Technology'
 };
 
-const RootLayout = ({ children }) => {
+const RootLayout = async ({ children }) => {
+  const mainNavigation = await client.fetch(`*[_type == "mainNavigation"][0]{
+    companyLogo,
+    navLinks[]{
+      linkText,
+      href
+    }
+  }`);
+
+  const { companyLogo, navLinks } = mainNavigation;
+
+  const mainLinks = navLinks.map(({ href, linkText }) => (
+    <li key={linkText}>
+      <Link href={href}>{linkText}</Link>
+    </li>
+  ));
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <header className="flex justify-between">
-          <Link href="/">MJM LLC</Link>
+          <Link href="/">
+            <Image
+              src={urlFor(companyLogo).url()}
+              width="200"
+              height="150"
+              alt="Company Logo"
+            />
+          </Link>
 
           <nav>
-            <Link href="/about">About Us</Link>
+            <ul className="flex">{mainLinks}</ul>
           </nav>
         </header>
 

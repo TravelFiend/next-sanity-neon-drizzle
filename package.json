@@ -12,7 +12,7 @@
     "test:prettier": "prettier --check ./src"
   },
   "dependencies": {
-    "@sanity/image-url": "^1.0.2",
+    "@sanity/image-url": "^1.1.0",
     "clsx": "^2.1.1",
     "next": "14.2.10",
     "next-sanity": "^9.0.12",
