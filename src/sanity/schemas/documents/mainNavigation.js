@@ -1,17 +1,14 @@
 import { defineType, defineField, defineArrayMember } from 'sanity';
 
 export default defineType({
-  name: 'mainNavigation',
+  name: 'mainNav',
   title: 'Main Navigation',
   type: 'document',
   fields: [
     defineField({
       name: 'companyLogo',
       title: 'Company Logo',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
+      type: 'richImage'
     }),
     defineField({
       name: 'navLinks',

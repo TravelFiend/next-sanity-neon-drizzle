@@ -13,7 +13,7 @@ export const metadata = {
 };
 
 const RootLayout = async ({ children }) => {
-  const mainNavigation = await client.fetch(`*[_type == "mainNavigation"][0]{
+  const mainNavigation = await client.fetch(`*[_type == "mainNav"][0]{
     companyLogo,
     navLinks[]{
       linkText,
@@ -38,7 +38,7 @@ const RootLayout = async ({ children }) => {
               src={urlFor(companyLogo).url()}
               width="200"
               height="150"
-              alt="Company Logo"
+              alt={`${companyLogo.altText}.  Links to Home Page`}
             />
           </Link>
 
