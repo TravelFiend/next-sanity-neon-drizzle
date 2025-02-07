@@ -1,17 +1,14 @@
 import { defineType, defineField, defineArrayMember } from 'sanity';
 
 export default defineType({
-  name: 'mainNavigation',
+  name: 'mainNav',
   title: 'Main Navigation',
   type: 'document',
   fields: [
     defineField({
-      name: 'logo',
+      name: 'companyLogo',
       title: 'Company Logo',
-      type: 'image',
-      options: {
-        hotspot: true
-      }
+      type: 'richImage'
     }),
     defineField({
       name: 'navLinks',
@@ -19,8 +16,21 @@ export default defineType({
       type: 'array',
       of: [
         defineArrayMember({
-          type: 'reference',
-          to: [{ type: 'colors' }]
+          name: 'navLink',
+          title: 'Nav Link',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'linkText',
+              title: 'Link Text',
+              type: 'string'
+            }),
+            defineField({
+              name: 'href',
+              title: 'href',
+              type: 'string'
+            })
+          ]
         })
       ]
     })

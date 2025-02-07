@@ -32,11 +32,10 @@ This Project is setup to auto deploy on merge to `main` branch and generate a pr
 
 ### Be sure to update environment variables in your Vercel project:
 
-- NEXT*PUBLIC_SANITY_API_VERSION \_the current date of setting up your project*
-- NEXT*PUBLIC_SANITY_DEV_DATASET \_set in the Sanity dashboard, usually someting like "development"*
-- NEXT*PUBLIC_SANITY_PROD_DATASET \_set in the Sanity dashboard, usually someting like "production"*
-- SANITY*API_DEPLOY_TOKEN \_set in the Sanity dashboard, under "API -> Tokens"*
-- NEXT*PUBLIC_SANITY_PROJECT_ID \_Found at the top of the Sanity dashboard inside your project*
+- *NEXT_PUBLIC_SANITY_API_VERSION \_the current date of setting up your project*
+- *NEXT_PUBLIC_SANITY_DATASET \_set in the Sanity dashboard, usually someting like "development".  In vercel, set 2 of the same name, one for production, and one for pre-production environments*
+- *SANITY_API_DEPLOY_TOKEN \_set in the Sanity dashboard, under "API -> Tokens"*
+- *NEXT_PUBLIC_SANITY_PROJECT_ID \_Found at the top of the Sanity dashboard inside your project*
 
 ### Be sure to set secrets in your Github repo (settings -> Secrets and Variables -> Actions):
 

@@ -51,18 +51,14 @@ const structure = S =>
                 .child(S.document().schemaType('colors').documentId('colors')),
               S.listItem()
                 .title('Main Navigation')
-                .child(
-                  S.document()
-                    .schemaType('mainNavigation')
-                    .documentId('mainNavigation')
-                )
+                .child(S.document().schemaType('mainNav').documentId('mainNav'))
             ])
         ),
       ...S.documentTypeListItems().filter(
         listItem =>
           ![
             'siteSettings',
-            'mainNavigation',
+            'mainNav',
             'colors',
             'parentProduct',
             'productVariant'

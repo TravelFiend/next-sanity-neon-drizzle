@@ -3,7 +3,11 @@ import { defineCliConfig } from 'sanity/cli';
 export default defineCliConfig({
   api: {
     projectId: 'ihpejoz1',
-    dataset: 'development'
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'development'
+  },
+  studioHost: process.env.SANITY_STUDIO_HOSTNAME,
+  project: {
+    basePath: '/admin'
   },
   /**
    * Enable auto-updates for studios.

@@ -1,0 +1,35 @@
+name: Deploy Sanity on Push to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-sanity-main:
+    runs-on: ubuntu-latest
+
+    env:
+      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_PROD }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.4.1'
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.1.38'
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Deploy Sanity Studio
+        run: bun run sanity deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
