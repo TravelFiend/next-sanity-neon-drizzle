@@ -30,6 +30,6 @@ jobs:
         run: bun install
 
       - name: Deploy Sanity Studio
-        run: bun run sanity deploy
+        run: yes y | bun run sanity deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
