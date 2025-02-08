@@ -1,23 +1,31 @@
-import Colors from './documents/colors';
-import MainNavigation from './documents/mainNavigation';
 import SiteSettings from './documents/siteSettings';
 import ParentProduct from './documents/parentProduct';
 import ProductVariant from './documents/productVariant';
-import { FontColors, ThemeColors } from './fields/globalColors';
-import { RichImage } from './fields/images';
+import { FontColors, ThemeColors, Colors } from './fields/globalColors';
+import Footer from './fields/footer';
+import MainNavigation from './fields/mainNavigation';
+import SEO from './fields/seo';
+import { RichImage } from './reusableTypes/images';
+import { LinkWithIcon, NavLinks } from './reusableTypes/links';
 
 const schemaTypes = [
   // Document Types
-  Colors,
-  MainNavigation,
   ParentProduct,
   ProductVariant,
   SiteSettings,
 
   // Fields
+  Colors,
   FontColors,
-  RichImage,
-  ThemeColors
+  Footer,
+  ThemeColors,
+  MainNavigation,
+  SEO,
+
+  // Reusable Types
+  LinkWithIcon,
+  NavLinks,
+  RichImage
 ];
 
 export default schemaTypes;
