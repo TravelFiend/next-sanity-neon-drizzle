@@ -37,13 +37,29 @@ export default defineType({
       type: 'footer',
       group: 'footer'
     }),
-    //TODO: Add fonts field type
-    // defineField({
-    //   name: 'fonts',
-    //   title: 'Fonts',
-    //   type: 'fonts',
-    //   group: 'branding'
-    // }),
+    defineField({
+      name: 'fonts',
+      title: 'Fonts',
+      type: 'object',
+      group: 'branding',
+      fields: [
+        defineField({
+          name: 'headingFont',
+          title: 'Heading Font',
+          type: 'font'
+        }),
+        defineField({
+          name: 'bodyFont',
+          title: 'Body Font',
+          type: 'font'
+        }),
+        defineField({
+          name: 'captionFont',
+          title: 'Caption Font',
+          type: 'font'
+        })
+      ]
+    }),
     defineField({
       name: 'lightThemeColors',
       title: 'Light Theme Colors',

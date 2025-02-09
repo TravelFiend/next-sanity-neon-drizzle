@@ -4,9 +4,10 @@ import ProductVariant from './documents/productVariant';
 import { FontColors, ThemeColors, Colors } from './fields/globalColors';
 import Footer from './fields/footer';
 import MainNavigation from './fields/mainNavigation';
-import SEO from './reusableTypes/seo';
 import { RichImage } from './reusableTypes/images';
+import Font from './reusableTypes/font';
 import { LinkWithIcon, NavLinks } from './reusableTypes/links';
+import SEO from './reusableTypes/seo';
 
 const schemaTypes = [
   // Document Types
@@ -23,6 +24,7 @@ const schemaTypes = [
   SEO,
 
   // Reusable Types
+  Font,
   LinkWithIcon,
   NavLinks,
   RichImage
