@@ -9,7 +9,8 @@
     "lint": "eslint --fix src/**/*.{js,jsx}",
     "format": "prettier --write src/**/*.{js,jsx}",
     "test:lint": "next lint",
-    "test:prettier": "prettier --check ./src"
+    "test:prettier": "prettier --check ./src",
+    "prepare": "husky"
   },
   "dependencies": {
     "@sanity/image-url": "^1.1.0",
