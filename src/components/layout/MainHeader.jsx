@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import client from '../../sanity/config/client-config';
-import { urlFor } from '../../lib/sanity';
+import client from '@/sanity/config/client-config';
+import { urlFor } from '@/lib/sanity';
 
 const MainHeader = async () => {
   const { mainNav } = await client.fetch(`*[_type == "siteSettings"][0]{

@@ -39,7 +39,7 @@ const Footer = async () => {
         </ul>
       </div>
 
-      <p>© {copyrightText} Stuff and things</p>
+      <p>© {copyrightText}</p>
     </footer>
   );
 };

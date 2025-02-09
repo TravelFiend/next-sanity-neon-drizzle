@@ -37,6 +37,7 @@ export default defineType({
       type: 'footer',
       group: 'footer'
     }),
+    //TODO: Add fonts field type
     // defineField({
     //   name: 'fonts',
     //   title: 'Fonts',

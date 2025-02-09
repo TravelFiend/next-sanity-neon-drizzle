@@ -1,4 +1,4 @@
-import '../global.css';
+import '@/app/global.css';
 
 export const metadata = {
   title: 'E-Commerce-ism',
