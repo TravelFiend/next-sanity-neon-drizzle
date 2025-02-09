@@ -1,10 +1,6 @@
-// export const getDefaultDocumentNode = S => {
-//   return S.document().views([
-//     // Gives all documents the JSON preview,
-//     // as well as the default form view
-//     S.view.form()
-//   ]);
-// };
+export const getDefaultDocumentNode = S => {
+  return S.document().views([]);
+};
 
 const structure = S =>
   S.list()
