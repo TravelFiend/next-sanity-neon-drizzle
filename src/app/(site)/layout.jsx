@@ -1,4 +1,4 @@
-import '../global.css';
+import '../globals.css';
 import { Rubik, EB_Garamond, Martian_Mono } from 'next/font/google';
 import MainHeader from '@/components/layout/MainHeader';
 import Footer from '@/components/layout/Footer';
@@ -7,7 +7,9 @@ import client from '@/sanity/config/client-config';
 /* We're using google variable fonts here.  You can also use
   regular google fonts but you'll need a different setup for
   the following font variables (i.e. adding a new property:
-  `weights: ['400', '700']` to the font object) */
+  `weights: ['400', '700']` to the font object).  These variables
+  are thenadded in `globals.css` under the `@theme inline`
+  directive */
 
 // sans-serif
 const rubik = Rubik({
