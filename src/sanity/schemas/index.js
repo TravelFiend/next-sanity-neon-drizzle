@@ -4,7 +4,7 @@ import ProductVariant from './documents/productVariant';
 import { FontColors, ThemeColors, Colors } from './fields/globalColors';
 import Footer from './fields/footer';
 import MainNavigation from './fields/mainNavigation';
-import SEO from './fields/seo';
+import SEO from './reusableTypes/seo';
 import { RichImage } from './reusableTypes/images';
 import { LinkWithIcon, NavLinks } from './reusableTypes/links';
 

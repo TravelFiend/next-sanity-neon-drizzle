@@ -38,7 +38,7 @@ export const LinkWithIcon = defineType({
     defineField({
       name: 'href',
       title: 'href',
-      type: 'string'
+      type: 'url'
     })
   ]
 });

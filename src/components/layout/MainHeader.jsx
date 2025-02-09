@@ -27,8 +27,8 @@ const MainHeader = async () => {
       <Link href="/">
         <Image
           src={urlFor(companyLogo).url()}
-          width="200"
-          height="150"
+          width="150"
+          height="100"
           alt={`${companyLogo.altText}.  Links to Home Page`}
         />
       </Link>
