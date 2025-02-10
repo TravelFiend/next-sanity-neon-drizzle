@@ -35,18 +35,18 @@ export const metadata = {
 };
 
 const RootLayout = async ({ children }) => {
-  const { fonts } = await client.fetch(`*[_type == "siteSettings"][0]{
+  const {
+    fonts: { headingFont }
+  } = await client.fetch(`*[_type == "siteSettings"][0]{
     fonts {
-      headingFont,
-      bodyFont,
-      captionFont
+      headingFont
     }
   }`);
 
   return (
     <html lang="en">
       <body
-        className={` ${fonts.headingFont === 'sans-serif' ? rubik.className : rubik.variable} ${fonts.headingFont === 'serif' ? ebGaramond.className : ebGaramond.variable} ${fonts.headingFont === 'mono' ? martianMono.className : martianMono.variable} `}
+        className={` ${headingFont === 'sans-serif' ? rubik.className : rubik.variable} ${headingFont === 'serif' ? ebGaramond.className : ebGaramond.variable} ${headingFont === 'mono' ? martianMono.className : martianMono.variable} `}
       >
         <MainHeader />
         <main>{children}</main>
