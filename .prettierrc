@@ -6,6 +6,6 @@
   "singleQuote": true,
   "tabWidth": 2,
   "tailwindFunctions": ["clsx"],
-  "tailwindStylesheet": "./src/app/global.css",
+  "tailwindStylesheet": "./src/app/globals.css",
   "trailingComma": "none"
 }

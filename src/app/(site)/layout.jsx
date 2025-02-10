@@ -37,9 +37,7 @@ export const metadata = {
 const RootLayout = async ({ children }) => {
   const { fonts } = await client.fetch(`*[_type == "siteSettings"][0]{
     fonts {
-      headingFont,
-      bodyFont,
-      captionFont
+      headingFont
     }
   }`);
 
