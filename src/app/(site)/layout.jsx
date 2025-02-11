@@ -7,9 +7,7 @@ import client from '@/sanity/config/client-config';
 /* We're using google variable fonts here.  You can also use
   regular google fonts but you'll need a different setup for
   the following font variables (i.e. adding a new property:
-  `weights: ['400', '700']` to the font object).  These variables
-  are then added in `globals.css` under the `@theme inline`
-  directive */
+  `weights: ['400', '700']` to the font object) */
 
 // sans-serif
 const rubik = Rubik({
@@ -35,7 +33,9 @@ export const metadata = {
 };
 
 const RootLayout = async ({ children }) => {
-  const { fonts } = await client.fetch(`*[_type == "siteSettings"][0]{
+  const {
+    fonts: { headingFont }
+  } = await client.fetch(`*[_type == "siteSettings"][0]{
     fonts {
       headingFont
     }
@@ -44,7 +44,13 @@ const RootLayout = async ({ children }) => {
   return (
     <html lang="en">
       <body
-        className={`${fonts.headingFont === 'sans-serif' ? rubik.className : rubik.variable} ${fonts.headingFont === 'serif' ? ebGaramond.className : ebGaramond.variable} ${fonts.headingFont === 'mono' ? martianMono.className : martianMono.variable}`}
+        className={` ${rubik.variable} ${ebGaramond.variable} ${martianMono.variable} ${
+          headingFont === 'sans-serif'
+            ? rubik.className
+            : headingFont === 'serif'
+              ? ebGaramond.className
+              : martianMono.className
+        } `}
       >
         <MainHeader />
         <main>{children}</main>
