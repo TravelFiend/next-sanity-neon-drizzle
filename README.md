@@ -22,7 +22,7 @@ This project uses both husky and lint-staged, in conjunction with a robust eslin
 
 \*\*If the process does not run for you when first cloning the repo, open the `.husky/pre-commit` file and save it. I'm not sure why you need to do this but seems to be the only way to get it to work upon cloning.
 
-If this doesn't work, you may need to run `bunx husky init`, after which you'll need update your `.husky/pre-commit` file with the following contents:
+If this doesn't work, you may need to run `bunx husky init`, after which you'll need to update your `.husky/pre-commit` file with the following contents:
 ```
 #!/usr/bin/env sh
 bun lint-staged
