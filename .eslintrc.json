@@ -1,7 +1,25 @@
 {
   "plugins": ["import"],
   "root": true,
-  "extends": ["@sanity/eslint-config-studio", "next/core-web-vitals", "plugin:import/recommended", "next", "prettier"],
+  "extends": [
+    "@sanity/eslint-config-studio",
+    "next/core-web-vitals",
+    "plugin:import/recommended",
+    "next",
+    "prettier"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "alias": {
+        "map": [["@", "./src"]],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "comma-dangle": ["error", "never"],

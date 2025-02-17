@@ -30,7 +30,11 @@ export const ThemeColors = defineField({
       title: 'Theme Fifth Color',
       type: 'color'
     })
-  ]
+  ],
+  options: {
+    collapsible: true,
+    collapsed: true
+  }
 });
 
 export const FontColors = defineField({
@@ -57,6 +61,28 @@ export const FontColors = defineField({
       name: 'secondaryFontColorDark',
       title: 'Primary Dark Font Color',
       type: 'color'
+    })
+  ],
+  options: {
+    collapsible: true,
+    collapsed: true
+  }
+});
+
+export const Colors = defineField({
+  name: 'colors',
+  title: 'Site Default Colors',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'themeColors',
+      title: 'Theme Colors',
+      type: 'themeColors'
+    }),
+    defineField({
+      name: 'fontColors',
+      title: 'Font Colors',
+      type: 'fontColors'
     })
   ]
 });

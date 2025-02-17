@@ -1,6 +1,6 @@
-import { defineField } from 'sanity';
+import { defineType, defineField } from 'sanity';
 
-export const RichImage = defineField({
+export const RichImage = defineType({
   name: 'richImage',
   title: 'Rich Image',
   type: 'image',

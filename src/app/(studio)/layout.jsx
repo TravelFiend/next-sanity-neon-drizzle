@@ -1,16 +1,10 @@
-import '../app.css';
-
 export const metadata = {
   title: 'E-Commerce-ism',
   description: 'We doin thangs, Next + Sanity'
 };
 
-const RootLayout = ({ children }) => {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+const studioLayout = ({ children }) => {
+  return <>{children}</>;
 };
 
-export default RootLayout;
+export default studioLayout;

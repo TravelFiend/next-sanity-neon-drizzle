@@ -20,7 +20,13 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 This project uses both husky and lint-staged, in conjunction with a robust eslint and prettier setup to maintain opinionated coding standards on _pre-commit_. So... when you commit to Github, the process runs, checks for linting errors and auto formats based on the prettier/eslint rules set in the repo.
 
-\*\*If the process does not run for you when first cloning the repo, open the `.husky/pre-commit` file and save it. I'm not sure why you need to do this but seems to be the only way to get it to work upon cloning. Let me know if you have any issues.
+\*\*If the process does not run for you when first cloning the repo, open the `.husky/pre-commit` file and save it. I'm not sure why you need to do this but seems to be the only way to get it to work upon cloning.
+
+If this doesn't work, you may need to run `bunx husky init`, after which you'll need to update your `.husky/pre-commit` file with the following contents:
+```
+#!/usr/bin/env sh
+bun lint-staged
+```
 
 ## Deploy on Vercel
 
@@ -32,10 +38,10 @@ This Project is setup to auto deploy on merge to `main` branch and generate a pr
 
 ### Be sure to update environment variables in your Vercel project:
 
-- *NEXT_PUBLIC_SANITY_API_VERSION \_the current date of setting up your project*
-- *NEXT_PUBLIC_SANITY_DATASET \_set in the Sanity dashboard, usually someting like "development".  In vercel, set 2 of the same name, one for production, and one for pre-production environments*
-- *SANITY_API_DEPLOY_TOKEN \_set in the Sanity dashboard, under "API -> Tokens"*
-- *NEXT_PUBLIC_SANITY_PROJECT_ID \_Found at the top of the Sanity dashboard inside your project*
+- __NEXT_PUBLIC_SANITY_API_VERSION__ *the current date of setting up your project*
+- __NEXT_PUBLIC_SANITY_DATASET__ *set in the Sanity dashboard, usually someting like "development".  In vercel, set 2 of the same name, one for production, and one for pre-production environments*
+- __SANITY_API_DEPLOY_TOKEN__  *set in the Sanity dashboard, under "API -> Tokens"*
+- __NEXT_PUBLIC_SANITY_PROJECT_ID__ *Found at the top of the Sanity dashboard inside your project*
 
 ### Be sure to set secrets in your Github repo (settings -> Secrets and Variables -> Actions):
 

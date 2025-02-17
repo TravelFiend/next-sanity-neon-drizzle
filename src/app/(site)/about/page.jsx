@@ -5,8 +5,8 @@ export const metadata = {
 
 const AboutUsPage = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      ABOUT US PAGE DUDESKI
+    <main className="flex min-h-screen flex-col items-center justify-start p-24">
+      <p className="">About us page</p>
     </main>
   );
 };

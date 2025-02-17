@@ -1,14 +1,10 @@
 export const getDefaultDocumentNode = S => {
-  return S.document().views([
-    // Gives all documents the JSON preview,
-    // as well as the default form view
-    S.view.form()
-  ]);
+  return S.document().views([]);
 };
 
 const structure = S =>
   S.list()
-    .title('Base')
+    .title('MJM Admin')
     .items([
       S.listItem()
         .title('Products')
@@ -34,35 +30,15 @@ const structure = S =>
         ),
       S.divider(),
       S.listItem()
-        .title('Settings')
+        .title('Site Settings')
         .child(
-          S.list()
-            .title('Settings Documents')
-            .items([
-              S.listItem()
-                .title('Metadata')
-                .child(
-                  S.document()
-                    .schemaType('siteSettings')
-                    .documentId('siteSettings')
-                ),
-              S.listItem()
-                .title('Site Colors')
-                .child(S.document().schemaType('colors').documentId('colors')),
-              S.listItem()
-                .title('Main Navigation')
-                .child(S.document().schemaType('mainNav').documentId('mainNav'))
-            ])
+          S.document().schemaType('siteSettings').documentId('siteSettings')
         ),
       ...S.documentTypeListItems().filter(
         listItem =>
-          ![
-            'siteSettings',
-            'mainNav',
-            'colors',
-            'parentProduct',
-            'productVariant'
-          ].includes(listItem.getId())
+          !['siteSettings', 'parentProduct', 'productVariant'].includes(
+            listItem.getId()
+          )
       )
     ]);
 
