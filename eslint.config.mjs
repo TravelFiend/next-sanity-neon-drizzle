@@ -1,15 +1,15 @@
 import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
-import nextPlugin from "@next/eslint-plugin-next";
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import studio from '@sanity/eslint-config-studio';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import _import from 'eslint-plugin-import';
+import pluginJest from 'eslint-plugin-jest';
+import js from '@eslint/js';
+import { FlatCompat } from '@eslint/eslintrc';
+import studio from '@sanity/eslint-config-studio';
 
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -17,7 +17,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
-export default [
+const eslintConfig = [
   {
     ignores: [
       '**/node_modules',
@@ -28,24 +28,27 @@ export default [
     ]
   },
   ...studio,
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  {
+    files: ['**/*.test.js'],
+    plugins: { jest: pluginJest },
+    languageOptions: {
+      globals: pluginJest.environments.globals.globals,
+    },
+    rules: {
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/prefer-to-have-length': 'warn',
+      'jest/valid-expect': 'error',
+    },
+  },
   ...fixupConfigRules(
     compat.extends(
-      'plugin:import/recommended',
       'prettier'
     )
   ),
   {
-    name: "Next Plugin",
-    plugins: {
-      "@next/next": nextPlugin,
-      rules: {
-        ...nextPlugin.configs.recommended.rules,
-        ...nextPlugin.configs["core-web-vitals"].rules,
-      },
-    },
-  },
-  {
-    plugins: { import: fixupPluginRules(_import) },
     settings: {
       'import/resolver': {
         node: { paths: ['src'], extensions: ['.js', '.jsx', '.ts', '.tsx'] },
@@ -86,4 +89,6 @@ export default [
       '@next/next/no-title-in-document-head': 'error'
     }
   }
-]
+];
+
+export default eslintConfig;
