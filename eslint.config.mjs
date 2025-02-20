@@ -1,9 +1,9 @@
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
+import { fixupConfigRules } from '@eslint/compat';
+import js from '@eslint/js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import _import from 'eslint-plugin-import';
 import pluginJest from 'eslint-plugin-jest';
-import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
 import studio from '@sanity/eslint-config-studio';
 
