@@ -31,7 +31,7 @@ const Footer = async () => {
           ))}
         </ul>
         <ul className="flex justify-center">
-          {socialLinks?.map(({ _key, icon, href }) => (
+          {socialLinks?.map(({ _key, href }) => (
             <li key={_key}>
               <Link href={href}>TODO: Add icon here</Link>
             </li>
