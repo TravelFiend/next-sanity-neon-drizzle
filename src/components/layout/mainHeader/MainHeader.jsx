@@ -6,14 +6,14 @@ const MainHeader = async ({ navData }) => {
   const mainLinks = navData.navTabs?.map(({ link, secondLevelLinks }) => {
     if (secondLevelLinks) {
       return (
-        <li key={link.linkText}>
+        <li className="mr-4" key={link.linkText}>
           <button type="button">{link.linkText}</button>
         </li>
       );
     }
 
     return (
-      <Link key={link.linkText} href={`/${link.slug.current}`}>
+      <Link className="mr-4" key={link.linkText} href={`/${link.slug.current}`}>
         {link.linkText}
       </Link>
     );

@@ -1,4 +1,4 @@
-import MainHeader from '@/components/layout/MainHeader';
+import MainHeader from '@/components/layout/mainHeader/MainHeader';
 // import Footer from '@/components/layout/Footer';
 import getSiteSettings from '@/lib/actions/groqQueries/siteSettings';
 import { Suspense } from 'react';

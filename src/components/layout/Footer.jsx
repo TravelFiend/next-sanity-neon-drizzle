@@ -21,7 +21,7 @@ const Footer = async () => {
   const { copyrightText, footerLinks, socialLinks } = footer;
 
   return (
-    <footer className="fixed bottom-0 w-full text-center">
+    <footer className="bottom-0 w-full text-center">
       <div className="flex flex-col">
         <ul className="flex flex-col">
           {footerLinks?.map(({ _key, href, linkText }) => (
