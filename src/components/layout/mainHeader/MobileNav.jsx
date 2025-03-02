@@ -53,8 +53,10 @@ const MobileNav = ({ linkData }) => {
           child => child.secondLevelLink.linkText === evt.target.id
         )[0];
 
-        setAreGrandChildLinksOpen(
-          currentGrandChildren !== theGrandKids.thirdLevelLinks
+        setAreGrandChildLinksOpen(prevState =>
+          currentGrandChildren === theGrandKids.thirdLevelLinks
+            ? !prevState
+            : true
         );
 
         setCurrentGrandChildren(theGrandKids.thirdLevelLinks);
@@ -67,6 +69,7 @@ const MobileNav = ({ linkData }) => {
               id={secondLevelLink.linkText}
               type="button"
               onClick={handleChildLinkClick}
+              className="cursor-pointer"
             >
               {secondLevelLink.linkText} &darr;
             </button>
