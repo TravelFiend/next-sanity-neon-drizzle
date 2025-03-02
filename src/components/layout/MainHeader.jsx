@@ -1,35 +1,30 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import client from '@/sanity/config/client-config';
-import { urlFor } from '@/lib/sanity';
 
-const MainHeader = async () => {
-  const { mainNav } = await client.fetch(`*[_type == "siteSettings"][0]{
-    mainNav{
-      companyLogo,
-      navLinks[]{
-        linkText,
-        href
-      }
+const MainHeader = async ({ navData }) => {
+  if (!navData) return null;
+
+  const mainLinks = navData.navTabs?.map(({ link, secondLevelLinks }) => {
+    if (secondLevelLinks) {
+      return (
+        <li key={link.linkText}>
+          <button type="button">{link.linkText}</button>
+        </li>
+      );
     }
-  }`);
 
-  const { companyLogo, navLinks } = mainNav;
-
-  const mainLinks = navLinks.map(({ linkText, href }) => (
-    <li key={linkText}>
-      <Link href={href}>{linkText}</Link>
-    </li>
-  ));
+    return (
+      <Link key={link.linkText} href={`/${link.slug.current}`}>
+        {link.linkText}
+      </Link>
+    );
+  });
 
   return (
     <header className="fixed flex w-full justify-between">
       <Link href="/">
-        <Image
-          src={urlFor(companyLogo).url()}
-          width="150"
-          height="100"
-          alt={`${companyLogo.altText}.  Links to Home Page`}
+        <div
+          className="size-12 sm:size-20"
+          dangerouslySetInnerHTML={{ __html: navData.companyLogo }}
         />
       </Link>
 

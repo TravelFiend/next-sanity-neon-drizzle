@@ -1,8 +1,7 @@
-import { fixupConfigRules } from '@eslint/compat';
-import js from '@eslint/js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import _import from 'eslint-plugin-import';
+import { fixupConfigRules } from '@eslint/compat';
+import js from '@eslint/js';
 import pluginJest from 'eslint-plugin-jest';
 import { FlatCompat } from '@eslint/eslintrc';
 import studio from '@sanity/eslint-config-studio';
@@ -33,15 +32,15 @@ const eslintConfig = [
     files: ['**/*.test.js'],
     plugins: { jest: pluginJest },
     languageOptions: {
-      globals: pluginJest.environments.globals.globals,
+      globals: pluginJest.environments.globals.globals
     },
     rules: {
       'jest/no-disabled-tests': 'warn',
       'jest/no-focused-tests': 'error',
       'jest/no-identical-title': 'error',
       'jest/prefer-to-have-length': 'warn',
-      'jest/valid-expect': 'error',
-    },
+      'jest/valid-expect': 'error'
+    }
   },
   ...fixupConfigRules(
     compat.extends(
@@ -65,19 +64,17 @@ const eslintConfig = [
       'consistent-return': 0,
       'consistent-this': ['error', 'that'],
       'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
-      'id-length': ['error', { min: 3, exceptions: ['S', 'of', 'to'] }],
+      'id-length': ['error', { min: 3, exceptions: ['S', 'of', 'to', 'js', 'e'] }],
       'import/no-anonymous-default-export': 'error',
       'import/order': ['error', { groups: ['builtin'] }],
       'import/no-unresolved': 'error',
       'lines-around-comment': 0,
       'no-alert': 'error',
-      'no-console': 'error',
+      'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-implicit-coercion': 0,
-      'no-negated-condition': 'error',
       'no-new': 'error',
       'no-unexpected-multiline': 'error',
       'no-unused-vars': 'error',
-      'operator-linebreak': ['error', 'before'],
       'prefer-const': ['error', { destructuring: 'all' }],
       'quotes': ['error', 'single', { avoidEscape: true }],
       'semi': ['error', 'always'],
