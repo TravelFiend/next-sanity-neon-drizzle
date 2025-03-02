@@ -46,19 +46,23 @@ const MobileNav = ({ linkData }) => {
     );
   });
 
-  const secondLevelLinks = currentChildren?.map(
+  const childLinks = currentChildren?.map(
     ({ secondLevelLink, thirdLevelLinks }) => {
       const handleChildLinkClick = evt => {
         const theGrandKids = currentChildren.filter(
           child => child.secondLevelLink.linkText === evt.target.id
         )[0];
+
+        setAreGrandChildLinksOpen(
+          currentGrandChildren !== theGrandKids.thirdLevelLinks
+        );
+
         setCurrentGrandChildren(theGrandKids.thirdLevelLinks);
-        setAreGrandChildLinksOpen(!areGrandChildLinksOpen);
       };
 
       if (thirdLevelLinks) {
         return (
-          <li key={secondLevelLink.linkText} className="">
+          <li key={secondLevelLink.linkText}>
             <button
               id={secondLevelLink.linkText}
               type="button"
@@ -128,7 +132,7 @@ const MobileNav = ({ linkData }) => {
         )}
       >
         <li onClick={() => setAreChildLinksOpen(false)}>&larr; Back</li>
-        {secondLevelLinks}
+        {childLinks}
       </ul>
     </nav>
   );
