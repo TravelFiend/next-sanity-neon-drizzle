@@ -6,7 +6,7 @@ const MainHeader = async ({ navData }) => {
   if (!navData) return null;
 
   return (
-    <header className="fixed flex w-full justify-between bg-amber-400">
+    <header className="fixed flex h-12 w-full justify-between bg-amber-400 sm:h-16">
       <Link href="/">
         <div
           className="size-12 sm:size-16"

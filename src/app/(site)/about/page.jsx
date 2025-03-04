@@ -1,3 +1,5 @@
+import ContentWrapper from '@/components/common/ContentWrapper';
+
 export const metadata = {
   title: 'About Us',
   description: 'Learn about MJM LLC'
@@ -5,9 +7,9 @@ export const metadata = {
 
 const AboutUsPage = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start p-24">
+    <ContentWrapper>
       <p className="">About us page</p>
-    </main>
+    </ContentWrapper>
   );
 };
 
