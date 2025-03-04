@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import MobileSubNav from './MobileSubNav';
 import { usePathname } from 'next/navigation';
+import DesktopSubNav from './DesktopSubNav';
 
 const Nav = ({ linkData }) => {
   const [areLinksOpen, setAreLinksOpen] = useState(false);
@@ -23,7 +24,7 @@ const Nav = ({ linkData }) => {
   };
 
   const handleMainLinkClick = evt => {
-    setAreChildLinksOpen(true);
+    setAreChildLinksOpen(!areChildLinksOpen);
     const theKids = linkData.filter(
       singleLinkData => singleLinkData.link.linkText === evt.currentTarget.id
     )[0];
@@ -68,14 +69,19 @@ const Nav = ({ linkData }) => {
 
       <ul
         className={conditionalClasses(
-          'absolute left-1/6 flex w-5/6 translate-x-full flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center sm:transition-none',
-          areLinksOpen ? '-translate-x-0' : ''
+          'absolute left-1/6 flex w-5/6 translate-x-full flex-col justify-center bg-lime-900 sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center sm:transition-none',
+          areLinksOpen ? '-translate-x-0 transition-transform' : ''
         )}
       >
         {mainLinks}
       </ul>
 
       <MobileSubNav
+        isOpen={areChildLinksOpen}
+        setIsOpen={setAreChildLinksOpen}
+        currentChildren={currentChildren}
+      />
+      <DesktopSubNav
         isOpen={areChildLinksOpen}
         setIsOpen={setAreChildLinksOpen}
         currentChildren={currentChildren}
