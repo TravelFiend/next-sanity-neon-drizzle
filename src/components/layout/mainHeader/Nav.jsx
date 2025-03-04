@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import MobileSubNav from './MobileSubNav';
 import { usePathname } from 'next/navigation';
 
-const MobileNav = ({ linkData }) => {
+const Nav = ({ linkData }) => {
   const [areLinksOpen, setAreLinksOpen] = useState(false);
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
   const [currentChildren, setCurrentChildren] = useState(null);
@@ -33,7 +33,10 @@ const MobileNav = ({ linkData }) => {
   const mainLinks = linkData?.map(({ link, secondLevelLinks }) => {
     if (secondLevelLinks) {
       return (
-        <li key={link.linkText} className="cursor-pointer">
+        <li
+          key={link.linkText}
+          className="cursor-pointer list-none sm:mr-1 sm:px-4"
+        >
           <button
             id={link.linkText}
             type="button"
@@ -41,23 +44,23 @@ const MobileNav = ({ linkData }) => {
             className="flex w-full cursor-pointer justify-between"
           >
             <span>{link.linkText}</span>
-            <span>&rarr;</span>
+            <span className="sm:hidden">&rarr;</span>
           </button>
         </li>
       );
     }
 
     return (
-      <li key={link.linkText} className="cursor-pointer">
+      <li key={link.linkText} className="cursor-pointer sm:mr-1 sm:px-4">
         <Link href={`/${link.slug.current}`}>{link.linkText}</Link>
       </li>
     );
   });
 
   return (
-    <nav className="block bg-cyan-600 sm:hidden">
+    <nav className="block bg-cyan-600">
       <div
-        className="flex h-full cursor-pointer items-center px-5"
+        className="flex h-full cursor-pointer items-center px-5 sm:hidden"
         onClick={handleHamburgerClick}
       >
         <span>X</span>
@@ -65,7 +68,7 @@ const MobileNav = ({ linkData }) => {
 
       <ul
         className={conditionalClasses(
-          'absolute left-1/6 flex w-5/6 translate-x-full flex-col bg-lime-900 transition-transform',
+          'absolute left-1/6 flex w-5/6 translate-x-full flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center sm:transition-none',
           areLinksOpen ? '-translate-x-0' : ''
         )}
       >
@@ -81,4 +84,4 @@ const MobileNav = ({ linkData }) => {
   );
 };
 
-export default MobileNav;
+export default Nav;

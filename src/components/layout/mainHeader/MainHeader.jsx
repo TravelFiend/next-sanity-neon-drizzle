@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import DesktopNav from './DesktopNav';
-import MobileNav from './MobileNav';
+import Nav from './Nav';
 
 const MainHeader = async ({ navData }) => {
   if (!navData) return null;
@@ -14,8 +13,7 @@ const MainHeader = async ({ navData }) => {
         />
       </Link>
 
-      <DesktopNav linkData={navData.navTabs} />
-      <MobileNav linkData={navData.navTabs} />
+      <Nav linkData={navData.navTabs} />
     </header>
   );
 };
