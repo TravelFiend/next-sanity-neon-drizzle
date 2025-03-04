@@ -43,7 +43,7 @@ const DesktopSubNav = ({ isOpen, currentChildren }) => {
   return (
     <div
       className={conditionalClasses(
-        'absolute top-16 left-1/2 flex h-72 w-11/12 -translate-x-1/2 flex-col flex-wrap bg-green-400 break-words transition-opacity',
+        'absolute top-16 left-1/2 hidden h-72 w-11/12 -translate-x-1/2 flex-col flex-wrap bg-green-400 break-words transition-opacity sm:flex',
         isOpen ? 'opacity-100' : 'opacity-0'
       )}
     >
