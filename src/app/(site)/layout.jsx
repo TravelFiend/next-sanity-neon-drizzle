@@ -1,6 +1,6 @@
 import MainHeader from '@/components/layout/mainHeader/MainHeader';
 // import Footer from '@/components/layout/Footer';
-import getSiteSettings from '@/lib/actions/groqQueries/siteSettings';
+import getSiteSettings from '@groq/siteSettings';
 import { Suspense } from 'react';
 
 export const metadata = {

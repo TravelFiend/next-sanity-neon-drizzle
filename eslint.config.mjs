@@ -53,7 +53,10 @@ const eslintConfig = [
         node: { paths: ['src'], extensions: ['.js', '.jsx', '.ts', '.tsx'] },
 
         alias: {
-          map: [['@', './src']],
+          map: [
+            ['@', './src'],
+            ['@groq', './src/lib/actions/groqQueries']
+        ],
           extensions: ['.js', '.jsx', '.ts', '.tsx']
         }
       }
