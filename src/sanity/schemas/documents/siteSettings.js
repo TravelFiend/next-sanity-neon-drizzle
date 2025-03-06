@@ -58,7 +58,8 @@ export default defineType({
           title: 'Caption Font',
           type: 'font'
         })
-      ]
+      ],
+      validation: Rule => Rule.required()
     }),
     defineField({
       name: 'lightThemeColors',
@@ -76,7 +77,14 @@ export default defineType({
       name: 'seo',
       title: 'SEO',
       type: 'seo',
-      group: 'seo'
+      group: 'seo',
+      validation: Rule => Rule.required()
     })
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'seo.metaTitle',
+      subtitle: 'seo.metaDescription'
+    }
+  }
 });

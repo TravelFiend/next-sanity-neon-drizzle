@@ -8,7 +8,7 @@ export default defineField({
     defineField({
       name: 'footerLinks',
       title: 'Footer Links',
-      type: 'navLinks'
+      type: 'secondLevelLinks'
     }),
     defineField({
       name: 'socialLinks',

@@ -1,10 +1,10 @@
-// import Image from 'next/image';
+import ContentWrapper from '@/components/common/ContentWrapper';
 
 const Home = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <ContentWrapper>
       <div>Go Browns bitch ayoo madood</div>
-    </main>
+    </ContentWrapper>
   );
 };
 

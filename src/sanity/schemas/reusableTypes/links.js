@@ -1,44 +1,43 @@
-import { defineArrayMember, defineField, defineType } from 'sanity';
+import { defineField, defineType } from 'sanity';
 
-export const NavLinks = defineType({
-  name: 'navLinks',
-  title: 'Navigation Links',
-  type: 'array',
-  of: [
-    defineArrayMember({
-      name: 'navLink',
-      title: 'Nav Link',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'linkText',
-          title: 'Link Text',
-          type: 'string'
-        }),
-        defineField({
-          name: 'href',
-          title: 'href',
-          type: 'string'
-        })
-      ]
+const BasicLink = defineType({
+  name: 'basicLink',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'linkText',
+      title: 'Link Text',
+      type: 'string'
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: (doc, { parent }) => parent?.linkText,
+        maxLength: 96,
+        isUnique: (slug, context) => context.defaultIsUnique(slug, context)
+      },
+      validation: Rule => Rule.required()
     })
   ]
 });
 
-export const LinkWithIcon = defineType({
+const LinkWithIcon = defineType({
   name: 'linkWithIcon',
   type: 'object',
   fields: [
     defineField({
       name: 'icon',
       title: 'Icon',
-      // TODO: change to custom icon type
-      type: 'string'
+      type: 'inlineSvg'
     }),
     defineField({
-      name: 'href',
-      title: 'href',
-      type: 'url'
+      name: 'basicLink',
+      title: 'Link',
+      type: 'basicLink'
     })
   ]
 });
+
+export { BasicLink, LinkWithIcon };

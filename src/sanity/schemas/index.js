@@ -3,10 +3,10 @@ import ParentProduct from './documents/parentProduct';
 import ProductVariant from './documents/productVariant';
 import { FontColors, ThemeColors, Colors } from './fields/globalColors';
 import Footer from './fields/footer';
-import MainNavigation from './fields/mainNavigation';
+import { MainNav, NavTab, SecondLevelLinks } from './fields/mainNavigation';
 import { RichImage } from './reusableTypes/images';
 import Font from './reusableTypes/font';
-import { LinkWithIcon, NavLinks } from './reusableTypes/links';
+import { BasicLink, LinkWithIcon } from './reusableTypes/links';
 import SEO from './reusableTypes/seo';
 
 const schemaTypes = [
@@ -19,15 +19,17 @@ const schemaTypes = [
   Colors,
   FontColors,
   Footer,
-  ThemeColors,
-  MainNavigation,
+  MainNav,
+  NavTab,
   SEO,
+  ThemeColors,
 
   // Reusable Types
+  BasicLink,
   Font,
   LinkWithIcon,
-  NavLinks,
-  RichImage
+  RichImage,
+  SecondLevelLinks
 ];
 
 export default schemaTypes;
