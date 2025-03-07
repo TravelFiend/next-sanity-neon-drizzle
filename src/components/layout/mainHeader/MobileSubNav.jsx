@@ -39,46 +39,49 @@ const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
       <li className="cursor-pointer" onClick={handleBackClick}>
         &larr; Back
       </li>
-      {currentChildren?.map(({ secondLevelLink, thirdLevelLinks }) => (
-        <Fragment key={secondLevelLink.linkText}>
-          {thirdLevelLinks ? (
-            <li>
-              <button
-                id={secondLevelLink.linkText}
-                type="button"
-                onClick={handleChildLinkClick}
-                className="flex w-full cursor-pointer justify-between"
-              >
-                <span>{secondLevelLink.linkText}</span>
-                <span>&darr;</span>
-              </button>
 
-              <ul
-                className={conditionalClasses(
-                  'w-full flex-col bg-fuchsia-900',
-                  thirdLevelLinks === currentGrandChildren &&
-                    areGrandChildLinksOpen
-                    ? 'flex'
-                    : 'hidden'
-                )}
-              >
-                {thirdLevelLinks.map(finalLink => (
-                  <Link
-                    key={finalLink.linkText}
-                    href={`/${secondLevelLink.linkText.toLowerCase()}/${finalLink.linkText.toLowerCase()}`}
-                  >
-                    {finalLink.linkText}
-                  </Link>
-                ))}
-              </ul>
-            </li>
-          ) : (
-            <Link className="mr-4" href={`/${secondLevelLink.slug.current}`}>
-              {secondLevelLink.linkText}
-            </Link>
-          )}
-        </Fragment>
-      ))}
+      {currentChildren?.map(({ _key, secondLevelLink, thirdLevelLinks }) => {
+        return (
+          <Fragment key={_key}>
+            {thirdLevelLinks ? (
+              <li>
+                <button
+                  id={secondLevelLink.linkText}
+                  type="button"
+                  onClick={handleChildLinkClick}
+                  className="flex w-full cursor-pointer justify-between"
+                >
+                  <span>{secondLevelLink.linkText}</span>
+                  <span>&darr;</span>
+                </button>
+
+                <ul
+                  className={conditionalClasses(
+                    'w-full flex-col bg-fuchsia-900',
+                    thirdLevelLinks === currentGrandChildren &&
+                      areGrandChildLinksOpen
+                      ? 'flex'
+                      : 'hidden'
+                  )}
+                >
+                  {thirdLevelLinks.map(({ _key, linkText, slug }) => (
+                    <Link
+                      key={_key}
+                      href={`/${secondLevelLink.slug.current}/${slug.current}`}
+                    >
+                      {linkText}
+                    </Link>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <Link className="mr-4" href={`/${secondLevelLink.slug.current}`}>
+                {secondLevelLink.linkText}
+              </Link>
+            )}
+          </Fragment>
+        );
+      })}
     </ul>
   );
 };

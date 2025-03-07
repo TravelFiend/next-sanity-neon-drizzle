@@ -14,11 +14,13 @@ const getSiteSettings = async () => {
             slug
           },
           secondLevelLinks[]{
+            _key,
             secondLevelLink{
               linkText,
               slug,
             },
             thirdLevelLinks[]{
+              _key,
               linkText,
               slug
             }

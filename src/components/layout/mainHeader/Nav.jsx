@@ -49,7 +49,7 @@ const Nav = ({ linkData }) => {
     }
 
     return (
-      <li key={link.linkText} className="cursor-pointer sm:mr-1 sm:px-4">
+      <li key={_key} className="cursor-pointer sm:mr-1 sm:px-4">
         <Link href={`/${link.slug.current}`}>{link.linkText}</Link>
       </li>
     );
