@@ -1,5 +1,5 @@
 import MainHeader from '@/components/layout/mainHeader/MainHeader';
-// import Footer from '@/components/layout/Footer';
+import Footer from '@/components/layout/Footer';
 import getSiteSettings from '@groq/siteSettings';
 import { Suspense } from 'react';
 
@@ -22,7 +22,7 @@ const siteLayout = async ({ children }) => {
       </Suspense>
 
       <main>{children}</main>
-      {/* <Footer /> */}
+      <Footer footerData={siteSettings.footer} />
     </>
   );
 };

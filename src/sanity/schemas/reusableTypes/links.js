@@ -33,7 +33,7 @@ const LinkWithIcon = defineType({
       type: 'inlineSvg'
     }),
     defineField({
-      name: 'basicLink',
+      name: 'link',
       title: 'Link',
       type: 'basicLink'
     })

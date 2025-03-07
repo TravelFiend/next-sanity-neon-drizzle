@@ -30,14 +30,11 @@ const Nav = ({ linkData }) => {
     )[0];
     setCurrentChildren(theKids?.secondLevelLinks);
   };
-
-  const mainLinks = linkData?.map(({ link, secondLevelLinks }) => {
+  // TODO: update these maps to use the _key property from Sanity query
+  const mainLinks = linkData?.map(({ _key, link, secondLevelLinks }) => {
     if (secondLevelLinks) {
       return (
-        <li
-          key={link.linkText}
-          className="cursor-pointer list-none sm:mr-1 sm:px-4"
-        >
+        <li key={_key} className="cursor-pointer list-none sm:mr-1 sm:px-4">
           <button
             id={link.linkText}
             type="button"

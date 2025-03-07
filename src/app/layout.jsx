@@ -42,13 +42,13 @@ const RootLayout = async ({ children }) => {
   return (
     <html lang="en">
       <body
-        className={` ${rubik.variable} ${ebGaramond.variable} ${martianMono.variable} ${
-          headingFont === 'sans-serif'
-            ? rubik.className
+        className={`${rubik.variable} ${ebGaramond.variable} ${martianMono.variable} ${
+          headingFont && headingFont === 'mono'
+            ? martianMono.className
             : headingFont === 'serif'
               ? ebGaramond.className
-              : martianMono.className
-        } `}
+              : rubik.className
+        }`}
       >
         {children}
       </body>

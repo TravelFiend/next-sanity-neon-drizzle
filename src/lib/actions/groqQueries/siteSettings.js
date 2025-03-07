@@ -8,6 +8,7 @@ const getSiteSettings = async () => {
       mainNav{
         companyLogo,
         navTabs[]{
+          _key,
           link{
             linkText,
             slug
@@ -25,15 +26,22 @@ const getSiteSettings = async () => {
         }
       },
       footer{
-        footerLinks[]{
+        legalLinks[]{
           _key,
           linkText,
-          href
+          slug
+        },
+        siteLinks[]{
+          linkText,
+          slug
         },
         socialLinks[]{
           _key,
           icon,
-          href
+          link{
+            linkText,
+            slug
+          }
         },
         copyrightText
       }

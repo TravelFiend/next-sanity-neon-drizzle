@@ -1,39 +1,24 @@
-import client from '@/sanity/config/client-config';
 import Link from 'next/link';
 
-const Footer = async () => {
-  const { footer } = await client.fetch(`*[_type == "siteSettings"][0]{
-    footer{
-      footerLinks[]{
-        _key,
-        linkText,
-        href
-      },
-      socialLinks[]{
-        _key,
-        icon,
-        href
-      },
-      copyrightText
-    }
-  }`);
+const Footer = ({ footerData }) => {
+  if (!footerData) return null;
 
-  const { copyrightText, footerLinks, socialLinks } = footer;
+  const { copyrightText, legalLinks, socialLinks } = footerData;
 
   return (
     <footer className="bottom-0 w-full text-center">
       <div className="flex flex-col">
         <ul className="flex flex-col">
-          {footerLinks?.map(({ _key, href, linkText }) => (
+          {legalLinks?.map(({ _key, slug, linkText }) => (
             <li key={_key}>
-              <Link href={href}>{linkText}</Link>
+              <Link href={`/${slug.current}`}>{linkText}</Link>
             </li>
           ))}
         </ul>
         <ul className="flex justify-center">
-          {socialLinks?.map(({ _key, href }) => (
+          {socialLinks?.map(({ _key, slug }) => (
             <li key={_key}>
-              <Link href={href}>TODO: Add icon here</Link>
+              <Link href={`/${slug.current}`}>TODO: Add icon here</Link>
             </li>
           ))}
         </ul>
