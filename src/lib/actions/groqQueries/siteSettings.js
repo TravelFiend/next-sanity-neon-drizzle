@@ -34,6 +34,7 @@ const getSiteSettings = async () => {
           slug
         },
         siteLinks[]{
+          _key,
           linkText,
           slug
         },
@@ -48,6 +49,7 @@ const getSiteSettings = async () => {
         copyrightText
       }
     }`);
+
     return siteSettings;
   } catch (err) {
     console.error(`Error fetching site settings: ${err}`);

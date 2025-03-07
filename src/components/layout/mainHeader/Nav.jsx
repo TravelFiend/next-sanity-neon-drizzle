@@ -30,7 +30,7 @@ const Nav = ({ linkData }) => {
     )[0];
     setCurrentChildren(theKids?.secondLevelLinks);
   };
-  // TODO: update these maps to use the _key property from Sanity query
+
   const mainLinks = linkData?.map(({ _key, link, secondLevelLinks }) => {
     if (secondLevelLinks) {
       return (

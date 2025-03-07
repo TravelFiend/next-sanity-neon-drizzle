@@ -8,10 +8,6 @@ const GROUPS = [
   {
     name: 'iconLinks',
     title: 'Icon Links'
-  },
-  {
-    name: 'branding',
-    title: 'Branding'
   }
 ];
 
