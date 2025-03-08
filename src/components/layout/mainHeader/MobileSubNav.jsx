@@ -4,30 +4,20 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
-  const [areGrandChildLinksOpen, setAreGrandChildLinksOpen] = useState(false);
-  const [currentGrandChildren, setCurrentGrandChildren] = useState(null);
+  const [expandedChild, setExpandedChild] = useState(null);
   const pathName = usePathname();
 
   useEffect(() => {
-    setAreGrandChildLinksOpen(false);
+    setExpandedChild(null);
   }, [pathName]);
 
   const handleBackClick = () => {
     setIsOpen(false);
-    setAreGrandChildLinksOpen(false);
+    setExpandedChild(null);
   };
 
-  const handleChildLinkClick = evt => {
-    const theGrandKids = currentChildren.filter(
-      child =>
-        child.secondLevelLink.internalLink.linkText === evt.currentTarget.id
-    )[0];
-
-    setAreGrandChildLinksOpen(prevState =>
-      currentGrandChildren === theGrandKids.thirdLevelLinks ? !prevState : true
-    );
-
-    setCurrentGrandChildren(theGrandKids.thirdLevelLinks);
+  const handleChildLinkClick = child => {
+    setExpandedChild(prevExpanded => (prevExpanded === child ? null : child));
   };
 
   return (
@@ -42,45 +32,45 @@ const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
       </li>
 
       {currentChildren?.map(({ _key, secondLevelLink, thirdLevelLinks }) => {
+        const childSlug = secondLevelLink.internalLink.slug.current;
+        const childText = secondLevelLink.internalLink.linkText;
+
         return (
           <Fragment key={_key}>
             {thirdLevelLinks ? (
               <li>
                 <button
-                  id={secondLevelLink.internalLink.linkText}
                   type="button"
-                  onClick={handleChildLinkClick}
+                  onClick={() =>
+                    handleChildLinkClick({ _key, thirdLevelLinks })
+                  }
                   className="flex w-full cursor-pointer justify-between"
                 >
-                  <span>{secondLevelLink.internalLink.linkText}</span>
+                  <span>{childText}</span>
                   <span>&darr;</span>
                 </button>
 
                 <ul
                   className={conditionalClasses(
                     'w-full flex-col bg-fuchsia-900',
-                    thirdLevelLinks === currentGrandChildren &&
-                      areGrandChildLinksOpen
-                      ? 'flex'
-                      : 'hidden'
+                    expandedChild?._key === _key ? 'flex' : 'hidden'
                   )}
                 >
-                  {thirdLevelLinks.map(({ _key, internalLink }) => (
-                    <Link
-                      key={_key}
-                      href={`/${secondLevelLink.internalLink.slug.current}/${internalLink.slug.current}`}
-                    >
-                      {internalLink.linkText}
-                    </Link>
-                  ))}
+                  {thirdLevelLinks.map(
+                    ({ _key: grandChildKey, internalLink }) => (
+                      <Link
+                        key={grandChildKey}
+                        href={`/${childSlug}/${internalLink.slug.current}`}
+                      >
+                        {internalLink.linkText}
+                      </Link>
+                    )
+                  )}
                 </ul>
               </li>
             ) : (
-              <Link
-                className="mr-4"
-                href={`/${secondLevelLink.internalLink.slug.current}`}
-              >
-                {secondLevelLink.internalLink.linkText}
+              <Link className="mr-4" href={`/${childSlug}`}>
+                {childText}
               </Link>
             )}
           </Fragment>

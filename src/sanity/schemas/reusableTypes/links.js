@@ -1,6 +1,70 @@
 import { defineField, defineType } from 'sanity';
 import { LinkIcon } from '@sanity/icons';
 
+const linkFields = [
+  defineField({
+    name: 'linkText',
+    title: 'Link Text',
+    type: 'string'
+  })
+];
+
+const internalLinkFields = [
+  ...linkFields,
+  defineField({
+    name: 'slug',
+    title: 'Slug',
+    type: 'slug',
+    options: {
+      source: (doc, { parent }) => parent?.linkText,
+      maxLength: 96,
+      isUnique: (slug, context) => context.defaultIsUnique(slug, context)
+    },
+    validation: Rule => Rule.required()
+  })
+];
+
+const externalLinkFields = [
+  ...linkFields,
+  defineField({
+    name: 'url',
+    title: 'URL',
+    type: 'url',
+    validation: Rule => Rule.required()
+  })
+];
+
+const linkValidation = Rule =>
+  Rule.custom((value, context) => {
+    if (!context.parent?.internalLink && !context.parent?.externalLink) {
+      return 'Required: You must provide either an internal link or external URL.';
+    }
+    if (context.parent?.internalLink && context.parent?.externalLink) {
+      return 'You must provide either an internal link or external URL, but not both.';
+    }
+    return true;
+  });
+
+const prepareLinkPreview = ({
+  internalLinkText,
+  externalLinkText,
+  externalLinkURL
+}) => {
+  const displayTitle =
+    internalLinkText || externalLinkText || externalLinkURL || 'Link (empty)';
+  const displaySubtitle = internalLinkText
+    ? 'Internal Link'
+    : externalLinkText || externalLinkURL
+      ? 'External URL'
+      : 'Link';
+
+  return {
+    title: displayTitle,
+    subtitle: displaySubtitle,
+    media: LinkIcon
+  };
+};
+
 const BasicLink = defineType({
   name: 'basicLink',
   type: 'object',
@@ -11,63 +75,15 @@ const BasicLink = defineType({
       description: 'This should be just the final part of a url, e.g. "/about"',
       type: 'object',
       options: { collapsed: false },
-      fields: [
-        defineField({
-          name: 'linkText',
-          title: 'Link Text',
-          type: 'string'
-        }),
-        defineField({
-          name: 'slug',
-          title: 'Slug',
-          type: 'slug',
-          options: {
-            source: (doc, { parent }) => parent?.linkText,
-            maxLength: 96,
-            isUnique: (slug, context) => context.defaultIsUnique(slug, context)
-          },
-          validation: Rule => Rule.required()
-        })
-      ],
-      validation: Rule =>
-        Rule.custom((value, context) => {
-          if (!context.parent?.internalLink && !context.parent?.externalLink) {
-            return 'Required: You must provide either an internal link or external URL.';
-          }
-          if (context.parent?.internalLink && context.parent?.externalLink) {
-            return 'You must provide either an internal link or external URL, but not both.';
-          }
-          return true;
-        })
+      fields: internalLinkFields,
+      validation: linkValidation
     }),
     defineField({
-      // TODO: Make this field an object and add linkText as a second field
       name: 'externalLink',
       title: 'External Link',
       type: 'object',
-      fields: [
-        defineField({
-          name: 'linkText',
-          title: 'Link Text',
-          type: 'string'
-        }),
-        defineField({
-          name: 'url',
-          title: 'URL',
-          type: 'url',
-          validation: Rule => Rule.required()
-        })
-      ],
-      validation: Rule =>
-        Rule.custom((value, context) => {
-          if (!context.parent?.internalLink && !context.parent?.externalLink) {
-            return 'Required: You must provide either an internal link or external URL.';
-          }
-          if (context.parent?.internalLink && context.parent?.externalLink) {
-            return 'You must provide either an internal link or external URL, but not both.';
-          }
-          return true;
-        })
+      fields: externalLinkFields,
+      validation: linkValidation
     })
   ],
   preview: {
@@ -76,24 +92,7 @@ const BasicLink = defineType({
       externalLinkText: 'externalLink.linkText',
       externalLinkURL: 'externalLink.url'
     },
-    prepare({ internalLinkText, externalLinkText, externalLinkURL }) {
-      const displayTitle =
-        internalLinkText ||
-        externalLinkText ||
-        externalLinkURL ||
-        'Link (empty)';
-      const displaySubtitle = internalLinkText
-        ? 'Internal Link'
-        : externalLinkText || externalLinkURL
-          ? 'External URL'
-          : 'Link';
-
-      return {
-        title: displayTitle,
-        subtitle: displaySubtitle,
-        media: LinkIcon
-      };
-    }
+    prepare: prepareLinkPreview
   }
 });
 
@@ -120,23 +119,7 @@ const LinkWithIcon = defineType({
       externalLinkText: 'link.externalLink.linkText',
       externalLinkURL: 'link.externalLink.url'
     },
-    prepare({ internalLinkText, externalLinkText, externalLinkURL }) {
-      const displayTitle =
-        internalLinkText ||
-        externalLinkText ||
-        externalLinkURL ||
-        'Link (empty)';
-      const displaySubtitle = internalLinkText
-        ? 'Internal Link'
-        : externalLinkText || externalLinkURL
-          ? 'External URL'
-          : 'Link';
-
-      return {
-        title: displayTitle,
-        subtitle: displaySubtitle
-      };
-    }
+    prepare: prepareLinkPreview
   }
 });
 
