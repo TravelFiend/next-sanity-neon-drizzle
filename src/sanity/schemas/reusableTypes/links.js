@@ -104,10 +104,9 @@ const LinkWithIcon = defineType({
   preview: {
     select: {
       title: 'link.internalLink.linkText',
-      subtitle: 'link.externalUrl',
-      svgIcon: 'icon'
+      subtitle: 'link.externalUrl'
     },
-    prepare({ title, subtitle, svgIcon }) {
+    prepare({ title, subtitle }) {
       const displayTitle = title || subtitle || 'Link';
       const displaySubtitle = title
         ? 'Internal Link'
@@ -117,10 +116,7 @@ const LinkWithIcon = defineType({
 
       return {
         title: displayTitle,
-        subtitle: displaySubtitle,
-        media: () => {
-          return <div dangerouslySetInnerHTML={{ __html: svgIcon }} />;
-        }
+        subtitle: displaySubtitle
       };
     }
   }
