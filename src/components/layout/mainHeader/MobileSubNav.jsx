@@ -19,7 +19,8 @@ const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
 
   const handleChildLinkClick = evt => {
     const theGrandKids = currentChildren.filter(
-      child => child.secondLevelLink.linkText === evt.currentTarget.id
+      child =>
+        child.secondLevelLink.internalLink.linkText === evt.currentTarget.id
     )[0];
 
     setAreGrandChildLinksOpen(prevState =>
@@ -46,12 +47,12 @@ const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
             {thirdLevelLinks ? (
               <li>
                 <button
-                  id={secondLevelLink.linkText}
+                  id={secondLevelLink.internalLink.linkText}
                   type="button"
                   onClick={handleChildLinkClick}
                   className="flex w-full cursor-pointer justify-between"
                 >
-                  <span>{secondLevelLink.linkText}</span>
+                  <span>{secondLevelLink.internalLink.linkText}</span>
                   <span>&darr;</span>
                 </button>
 
@@ -64,19 +65,22 @@ const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
                       : 'hidden'
                   )}
                 >
-                  {thirdLevelLinks.map(({ _key, linkText, slug }) => (
+                  {thirdLevelLinks.map(({ _key, internalLink }) => (
                     <Link
                       key={_key}
-                      href={`/${secondLevelLink.slug.current}/${slug.current}`}
+                      href={`/${secondLevelLink.internalLink.slug.current}/${internalLink.slug.current}`}
                     >
-                      {linkText}
+                      {internalLink.linkText}
                     </Link>
                   ))}
                 </ul>
               </li>
             ) : (
-              <Link className="mr-4" href={`/${secondLevelLink.slug.current}`}>
-                {secondLevelLink.linkText}
+              <Link
+                className="mr-4"
+                href={`/${secondLevelLink.internalLink.slug.current}`}
+              >
+                {secondLevelLink.internalLink.linkText}
               </Link>
             )}
           </Fragment>
