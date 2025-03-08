@@ -2,9 +2,15 @@ import { defineField, defineType } from 'sanity';
 
 const nestedLinksPreview = nestedLinks => {
   const allChildren = nestedLinks?.map(nestedLink => {
-    return nestedLink.secondLevelLink
-      ? nestedLink.secondLevelLink.linkText
-      : nestedLink.linkText;
+    if (nestedLink.secondLevelLink) {
+      return nestedLink.secondLevelLink.internalLink
+        ? nestedLink.secondLevelLink.internalLink.linkText
+        : nestedLink.secondLevelLink.externalUrl;
+    } else {
+      return nestedLink.internalLink
+        ? nestedLink.internalLink.linkText
+        : nestedLink.externalUrl;
+    }
   });
 
   return allChildren?.join(' : ');
@@ -17,7 +23,8 @@ const SecondLevelLinks = defineType({
     defineField({
       name: 'secondLevelLink',
       title: 'Second Level Link',
-      type: 'basicLink'
+      type: 'basicLink',
+      validation: Rule => Rule.required()
     }),
     defineField({
       name: 'thirdLevelLinks',
@@ -28,14 +35,16 @@ const SecondLevelLinks = defineType({
   ],
   preview: {
     select: {
-      title: 'secondLevelLink.linkText',
+      internalLink: 'secondLevelLink.internalLink.linkText',
+      externalUrl: 'secondLevelLink.externalUrl',
       childLinks: 'thirdLevelLinks'
     },
     prepare(selection) {
-      const { title, childLinks } = selection;
+      const { internalLink, externalUrl, childLinks } = selection;
+      const displayTitle = internalLink || externalUrl;
 
       return {
-        title,
+        title: displayTitle,
         subtitle: nestedLinksPreview(childLinks)
       };
     }
@@ -87,14 +96,15 @@ const NavTab = defineType({
   ],
   preview: {
     select: {
-      title: 'link.linkText',
+      internalLink: 'link.internalLink.linkText',
+      externalUrl: 'link.externalUrl',
       childLinks: 'secondLevelLinks'
     },
-    prepare(selection) {
-      const { title, childLinks } = selection;
+    prepare({ internalLink, externalUrl, childLinks }) {
+      const displayTitle = internalLink || externalUrl;
 
       return {
-        title,
+        title: displayTitle,
         subtitle: nestedLinksPreview(childLinks)
       };
     }

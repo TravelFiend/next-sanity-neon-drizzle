@@ -1,7 +1,7 @@
-import MainHeader from '@/components/layout/mainHeader/MainHeader';
-import Footer from '@/components/layout/Footer';
+// import MainHeader from '@/components/layout/mainHeader/MainHeader';
+// import Footer from '@/components/layout/Footer';
 import getSiteSettings from '@groq/siteSettings';
-import { Suspense } from 'react';
+// import { Suspense } from 'react';
 
 export const metadata = {
   title: 'MJM LLC',
@@ -17,12 +17,12 @@ const siteLayout = async ({ children }) => {
 
   return (
     <>
-      <Suspense fallback={<div className="h-[280px]" />}>
+      {/* <Suspense fallback={<div className="h-[280px]" />}>
         <MainHeader navData={siteSettings.mainNav} />
-      </Suspense>
+      </Suspense> */}
 
       <main>{children}</main>
-      <Footer footerData={siteSettings.footer} />
+      {/* <Footer footerData={siteSettings.footer} /> */}
     </>
   );
 };
