@@ -118,7 +118,9 @@ const LinkWithIcon = defineType({
       return {
         title: displayTitle,
         subtitle: displaySubtitle,
-        media: () => <div dangerouslySetInnerHTML={{ __html: svgIcon }} />
+        media: () => {
+          return <div dangerouslySetInnerHTML={{ __html: svgIcon }} />;
+        }
       };
     }
   }
