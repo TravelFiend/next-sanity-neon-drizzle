@@ -10,19 +10,25 @@ const getSiteSettings = async () => {
         navTabs[]{
           _key,
           link{
-            linkText,
-            slug
+            internalLink{
+              linkText,
+              slug
+            }
           },
           secondLevelLinks[]{
             _key,
             secondLevelLink{
-              linkText,
-              slug,
+              internalLink{
+                linkText,
+                slug
+              }
             },
             thirdLevelLinks[]{
               _key,
-              linkText,
-              slug
+              internalLink{
+                linkText,
+                slug
+              }
             }
           }
         }

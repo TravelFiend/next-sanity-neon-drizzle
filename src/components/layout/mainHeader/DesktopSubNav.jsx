@@ -8,17 +8,17 @@ const DesktopSubNav = ({ isOpen, currentChildren }) => {
     ({ _key, secondLevelLink, thirdLevelLinks }) => {
       return thirdLevelLinks ? (
         <div key={_key} className="mb-3 flex flex-col flex-wrap">
-          <Link href={`/${secondLevelLink.slug.current}`}>
+          <Link href={`/${secondLevelLink.internalLink.slug.current}`}>
             <span className="block font-semibold">
-              {secondLevelLink.linkText}
+              {secondLevelLink.internalLink.linkText}
             </span>
           </Link>
 
-          <ul key={secondLevelLink.linkText}>
-            {thirdLevelLinks.map(({ _key, linkText, slug }) => (
+          <ul key={secondLevelLink.internalLink.linkText}>
+            {thirdLevelLinks.map(({ _key, internalLink }) => (
               <li key={_key}>
-                <Link href={`/${slug.current}`}>
-                  <span className="block">{linkText}</span>
+                <Link href={`/${internalLink.slug.current}`}>
+                  <span className="block">{internalLink.linkText}</span>
                 </Link>
               </li>
             ))}
@@ -26,11 +26,11 @@ const DesktopSubNav = ({ isOpen, currentChildren }) => {
         </div>
       ) : (
         <Link
-          key={secondLevelLink.linkText}
-          href={`/${secondLevelLink.slug.current}`}
+          key={secondLevelLink.internalLink.linkText}
+          href={`/${secondLevelLink.internalLink.slug.current}`}
         >
           <span className="block font-semibold">
-            {secondLevelLink.linkText}
+            {secondLevelLink.internalLink.linkText}
           </span>
         </Link>
       );
