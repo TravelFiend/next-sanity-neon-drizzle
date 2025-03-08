@@ -30,20 +30,25 @@ const getSiteSettings = async () => {
       footer{
         legalLinks[]{
           _key,
-          linkText,
-          slug
+          internalLink{
+            linkText,
+            slug
+          }
         },
         siteLinks[]{
           _key,
-          linkText,
-          slug
+          internalLink{
+            linkText,
+            slug
+          }
         },
         socialLinks[]{
           _key,
           icon,
           link{
-            linkText,
-            slug
+            externalLink{
+              url
+            }
           }
         },
         copyrightText

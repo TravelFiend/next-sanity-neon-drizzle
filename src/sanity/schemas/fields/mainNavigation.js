@@ -5,11 +5,11 @@ const nestedLinksPreview = nestedLinks => {
     if (nestedLink.secondLevelLink) {
       return nestedLink.secondLevelLink.internalLink
         ? nestedLink.secondLevelLink.internalLink.linkText
-        : nestedLink.secondLevelLink.externalUrl;
+        : nestedLink.secondLevelLink.externalLink;
     } else {
       return nestedLink.internalLink
         ? nestedLink.internalLink.linkText
-        : nestedLink.externalUrl;
+        : nestedLink.externalLink;
     }
   });
 
@@ -35,13 +35,19 @@ const SecondLevelLinks = defineType({
   ],
   preview: {
     select: {
-      internalLink: 'secondLevelLink.internalLink.linkText',
-      externalUrl: 'secondLevelLink.externalUrl',
+      internalLinkText: 'secondLevelLink.internalLink.linkText',
+      externalLinkText: 'secondLevelLink.externalLink.linkText',
+      externalLinkURL: 'secondLevelLink.externalLink.url',
       childLinks: 'thirdLevelLinks'
     },
-    prepare(selection) {
-      const { internalLink, externalUrl, childLinks } = selection;
-      const displayTitle = internalLink || externalUrl;
+    prepare({
+      internalLinkText,
+      externalLinkText,
+      externalLinkURL,
+      childLinks
+    }) {
+      const displayTitle =
+        internalLinkText || externalLinkText || externalLinkURL;
 
       return {
         title: displayTitle,
@@ -96,12 +102,19 @@ const NavTab = defineType({
   ],
   preview: {
     select: {
-      internalLink: 'link.internalLink.linkText',
-      externalUrl: 'link.externalUrl',
+      internalLinkText: 'link.internalLink.linkText',
+      externalLinkText: 'link.externalLink.linkText',
+      externalLinkURL: 'link.externalLink.url',
       childLinks: 'secondLevelLinks'
     },
-    prepare({ internalLink, externalUrl, childLinks }) {
-      const displayTitle = internalLink || externalUrl;
+    prepare({
+      internalLinkText,
+      externalLinkText,
+      externalLinkURL,
+      childLinks
+    }) {
+      const displayTitle =
+        internalLinkText || externalLinkText || externalLinkURL;
 
       return {
         title: displayTitle,

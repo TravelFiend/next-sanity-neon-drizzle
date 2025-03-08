@@ -8,7 +8,7 @@ const BasicLink = defineType({
     defineField({
       name: 'internalLink',
       title: 'Internal Link',
-      description: 'This should be just the final part if a url, e.g. "/about"',
+      description: 'This should be just the final part of a url, e.g. "/about"',
       type: 'object',
       options: { collapsed: false },
       fields: [
@@ -31,25 +31,39 @@ const BasicLink = defineType({
       ],
       validation: Rule =>
         Rule.custom((value, context) => {
-          if (!context.parent?.internalLink && !context.parent?.externalUrl) {
+          if (!context.parent?.internalLink && !context.parent?.externalLink) {
             return 'Required: You must provide either an internal link or external URL.';
           }
-          if (context.parent?.internalLink && context.parent?.externalUrl) {
+          if (context.parent?.internalLink && context.parent?.externalLink) {
             return 'You must provide either an internal link or external URL, but not both.';
           }
           return true;
         })
     }),
     defineField({
-      name: 'externalUrl',
-      title: 'External URL',
-      type: 'url',
+      // TODO: Make this field an object and add linkText as a second field
+      name: 'externalLink',
+      title: 'External Link',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'linkText',
+          title: 'Link Text',
+          type: 'string'
+        }),
+        defineField({
+          name: 'url',
+          title: 'URL',
+          type: 'url',
+          validation: Rule => Rule.required()
+        })
+      ],
       validation: Rule =>
         Rule.custom((value, context) => {
-          if (!context.parent?.internalLink && !context.parent?.externalUrl) {
+          if (!context.parent?.internalLink && !context.parent?.externalLink) {
             return 'Required: You must provide either an internal link or external URL.';
           }
-          if (context.parent?.internalLink && context.parent?.externalUrl) {
+          if (context.parent?.internalLink && context.parent?.externalLink) {
             return 'You must provide either an internal link or external URL, but not both.';
           }
           return true;
@@ -59,26 +73,25 @@ const BasicLink = defineType({
   preview: {
     select: {
       internalLinkText: 'internalLink.linkText',
-      externalUrl: 'externalUrl'
+      externalLinkText: 'externalLink.linkText',
+      externalLinkURL: 'externalLink.url'
     },
-    prepare({ internalLinkText, externalUrl }) {
-      if (internalLinkText) {
-        return {
-          title: internalLinkText,
-          subtitle: 'Internal Link',
-          media: LinkIcon
-        };
-      }
-      if (externalUrl) {
-        return {
-          title: externalUrl,
-          subtitle: 'External URL',
-          media: LinkIcon
-        };
-      }
+    prepare({ internalLinkText, externalLinkText, externalLinkURL }) {
+      const displayTitle =
+        internalLinkText ||
+        externalLinkText ||
+        externalLinkURL ||
+        'Link (empty)';
+      const displaySubtitle = internalLinkText
+        ? 'Internal Link'
+        : externalLinkText || externalLinkURL
+          ? 'External URL'
+          : 'Link';
+
       return {
-        title: 'Link (Empty)',
-        subtitle: 'No link selected'
+        title: displayTitle,
+        subtitle: displaySubtitle,
+        media: LinkIcon
       };
     }
   }
@@ -103,14 +116,19 @@ const LinkWithIcon = defineType({
   ],
   preview: {
     select: {
-      title: 'link.internalLink.linkText',
-      subtitle: 'link.externalUrl'
+      internalLinkText: 'link.internalLink.linkText',
+      externalLinkText: 'link.externalLink.linkText',
+      externalLinkURL: 'link.externalLink.url'
     },
-    prepare({ title, subtitle }) {
-      const displayTitle = title || subtitle || 'Link';
-      const displaySubtitle = title
+    prepare({ internalLinkText, externalLinkText, externalLinkURL }) {
+      const displayTitle =
+        internalLinkText ||
+        externalLinkText ||
+        externalLinkURL ||
+        'Link (empty)';
+      const displaySubtitle = internalLinkText
         ? 'Internal Link'
-        : subtitle
+        : externalLinkText || externalLinkURL
           ? 'External URL'
           : 'Link';
 
