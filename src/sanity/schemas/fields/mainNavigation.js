@@ -2,9 +2,15 @@ import { defineField, defineType } from 'sanity';
 
 const nestedLinksPreview = nestedLinks => {
   const allChildren = nestedLinks?.map(nestedLink => {
-    return nestedLink.secondLevelLink
-      ? nestedLink.secondLevelLink.linkText
-      : nestedLink.linkText;
+    if (nestedLink.secondLevelLink) {
+      return nestedLink.secondLevelLink.internalLink
+        ? nestedLink.secondLevelLink.internalLink.linkText
+        : nestedLink.secondLevelLink.externalLink;
+    } else {
+      return nestedLink.internalLink
+        ? nestedLink.internalLink.linkText
+        : nestedLink.externalLink;
+    }
   });
 
   return allChildren?.join(' : ');
@@ -17,7 +23,8 @@ const SecondLevelLinks = defineType({
     defineField({
       name: 'secondLevelLink',
       title: 'Second Level Link',
-      type: 'basicLink'
+      type: 'basicLink',
+      validation: Rule => Rule.required()
     }),
     defineField({
       name: 'thirdLevelLinks',
@@ -28,14 +35,22 @@ const SecondLevelLinks = defineType({
   ],
   preview: {
     select: {
-      title: 'secondLevelLink.linkText',
+      internalLinkText: 'secondLevelLink.internalLink.linkText',
+      externalLinkText: 'secondLevelLink.externalLink.linkText',
+      externalLinkURL: 'secondLevelLink.externalLink.url',
       childLinks: 'thirdLevelLinks'
     },
-    prepare(selection) {
-      const { title, childLinks } = selection;
+    prepare({
+      internalLinkText,
+      externalLinkText,
+      externalLinkURL,
+      childLinks
+    }) {
+      const displayTitle =
+        internalLinkText || externalLinkText || externalLinkURL;
 
       return {
-        title,
+        title: displayTitle,
         subtitle: nestedLinksPreview(childLinks)
       };
     }
@@ -87,14 +102,22 @@ const NavTab = defineType({
   ],
   preview: {
     select: {
-      title: 'link.linkText',
+      internalLinkText: 'link.internalLink.linkText',
+      externalLinkText: 'link.externalLink.linkText',
+      externalLinkURL: 'link.externalLink.url',
       childLinks: 'secondLevelLinks'
     },
-    prepare(selection) {
-      const { title, childLinks } = selection;
+    prepare({
+      internalLinkText,
+      externalLinkText,
+      externalLinkURL,
+      childLinks
+    }) {
+      const displayTitle =
+        internalLinkText || externalLinkText || externalLinkURL;
 
       return {
-        title,
+        title: displayTitle,
         subtitle: nestedLinksPreview(childLinks)
       };
     }

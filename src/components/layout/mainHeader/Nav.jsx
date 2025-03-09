@@ -25,26 +25,25 @@ const Nav = ({ linkData }) => {
 
   const handleMainLinkClick = evt => {
     setAreChildLinksOpen(!areChildLinksOpen);
+
     const theKids = linkData.filter(
-      singleLinkData => singleLinkData.link.linkText === evt.currentTarget.id
+      singleLinkData =>
+        singleLinkData.link.internalLink.linkText === evt.currentTarget.id
     )[0];
     setCurrentChildren(theKids?.secondLevelLinks);
   };
 
-  const mainLinks = linkData?.map(({ link, secondLevelLinks }) => {
+  const mainLinks = linkData?.map(({ _key, link, secondLevelLinks }) => {
     if (secondLevelLinks) {
       return (
-        <li
-          key={link.linkText}
-          className="cursor-pointer list-none sm:mr-1 sm:px-4"
-        >
+        <li key={_key} className="cursor-pointer list-none sm:mr-1 sm:px-4">
           <button
-            id={link.linkText}
+            id={link.internalLink.linkText}
             type="button"
             onClick={handleMainLinkClick}
             className="flex w-full cursor-pointer justify-between"
           >
-            <span>{link.linkText}</span>
+            <span>{link.internalLink.linkText}</span>
             <span className="sm:hidden">&rarr;</span>
           </button>
         </li>
@@ -52,8 +51,10 @@ const Nav = ({ linkData }) => {
     }
 
     return (
-      <li key={link.linkText} className="cursor-pointer sm:mr-1 sm:px-4">
-        <Link href={`/${link.slug.current}`}>{link.linkText}</Link>
+      <li key={_key} className="cursor-pointer sm:mr-1 sm:px-4">
+        <Link href={`/${link.internalLink.slug.current}`}>
+          {link.internalLink.linkText}
+        </Link>
       </li>
     );
   });

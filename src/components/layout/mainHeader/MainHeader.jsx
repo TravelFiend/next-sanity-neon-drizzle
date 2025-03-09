@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Nav from './Nav';
 
-const MainHeader = async ({ navData }) => {
+const MainHeader = ({ navData }) => {
   if (!navData) return null;
 
   return (

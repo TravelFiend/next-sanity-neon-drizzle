@@ -8,36 +8,59 @@ const getSiteSettings = async () => {
       mainNav{
         companyLogo,
         navTabs[]{
+          _key,
           link{
-            linkText,
-            slug
-          },
-          secondLevelLinks[]{
-            secondLevelLink{
-              linkText,
-              slug,
-            },
-            thirdLevelLinks[]{
+            internalLink{
               linkText,
               slug
+            }
+          },
+          secondLevelLinks[]{
+            _key,
+            secondLevelLink{
+              internalLink{
+                linkText,
+                slug
+              }
+            },
+            thirdLevelLinks[]{
+              _key,
+              internalLink{
+                linkText,
+                slug
+              }
             }
           }
         }
       },
       footer{
-        footerLinks[]{
+        legalLinks[]{
           _key,
-          linkText,
-          href
+          internalLink{
+            linkText,
+            slug
+          }
+        },
+        siteLinks[]{
+          _key,
+          internalLink{
+            linkText,
+            slug
+          }
         },
         socialLinks[]{
           _key,
           icon,
-          href
+          link{
+            externalLink{
+              url
+            }
+          }
         },
         copyrightText
       }
     }`);
+
     return siteSettings;
   } catch (err) {
     console.error(`Error fetching site settings: ${err}`);

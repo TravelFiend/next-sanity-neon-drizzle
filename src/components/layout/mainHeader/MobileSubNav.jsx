@@ -4,29 +4,20 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
-  const [areGrandChildLinksOpen, setAreGrandChildLinksOpen] = useState(false);
-  const [currentGrandChildren, setCurrentGrandChildren] = useState(null);
+  const [expandedChild, setExpandedChild] = useState(null);
   const pathName = usePathname();
 
   useEffect(() => {
-    setAreGrandChildLinksOpen(false);
+    setExpandedChild(null);
   }, [pathName]);
 
   const handleBackClick = () => {
     setIsOpen(false);
-    setAreGrandChildLinksOpen(false);
+    setExpandedChild(null);
   };
 
-  const handleChildLinkClick = evt => {
-    const theGrandKids = currentChildren.filter(
-      child => child.secondLevelLink.linkText === evt.currentTarget.id
-    )[0];
-
-    setAreGrandChildLinksOpen(prevState =>
-      currentGrandChildren === theGrandKids.thirdLevelLinks ? !prevState : true
-    );
-
-    setCurrentGrandChildren(theGrandKids.thirdLevelLinks);
+  const handleChildLinkClick = child => {
+    setExpandedChild(prevExpanded => (prevExpanded === child ? null : child));
   };
 
   return (
@@ -39,46 +30,52 @@ const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
       <li className="cursor-pointer" onClick={handleBackClick}>
         &larr; Back
       </li>
-      {currentChildren?.map(({ secondLevelLink, thirdLevelLinks }) => (
-        <Fragment key={secondLevelLink.linkText}>
-          {thirdLevelLinks ? (
-            <li>
-              <button
-                id={secondLevelLink.linkText}
-                type="button"
-                onClick={handleChildLinkClick}
-                className="flex w-full cursor-pointer justify-between"
-              >
-                <span>{secondLevelLink.linkText}</span>
-                <span>&darr;</span>
-              </button>
 
-              <ul
-                className={conditionalClasses(
-                  'w-full flex-col bg-fuchsia-900',
-                  thirdLevelLinks === currentGrandChildren &&
-                    areGrandChildLinksOpen
-                    ? 'flex'
-                    : 'hidden'
-                )}
-              >
-                {thirdLevelLinks.map(finalLink => (
-                  <Link
-                    key={finalLink.linkText}
-                    href={`/${secondLevelLink.linkText.toLowerCase()}/${finalLink.linkText.toLowerCase()}`}
-                  >
-                    {finalLink.linkText}
-                  </Link>
-                ))}
-              </ul>
-            </li>
-          ) : (
-            <Link className="mr-4" href={`/${secondLevelLink.slug.current}`}>
-              {secondLevelLink.linkText}
-            </Link>
-          )}
-        </Fragment>
-      ))}
+      {currentChildren?.map(({ _key, secondLevelLink, thirdLevelLinks }) => {
+        const childSlug = secondLevelLink.internalLink.slug.current;
+        const childText = secondLevelLink.internalLink.linkText;
+
+        return (
+          <Fragment key={_key}>
+            {thirdLevelLinks ? (
+              <li>
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleChildLinkClick({ _key, thirdLevelLinks })
+                  }
+                  className="flex w-full cursor-pointer justify-between"
+                >
+                  <span>{childText}</span>
+                  <span>&darr;</span>
+                </button>
+
+                <ul
+                  className={conditionalClasses(
+                    'w-full flex-col bg-fuchsia-900',
+                    expandedChild?._key === _key ? 'flex' : 'hidden'
+                  )}
+                >
+                  {thirdLevelLinks.map(
+                    ({ _key: grandChildKey, internalLink }) => (
+                      <Link
+                        key={grandChildKey}
+                        href={`/${childSlug}/${internalLink.slug.current}`}
+                      >
+                        {internalLink.linkText}
+                      </Link>
+                    )
+                  )}
+                </ul>
+              </li>
+            ) : (
+              <Link className="mr-4" href={`/${childSlug}`}>
+                {childText}
+              </Link>
+            )}
+          </Fragment>
+        );
+      })}
     </ul>
   );
 };
