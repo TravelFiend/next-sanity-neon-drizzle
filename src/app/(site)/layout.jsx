@@ -10,18 +10,18 @@ const siteLayout = async ({ children }) => {
   } = await getSiteSettings();
 
   if (!mainNav || !footer) {
-    throw new Error('No site settings found');
+    console.warn('Header and/or footer data is empty in Sanity');
   }
 
   return (
     <>
       <Suspense fallback={<div className="h-[280px]" />}>
-        <MainHeader navData={mainNav} />
+        {mainNav ? <MainHeader navData={mainNav} /> : null}
       </Suspense>
 
       <main>{children}</main>
       <SanityLive />
-      <Footer footerData={footer} />
+      {footer ? <Footer footerData={footer} /> : null}
     </>
   );
 };
