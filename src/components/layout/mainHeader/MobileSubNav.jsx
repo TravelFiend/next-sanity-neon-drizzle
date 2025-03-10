@@ -1,18 +1,42 @@
-import { useState, Fragment, useEffect } from 'react';
+import { useState, Fragment, useEffect, useRef } from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
+const MobileSubNav = ({
+  isOpen,
+  setIsOpen,
+  setAreChildrenOpen,
+  currentChildren
+}) => {
   const [expandedChild, setExpandedChild] = useState(null);
+  const subNavRef = useRef();
   const pathName = usePathname();
 
   useEffect(() => {
     setExpandedChild(null);
   }, [pathName]);
 
+  useEffect(() => {
+    setIsOpen(true);
+  }, [currentChildren, setIsOpen]);
+
+  // useEffect(() => {
+  //   const handleOutSideClick = evt => {
+  //     if (!subNavRef.current?.contains(evt.target)) {
+  //       setIsOpen(false);
+  //     }
+  //   };
+
+  //   window.addEventListener('mousedown', handleOutSideClick);
+
+  //   return () => {
+  //     window.removeEventListener('mousedown', handleOutSideClick);
+  //   };
+  // }, [subNavRef, setIsOpen]);
+
   const handleBackClick = () => {
-    setIsOpen(false);
+    setAreChildrenOpen(false);
     setExpandedChild(null);
   };
 
@@ -26,6 +50,7 @@ const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
         'absolute left-1/6 flex w-5/6 translate-x-full flex-col bg-red-700 transition-transform sm:hidden',
         isOpen ? '-translate-x-0' : ''
       )}
+      ref={subNavRef}
     >
       <li className="cursor-pointer" onClick={handleBackClick}>
         &larr; Back
