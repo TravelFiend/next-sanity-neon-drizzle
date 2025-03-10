@@ -24,34 +24,38 @@ const Nav = ({ linkData }) => {
   };
 
   const handleMainLinkClick = evt => {
-    setAreChildLinksOpen(!areChildLinksOpen);
-
     const theKids = linkData.filter(
       singleLinkData =>
         singleLinkData.link.internalLink.linkText === evt.currentTarget.id
     )[0];
+
+    if (theKids?.secondLevelLinks === currentChildren) {
+      setAreChildLinksOpen(!areChildLinksOpen);
+    }
+
     setCurrentChildren(theKids?.secondLevelLinks);
   };
 
   const mainLinks = linkData?.map(({ _key, link, secondLevelLinks }) => {
     if (secondLevelLinks) {
       return (
-        <li key={_key} className="cursor-pointer list-none sm:mr-1 sm:px-4">
-          <button
-            id={link.internalLink.linkText}
-            type="button"
-            onClick={handleMainLinkClick}
-            className="flex w-full cursor-pointer justify-between"
-          >
-            <span>{link.internalLink.linkText}</span>
-            <span className="sm:hidden">&rarr;</span>
-          </button>
+        <li
+          key={_key}
+          id={link.internalLink.linkText}
+          className="flex h-full w-full cursor-pointer list-none items-center hover:text-secondary sm:mr-1 sm:px-4"
+          onClick={handleMainLinkClick}
+        >
+          <span>{link.internalLink.linkText}</span>
+          <span className="sm:hidden">&rarr;</span>
         </li>
       );
     }
 
     return (
-      <li key={_key} className="cursor-pointer sm:mr-1 sm:px-4">
+      <li
+        key={_key}
+        className="flex h-full cursor-pointer items-center hover:text-secondary sm:mr-1 sm:px-4"
+      >
         <Link href={`/${link.internalLink.slug.current}`}>
           {link.internalLink.linkText}
         </Link>
@@ -79,7 +83,8 @@ const Nav = ({ linkData }) => {
 
       <MobileSubNav
         isOpen={areChildLinksOpen}
-        setIsOpen={setAreChildLinksOpen}
+        setIsOpen={setAreLinksOpen}
+        setAreChildrenOpen={setAreChildLinksOpen}
         currentChildren={currentChildren}
       />
       <DesktopSubNav

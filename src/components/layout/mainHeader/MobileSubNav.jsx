@@ -3,7 +3,12 @@ import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
+const MobileSubNav = ({
+  isOpen,
+  setIsOpen,
+  setAreChildrenOpen,
+  currentChildren
+}) => {
   const [expandedChild, setExpandedChild] = useState(null);
   const pathName = usePathname();
 
@@ -11,13 +16,19 @@ const MobileSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
     setExpandedChild(null);
   }, [pathName]);
 
+  useEffect(() => {
+    setIsOpen(true);
+  }, [currentChildren, setIsOpen]);
+
   const handleBackClick = () => {
-    setIsOpen(false);
+    setAreChildrenOpen(false);
     setExpandedChild(null);
   };
 
   const handleChildLinkClick = child => {
-    setExpandedChild(prevExpanded => (prevExpanded === child ? null : child));
+    setExpandedChild(prevExpanded =>
+      prevExpanded?.thirdLevelLinks === child.thirdLevelLinks ? null : child
+    );
   };
 
   return (
