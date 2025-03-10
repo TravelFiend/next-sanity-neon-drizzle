@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect, useRef } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -10,7 +10,6 @@ const MobileSubNav = ({
   currentChildren
 }) => {
   const [expandedChild, setExpandedChild] = useState(null);
-  const subNavRef = useRef();
   const pathName = usePathname();
 
   useEffect(() => {
@@ -38,7 +37,6 @@ const MobileSubNav = ({
         'absolute left-1/6 flex w-5/6 translate-x-full flex-col bg-red-700 transition-transform sm:hidden',
         isOpen ? '-translate-x-0' : ''
       )}
-      ref={subNavRef}
     >
       <li className="cursor-pointer" onClick={handleBackClick}>
         &larr; Back
