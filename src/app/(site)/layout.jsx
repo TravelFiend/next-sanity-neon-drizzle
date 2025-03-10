@@ -1,28 +1,27 @@
 import { Suspense } from 'react';
 import MainHeader from '@/components/layout/mainHeader/MainHeader';
 import Footer from '@/components/layout/Footer';
-import getSiteSettings from '@groq/siteSettings';
-
-export const metadata = {
-  title: 'MJM LLC',
-  description: 'Music, Art, Technology'
-};
+import { getSiteSettings } from '@groq/siteSettings';
+import { SanityLive } from '@/sanity/utils/live';
 
 const siteLayout = async ({ children }) => {
-  const siteSettings = await getSiteSettings();
+  const {
+    data: { mainNav, footer }
+  } = await getSiteSettings();
 
-  if (!siteSettings) {
+  if (!mainNav || !footer) {
     throw new Error('No site settings found');
   }
 
   return (
     <>
       <Suspense fallback={<div className="h-[280px]" />}>
-        <MainHeader navData={siteSettings.mainNav} />
+        <MainHeader navData={mainNav} />
       </Suspense>
 
       <main>{children}</main>
-      <Footer footerData={siteSettings.footer} />
+      <SanityLive />
+      <Footer footerData={footer} />
     </>
   );
 };
