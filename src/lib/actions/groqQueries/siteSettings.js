@@ -1,26 +1,7 @@
 'use server';
 
 import { defineQuery } from 'next-sanity';
-import { sanityFetch } from '@/sanity/config/client-config';
-
-const MAIN_FONT_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
-  fonts {
-    headingFont
-  }
-}`);
-
-const getMainFont = async () => {
-  try {
-    const mainFontSelection = await sanityFetch({
-      query: MAIN_FONT_QUERY
-    });
-
-    return mainFontSelection;
-  } catch (err) {
-    console.error(`Error fetching main font selection: ${err}`);
-    return null;
-  }
-};
+import { sanityFetch } from '@/sanity/utils/live';
 
 const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
   mainNav{
@@ -115,4 +96,4 @@ const getSitewideMetaData = async () => {
   }
 };
 
-export { getSiteSettings, getSitewideMetaData, getMainFont };
+export { getSiteSettings, getSitewideMetaData };

@@ -1,9 +1,6 @@
 import './globals.css';
 import { Rubik, EB_Garamond, Martian_Mono } from 'next/font/google';
-import {
-  getMainFont,
-  getSitewideMetaData
-} from '@/lib/actions/groqQueries/siteSettings';
+import { getSitewideMetaData } from '@/lib/actions/groqQueries/siteSettings';
 
 /* We're using google variable fonts here.  You can also use
   regular google fonts but you'll need a different setup for
@@ -47,22 +44,10 @@ export const generateMetadata = async () => {
 };
 
 const RootLayout = async ({ children }) => {
-  const {
-    data: {
-      fonts: { headingFont }
-    }
-  } = await getMainFont();
-
   return (
     <html lang="en">
       <body
-        className={`${rubik.variable} ${ebGaramond.variable} ${martianMono.variable} ${
-          headingFont && headingFont === 'mono'
-            ? martianMono.className
-            : headingFont === 'serif'
-              ? ebGaramond.className
-              : rubik.className
-        }`}
+        className={`${rubik.variable} ${rubik.className} ${ebGaramond.variable} ${martianMono.variable}`}
       >
         {children}
       </body>

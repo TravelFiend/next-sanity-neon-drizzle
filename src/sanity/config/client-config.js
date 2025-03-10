@@ -1,4 +1,4 @@
-import { createClient, defineLive } from 'next-sanity';
+import { createClient } from 'next-sanity';
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'development';
@@ -11,14 +11,4 @@ const client = createClient({
   useCdn: process.env.NEXT_PUBLIC_SANITY_DATASET === 'production' ? true : false
 });
 
-// TODO: Live Content API is still experimental and is likely to change
-const token = process.env.SANITY_API_READ_TOKEN;
-if (!token) {
-  throw new Error('Missing SANITY_API_READ_TOKEN');
-}
-
-export const { sanityFetch, SanityLive } = defineLive({
-  client,
-  serverToken: token,
-  browserToken: token
-});
+export default client;

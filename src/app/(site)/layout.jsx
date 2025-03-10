@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import MainHeader from '@/components/layout/mainHeader/MainHeader';
 import Footer from '@/components/layout/Footer';
 import { getSiteSettings } from '@groq/siteSettings';
-import { SanityLive } from '@/sanity/config/client-config';
+import { SanityLive } from '@/sanity/utils/live';
 
 const siteLayout = async ({ children }) => {
   const {
