@@ -21,27 +21,15 @@ const MobileSubNav = ({
     setIsOpen(true);
   }, [currentChildren, setIsOpen]);
 
-  // useEffect(() => {
-  //   const handleOutSideClick = evt => {
-  //     if (!subNavRef.current?.contains(evt.target)) {
-  //       setIsOpen(false);
-  //     }
-  //   };
-
-  //   window.addEventListener('mousedown', handleOutSideClick);
-
-  //   return () => {
-  //     window.removeEventListener('mousedown', handleOutSideClick);
-  //   };
-  // }, [subNavRef, setIsOpen]);
-
   const handleBackClick = () => {
     setAreChildrenOpen(false);
     setExpandedChild(null);
   };
 
   const handleChildLinkClick = child => {
-    setExpandedChild(prevExpanded => (prevExpanded === child ? null : child));
+    setExpandedChild(prevExpanded =>
+      prevExpanded?.thirdLevelLinks === child.thirdLevelLinks ? null : child
+    );
   };
 
   return (
