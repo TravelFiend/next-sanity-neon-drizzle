@@ -5,10 +5,10 @@ const MainHeader = ({ navData }) => {
   if (!navData) return null;
 
   return (
-    <header className="fixed flex h-12 w-full justify-between bg-amber-400 sm:h-16">
+    <header className="fixed flex h-12 w-full justify-between bg-secondary sm:h-16 dark:bg-primary">
       <Link href="/">
         <div
-          className="size-12 sm:size-16"
+          className="ml-6 flex size-12 items-center sm:size-16"
           dangerouslySetInnerHTML={{ __html: navData.companyLogo }}
         />
       </Link>

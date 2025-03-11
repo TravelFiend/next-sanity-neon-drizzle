@@ -64,7 +64,7 @@ const Nav = ({ linkData }) => {
   });
 
   return (
-    <nav className="block bg-cyan-600">
+    <nav className="block h-full bg-cyan-600">
       <div
         className="flex h-full cursor-pointer items-center px-5 sm:hidden"
         onClick={handleHamburgerClick}
