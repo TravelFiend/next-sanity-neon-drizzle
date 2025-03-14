@@ -10,6 +10,7 @@ import DesktopSubNav from './DesktopSubNav';
 const Nav = ({ linkData }) => {
   const [areLinksOpen, setAreLinksOpen] = useState(false);
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
+  const [parentLink, setParentLink] = useState(null);
   const [currentChildren, setCurrentChildren] = useState(null);
   const pathName = usePathname();
 
@@ -34,6 +35,7 @@ const Nav = ({ linkData }) => {
     }
 
     setCurrentChildren(theKids?.secondLevelLinks);
+    setParentLink(evt.currentTarget.id.toLowerCase());
   };
 
   const mainLinks = linkData?.map(({ _key, link, secondLevelLinks }) => {
@@ -85,11 +87,13 @@ const Nav = ({ linkData }) => {
         isOpen={areChildLinksOpen}
         setIsOpen={setAreLinksOpen}
         setAreChildrenOpen={setAreChildLinksOpen}
+        parentLink={parentLink}
         currentChildren={currentChildren}
       />
       <DesktopSubNav
         isOpen={areChildLinksOpen}
         setIsOpen={setAreChildLinksOpen}
+        parentLink={parentLink}
         currentChildren={currentChildren}
       />
     </nav>

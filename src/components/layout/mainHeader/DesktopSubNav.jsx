@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import Link from 'next/link';
 import useHoverState from '@/lib/hooks/useHoverState';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 
-const DesktopSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
+const DesktopSubNav = ({ isOpen, setIsOpen, parentLink, currentChildren }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverState();
 
   useEffect(() => {
@@ -34,32 +34,45 @@ const DesktopSubNav = ({ isOpen, setIsOpen, currentChildren }) => {
         isOpen ? 'opacity-100' : 'opacity-0'
       )}
     >
-      {currentChildren.map(({ _key, secondLevelLink, thirdLevelLinks }) => {
-        const childSlug = secondLevelLink.internalLink.slug.current;
-        const childText = secondLevelLink.internalLink.linkText;
+      {currentChildren.map(
+        ({ _key, secondLevelLink, thirdLevelLinks }, idx) => {
+          const childSlug = secondLevelLink.internalLink.slug.current;
+          const childText = secondLevelLink.internalLink.linkText;
 
-        return (
-          <div key={_key} className="mb-3 flex flex-col flex-wrap">
-            <Link href={`/${childSlug}`}>
-              <span className="block font-semibold">{childText}</span>
-            </Link>
+          return (
+            <Fragment key={_key}>
+              {idx === 0 ? (
+                <Link href={`/${parentLink}`} className="font-semibold">
+                  BROWSE ALL {parentLink.toUpperCase()}
+                </Link>
+              ) : null}
+              <div className="mb-3 flex flex-col flex-wrap">
+                <Link href={`/${parentLink}/${childSlug}`}>
+                  <span className="block font-semibold">{childText}</span>
+                </Link>
 
-            {thirdLevelLinks && (
-              <ul key={childText}>
-                {thirdLevelLinks.map(
-                  ({ _key: grandChildKey, internalLink }) => (
-                    <li key={grandChildKey}>
-                      <Link href={`/${childSlug}/${internalLink.slug.current}`}>
-                        <span className="block">{internalLink.linkText}</span>
-                      </Link>
-                    </li>
-                  )
+                {thirdLevelLinks && (
+                  <ul key={childText}>
+                    {thirdLevelLinks.map(
+                      ({ _key: grandChildKey, internalLink }) => (
+                        <li key={grandChildKey}>
+                          <Link
+                            href={`/${parentLink}/${childSlug}/${internalLink.slug.current}`}
+                          >
+                            <span className="block">
+                              {internalLink.linkText}
+                            </span>
+                          </Link>
+                        </li>
+                      )
+                    )}
+                  </ul>
                 )}
-              </ul>
-            )}
-          </div>
-        );
-      })}
+              </div>
+            </Fragment>
+          );
+        }
+      )}
     </div>
   );
 };
