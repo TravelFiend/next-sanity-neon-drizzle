@@ -12,7 +12,7 @@ const Home = async () => {
 
   return (
     <ContentWrapper>
-      <div>{title && title}</div>
+      <div className="py-10 text-3xl">{title}</div>
       <ContentBlocks contentBlocks={contentBlocks} />
     </ContentWrapper>
   );

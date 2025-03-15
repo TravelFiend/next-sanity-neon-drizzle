@@ -10,6 +10,7 @@ import { RichImage } from './reusableTypes/images';
 import Font from './reusableTypes/font';
 import { BasicLink, LinkWithIcon } from './reusableTypes/links';
 import SEO from './reusableTypes/seo';
+import TextAlign from './reusableTypes/textAlign';
 
 const schemaTypes = [
   // Document Types
@@ -34,6 +35,7 @@ const schemaTypes = [
   LinkWithIcon,
   RichImage,
   SecondLevelLinks,
+  TextAlign,
   TextBlock
 ];
 

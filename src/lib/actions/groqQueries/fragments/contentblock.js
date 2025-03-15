@@ -2,7 +2,8 @@ const textBlockFragment = `
   _type,
   title,
   subtitle,
-  body
+  body,
+  alignment
 `;
 
 const contentBlocksFragment = `

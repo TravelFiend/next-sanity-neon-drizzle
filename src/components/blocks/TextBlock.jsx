@@ -1,13 +1,17 @@
-const TextBlock = ({ title, subtitle, body }) => {
+const TextBlock = ({ blockData }) => {
+  const { title, subtitle, body, alignment } = blockData;
+
   return (
-    <section className="w-full">
-      {title ? <h2 className="text-serif font-semibold">{title}</h2> : null}
+    <section className={`w-full text-${alignment}`}>
+      {title ? (
+        <h2 className="font-serif text-2xl font-semibold">{title}</h2>
+      ) : null}
       {subtitle ? (
-        <h3 className="text-mono text-gray-700 dark:text-gray-400">
+        <h3 className="font-mono text-gray-700 dark:text-gray-400">
           {subtitle}
         </h3>
       ) : null}
-      {body ? <p className="text-sans">{body}</p> : null}
+      {body ? <p className="font-sans">{body}</p> : null}
     </section>
   );
 };

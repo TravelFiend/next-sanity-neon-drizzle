@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
+import { TextIcon } from '@sanity/icons';
 
 const ContentBlocks = defineType({
   name: 'contentBlocks',
@@ -16,6 +17,7 @@ export const TextBlock = defineType({
   name: 'textBlock',
   title: 'Text Block',
   type: 'object',
+  icon: TextIcon,
   fields: [
     defineField({
       name: 'title',
@@ -31,8 +33,19 @@ export const TextBlock = defineType({
       name: 'body',
       title: 'Body',
       type: 'string'
+    }),
+    defineField({
+      name: 'alignment',
+      title: 'Alignment',
+      type: 'textAlign'
     })
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle' || 'body' || null
+    }
+  }
 });
 
 export { ContentBlocks, TextBlock };
