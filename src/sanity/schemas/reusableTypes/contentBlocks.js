@@ -13,7 +13,7 @@ const ContentBlocks = defineType({
   ]
 });
 
-export const TextBlock = defineType({
+const TextBlock = defineType({
   name: 'textBlock',
   title: 'Text Block',
   type: 'object',
