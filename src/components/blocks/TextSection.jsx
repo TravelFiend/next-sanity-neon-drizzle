@@ -1,4 +1,4 @@
-const TextBlock = ({ blockData }) => {
+const TextSection = ({ blockData }) => {
   const { title, subtitle, body, alignment } = blockData;
 
   return (
@@ -16,4 +16,4 @@ const TextBlock = ({ blockData }) => {
   );
 };
 
-export default TextBlock;
+export default TextSection;
