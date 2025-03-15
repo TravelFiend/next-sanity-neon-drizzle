@@ -1,9 +1,14 @@
+import { getHomepage } from '@/lib/actions/groqQueries/queries/homepage';
 import ContentWrapper from '@/components/common/ContentWrapper';
 
-const Home = () => {
+const Home = async () => {
+  const { data } = await getHomepage();
+
+  if (!data) throw new Error('Home page data not found');
+
   return (
     <ContentWrapper>
-      <div>Go Browns bitch ayoo madood</div>
+      {/* <div>{title && <span>{title}</span>}</div> */}
     </ContentWrapper>
   );
 };

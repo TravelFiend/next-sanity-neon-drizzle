@@ -4,6 +4,7 @@ import ProductVariant from './documents/productVariant';
 import { FontColors, ThemeColors, Colors } from './fields/globalColors';
 import Footer from './fields/footer';
 import { MainNav, NavTab, SecondLevelLinks } from './fields/mainNavigation';
+import { ContentBlocks, TextBlock } from './reusableTypes/contentBlocks';
 import { RichImage } from './reusableTypes/images';
 import Font from './reusableTypes/font';
 import { BasicLink, LinkWithIcon } from './reusableTypes/links';
@@ -26,10 +27,12 @@ const schemaTypes = [
 
   // Reusable Types
   BasicLink,
+  ContentBlocks,
   Font,
   LinkWithIcon,
   RichImage,
-  SecondLevelLinks
+  SecondLevelLinks,
+  TextBlock
 ];
 
 export default schemaTypes;
