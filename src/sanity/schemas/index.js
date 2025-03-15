@@ -1,3 +1,4 @@
+import Homepage from './documents/homepage';
 import SiteSettings from './documents/siteSettings';
 import ParentProduct from './documents/parentProduct';
 import ProductVariant from './documents/productVariant';
@@ -12,6 +13,7 @@ import SEO from './reusableTypes/seo';
 
 const schemaTypes = [
   // Document Types
+  Homepage,
   ParentProduct,
   ProductVariant,
   SiteSettings,

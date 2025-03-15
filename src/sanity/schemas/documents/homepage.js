@@ -9,6 +9,16 @@ const Homepage = defineType({
       name: 'title',
       title: 'Title',
       type: 'string'
+    }),
+    defineField({
+      name: 'contentBlocks',
+      title: 'Content Blocks',
+      type: 'contentBlocks'
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo'
     })
   ]
 });

@@ -1,14 +1,19 @@
 import { getHomepage } from '@/lib/actions/groqQueries/queries/homepage';
 import ContentWrapper from '@/components/common/ContentWrapper';
+import ContentBlocks from '@/components/blocks/ContentBlocks';
 
 const Home = async () => {
-  const { data } = await getHomepage();
+  const {
+    data: { title, contentBlocks }
+  } = await getHomepage();
 
-  if (!data) throw new Error('Home page data not found');
+  if (!title || !contentBlocks)
+    throw new Error('Sanity homepage data not found');
 
   return (
     <ContentWrapper>
-      {/* <div>{title && <span>{title}</span>}</div> */}
+      <div>{title && title}</div>
+      <ContentBlocks contentBlocks={contentBlocks} />
     </ContentWrapper>
   );
 };

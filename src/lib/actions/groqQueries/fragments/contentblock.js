@@ -1,4 +1,5 @@
 const textBlockFragment = `
+  _type,
   title,
   subtitle,
   body
