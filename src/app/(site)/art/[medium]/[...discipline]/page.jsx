@@ -1,8 +1,8 @@
 import ContentWrapper from '@/components/common/ContentWrapper';
 
 const ArtistPage = async ({ params }) => {
-  const { artist } = await params;
-  return <ContentWrapper>{artist}</ContentWrapper>;
+  const { discipline } = await params;
+  return <ContentWrapper>{discipline}</ContentWrapper>;
 };
 
 export default ArtistPage;
