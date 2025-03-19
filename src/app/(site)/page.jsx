@@ -1,9 +1,19 @@
+import { getHomepage } from '@/lib/actions/groqQueries/queries/homepage';
 import ContentWrapper from '@/components/common/ContentWrapper';
+import ContentBlocks from '@/components/blocks/ContentBlocks';
 
-const Home = () => {
+const Home = async () => {
+  const {
+    data: { title, contentBlocks }
+  } = await getHomepage();
+
+  if (!title || !contentBlocks)
+    throw new Error('Sanity homepage data not found');
+
   return (
     <ContentWrapper>
-      <div>Go Browns bitch ayoo madood</div>
+      <div className="py-10 text-3xl">{title}</div>
+      <ContentBlocks contentBlocks={contentBlocks} />
     </ContentWrapper>
   );
 };

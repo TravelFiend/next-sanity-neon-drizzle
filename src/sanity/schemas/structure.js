@@ -7,6 +7,9 @@ const structure = S =>
     .title('MJM Admin')
     .items([
       S.listItem()
+        .title('Homepage')
+        .child(S.document().schemaType('homepage').documentId('homepage')),
+      S.listItem()
         .title('Products')
         .child(
           S.list()
@@ -36,9 +39,12 @@ const structure = S =>
         ),
       ...S.documentTypeListItems().filter(
         listItem =>
-          !['siteSettings', 'parentProduct', 'productVariant'].includes(
-            listItem.getId()
-          )
+          ![
+            'homepage',
+            'siteSettings',
+            'parentProduct',
+            'productVariant'
+          ].includes(listItem.getId())
       )
     ]);
 
