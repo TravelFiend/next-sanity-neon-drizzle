@@ -7,8 +7,9 @@ const Home = async () => {
     data: { title, contentBlocks }
   } = await getHomepage();
 
-  if (!title || !contentBlocks)
+  if (!title || !contentBlocks) {
     throw new Error('Sanity homepage data not found');
+  }
 
   return (
     <ContentWrapper>
