@@ -7,10 +7,48 @@ const ContentBlocks = defineType({
   type: 'array',
   of: [
     defineArrayMember({
+      name: 'heroBlock',
+      type: 'heroBlock'
+    }),
+    defineArrayMember({
       name: 'textBlock',
       type: 'textBlock'
     })
   ]
+});
+
+const HeroBlock = defineType({
+  name: 'heroBlock',
+  title: 'Hero Block',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string'
+    }),
+    defineField({
+      name: 'subtitle',
+      title: 'Subtitle',
+      type: 'string'
+    }),
+    // defineField({
+    //   name: 'cta',
+    //   title: 'Call to Action',
+    //   type: 'cta'
+    // }),
+    defineField({
+      name: 'backgroundImage',
+      title: 'Background Image',
+      type: 'richImage'
+    })
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'subtitle'
+    }
+  }
 });
 
 const TextBlock = defineType({
@@ -48,4 +86,4 @@ const TextBlock = defineType({
   }
 });
 
-export { ContentBlocks, TextBlock };
+export { ContentBlocks, HeroBlock, TextBlock };
