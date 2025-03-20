@@ -18,8 +18,8 @@ export const RichImage = defineType({
       type: 'string',
       description:
         '(ADA) A short description of the image. Should describe the visual contents of the image, i.e. "Medusa eating nachos", and not be used as cta-type text.',
-      validation: RuleTester =>
-        RuleTester.custom((value, context) => {
+      validation: Rule =>
+        Rule.custom((value, context) => {
           if (!context.parent?.asset && value) {
             return 'Cannot have alt text without an image';
           }
