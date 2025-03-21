@@ -1,3 +1,14 @@
+import { richImageFragment } from './richImage';
+
+const heroBlockFragment = `
+  _type,
+  title,
+  subtitle,
+  image{
+    ${richImageFragment}
+  }
+`;
+
 const textBlockFragment = `
   _type,
   title,
@@ -8,6 +19,9 @@ const textBlockFragment = `
 
 const contentBlocksFragment = `
   _key,
+  _type == "heroBlock" => {
+    ${heroBlockFragment}
+  },
   _type == "textBlock" => {
     ${textBlockFragment}
   }

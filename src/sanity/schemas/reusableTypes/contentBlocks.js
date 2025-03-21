@@ -38,8 +38,8 @@ const HeroBlock = defineType({
     //   type: 'cta'
     // }),
     defineField({
-      name: 'backgroundImage',
-      title: 'Background Image',
+      name: 'image',
+      title: 'Image',
       type: 'richImage'
     })
   ],

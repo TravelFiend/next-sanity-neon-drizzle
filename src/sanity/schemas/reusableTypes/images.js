@@ -8,7 +8,7 @@ export const RichImage = defineType({
   description: 'This asset is served from Cloudinary',
   fields: [
     defineField({
-      name: 'asset',
+      name: 'imageAsset',
       title: 'Image Asset',
       type: 'cloudinary.asset'
     }),
@@ -20,10 +20,10 @@ export const RichImage = defineType({
         '(ADA) A short description of the image. Should describe the visual contents of the image, i.e. "Medusa eating nachos", and not be used as cta-type text.',
       validation: Rule =>
         Rule.custom((value, context) => {
-          if (!context.parent?.asset && value) {
+          if (!context.parent?.imageAsset && value) {
             return 'Cannot have alt text without an image';
           }
-          if (context.parent?.asset && !value) {
+          if (context.parent?.imageAsset && !value) {
             return 'Required';
           }
           return true;
@@ -33,7 +33,7 @@ export const RichImage = defineType({
   preview: {
     select: {
       title: 'altText',
-      media: 'asset'
+      media: 'imageAsset'
     }
   }
 });
