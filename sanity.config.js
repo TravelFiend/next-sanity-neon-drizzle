@@ -2,6 +2,7 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure'; // needed to view studio at all
 import { visionTool } from '@sanity/vision';
 import { colorInput } from '@sanity/color-input';
+import { cloudinarySchemaPlugin } from 'sanity-plugin-cloudinary';
 import { inlineSvgInput } from '@focus-reactive/sanity-plugin-inline-svg-input';
 import schemaTypes from './src/sanity/schemas/index';
 import structure, {
@@ -26,7 +27,8 @@ const config = defineConfig([
       visionTool({
         defaultApiVersion: `v${process.env.NEXT_PUBLIC_SANITY_API_VERSION}`
       }),
-      inlineSvgInput()
+      inlineSvgInput(),
+      cloudinarySchemaPlugin()
     ],
     schema: { types: schemaTypes }
   },
@@ -46,7 +48,8 @@ const config = defineConfig([
       visionTool({
         defaultApiVersion: `v${process.env.NEXT_PUBLIC_SANITY_API_VERSION}`
       }),
-      inlineSvgInput()
+      inlineSvgInput(),
+      cloudinarySchemaPlugin()
     ],
     schema: { types: schemaTypes }
   }
