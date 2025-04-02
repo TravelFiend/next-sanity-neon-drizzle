@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Fragment, Suspense } from 'react';
 import MainHeader from '@/components/layout/mainHeader/MainHeader';
 import Footer from '@/components/layout/Footer';
 import { getSiteSettings } from '@/lib/actions/groqQueries/queries/siteSettings';
@@ -14,15 +14,14 @@ const siteLayout = async ({ children }) => {
   }
 
   return (
-    <>
-      <Suspense fallback={<div className="h-[280px]" />}>
+    <Fragment className="relative">
+      <Suspense fallback={<div className="h-72" />}>
         {mainNav ? <MainHeader navData={mainNav} /> : null}
       </Suspense>
-
       <main>{children}</main>
       <SanityLive />
       {footer ? <Footer footerData={footer} /> : null}
-    </>
+    </Fragment>
   );
 };
 

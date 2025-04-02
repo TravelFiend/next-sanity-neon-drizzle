@@ -22,8 +22,7 @@ const getHomepage = async () => {
 
     return homepageData;
   } catch (err) {
-    console.error(`Error fetching site-wide metadata: ${err}`);
-    return null;
+    throw new Error(`Error fetching homepage content: ${err}`);
   }
 };
 

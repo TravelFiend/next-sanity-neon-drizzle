@@ -1,4 +1,5 @@
 // https://www.sanity.io/plugins/sanity-plugin-cloudinary
+// TODO: only query needed properties
 const richImageFragment = `
   imageAsset{
     _type,

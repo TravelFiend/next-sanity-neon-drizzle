@@ -10,11 +10,16 @@ import {
   HeroBlock,
   TextBlock
 } from './reusableTypes/contentBlocks';
+import CTAButton from './reusableTypes/ctaButton';
 import { RichImage } from './reusableTypes/images';
 import Font from './reusableTypes/font';
 import { BasicLink, LinkWithIcon } from './reusableTypes/links';
 import SEO from './reusableTypes/seo';
-import TextAlign from './reusableTypes/textAlign';
+import {
+  ContentAlign,
+  HorizontalAlign,
+  VerticalAlign
+} from './reusableTypes/alignment';
 
 const schemaTypes = [
   // Document Types
@@ -34,14 +39,17 @@ const schemaTypes = [
 
   // Reusable Types
   BasicLink,
+  ContentAlign,
   ContentBlocks,
+  CTAButton,
   Font,
   HeroBlock,
+  HorizontalAlign,
   LinkWithIcon,
   RichImage,
   SecondLevelLinks,
-  TextAlign,
-  TextBlock
+  TextBlock,
+  VerticalAlign
 ];
 
 export default schemaTypes;

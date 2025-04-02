@@ -1,11 +1,26 @@
+import contentAlignFragment from './alignment';
+import CTAButtonFragment from './ctaButton';
 import { richImageFragment } from './richImage';
 
 const heroBlockFragment = `
   _type,
-  title,
-  subtitle,
   image{
     ${richImageFragment}
+  },
+  paddingX,
+  paddingY,
+  title,
+  subtitle,
+  ctaButton{
+    ${CTAButtonFragment}
+  },
+  textAlignment,
+  textBlockAlignment{
+    ${contentAlignFragment}
+  },
+  overlay{
+    coverage,
+    opacity
   }
 `;
 

@@ -47,7 +47,7 @@ const RootLayout = async ({ children }) => {
   return (
     <html lang="en">
       <body
-        className={`${rubik.variable} ${rubik.className} ${ebGaramond.variable} ${martianMono.variable}`}
+        className={`${rubik.variable} ${rubik.className} ${ebGaramond.variable} ${martianMono.variable} h-screen`}
       >
         {children}
       </body>
