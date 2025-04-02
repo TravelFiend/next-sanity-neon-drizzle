@@ -119,21 +119,10 @@ const HeroBlock = defineType({
           name: 'opacity',
           title: 'Opacity',
           type: 'number',
-          initialValue: 100,
           description: '0 = transparent, 100 = opaque',
-          list: [
-            { title: '0', value: 0 },
-            { title: '0.1', value: 10 },
-            { title: '0.2', value: 20 },
-            { title: '0.3', value: 30 },
-            { title: '0.4', value: 40 },
-            { title: '0.5', value: 50 },
-            { title: '0.6', value: 60 },
-            { title: '0.7', value: 70 },
-            { title: '0.8', value: 80 },
-            { title: '0.9', value: 90 },
-            { title: '1', value: 100 }
-          ]
+          options: {
+            list: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+          }
         })
       ]
     })
