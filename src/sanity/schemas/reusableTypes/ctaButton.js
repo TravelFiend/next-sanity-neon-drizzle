@@ -6,18 +6,13 @@ const CTAButton = defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'text',
-      title: 'CTAButton Text',
-      type: 'string'
-    }),
-    defineField({
       name: 'link',
       title: 'Link',
       type: 'basicLink'
     }),
     defineField({
       name: 'alignment',
-      title: 'Alignment',
+      title: 'Button Text Alignment',
       type: 'horizontalAlign'
     })
   ]
