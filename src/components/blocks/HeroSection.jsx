@@ -10,8 +10,21 @@ const HeroSection = ({ blockData, index }) => {
     // paddingX,
     // paddingY,
     // textAlignment,
-    // textBlockAlignment
+    // textBlockAlignment,
+    // overlay
   } = blockData;
+
+  // console.log({
+  //   image,
+  //   title,
+  //   subtitle,
+  //   ctaButton,
+  //   paddingX,
+  //   paddingY,
+  //   textAlignment,
+  //   textBlockAlignment,
+  //   overlay
+  // });
 
   const isFirst = index === 0;
 

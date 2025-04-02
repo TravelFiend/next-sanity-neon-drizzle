@@ -20,6 +20,7 @@ const heroBlockFragment = `
   },
   overlay{
     coverage,
+    color,
     opacity
   }
 `;
