@@ -14,14 +14,14 @@ const siteLayout = async ({ children }) => {
   }
 
   return (
-    <Fragment className="relative">
+    <>
       <Suspense fallback={<div className="h-72" />}>
         {mainNav ? <MainHeader navData={mainNav} /> : null}
       </Suspense>
       <main>{children}</main>
       <SanityLive />
       {footer ? <Footer footerData={footer} /> : null}
-    </Fragment>
+    </>
   );
 };
 
