@@ -1,5 +1,4 @@
 const CTAButtonFragment = `
-  text,
   link,
   alignment
 `;
