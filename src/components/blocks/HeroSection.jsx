@@ -33,17 +33,15 @@ const HeroSection = ({ blockData, index }) => {
       <section
         className={conditionalClasses(
           'z-0 w-full',
-          isFirst ? 'absolute -top-16 h-screen' : 'h-2/3'
+          isFirst ? 'absolute top-0 h-screen' : 'h-2/3'
         )}
       >
-        <div>
-          <Image
-            src={image?.imageAsset?.url}
-            fill
-            alt={image?.altText}
-            className="object-cover"
-          />
-        </div>
+        <Image
+          src={image?.imageAsset?.url}
+          fill
+          alt={image?.altText}
+          className="object-cover"
+        />
 
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center">
           <h1 className="text-4xl font-bold text-white">{title}</h1>

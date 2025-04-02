@@ -4,7 +4,7 @@ import HeroSection from './HeroSection';
 
 const ContentBlocks = ({ contentBlocks }) => {
   return (
-    <div className="relative">
+    <div className="">
       {contentBlocks.map((block, idx) => {
         const { _key, _type, ...blockData } = block;
 
