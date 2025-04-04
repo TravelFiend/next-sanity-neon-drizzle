@@ -1,4 +1,4 @@
-import ColorPreviewRadio from '@/sanity/studioUI/Colors';
+import ColorPreviewRadio from '../../studioUI/Colors';
 import { defineType } from 'sanity';
 
 const SiteColorsSelector = defineType({
