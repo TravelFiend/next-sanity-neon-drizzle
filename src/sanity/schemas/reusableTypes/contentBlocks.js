@@ -36,7 +36,9 @@ const HeroBlock = defineType({
     defineField({
       name: 'bgColor',
       title: 'Background Color',
-      type: 'siteColorsSelector'
+      type: 'siteColorsSelector',
+      description: 'Background color seen when hero is not full width',
+      hidden: ({ parent }) => parent?.isFullWidth
     }),
     defineField({
       name: 'title',
@@ -86,7 +88,9 @@ const HeroBlock = defineType({
         defineField({
           name: 'color',
           title: 'Overlay Color',
-          type: 'siteColorsSelector'
+          type: 'siteColorsSelector',
+          hidden: ({ parent }) =>
+            !parent.coverage || parent?.coverage === 'none'
         }),
         defineField({
           name: 'opacity',
@@ -95,7 +99,9 @@ const HeroBlock = defineType({
           description: '0 = transparent, 100 = opaque',
           options: {
             list: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-          }
+          },
+          hidden: ({ parent }) =>
+            !parent.coverage || parent?.coverage === 'none'
         })
       ]
     })
