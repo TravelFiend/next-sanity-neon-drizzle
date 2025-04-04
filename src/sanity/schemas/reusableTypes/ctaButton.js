@@ -11,9 +11,9 @@ const CTAButton = defineType({
       type: 'basicLink'
     }),
     defineField({
-      name: 'alignment',
-      title: 'Button Text Alignment',
-      type: 'horizontalAlign'
+      name: 'isDark',
+      title: 'Is Dark Button?',
+      type: 'boolean'
     })
   ]
 });

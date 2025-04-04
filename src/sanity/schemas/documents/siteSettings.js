@@ -38,18 +38,6 @@ export default defineType({
       group: 'footer'
     }),
     defineField({
-      name: 'lightThemeColors',
-      title: 'Light Theme Colors',
-      type: 'colors',
-      group: 'branding'
-    }),
-    defineField({
-      name: 'darkThemeColors',
-      title: 'Dark Theme Colors',
-      type: 'colors',
-      group: 'branding'
-    }),
-    defineField({
       name: 'seo',
       title: 'SEO',
       type: 'seo',

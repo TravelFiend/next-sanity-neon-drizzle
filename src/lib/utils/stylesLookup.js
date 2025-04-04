@@ -1,16 +1,41 @@
 // TODO: don't pass opacity in dynamically, use tailwindcss opacity classes instead
-const bgColorSelector = (color, opacity) => {
+const bgColorSelector = color => {
   switch (color) {
+    case 'white':
+      return 'bg-white';
     case 'primary':
-      return `bg-primary${opacity ? `/${opacity}` : ''}`;
+      return 'bg-primary';
     case 'secondary':
-      return `bg-secondary${opacity ? `/${opacity}` : ''}`;
+      return 'bg-secondary';
     case 'tertiary':
-      return `bg-tertiary${opacity ? `/${opacity}` : ''}`;
+      return 'bg-tertiary';
     case 'accent':
-      return `bg-accent${opacity ? `/${opacity}` : ''}`;
+      return 'bg-accent';
     case 'highlight':
-      return `bg-highlight${opacity ? `/${opacity}` : ''}`;
+      return 'bg-highlight';
+    case 'black':
+      return 'bg-black';
+    default:
+      return '';
+  }
+};
+
+const textColorSelector = color => {
+  switch (color) {
+    case 'white':
+      return 'text-white';
+    case 'primary':
+      return 'text-primary';
+    case 'secondary':
+      return 'text-secondary';
+    case 'tertiary':
+      return 'text-tertiary';
+    case 'accent':
+      return 'text-accent';
+    case 'highlight':
+      return 'text-highlight';
+    case 'black':
+      return 'text-black';
     default:
       return '';
   }
@@ -82,6 +107,7 @@ const setElementVerticalAlignment = tcb => {
 
 export {
   bgColorSelector,
+  textColorSelector,
   setOpacity,
   setTextAlignment,
   setElementHorizontalAlignment,

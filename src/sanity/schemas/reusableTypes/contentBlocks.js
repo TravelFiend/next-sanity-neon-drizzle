@@ -51,6 +51,22 @@ const HeroBlock = defineType({
       type: 'string'
     }),
     defineField({
+      name: 'textColor',
+      title: 'Text Color',
+      type: 'siteColorsSelector'
+    }),
+    defineField({
+      name: 'showTextShadow',
+      title: 'Show Text Shadow',
+      type: 'boolean'
+    }),
+    defineField({
+      name: 'textShadowColor',
+      title: 'Text Shadow Color',
+      type: 'siteColorsSelector',
+      hidden: ({ parent }) => !parent?.showTextShadow
+    }),
+    defineField({
       name: 'ctaButton',
       title: 'Call to Action Button',
       type: 'ctaButton'

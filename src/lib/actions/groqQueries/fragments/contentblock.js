@@ -11,6 +11,9 @@ const heroBlockFragment = `
   bgColor,
   title,
   subtitle,
+  textColor,
+  showTextShadow,
+  textShadowColor,
   ctaButton{
     ${CTAButtonFragment}
   },

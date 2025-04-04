@@ -5,9 +5,8 @@ import { getSiteSettings } from '@/lib/actions/groqQueries/queries/siteSettings'
 import { SanityLive } from '@/sanity/utils/live';
 
 const siteLayout = async ({ children }) => {
-  const {
-    data: { mainNav, footer }
-  } = await getSiteSettings();
+  const { data } = await getSiteSettings();
+  const { mainNav, footer } = data;
 
   if (!mainNav || !footer) {
     console.warn('Header and/or footer data is empty in Sanity');

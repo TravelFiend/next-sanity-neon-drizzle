@@ -2,7 +2,6 @@ import Homepage from './documents/homepage';
 import SiteSettings from './documents/siteSettings';
 import ParentProduct from './documents/parentProduct';
 import ProductVariant from './documents/productVariant';
-import { FontColors, ThemeColors, Colors } from './fields/globalColors';
 import Footer from './fields/footer';
 import { MainNav, NavTab, SecondLevelLinks } from './fields/mainNavigation';
 import SiteColorsSelector from './reusableTypes/colors';
@@ -30,13 +29,10 @@ const schemaTypes = [
   SiteSettings,
 
   // Fields
-  Colors,
-  FontColors,
   Footer,
   MainNav,
   NavTab,
   SEO,
-  ThemeColors,
 
   // Reusable Types
   BasicLink,

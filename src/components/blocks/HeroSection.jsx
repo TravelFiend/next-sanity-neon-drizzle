@@ -5,8 +5,12 @@ import {
   setOpacity,
   setTextAlignment,
   setElementHorizontalAlignment,
-  setElementVerticalAlignment
+  setElementVerticalAlignment,
+  textColorSelector
 } from '@/lib/utils/stylesLookup';
+import LinkButton from '../common/LinkButton';
+
+// TODO: implement Sanity text shadow and text shadow color selections on FE
 
 const HeroSection = ({ blockData, index }) => {
   const {
@@ -15,16 +19,14 @@ const HeroSection = ({ blockData, index }) => {
     bgColor,
     title,
     subtitle,
-    // ctaButton,
+    textColor,
+    // showTextShadow,
+    // textShadowColor,
+    ctaButton,
     textAlignment,
     textBlockAlignment,
     overlay
   } = blockData;
-
-  // console.log({
-  //   ctaButton,
-  //   overlay
-  // });
 
   const isFirst = index === 0;
 
@@ -52,7 +54,7 @@ const HeroSection = ({ blockData, index }) => {
             alt={image?.altText}
             className="object-cover"
           />
-          {overlay.coverage === 'fullImage' ? (
+          {overlay?.coverage === 'fullImage' ? (
             <div
               className={conditionalClasses(
                 'absolute z-10 h-full w-full',
@@ -73,8 +75,25 @@ const HeroSection = ({ blockData, index }) => {
               setTextAlignment(textAlignment)
             )}
           >
-            <h1 className="text-4xl font-bold text-white">{title}</h1>
-            <p className="text-2xl text-white">{subtitle}</p>
+            <h1
+              className={conditionalClasses(
+                'text-6xl font-bold',
+                textColor ? textColorSelector(textColor) : 'text-white'
+                // showTextShadow && 'text-shadow-md'
+              )}
+            >
+              {title}
+            </h1>
+            <p
+              className={conditionalClasses(
+                'text-2xl outline-black',
+                textColor ? textColorSelector(textColor) : 'text-white'
+                // showTextShadow && 'text-shadow'
+              )}
+            >
+              {subtitle}
+            </p>
+            {ctaButton ? <LinkButton linkData={ctaButton} /> : null}
           </div>
         </div>
       </section>
