@@ -86,7 +86,7 @@ const HeroBlock = defineType({
         defineField({
           name: 'color',
           title: 'Overlay Color',
-          type: 'color'
+          type: 'siteColorsSelector'
         }),
         defineField({
           name: 'opacity',

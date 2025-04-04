@@ -1,6 +1,12 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Image from 'next/image';
-import { colorSelector, setTextAlignment } from '@/lib/utils/stylesLookup';
+import {
+  bgColorSelector,
+  setOpacity,
+  setTextAlignment,
+  setElementHorizontalAlignment,
+  setElementVerticalAlignment
+} from '@/lib/utils/stylesLookup';
 
 const HeroSection = ({ blockData, index }) => {
   const {
@@ -10,20 +16,13 @@ const HeroSection = ({ blockData, index }) => {
     title,
     subtitle,
     // ctaButton,
-    textAlignment
-    // textBlockAlignment,
-    // overlay
+    textAlignment,
+    textBlockAlignment,
+    overlay
   } = blockData;
 
   // console.log({
-  //   image,
-  // isFullWidth,
-  // bgColor,
-  // title,
-  // subtitle,
   //   ctaButton,
-  // textAlignment
-  //   textBlockAlignment,
   //   overlay
   // });
 
@@ -37,20 +36,40 @@ const HeroSection = ({ blockData, index }) => {
           isFullWidth ? '' : 'p-20',
           isFirst ? 'absolute top-0 h-screen' : 'h-2/3',
           isFirst && isFullWidth ? '' : 'pt-28',
-          colorSelector(bgColor)
+          bgColorSelector(bgColor)
         )}
       >
-        <div className="relative h-full">
+        <div
+          className={conditionalClasses(
+            'relative flex h-full',
+            setElementHorizontalAlignment(textBlockAlignment.horizontalAlign),
+            setElementVerticalAlignment(textBlockAlignment.verticalAlign)
+          )}
+        >
           <Image
             src={image?.imageAsset?.url}
             fill
             alt={image?.altText}
             className="object-cover"
           />
+          {overlay.coverage === 'fullImage' ? (
+            <div
+              className={conditionalClasses(
+                'absolute z-10 h-full w-full',
+                overlay?.coverage === 'fullImage'
+                  ? `${bgColorSelector(overlay.color)} ${setOpacity(overlay.opacity)}`
+                  : ''
+              )}
+            />
+          ) : null}
 
           <div
             className={conditionalClasses(
-              'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform',
+              'absolute',
+              isFullWidth ? 'm-16 p-20' : 'm-6 p-14',
+              overlay?.coverage === 'textOnly'
+                ? `${bgColorSelector(overlay.color)} ${setOpacity(overlay.opacity)}`
+                : '',
               setTextAlignment(textAlignment)
             )}
           >
