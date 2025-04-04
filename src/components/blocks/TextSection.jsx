@@ -1,8 +1,17 @@
+import conditionalClasses from '@/lib/utils/conditionalClasses';
+
 const TextSection = ({ blockData }) => {
   const { title, subtitle, body, alignment } = blockData;
 
   return (
-    <section className={`w-full text-${alignment}`}>
+    <section
+      className={conditionalClasses(
+        'w-full py-10',
+        alignment === 'left' ? 'text-left' : '',
+        alignment === 'center' ? 'text-center' : '',
+        alignment === 'right' ? 'text-right' : ''
+      )}
+    >
       {title ? (
         <h2 className="font-serif text-2xl font-semibold">{title}</h2>
       ) : null}

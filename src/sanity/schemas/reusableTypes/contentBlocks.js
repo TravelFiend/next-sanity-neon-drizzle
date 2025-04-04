@@ -29,46 +29,14 @@ const HeroBlock = defineType({
       type: 'richImage'
     }),
     defineField({
-      name: 'paddingX',
-      title: 'Padding X',
-      type: 'string',
-      initialValue: '0',
-      options: {
-        list: [
-          { title: '0px', value: '0' },
-          { title: '12px', value: '3' },
-          { title: '20px', value: '5' },
-          { title: '32px', value: '8' },
-          { title: '40px', value: '10' },
-          { title: '48px', value: '12' },
-          { title: '56px', value: '14' },
-          { title: '64px', value: '16' },
-          { title: '72px', value: '18' },
-          { title: '80px', value: '20' }
-        ]
-      },
-      description: 'Left/right padding from edge of screen.'
+      name: 'isFullWidth',
+      title: 'Full Width Hero?',
+      type: 'boolean'
     }),
     defineField({
-      name: 'paddingY',
-      title: 'Padding Y',
-      type: 'string',
-      initialValue: '0',
-      options: {
-        list: [
-          { title: '0px', value: '0' },
-          { title: '12px', value: '3' },
-          { title: '20px', value: '5' },
-          { title: '32px', value: '8' },
-          { title: '40px', value: '10' },
-          { title: '48px', value: '12' },
-          { title: '56px', value: '14' },
-          { title: '64px', value: '16' },
-          { title: '72px', value: '18' },
-          { title: '80px', value: '20' }
-        ]
-      },
-      description: 'Top/bottom padding.'
+      name: 'bgColor',
+      title: 'Background Color',
+      type: 'siteColorsSelector'
     }),
     defineField({
       name: 'title',

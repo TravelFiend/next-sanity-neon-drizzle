@@ -7,8 +7,8 @@ const heroBlockFragment = `
   image{
     ${richImageFragment}
   },
-  paddingX,
-  paddingY,
+  isFullWidth,
+  bgColor,
   title,
   subtitle,
   ctaButton{

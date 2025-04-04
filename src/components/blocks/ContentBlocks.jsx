@@ -1,20 +1,15 @@
-import { Fragment } from 'react';
 import TextSection from './TextSection';
 import HeroSection from './HeroSection';
 
 const ContentBlocks = ({ contentBlocks }) => {
   return (
-    <div className="">
+    <>
       {contentBlocks.map((block, idx) => {
         const { _key, _type, ...blockData } = block;
 
         switch (_type) {
           case 'heroBlock':
-            return (
-              <Fragment key={_key}>
-                <HeroSection blockData={blockData} index={idx} />
-              </Fragment>
-            );
+            return <HeroSection key={_key} blockData={blockData} index={idx} />;
           case 'textBlock':
             return <TextSection key={_key} blockData={blockData} />;
           default:
@@ -22,7 +17,7 @@ const ContentBlocks = ({ contentBlocks }) => {
             return null;
         }
       })}
-    </div>
+    </>
   );
 };
 

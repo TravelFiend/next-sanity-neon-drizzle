@@ -16,12 +16,30 @@
     var(--tw-gradient-stops)
   );
 
-  --color-primary: #337462;
-  --color-secondary: #b33291;
+  /* Primary - Deep Purple */
+  --color-primary-light: #4a2a47;
+  --color-primary: #231123;
+  --color-primary-dark: #150a15;
 
-  --color-error: red;
-  --color-success: green;
-  --color-warning: yellow;
+  /* Secondary - Muted Green */
+  --color-secondary-light: #a8c998;
+  --color-secondary: #88ab75;
+  --color-secondary-dark: #668558;
+
+  /* Tertiary - Warm Peach/Orange */
+  --color-tertiary-light: #e8a992;
+  --color-tertiary: #de8f6e;
+  --color-tertiary-dark: #b87353;
+
+  /* Accent - Teal/Cyan */
+  --color-accent-light: #5ab1c7;
+  --color-accent: #2d93ad;
+  --color-accent-dark: #1f768a;
+
+  /* Highlight - Bright Yellow-Green */
+  --color-highlight: #edff86;
+  --color-error: #bf00ff;
+  --color-success: #4ecdc4;
   --color-info: #656565;
 }
 

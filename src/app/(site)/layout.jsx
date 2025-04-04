@@ -1,4 +1,4 @@
-import { Fragment, Suspense } from 'react';
+import { Suspense } from 'react';
 import MainHeader from '@/components/layout/mainHeader/MainHeader';
 import Footer from '@/components/layout/Footer';
 import { getSiteSettings } from '@/lib/actions/groqQueries/queries/siteSettings';
@@ -15,7 +15,7 @@ const siteLayout = async ({ children }) => {
 
   return (
     <>
-      <Suspense fallback={<div className="h-72" />}>
+      <Suspense fallback={<div className="h-12 sm:h-16" />}>
         {mainNav ? <MainHeader navData={mainNav} /> : null}
       </Suspense>
       <main>{children}</main>

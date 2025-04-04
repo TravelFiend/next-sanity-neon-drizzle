@@ -5,6 +5,7 @@ import ProductVariant from './documents/productVariant';
 import { FontColors, ThemeColors, Colors } from './fields/globalColors';
 import Footer from './fields/footer';
 import { MainNav, NavTab, SecondLevelLinks } from './fields/mainNavigation';
+import SiteColorsSelector from './reusableTypes/colors';
 import {
   ContentBlocks,
   HeroBlock,
@@ -48,6 +49,7 @@ const schemaTypes = [
   LinkWithIcon,
   RichImage,
   SecondLevelLinks,
+  SiteColorsSelector,
   TextBlock,
   VerticalAlign
 ];
