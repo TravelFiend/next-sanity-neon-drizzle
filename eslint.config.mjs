@@ -72,6 +72,7 @@ const eslintConfig = [
       'import/order': ['error', { groups: ['builtin'] }],
       'import/no-unresolved': 'error',
       'lines-around-comment': 0,
+      'multiline-ternary': 'off',
       'no-alert': 'error',
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-implicit-coercion': 0,
