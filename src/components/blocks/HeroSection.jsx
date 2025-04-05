@@ -99,7 +99,7 @@ const HeroSection = ({ blockData, index }) => {
           </div>
         </div>
       </section>
-      {isFirst ? <div className="h-screen" /> : null}
+      {isFirst ? <div className="-mt-12 h-screen sm:-mt-16" /> : null}
     </>
   );
 };
