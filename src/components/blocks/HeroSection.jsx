@@ -34,10 +34,10 @@ const HeroSection = ({ blockData, index }) => {
     <>
       <section
         className={conditionalClasses(
-          'z-0 m-auto w-full',
+          'z-0 m-auto h-screen w-full',
           isFullWidth ? '' : 'p-20',
-          isFirst ? 'absolute top-0 h-screen' : 'h-2/3',
-          isFirst && isFullWidth ? '' : 'pt-28',
+          isFirst ? 'absolute top-0' : 'h-[70vh]',
+          isFirst && !isFullWidth ? 'pt-28' : '',
           bgColorSelector(bgColor)
         )}
       >
@@ -69,15 +69,17 @@ const HeroSection = ({ blockData, index }) => {
             className={conditionalClasses(
               'absolute',
               isFullWidth ? 'm-16 p-20' : 'm-6 p-14',
-              overlay?.coverage === 'textOnly'
-                ? `${bgColorSelector(overlay.color)} ${setOpacity(overlay.opacity)}`
-                : '',
               setTextAlignment(textAlignment)
             )}
           >
+            {overlay?.coverage === 'textOnly' ? (
+              <div
+                className={`absolute bottom-0 left-0 h-full w-full ${bgColorSelector(overlay.color)} ${setOpacity(overlay.opacity)}`}
+              />
+            ) : null}
             <h1
               className={conditionalClasses(
-                'text-6xl font-bold',
+                'text-6xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]',
                 textColor ? textColorSelector(textColor) : 'text-white'
                 // showTextShadow && 'text-shadow-md'
               )}
@@ -86,7 +88,7 @@ const HeroSection = ({ blockData, index }) => {
             </h1>
             <p
               className={conditionalClasses(
-                'text-2xl outline-black',
+                'text-2xl text-shadow-lg',
                 textColor ? textColorSelector(textColor) : 'text-white'
                 // showTextShadow && 'text-shadow'
               )}

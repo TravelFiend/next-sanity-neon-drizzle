@@ -106,7 +106,7 @@ const HeroBlock = defineType({
           title: 'Overlay Color',
           type: 'siteColorsSelector',
           hidden: ({ parent }) =>
-            !parent.coverage || parent?.coverage === 'none'
+            !parent?.coverage || parent?.coverage === 'none'
         }),
         defineField({
           name: 'opacity',
@@ -117,7 +117,7 @@ const HeroBlock = defineType({
             list: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
           },
           hidden: ({ parent }) =>
-            !parent.coverage || parent?.coverage === 'none'
+            !parent?.coverage || parent?.coverage === 'none'
         })
       ]
     })
