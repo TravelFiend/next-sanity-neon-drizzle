@@ -59,6 +59,51 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+  .font-outline-primary-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-primary);
+  }
+  .font-outline-primary-md {
+    -webkit-text-stroke: 0.125rem var(--color-primary);
+  }
+  .font-outline-primary-lg {
+    -webkit-text-stroke: 0.25rem var(--color-primary);
+  }
+  .font-outline-secondary-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-secondary);
+  }
+  .text-outline-secondary-md {
+    -webkit-text-stroke: 0.125rem var(--color-secondary);
+  }
+  .font-outline-secondary-lg {
+    -webkit-text-stroke: 0.25rem var(--color-secondary);
+  }
+  .font-outline-tertiary-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-tertiary);
+  }
+  .font-outline-tertiary-md {
+    -webkit-text-stroke: 0.125rem var(--color-tertiary);
+  }
+  .font-outline-tertiary-lg {
+    -webkit-text-stroke: 0.25rem var(--color-tertiary);
+  }
+  .font-outline-accent-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-accent);
+  }
+  .font-outline-accent-md {
+    -webkit-text-stroke: 0.125rem var(--color-accent);
+  }
+  .font-outline-accent-lg {
+    -webkit-text-stroke: 0.25rem var(--color-accent);
+  }
+  .font-outline-highlight-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-highlight);
+  }
+  .font-outline-highlight-md {
+    -webkit-text-stroke: 0.125rem var(--color-highlight);
+  }
+  .font-outline-highlight-lg {
+    -webkit-text-stroke: 0.25rem var(--color-highlight);
+  }
 }
 
 @utility text-balance {

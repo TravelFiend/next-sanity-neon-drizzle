@@ -56,15 +56,28 @@ const HeroBlock = defineType({
       type: 'siteColorsSelector'
     }),
     defineField({
-      name: 'showTextShadow',
-      title: 'Show Text Shadow',
+      name: 'showTextOutline',
+      title: 'Show Text Outline',
       type: 'boolean'
     }),
     defineField({
-      name: 'textShadowColor',
-      title: 'Text Shadow Color',
+      name: 'textOutlineColor',
+      title: 'Text Outline Color',
       type: 'siteColorsSelector',
-      hidden: ({ parent }) => !parent?.showTextShadow
+      hidden: ({ parent }) => !parent?.showTextOutline
+    }),
+    defineField({
+      name: 'textOutlineSize',
+      title: 'Text Outline Width',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Small', value: 'sm' },
+          { title: 'Medium', value: 'md' },
+          { title: 'Large', value: 'lg' }
+        ]
+      },
+      hidden: ({ parent }) => !parent?.showTextOutline
     }),
     defineField({
       name: 'ctaButton',

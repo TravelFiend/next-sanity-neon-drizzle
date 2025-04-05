@@ -1,12 +1,13 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Image from 'next/image';
 import {
-  bgColorSelector,
+  setBgColor,
   setOpacity,
   setTextAlignment,
   setElementHorizontalAlignment,
   setElementVerticalAlignment,
-  textColorSelector
+  setTextColor,
+  setTextOutline
 } from '@/lib/utils/stylesLookup';
 import LinkButton from '../common/LinkButton';
 
@@ -20,8 +21,9 @@ const HeroSection = ({ blockData, index }) => {
     title,
     subtitle,
     textColor,
-    // showTextShadow,
-    // textShadowColor,
+    showTextOutline,
+    textOutlineColor,
+    textOutlineSize,
     ctaButton,
     textAlignment,
     textBlockAlignment,
@@ -38,7 +40,7 @@ const HeroSection = ({ blockData, index }) => {
           isFullWidth ? '' : 'p-20',
           isFirst ? 'absolute top-0' : 'h-[70vh]',
           isFirst && !isFullWidth ? 'pt-28' : '',
-          bgColorSelector(bgColor)
+          setBgColor(bgColor)
         )}
       >
         <div
@@ -59,7 +61,7 @@ const HeroSection = ({ blockData, index }) => {
               className={conditionalClasses(
                 'absolute z-10 h-full w-full',
                 overlay?.coverage === 'fullImage'
-                  ? `${bgColorSelector(overlay.color)} ${setOpacity(overlay.opacity)}`
+                  ? `${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`
                   : ''
               )}
             />
@@ -74,23 +76,24 @@ const HeroSection = ({ blockData, index }) => {
           >
             {overlay?.coverage === 'textOnly' ? (
               <div
-                className={`absolute bottom-0 left-0 h-full w-full ${bgColorSelector(overlay.color)} ${setOpacity(overlay.opacity)}`}
+                className={`absolute bottom-0 left-0 h-full w-full rounded-2xl ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`}
               />
             ) : null}
             <h1
               className={conditionalClasses(
-                'text-6xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]',
-                textColor ? textColorSelector(textColor) : 'text-white'
-                // showTextShadow && 'text-shadow-md'
+                'text-outline-secondary-md text-7xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]',
+                textColor ? setTextColor(textColor) : 'text-white',
+                showTextOutline &&
+                  setTextOutline(textOutlineColor, textOutlineSize)
               )}
             >
               {title}
             </h1>
             <p
               className={conditionalClasses(
-                'text-2xl text-shadow-lg',
-                textColor ? textColorSelector(textColor) : 'text-white'
-                // showTextShadow && 'text-shadow'
+                'font-outline-primary-xs text-2xl text-shadow-lg',
+                textColor ? setTextColor(textColor) : 'text-white',
+                showTextOutline && setTextOutline(textOutlineColor, 'sm')
               )}
             >
               {subtitle}

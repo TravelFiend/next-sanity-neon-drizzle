@@ -1,5 +1,5 @@
 // TODO: don't pass opacity in dynamically, use tailwindcss opacity classes instead
-const bgColorSelector = color => {
+const setBgColor = color => {
   switch (color) {
     case 'white':
       return 'bg-white';
@@ -20,7 +20,7 @@ const bgColorSelector = color => {
   }
 };
 
-const textColorSelector = color => {
+const setTextColor = color => {
   switch (color) {
     case 'white':
       return 'text-white';
@@ -38,6 +38,46 @@ const textColorSelector = color => {
       return 'text-black';
     default:
       return '';
+  }
+};
+
+const setTextOutline = (color, size) => {
+  if (size === 'lg') {
+    return color === 'primary'
+      ? 'font-outline-primary-lg'
+      : color === 'secondary'
+        ? 'font-outline-secondary-lg'
+        : color === 'tertiary'
+          ? 'font-outline-tertiary-lg'
+          : color === 'accent'
+            ? 'font-outline-accent-lg'
+            : color === 'highlight'
+              ? 'font-outline-highlight-lg'
+              : '';
+  } else if (size === 'md') {
+    return color === 'primary'
+      ? 'font-outline-primary-md'
+      : color === 'secondary'
+        ? 'font-outline-secondary-md'
+        : color === 'tertiary'
+          ? 'font-outline-tertiary-md'
+          : color === 'accent'
+            ? 'font-outline-accent-md'
+            : color === 'highlight'
+              ? 'font-outline-highlight-md'
+              : '';
+  } else {
+    return color === 'primary'
+      ? 'font-outline-primary-sm'
+      : color === 'secondary'
+        ? 'font-outline-secondary-sm'
+        : color === 'tertiary'
+          ? 'font-outline-tertiary-sm'
+          : color === 'accent'
+            ? 'font-outline-accent-sm'
+            : color === 'highlight'
+              ? 'font-outline-highlight-sm'
+              : '';
   }
 };
 
@@ -106,8 +146,9 @@ const setElementVerticalAlignment = tcb => {
 };
 
 export {
-  bgColorSelector,
-  textColorSelector,
+  setBgColor,
+  setTextColor,
+  setTextOutline,
   setOpacity,
   setTextAlignment,
   setElementHorizontalAlignment,
