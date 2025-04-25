@@ -1,6 +1,6 @@
 import './globals.css';
 import { Rubik, EB_Garamond, Martian_Mono } from 'next/font/google';
-import { getSitewideMetaData } from '@/lib/actions/groqQueries/siteSettings';
+import { getSitewideMetaData } from '@/lib/actions/groqQueries/queries/siteSettings';
 
 /* We're using google variable fonts here.  You can also use
   regular google fonts but you'll need a different setup for
