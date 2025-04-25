@@ -43,41 +43,44 @@ const setTextColor = color => {
 
 const setTextOutline = (color, size) => {
   if (size === 'lg') {
-    return color === 'primary'
-      ? 'font-outline-primary-lg'
-      : color === 'secondary'
-        ? 'font-outline-secondary-lg'
-        : color === 'tertiary'
-          ? 'font-outline-tertiary-lg'
-          : color === 'accent'
-            ? 'font-outline-accent-lg'
-            : color === 'highlight'
-              ? 'font-outline-highlight-lg'
-              : '';
+    switch (color) {
+      case 'primary':
+        return 'font-outline-primary-lg';
+      case 'secondary':
+        return 'font-outline-secondary-lg';
+      case 'tertiary':
+        return 'font-outline-tertiary-lg';
+      case 'accent':
+        return 'font-outline-accent-lg';
+      case 'highlight':
+        return 'font-outline-highlight-lg';
+    }
   } else if (size === 'md') {
-    return color === 'primary'
-      ? 'font-outline-primary-md'
-      : color === 'secondary'
-        ? 'font-outline-secondary-md'
-        : color === 'tertiary'
-          ? 'font-outline-tertiary-md'
-          : color === 'accent'
-            ? 'font-outline-accent-md'
-            : color === 'highlight'
-              ? 'font-outline-highlight-md'
-              : '';
+    switch (color) {
+      case 'primary':
+        return 'font-outline-primary-md';
+      case 'secondary':
+        return 'font-outline-secondary-md';
+      case 'tertiary':
+        return 'font-outline-tertiary-md';
+      case 'accent':
+        return 'font-outline-accent-md';
+      case 'highlight':
+        return 'font-outline-highlight-md';
+    }
   } else {
-    return color === 'primary'
-      ? 'font-outline-primary-sm'
-      : color === 'secondary'
-        ? 'font-outline-secondary-sm'
-        : color === 'tertiary'
-          ? 'font-outline-tertiary-sm'
-          : color === 'accent'
-            ? 'font-outline-accent-sm'
-            : color === 'highlight'
-              ? 'font-outline-highlight-sm'
-              : '';
+    switch (color) {
+      case 'primary':
+        return 'font-outline-primary-sm';
+      case 'secondary':
+        return 'font-outline-secondary-sm';
+      case 'tertiary':
+        return 'font-outline-tertiary-sm';
+      case 'accent':
+        return 'font-outline-accent-sm';
+      case 'highlight':
+        return 'font-outline-highlight-sm';
+    }
   }
 };
 
