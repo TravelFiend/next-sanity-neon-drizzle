@@ -20,6 +20,10 @@ const getHomepage = async () => {
       query: HOMEPAGE_QUERY
     });
 
+    if (!homepageData) {
+      throw new Error('Homepage data not found');
+    }
+
     return homepageData;
   } catch (err) {
     throw new Error(`Error fetching homepage content: ${err}`);
