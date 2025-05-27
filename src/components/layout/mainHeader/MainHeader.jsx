@@ -10,6 +10,7 @@ const MainHeader = ({ navData }) => {
         <div
           className="ml-6 flex size-12 items-center sm:size-16"
           dangerouslySetInnerHTML={{ __html: navData.companyLogo }}
+          aria-label="Company logo: Link to home page"
         />
       </Link>
 

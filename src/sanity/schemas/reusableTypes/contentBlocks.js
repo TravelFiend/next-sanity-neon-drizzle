@@ -13,6 +13,10 @@ const ContentBlocks = defineType({
     defineArrayMember({
       name: 'textBlock',
       type: 'textBlock'
+    }),
+    defineArrayMember({
+      name: 'carouselBlock',
+      type: 'carouselBlock'
     })
   ]
 });
@@ -185,4 +189,36 @@ const TextBlock = defineType({
   }
 });
 
-export { ContentBlocks, HeroBlock, TextBlock };
+const CarouselBlock = defineType({
+  name: 'carouselBlock',
+  title: 'Carousel Block',
+  type: 'object',
+  icon: ImageIcon,
+  fields: [
+    defineField({
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      of: [{ type: 'richImage' }]
+    }),
+    defineField({
+      name: 'direction',
+      title: 'Direction',
+      type: 'string',
+      initialValue: 'horizontal',
+      options: {
+        list: [
+          { title: 'Horizontal', value: 'horizontal' },
+          { title: 'Vertical', value: 'vertical' }
+        ]
+      }
+    })
+  ],
+  preview: {
+    select: {
+      title: 'title'
+    }
+  }
+});
+
+export { ContentBlocks, HeroBlock, TextBlock, CarouselBlock };
