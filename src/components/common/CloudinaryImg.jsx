@@ -2,28 +2,22 @@
 
 import { CldImage } from 'next-cloudinary';
 
-const CloudinaryImg = ({ src, alt, classes, priority, height, width }) => {
+const CloudinaryImg = ({
+  src,
+  alt,
+  classes = '',
+  priority = false,
+  height,
+  width
+}) => {
   return (
-    <>
-      {!height || !width ? (
-        <CldImage
-          src={src}
-          fill
-          alt={alt}
-          className={classes || ''}
-          priority={priority}
-        />
-      ) : (
-        <CldImage
-          src={src}
-          height={height}
-          width={width}
-          alt={alt}
-          className={classes || ''}
-          priority={priority}
-        />
-      )}
-    </>
+    <CldImage
+      src={src}
+      alt={alt}
+      className={classes}
+      priority={priority}
+      {...(height && width ? { height, width } : { fill: true })}
+    />
   );
 };
 
