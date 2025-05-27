@@ -53,16 +53,14 @@ const HeroSection = ({ blockData, index }) => {
           <CloudinaryImg
             src={image?.imageAsset?.public_id}
             alt={image?.altText}
-            classes="object-cover"
+            className="object-cover"
             priority={isFirst}
+            sizes="100vw"
           />
           {overlay?.coverage === 'fullImage' ? (
             <div
               className={conditionalClasses(
-                'absolute z-10 h-full w-full',
-                overlay?.coverage === 'fullImage'
-                  ? `${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`
-                  : ''
+                `absolute z-10 h-full w-full ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`
               )}
             />
           ) : null}

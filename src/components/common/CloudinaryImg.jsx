@@ -5,18 +5,19 @@ import { CldImage } from 'next-cloudinary';
 const CloudinaryImg = ({
   src,
   alt,
-  classes = '',
+  className = '',
   priority = false,
   height,
-  width
+  width,
+  sizes
 }) => {
   return (
     <CldImage
       src={src}
       alt={alt}
-      className={classes}
+      className={className}
       priority={priority}
-      {...(height && width ? { height, width } : { fill: true })}
+      {...(height && width ? { height, width } : { fill: true, sizes })}
     />
   );
 };
