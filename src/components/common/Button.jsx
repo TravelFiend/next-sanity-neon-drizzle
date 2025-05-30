@@ -1,6 +1,6 @@
-const Button = ({ label }) => {
+const Button = ({ label, onClick }) => {
   return (
-    <button type="submit" className="rounded-lg">
+    <button type="button" className="rounded-lg" onClick={onClick}>
       {label}
     </button>
   );

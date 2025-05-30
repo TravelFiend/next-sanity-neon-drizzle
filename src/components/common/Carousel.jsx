@@ -3,42 +3,97 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import useEmblaCarousel from 'embla-carousel-react';
 import CloudinaryImg from './CloudinaryImg';
-import { setSlideFlex, setSlideMargin } from '@/lib/utils/stylesLookup';
+import { useCallback, useEffect } from 'react';
+import CardRow from './CardRow';
 
 const Carousel = ({ slidesData, direction }) => {
-  const [emblaRef] = useEmblaCarousel({
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
-    active: slidesData.length > 4
+    active: true,
+    align: 'start',
+    axis: direction === 'vertical' ? 'y' : 'x'
   });
 
+  useEffect(() => {
+    if (emblaApi && slidesData.length > 4) {
+      emblaApi.reInit({
+        loop: true,
+        align: 'start',
+        axis: direction === 'vertical' ? 'y' : 'x'
+      });
+    }
+  }, [emblaApi, slidesData.length, direction]);
+
+  if (!slidesData || !Array.isArray(slidesData) || !slidesData.length) {
+    throw new Error('Invalid slidesData provided to Carousel component');
+  }
+
+  const handleKeyDown = useCallback(
+    event => {
+      event.preventDefault();
+      if (event.key === 'ArrowLeft') {
+        emblaApi?.scrollPrev();
+      } else if (event.key === 'ArrowRight') {
+        emblaApi?.scrollNext();
+      }
+    },
+    [emblaApi]
+  );
+
   return (
-    <div
-      ref={emblaRef}
-      className={conditionalClasses(
-        'flex h-full items-center justify-between overflow-hidden',
-        direction === 'vertical' ? 'flex-col' : 'w-full'
-      )}
-    >
-      <div className="flex h-full w-full">
-        {slidesData.map((slide, idx) => (
-          <div
-            key={idx}
-            className={conditionalClasses(
-              'relative h-full min-w-0',
-              setSlideMargin(slidesData.length),
-              setSlideFlex(slidesData.length)
-            )}
-          >
-            <CloudinaryImg
-              src={slide.imageAsset.public_id}
-              alt={slide.altText}
-              sizes={slidesData.length === 3 ? '33vw' : '25vw'}
-              className="h-full w-full object-cover"
-            />
+    <>
+      {slidesData.length > 4 ? (
+        <div
+          ref={emblaRef}
+          onKeyDown={handleKeyDown}
+          className={conditionalClasses(
+            'relative flex h-full items-center justify-between overflow-hidden',
+            direction === 'vertical' ? 'flex-col' : 'w-full'
+          )}
+          role="region"
+          aria-roledescription="carousel"
+          tabIndex={0}
+        >
+          <div className="flex h-full w-full">
+            {slidesData.map((slide, idx) => (
+              <div
+                key={slide.imageAsset.public_id || idx}
+                className="relative mr-[1%] ml-[1%] h-full flex-[0_0_26%]"
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`Slide ${idx + 1} of ${slidesData.length}: ${slide.altText}`}
+              >
+                <CloudinaryImg
+                  src={slide.imageAsset.public_id}
+                  alt={slide.altText}
+                  sizes="25vw"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+          <div className="absolute inset-0 z-10 flex items-center justify-between px-4">
+            {/* TODO: update to use a reusable button component? */}
+            <button
+              className="rounded-full bg-primary-dark p-2 shadow-md hover:bg-gray-200"
+              onClick={() => emblaApi.scrollPrev()}
+              aria-label="Previous slide"
+            >
+              Prev
+            </button>
+            <button
+              className="rounded-full bg-primary-dark p-2 shadow-md hover:bg-gray-200"
+              onClick={() => emblaApi.scrollNext()}
+              aria-label="Next slide"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      ) : (
+        <CardRow cards={slidesData} />
+      )}
+    </>
   );
 };
 

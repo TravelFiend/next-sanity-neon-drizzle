@@ -148,15 +148,6 @@ const setElementVerticalAlignment = tcb => {
   }
 };
 
-// Empbla carousel slide styles
-const setSlideFlex = count => {
-  return count === 3 ? 'flex-[0_0_32%]' : 'flex-[0_0_23%]';
-};
-
-const setSlideMargin = count => {
-  return count === 3 ? 'mr-[.6666%] ml-[.6666%]' : 'mr-[1%] ml-[1%]';
-};
-
 export {
   setBgColor,
   setTextColor,
@@ -164,7 +155,5 @@ export {
   setOpacity,
   setTextAlignment,
   setElementHorizontalAlignment,
-  setElementVerticalAlignment,
-  setSlideFlex,
-  setSlideMargin
+  setElementVerticalAlignment
 };
