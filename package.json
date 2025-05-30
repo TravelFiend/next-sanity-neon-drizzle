@@ -16,6 +16,7 @@
     "@focus-reactive/sanity-plugin-inline-svg-input": "^1.1.0",
     "@sanity/image-url": "^1.1.0",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.6.0",
     "next": "15.3.2",
     "next-cloudinary": "^6.16.0",
     "next-sanity": "^9.12.0",

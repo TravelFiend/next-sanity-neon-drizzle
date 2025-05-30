@@ -11,13 +11,18 @@ const CloudinaryImg = ({
   priority = false,
   height,
   width,
-  sizes
+  sizes = ''
 }) => {
+  if (!src) {
+    return null;
+  }
+
   return (
     <CldImage
       src={src}
       alt={alt}
       className={className}
+      sizes={sizes}
       priority={priority}
       {...(height && width ? { height, width } : { fill: true, sizes })}
     />

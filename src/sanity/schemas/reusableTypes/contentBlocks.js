@@ -189,6 +189,9 @@ const TextBlock = defineType({
   }
 });
 
+/* TODO: Update to array of references when we have artists/musicians schemas
+  https://www.sanity.io/docs/studio/array-type#r7awwxtw */
+
 const CarouselBlock = defineType({
   name: 'carouselBlock',
   title: 'Carousel Block',
@@ -199,7 +202,8 @@ const CarouselBlock = defineType({
       name: 'images',
       title: 'Images',
       type: 'array',
-      of: [{ type: 'richImage' }]
+      of: [{ type: 'richImage' }],
+      validation: Rule => Rule.required().min(3)
     }),
     defineField({
       name: 'direction',
