@@ -1,5 +1,5 @@
 import { defineLive } from 'next-sanity';
-import client from '../config/client-config';
+import client from '../client-config';
 
 /* TODO: Live Content API is still experimental and is likely to change
   we should use this selectively to keep our API usage down, only for

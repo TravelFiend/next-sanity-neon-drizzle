@@ -1,5 +1,6 @@
 import { defineType, defineField } from 'sanity';
 
+// TODO: Get rid of the title field if we don't need it
 const Homepage = defineType({
   name: 'homepage',
   title: 'Home Page',

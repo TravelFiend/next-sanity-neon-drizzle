@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react';
-import SubmitButton from '../SubmitButton';
+import Button from '../Button';
 
-describe('SubmitButton', () => {
+describe('Button', () => {
   it('should render a clickable button', async () => {
-    const { queryByText } = render(<SubmitButton label="Click Me" />);
+    const { queryByText } = render(<Button label="Click Me" />);
     expect(queryByText('Click Me')).toBeTruthy();
   });
 });

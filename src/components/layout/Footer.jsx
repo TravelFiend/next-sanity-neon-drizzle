@@ -37,14 +37,21 @@ const Footer = ({ footerData }) => {
 
           <ul className="flex justify-center">
             {socialLinks?.map(({ _key, icon, link }) => (
-              <a key={_key} href={link?.externalLink?.url}>
-                <li className="pr-5">
+              <li key={_key} className="pr-5">
+                <a
+                  href={link?.externalLink?.url}
+                  aria-label={
+                    link?.externalLink.linkText
+                      ? link?.externalLink.linkText
+                      : `Social media link: ${link.externalLink.url}`
+                  }
+                >
                   <div
                     className="size-10 sm:size-15"
                     dangerouslySetInnerHTML={{ __html: icon }}
                   />
-                </li>
-              </a>
+                </a>
+              </li>
             ))}
           </ul>
         </div>

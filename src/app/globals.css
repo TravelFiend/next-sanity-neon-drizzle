@@ -16,12 +16,30 @@
     var(--tw-gradient-stops)
   );
 
-  --color-primary: #337462;
-  --color-secondary: #b33291;
+  /* Primary - Deep Purple */
+  --color-primary-light: #4a2a47;
+  --color-primary: #231123;
+  --color-primary-dark: #150a15;
 
-  --color-error: red;
-  --color-success: green;
-  --color-warning: yellow;
+  /* Secondary - Muted Green */
+  --color-secondary-light: #a8c998;
+  --color-secondary: #88ab75;
+  --color-secondary-dark: #668558;
+
+  /* Tertiary - Warm Peach/Orange */
+  --color-tertiary-light: #e8a992;
+  --color-tertiary: #de8f6e;
+  --color-tertiary-dark: #b87353;
+
+  /* Accent - Teal/Cyan */
+  --color-accent-light: #5ab1c7;
+  --color-accent: #2d93ad;
+  --color-accent-dark: #1f768a;
+
+  /* Highlight - Bright Yellow-Green */
+  --color-highlight: #edff86;
+  --color-error: #bf00ff;
+  --color-success: #4ecdc4;
   --color-info: #656565;
 }
 
@@ -41,6 +59,51 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+  .font-outline-primary-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-primary);
+  }
+  .font-outline-primary-md {
+    -webkit-text-stroke: 0.125rem var(--color-primary);
+  }
+  .font-outline-primary-lg {
+    -webkit-text-stroke: 0.25rem var(--color-primary);
+  }
+  .font-outline-secondary-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-secondary);
+  }
+  .text-outline-secondary-md {
+    -webkit-text-stroke: 0.125rem var(--color-secondary);
+  }
+  .font-outline-secondary-lg {
+    -webkit-text-stroke: 0.25rem var(--color-secondary);
+  }
+  .font-outline-tertiary-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-tertiary);
+  }
+  .font-outline-tertiary-md {
+    -webkit-text-stroke: 0.125rem var(--color-tertiary);
+  }
+  .font-outline-tertiary-lg {
+    -webkit-text-stroke: 0.25rem var(--color-tertiary);
+  }
+  .font-outline-accent-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-accent);
+  }
+  .font-outline-accent-md {
+    -webkit-text-stroke: 0.125rem var(--color-accent);
+  }
+  .font-outline-accent-lg {
+    -webkit-text-stroke: 0.25rem var(--color-accent);
+  }
+  .font-outline-highlight-sm {
+    -webkit-text-stroke: 0.0625rem var(--color-highlight);
+  }
+  .font-outline-highlight-md {
+    -webkit-text-stroke: 0.125rem var(--color-highlight);
+  }
+  .font-outline-highlight-lg {
+    -webkit-text-stroke: 0.25rem var(--color-highlight);
+  }
 }
 
 @utility text-balance {
@@ -49,6 +112,15 @@
 
 @layer utilities {
   :root {
+    .text-shadow-sm {
+      text-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+    }
+    .text-shadow-md {
+      text-shadow: 0 1px 3px rgb(0 0 0 / 0.4);
+    }
+    .text-shadow-lg {
+      text-shadow: 0 2px 4px rgb(0 0 0 / 0.4);
+    }
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
     --background-end-rgb: 255, 255, 255;
@@ -70,5 +142,6 @@
         rgb(var(--background-end-rgb))
       )
       rgb(var(--background-start-rgb));
+    box-sizing: border-box;
   }
 }
