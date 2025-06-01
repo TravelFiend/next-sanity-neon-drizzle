@@ -5,6 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import CloudinaryImg from './CloudinaryImg';
 import { useCallback, useEffect } from 'react';
 import CardRow from './CardRow';
+import Button from './Button';
 
 const Carousel = ({ slidesData, direction }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -73,21 +74,18 @@ const Carousel = ({ slidesData, direction }) => {
             ))}
           </div>
           <div className="absolute inset-0 z-10 flex items-center justify-between px-4">
-            {/* TODO: update to use a reusable button component? */}
-            <button
-              className="rounded-full bg-primary-dark p-2 shadow-md hover:bg-gray-200"
+            <Button
+              className="rounded-full"
               onClick={() => emblaApi.scrollPrev()}
-              aria-label="Previous slide"
-            >
-              Prev
-            </button>
-            <button
-              className="rounded-full bg-primary-dark p-2 shadow-md hover:bg-gray-200"
+              label="Prev"
+              ariaLabel="Previous slide"
+            />
+            <Button
+              className="rounded-full"
               onClick={() => emblaApi.scrollNext()}
+              label="Next"
               aria-label="Next slide"
-            >
-              Next
-            </button>
+            />
           </div>
         </div>
       ) : (
