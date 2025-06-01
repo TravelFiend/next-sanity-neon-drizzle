@@ -19,13 +19,14 @@ const getHomepage = async () => {
       query: HOMEPAGE_QUERY
     });
 
-    if (!homepageData || !homepageData.data) {
-      throw new Error('Homepage data not found');
+    if (!homepageData?.data) {
+      return null;
     }
 
     return homepageData;
   } catch (err) {
-    throw new Error(`Error fetching homepage content: ${err}`);
+    console.error('Error fetching homepage content:', err);
+    return null;
   }
 };
 

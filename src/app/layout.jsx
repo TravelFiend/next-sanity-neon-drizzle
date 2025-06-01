@@ -45,7 +45,7 @@ export const generateMetadata = async () => {
 
 const RootLayout = async ({ children }) => {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <body
         className={`${rubik.variable} ${rubik.className} ${ebGaramond.variable} ${martianMono.variable}`}
       >
