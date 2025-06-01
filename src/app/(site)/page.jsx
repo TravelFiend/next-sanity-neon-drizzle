@@ -1,10 +1,20 @@
-// import Image from 'next/image';
+import { getHomepage } from '@/lib/actions/groqQueries/queries/homepage';
+import ContentWrapper from '@/components/common/ContentWrapper';
+import ContentBlocks from '@/components/blocks/ContentBlocks';
 
-const Home = () => {
+const Home = async () => {
+  const { data } = await getHomepage();
+  const { title, contentBlocks } = data;
+
+  if (!data) {
+    throw new Error('Sanity homepage data not found');
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div>Go Browns bitch ayoo madood</div>
-    </main>
+    <ContentWrapper>
+      <div className="py-10 text-3xl">{title}</div>
+      <ContentBlocks contentBlocks={contentBlocks} />
+    </ContentWrapper>
   );
 };
 

@@ -1,6 +1,6 @@
 import './globals.css';
 import { Rubik, EB_Garamond, Martian_Mono } from 'next/font/google';
-import client from '@/sanity/config/client-config';
+import { getSitewideMetaData } from '@/lib/actions/groqQueries/queries/siteSettings';
 
 /* We're using google variable fonts here.  You can also use
   regular google fonts but you'll need a different setup for
@@ -25,30 +25,29 @@ const martianMono = Martian_Mono({
   variable: '--font-martian'
 });
 
-export const metadata = {
-  title: 'E-Commerce-ism',
-  description: 'We doin thangs, Next + Sanity'
+/* docs here: https://nextjs.org/docs/app/api-reference/functions/generate-metadata
+  TODO: we should include as many fields as possible when ready */
+export const generateMetadata = async () => {
+  const {
+    data: { seo }
+  } = await getSitewideMetaData();
+
+  return {
+    title: {
+      template: `%s | ${seo.metaTitle}`,
+      default: seo.metaTitle
+    },
+    description: seo.metaDescription,
+    keywords: seo.metaKeywords,
+    generator: 'Next.js'
+  };
 };
 
 const RootLayout = async ({ children }) => {
-  const {
-    fonts: { headingFont }
-  } = await client.fetch(`*[_type == "siteSettings"][0]{
-    fonts {
-      headingFont
-    }
-  }`);
-
   return (
     <html lang="en">
       <body
-        className={` ${rubik.variable} ${ebGaramond.variable} ${martianMono.variable} ${
-          headingFont === 'sans-serif'
-            ? rubik.className
-            : headingFont === 'serif'
-              ? ebGaramond.className
-              : martianMono.className
-        } `}
+        className={`${rubik.variable} ${rubik.className} ${ebGaramond.variable} ${martianMono.variable}`}
       >
         {children}
       </body>

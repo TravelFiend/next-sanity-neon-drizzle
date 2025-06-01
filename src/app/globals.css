@@ -1,17 +1,28 @@
 @import 'tailwindcss';
 
+/* TODO: add font fallbacks */
 @theme inline {
   --font-sans: var(--font-rubik);
   --font-serif: var(--font-garamond);
   --font-mono: var(--font-martian);
 }
 
+/* Custom utility classes are defined here, here's the list:
+  https://tailwindcss.com/docs/theme#theme-variable-namespaces */
 @theme {
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
     from 180deg at 50% 50%,
     var(--tw-gradient-stops)
   );
+
+  --color-primary: #337462;
+  --color-secondary: #b33291;
+
+  --color-error: red;
+  --color-success: green;
+  --color-warning: yellow;
+  --color-info: #656565;
 }
 
 /*

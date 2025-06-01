@@ -38,29 +38,6 @@ export default defineType({
       group: 'footer'
     }),
     defineField({
-      name: 'fonts',
-      title: 'Fonts',
-      type: 'object',
-      group: 'branding',
-      fields: [
-        defineField({
-          name: 'headingFont',
-          title: 'Heading Font',
-          type: 'font'
-        }),
-        defineField({
-          name: 'bodyFont',
-          title: 'Body Font',
-          type: 'font'
-        }),
-        defineField({
-          name: 'captionFont',
-          title: 'Caption Font',
-          type: 'font'
-        })
-      ]
-    }),
-    defineField({
       name: 'lightThemeColors',
       title: 'Light Theme Colors',
       type: 'colors',
@@ -76,7 +53,14 @@ export default defineType({
       name: 'seo',
       title: 'SEO',
       type: 'seo',
-      group: 'seo'
+      group: 'seo',
+      validation: Rule => Rule.required()
     })
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'seo.metaTitle',
+      subtitle: 'seo.metaDescription'
+    }
+  }
 });
