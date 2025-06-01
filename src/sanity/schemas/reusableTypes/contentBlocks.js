@@ -220,7 +220,12 @@ const CarouselBlock = defineType({
   ],
   preview: {
     select: {
-      title: 'title'
+      title: 'direction'
+    },
+    prepare({ title }) {
+      return {
+        title: `Carousel Block - ${title.charAt(0).toUpperCase() + title.slice(1)}`
+      };
     }
   }
 });
