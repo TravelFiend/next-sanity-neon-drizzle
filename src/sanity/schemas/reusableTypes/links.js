@@ -5,7 +5,10 @@ const linkFields = [
   defineField({
     name: 'linkText',
     title: 'Link Text',
-    type: 'string'
+    type: 'string',
+    description:
+      'Either the text to be displayed for a link, or the accessible label for an icon link. This is required for both internal and external links.',
+    validation: Rule => Rule.required()
   })
 ];
 

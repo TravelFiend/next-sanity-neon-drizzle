@@ -23,6 +23,7 @@ const eslintConfig = [
       '**/dist',
       '**/coverage',
       '**/.env*',
+      '**/.sanity',
       '**/README.md'
     ]
   },

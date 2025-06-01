@@ -37,6 +37,14 @@ const textBlockFragment = `
   alignment
 `;
 
+const carouselBlockFragment = `
+  _type,
+  images[]{
+    ${richImageFragment}
+  },
+  direction
+`;
+
 const contentBlocksFragment = `
   _key,
   _type == "heroBlock" => {
@@ -44,7 +52,10 @@ const contentBlocksFragment = `
   },
   _type == "textBlock" => {
     ${textBlockFragment}
+  },
+  _type == "carouselBlock" => {
+    ${carouselBlockFragment}
   }
 `;
 
-export { textBlockFragment, contentBlocksFragment };
+export default contentBlocksFragment;

@@ -40,8 +40,9 @@ This Project is setup to auto deploy on merge to `main` branch and generate a pr
 
 - __NEXT_PUBLIC_SANITY_API_VERSION__ *the current date of setting up your project*
 - __NEXT_PUBLIC_SANITY_DATASET__ *set in the Sanity dashboard, usually someting like "development".  In vercel, set 2 of the same name, one for production, and one for pre-production environments*
-- __SANITY_API_DEPLOY_TOKEN__  *set in the Sanity dashboard, under "API -> Tokens"*
 - __NEXT_PUBLIC_SANITY_PROJECT_ID__ *Found at the top of the Sanity dashboard inside your project*
+- __SANITY_API_DEPLOY_TOKEN__  *set in the Sanity dashboard, under "API -> Tokens"*
+- __NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME__ *found in the top-left of the Cloudinary dashboard after logging in*
 
 ### Be sure to set secrets in your Github repo (settings -> Secrets and Variables -> Actions):
 

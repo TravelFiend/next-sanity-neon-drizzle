@@ -1,4 +1,3 @@
-// TODO: don't pass opacity in dynamically, use tailwindcss opacity classes instead
 const setBgColor = color => {
   switch (color) {
     case 'white':
@@ -84,6 +83,7 @@ const setTextOutline = (color, size) => {
   }
 };
 
+// TODO: don't pass opacity in dynamically, use tailwindcss opacity classes instead
 const setOpacity = opacity => {
   switch (opacity) {
     case 10:

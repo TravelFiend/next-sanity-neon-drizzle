@@ -44,7 +44,8 @@ const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
       icon,
       link{
         externalLink{
-          url
+          url,
+          linkText
         }
       }
     },

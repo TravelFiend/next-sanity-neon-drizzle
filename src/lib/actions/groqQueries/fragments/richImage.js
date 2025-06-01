@@ -17,7 +17,8 @@ const richImageFragment = `
     duration,
     tags,
     created_at,
-    access_mode
+    access_mode,
+    ...
   },
   altText
 `;

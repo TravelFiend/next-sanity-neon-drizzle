@@ -1,5 +1,4 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import Image from 'next/image';
 import {
   setBgColor,
   setOpacity,
@@ -10,6 +9,7 @@ import {
   setTextOutline
 } from '@/lib/utils/stylesLookup';
 import LinkButton from '../common/LinkButton';
+import CloudinaryImg from '../common/CloudinaryImg';
 
 // TODO: implement Sanity text shadow and text shadow color selections on FE
 
@@ -50,19 +50,17 @@ const HeroSection = ({ blockData, index }) => {
             setElementVerticalAlignment(textBlockAlignment.verticalAlign)
           )}
         >
-          <Image
-            src={image?.imageAsset?.url}
-            fill
+          <CloudinaryImg
+            src={image?.imageAsset?.public_id}
             alt={image?.altText}
             className="object-cover"
+            priority={isFirst}
+            sizes="100vw"
           />
           {overlay?.coverage === 'fullImage' ? (
             <div
               className={conditionalClasses(
-                'absolute z-10 h-full w-full',
-                overlay?.coverage === 'fullImage'
-                  ? `${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`
-                  : ''
+                `absolute z-10 h-full w-full ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`
               )}
             />
           ) : null}

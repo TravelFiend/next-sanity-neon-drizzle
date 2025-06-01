@@ -13,6 +13,10 @@ const ContentBlocks = defineType({
     defineArrayMember({
       name: 'textBlock',
       type: 'textBlock'
+    }),
+    defineArrayMember({
+      name: 'carouselBlock',
+      type: 'carouselBlock'
     })
   ]
 });
@@ -185,4 +189,45 @@ const TextBlock = defineType({
   }
 });
 
-export { ContentBlocks, HeroBlock, TextBlock };
+/* TODO: Update to array of references when we have artists/musicians schemas
+  https://www.sanity.io/docs/studio/array-type#r7awwxtw */
+
+const CarouselBlock = defineType({
+  name: 'carouselBlock',
+  title: 'Carousel Block',
+  type: 'object',
+  icon: ImageIcon,
+  fields: [
+    defineField({
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      of: [{ type: 'richImage' }],
+      validation: Rule => Rule.required().min(3)
+    }),
+    defineField({
+      name: 'direction',
+      title: 'Direction',
+      type: 'string',
+      initialValue: 'horizontal',
+      options: {
+        list: [
+          { title: 'Horizontal', value: 'horizontal' },
+          { title: 'Vertical', value: 'vertical' }
+        ]
+      }
+    })
+  ],
+  preview: {
+    select: {
+      title: 'direction'
+    },
+    prepare({ title }) {
+      return {
+        title: `Carousel Block - ${title.charAt(0).toUpperCase() + title.slice(1)}`
+      };
+    }
+  }
+});
+
+export { ContentBlocks, HeroBlock, TextBlock, CarouselBlock };

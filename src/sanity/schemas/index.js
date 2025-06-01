@@ -6,6 +6,7 @@ import Footer from './fields/footer';
 import { MainNav, NavTab, SecondLevelLinks } from './fields/mainNavigation';
 import SiteColorsSelector from './reusableTypes/colors';
 import {
+  CarouselBlock,
   ContentBlocks,
   HeroBlock,
   TextBlock
@@ -36,6 +37,7 @@ const schemaTypes = [
 
   // Reusable Types
   BasicLink,
+  CarouselBlock,
   ContentAlign,
   ContentBlocks,
   CTAButton,
