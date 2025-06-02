@@ -19,6 +19,15 @@ const Nav = ({ linkData }) => {
     setAreChildLinksOpen(false);
   }, [pathName]);
 
+  const handleBurgerClick = () => {
+    if (areLinksOpen) {
+      setAreLinksOpen(false);
+      setAreChildLinksOpen(false);
+    } else {
+      setAreLinksOpen(true);
+    }
+  };
+
   const handleMainLinkClick = evt => {
     const theKids = linkData.filter(
       singleLinkData =>
@@ -64,7 +73,7 @@ const Nav = ({ linkData }) => {
     <nav className="block h-full bg-cyan-600">
       <div
         className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
-        onClick={() => setAreLinksOpen(!areLinksOpen)}
+        onClick={handleBurgerClick}
       >
         {[...Array(3)].map((_, index) => (
           <div
