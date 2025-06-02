@@ -19,11 +19,6 @@ const Nav = ({ linkData }) => {
     setAreChildLinksOpen(false);
   }, [pathName]);
 
-  const handleHamburgerClick = () => {
-    setAreLinksOpen(!areLinksOpen);
-    setAreChildLinksOpen(false);
-  };
-
   const handleMainLinkClick = evt => {
     const theKids = linkData.filter(
       singleLinkData =>
@@ -68,16 +63,21 @@ const Nav = ({ linkData }) => {
   return (
     <nav className="block h-full bg-cyan-600">
       <div
-        className="flex h-full cursor-pointer items-center px-5 sm:hidden"
-        onClick={handleHamburgerClick}
+        className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
+        onClick={() => setAreLinksOpen(!areLinksOpen)}
       >
-        <span>X</span>
+        {[...Array(3)].map((_, index) => (
+          <div
+            key={index}
+            className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
+          />
+        ))}
       </div>
 
       <ul
         className={conditionalClasses(
-          'absolute left-1/6 flex w-5/6 translate-x-full flex-col justify-center bg-lime-900 sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center sm:transition-none',
-          areLinksOpen ? '-translate-x-0 transition-transform' : ''
+          'absolute left-1/6 flex w-5/6 translate-x-full flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
+          areLinksOpen ? '-translate-x-0' : ''
         )}
       >
         {mainLinks}

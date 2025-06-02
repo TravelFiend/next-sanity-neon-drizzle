@@ -68,7 +68,7 @@ const eslintConfig = [
       'consistent-return': 0,
       'consistent-this': ['error', 'that'],
       'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
-      'id-length': ['error', { min: 3, exceptions: ['S', 'of', 'to', 'js', 'e'] }],
+      'id-length': ['error', { min: 3, exceptions: ['S', 'of', 'to', 'js', 'e', '_'] }],
       'import/no-anonymous-default-export': 'error',
       'import/order': ['error', { groups: ['builtin'] }],
       'import/no-unresolved': 'error',
