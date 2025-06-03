@@ -17,6 +17,10 @@ const ContentBlocks = defineType({
     defineArrayMember({
       name: 'carouselBlock',
       type: 'carouselBlock'
+    }),
+    defineArrayMember({
+      name: 'imageTextBlock',
+      type: 'imageTextBlock'
     })
   ]
 });
