@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
-import { ImageIcon, TextIcon } from '@sanity/icons';
+import { ImageIcon, TextIcon, PanelLeftIcon } from '@sanity/icons';
 
 const ContentBlocks = defineType({
   name: 'contentBlocks',
@@ -189,6 +189,55 @@ const TextBlock = defineType({
   }
 });
 
+const ImageTextBlock = defineType({
+  name: 'imageTextBlock',
+  title: 'Image/Text Block',
+  type: 'object',
+  icon: PanelLeftIcon,
+  fields: [
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'richImage'
+    }),
+    defineField({
+      name: 'text',
+      title: 'Text',
+      type: 'textBlock'
+    }),
+    defineField({
+      name: 'imageAlignment',
+      title: 'Image Alignment',
+      type: 'string',
+      description:
+        'Aligns the image to the left or to the right within the block',
+      initialValue: 'left',
+      options: {
+        list: [
+          { title: 'Left', value: 'left' },
+          { title: 'Right', value: 'right' }
+        ],
+        layout: 'radio',
+        direction: 'horizontal'
+      }
+    })
+  ],
+  preview: {
+    select: {
+      title: 'text.title',
+      subtitle: 'text.subtitle',
+      image: 'image'
+    },
+    prepare({ title, subtitle, image }) {
+      return {
+        title: title || 'Untitled Image/Text Block',
+        subtitle: subtitle || 'No subtitle provided',
+        media: image
+      };
+    }
+  }
+});
+
 /* TODO: Update to array of references when we have artists/musicians schemas
   https://www.sanity.io/docs/studio/array-type#r7awwxtw */
 
@@ -230,4 +279,4 @@ const CarouselBlock = defineType({
   }
 });
 
-export { ContentBlocks, HeroBlock, TextBlock, CarouselBlock };
+export { ContentBlocks, HeroBlock, TextBlock, ImageTextBlock, CarouselBlock };
