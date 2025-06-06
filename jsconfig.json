@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@groq/*": ["./src/lib/actions/groqQueries/*"]
+      "@/*": ["src/*"],
+      "@groq/*": ["./src/lib/actions/groqQueries/*"],
+      "@assets/*": ["public/assets/*"]
     }
-  }
+  },
+  "exclude": ["node_modules", ".next", "dist"]
 }

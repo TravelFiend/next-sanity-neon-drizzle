@@ -22,7 +22,6 @@ const CloudinaryImg = ({
       src={src}
       alt={alt}
       className={className}
-      sizes={sizes}
       priority={priority}
       {...(height && width ? { height, width } : { fill: true, sizes })}
     />

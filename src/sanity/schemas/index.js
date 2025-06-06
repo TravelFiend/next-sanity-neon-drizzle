@@ -9,6 +9,7 @@ import {
   CarouselBlock,
   ContentBlocks,
   HeroBlock,
+  ImageTextBlock,
   TextBlock
 } from './reusableTypes/contentBlocks';
 import CTAButton from './reusableTypes/ctaButton';
@@ -44,6 +45,7 @@ const schemaTypes = [
   Font,
   HeroBlock,
   HorizontalAlign,
+  ImageTextBlock,
   LinkWithIcon,
   RichImage,
   SecondLevelLinks,

@@ -1,6 +1,7 @@
 import TextSection from './TextSection';
 import HeroSection from './HeroSection';
 import CarouselSection from './CarouselSection';
+import ImageTextSection from './ImageTextSection';
 
 const ContentBlocks = ({ contentBlocks }) => {
   return (
@@ -15,6 +16,8 @@ const ContentBlocks = ({ contentBlocks }) => {
             return <TextSection key={_key} blockData={blockData} />;
           case 'carouselBlock':
             return <CarouselSection key={_key} blockData={blockData} />;
+          case 'imageTextBlock':
+            return <ImageTextSection key={_key} blockData={blockData} />;
           default:
             console.error(`${_type} is not a valid content block type`);
             return null;

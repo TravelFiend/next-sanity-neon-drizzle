@@ -58,7 +58,7 @@ const Carousel = ({ slidesData, direction }) => {
           <div className="flex h-full w-full">
             {slidesData.map((slide, idx) => (
               <div
-                key={slide.imageAsset.public_id || idx}
+                key={slide.imageAsset._key}
                 className="relative mr-[1%] ml-[1%] h-full flex-[0_0_26%]"
                 role="group"
                 aria-roledescription="slide"

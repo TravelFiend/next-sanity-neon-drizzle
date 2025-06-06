@@ -11,6 +11,7 @@ jobs:
 
     env:
       SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_PROD }}
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
 
     steps:
       - name: Checkout Repository
@@ -30,6 +31,6 @@ jobs:
         run: bun install
 
       - name: Deploy Sanity Studio
-        run: yes y | bun run sanity deploy
+        run: bun run sanity deploy --non-interactive
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}

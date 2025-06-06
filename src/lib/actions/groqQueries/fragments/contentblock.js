@@ -37,6 +37,17 @@ const textBlockFragment = `
   alignment
 `;
 
+const imageTextBlockFragment = `
+  _type,
+  image{
+    ${richImageFragment}
+  },
+  text{
+    ${textBlockFragment}
+  },
+  imageAlignment
+`;
+
 const carouselBlockFragment = `
   _type,
   images[]{
@@ -52,6 +63,9 @@ const contentBlocksFragment = `
   },
   _type == "textBlock" => {
     ${textBlockFragment}
+  },
+  _type == "imageTextBlock" => {
+    ${imageTextBlockFragment}
   },
   _type == "carouselBlock" => {
     ${carouselBlockFragment}
