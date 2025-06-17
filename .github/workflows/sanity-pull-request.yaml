@@ -17,6 +17,9 @@ jobs:
       SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - uses: ./.github/actions/setup-sanity
 
       - name: Deploy Sanity Schema
@@ -33,6 +36,9 @@ jobs:
       SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - uses: ./.github/actions/setup-sanity
 
       - name: Deploy Sanity Studio
