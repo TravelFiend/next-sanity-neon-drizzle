@@ -1,4 +1,4 @@
-name: Deploy Sanity (mjm-fe-dev.sanity.studio) on PR
+name: mjm-fe-dev.sanity.studio
 
 on:
   pull_request:

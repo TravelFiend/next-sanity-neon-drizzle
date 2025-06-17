@@ -1,4 +1,4 @@
-name: Deploy Sanity (mjm-llc.sanity.studio) on Push to Main
+name: mjm-llc.sanity.studio
 
 on:
   push:
