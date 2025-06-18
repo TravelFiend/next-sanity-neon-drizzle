@@ -6,7 +6,8 @@ const Home = async () => {
   if (!homepage) {
     throw new Error('Homepage data not found');
   }
-  const { contentBlocks } = homepage.data;
+
+  const { contentBlocks } = homepage;
 
   return <ContentBlocks contentBlocks={contentBlocks} />;
 };

@@ -16,8 +16,7 @@
     "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"],
-      "@groq/*": ["./src/lib/actions/groqQueries/*"],
-      "@sanityTypes/*": ["./src/types/sanity/*"]
+      "@groq/*": ["./src/lib/actions/groqQueries/*"]
     },
     "plugins": [
       {

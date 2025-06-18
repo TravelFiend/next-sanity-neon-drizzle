@@ -1,17 +1,19 @@
 'use server';
 
-import { defineQuery } from 'next-sanity';
+import { defineQuery, groq } from 'next-sanity';
 import { sanityFetch } from '@/sanity/utils/live';
 import contentBlocksFragment from '../fragments/contentblock';
 import seoFragment from '../fragments/seo';
 
-const HOMEPAGE_QUERY = defineQuery(`*[_type == "homepage"][0]{
+const RAW_HOMEPAGE_QUERY = groq`*[_type == "homepage"][0]{
   _type,
   contentBlocks[]{
     ${contentBlocksFragment}
   },
   ${seoFragment}
-}`);
+}`;
+
+const HOMEPAGE_QUERY = defineQuery(RAW_HOMEPAGE_QUERY);
 
 const getHomepage = async () => {
   try {
