@@ -255,7 +255,7 @@ const CarouselBlock = defineType({
       name: 'images',
       title: 'Images',
       type: 'array',
-      of: [{ type: 'richImage' }],
+      of: [defineArrayMember({ type: 'richImage' })],
       validation: Rule => Rule.required().min(3)
     }),
     defineField({

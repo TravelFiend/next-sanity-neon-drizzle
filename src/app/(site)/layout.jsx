@@ -12,6 +12,7 @@ const siteLayout = async ({ children }) => {
     console.warn('Header and/or footer data is empty in Sanity');
   }
 
+  // TODO: Move the <SanityLive /> component only on pages that need live content updates
   return (
     <>
       <Suspense fallback={<div className="h-12 sm:h-16" />}>

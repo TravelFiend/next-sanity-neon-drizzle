@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity';
+import { defineType, defineField, defineArrayMember } from 'sanity';
 
 export default defineType({
   name: 'seo',
@@ -19,7 +19,7 @@ export default defineType({
       name: 'metaKeywords',
       title: 'Meta Keywords',
       type: 'array',
-      of: [{ type: 'string' }]
+      of: [defineArrayMember({ type: 'string' })]
     })
   ]
 });

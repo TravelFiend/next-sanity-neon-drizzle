@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 const nestedLinksPreview = nestedLinks => {
   const allChildren = nestedLinks?.map(nestedLink => {
@@ -30,7 +30,7 @@ const SecondLevelLinks = defineType({
       name: 'thirdLevelLinks',
       title: 'Third Level Links',
       type: 'array',
-      of: [{ type: 'basicLink' }]
+      of: [defineArrayMember({ type: 'basicLink' })]
     })
   ],
   preview: {
@@ -90,7 +90,7 @@ const NavTab = defineType({
       name: 'secondLevelLinks',
       title: 'Second Level Links',
       type: 'array',
-      of: [{ type: 'secondLevelLinks' }],
+      of: [defineArrayMember({ type: 'secondLevelLinks' })],
       validation: Rule =>
         Rule.custom(secondLevelLinks => {
           if (!isUniqueWithinArray(secondLevelLinks)) {
@@ -138,7 +138,7 @@ const MainNav = defineField({
       name: 'navTabs',
       title: 'Navigation Tabs',
       type: 'array',
-      of: [{ type: 'navTab' }]
+      of: [defineArrayMember({ type: 'navTab' })]
     })
   ]
 });

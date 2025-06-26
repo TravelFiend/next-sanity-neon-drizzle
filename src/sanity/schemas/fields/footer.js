@@ -1,4 +1,4 @@
-import { defineField } from 'sanity';
+import { defineArrayMember, defineField } from 'sanity';
 
 const GROUPS = [
   {
@@ -21,21 +21,21 @@ export default defineField({
       name: 'legalLinks',
       title: 'Legal Links',
       type: 'array',
-      of: [{ type: 'basicLink' }],
+      of: [defineArrayMember({ type: 'basicLink' })],
       group: 'textLinks'
     }),
     defineField({
       name: 'siteLinks',
       title: 'Site Links',
       type: 'array',
-      of: [{ type: 'basicLink' }],
+      of: [defineArrayMember({ type: 'basicLink' })],
       group: 'textLinks'
     }),
     defineField({
       name: 'socialLinks',
       title: 'Social Links',
       type: 'array',
-      of: [{ type: 'linkWithIcon' }],
+      of: [defineArrayMember({ type: 'linkWithIcon' })],
       group: 'iconLinks'
     }),
     defineField({
