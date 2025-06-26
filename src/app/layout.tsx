@@ -26,17 +26,26 @@ const martianMono = Martian_Mono({
 });
 
 /* docs here: https://nextjs.org/docs/app/api-reference/functions/generate-metadata
-  TODO: we should include as many fields as possible when ready */
+  TODO: we should include as many fields as possible when ready and update default values */
 export const generateMetadata = async () => {
-  const { seo } = await getSitewideMetaData();
+  const metadata = await getSitewideMetaData();
+  if (!metadata)
+    return {
+      title: 'MJM LLC or whatever our company name will be',
+      description: 'Cool stuff for art and music lovers',
+      keywords: ['Art', 'Music', 'Posters'],
+      generator: 'Next.js'
+    };
+
+  const { seo } = metadata;
 
   return {
     title: {
-      template: `%s | ${seo.metaTitle}`,
-      default: seo.metaTitle
+      template: `%s | ${seo?.metaTitle}`,
+      default: seo?.metaTitle
     },
-    description: seo.metaDescription,
-    keywords: seo.metaKeywords,
+    description: seo?.metaDescription,
+    keywords: seo?.metaKeywords,
     generator: 'Next.js'
   };
 };

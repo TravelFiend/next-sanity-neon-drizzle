@@ -6,6 +6,8 @@ import { SanityLive } from '@/sanity/utils/live';
 
 const siteLayout = async ({ children }: { children: React.ReactNode }) => {
   const siteSettingsData = await getSiteSettings();
+  if (!siteSettingsData) return null;
+
   const { mainNav, footer } = siteSettingsData;
 
   if (!mainNav || !footer) {
