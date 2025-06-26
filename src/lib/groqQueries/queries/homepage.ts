@@ -1,5 +1,3 @@
-'use server';
-
 import { defineQuery } from 'next-sanity';
 import contentBlocksFragment from '../fragments/contentblock';
 import seoFragment from '../fragments/seo';
@@ -15,15 +13,15 @@ const HOMEPAGE_QUERY = defineQuery(`*[_type == "homepage"][0]{
 
 const getHomepage = async () => {
   try {
-    const { data: homepageData } = await sanityFetch({
+    const { data } = await sanityFetch({
       query: HOMEPAGE_QUERY
     });
 
-    if (!homepageData?._type) {
+    if (!data?._type) {
       return null;
     }
 
-    return homepageData;
+    return data;
   } catch (err) {
     console.error('Error fetching homepage content:', err);
     return null;

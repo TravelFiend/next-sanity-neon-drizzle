@@ -1,5 +1,3 @@
-'use server';
-
 import { defineQuery } from 'next-sanity';
 import { sanityFetch } from '@/sanity/utils/live';
 
@@ -55,11 +53,11 @@ const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
 
 const getSiteSettings = async () => {
   try {
-    const siteSettings = await sanityFetch({
+    const { data } = await sanityFetch({
       query: SITE_SETTINGS_QUERY
     });
 
-    return siteSettings;
+    return data;
   } catch (err) {
     console.error(`Error fetching site settings: ${err}`);
     return null;
@@ -76,13 +74,13 @@ const SITEWIDE_METADATA_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
 
 const getSitewideMetaData = async () => {
   try {
-    const sitewideMetadataData = await sanityFetch({
+    const { data } = await sanityFetch({
       query: SITEWIDE_METADATA_QUERY,
       // Metadata should never contain stega
       stega: false
     });
 
-    return sitewideMetadataData;
+    return data;
   } catch (err) {
     console.error(`Error fetching site-wide metadata: ${err}`);
     return null;

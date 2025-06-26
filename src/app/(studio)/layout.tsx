@@ -3,7 +3,7 @@ export const metadata = {
   description: 'We doin thangs, Next + Sanity'
 };
 
-const studioLayout = ({ children }) => {
+const studioLayout = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
