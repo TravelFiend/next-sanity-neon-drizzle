@@ -1,8 +1,10 @@
-export const getDefaultDocumentNode = S => {
+import type { StructureBuilder, StructureResolver } from 'sanity/structure';
+
+export const getDefaultDocumentNode = (S: StructureBuilder) => {
   return S.document().views([]);
 };
 
-const structure = S =>
+const structure: StructureResolver = S =>
   S.list()
     .title('MJM Admin')
     .items([
@@ -44,7 +46,7 @@ const structure = S =>
             'siteSettings',
             'parentProduct',
             'productVariant'
-          ].includes(listItem.getId())
+          ].includes(listItem.getId()!)
       )
     ]);
 
