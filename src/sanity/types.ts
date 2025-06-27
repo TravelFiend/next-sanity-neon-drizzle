@@ -26,7 +26,7 @@ export type SiteColorsSelector =
 
 export type SecondLevelLinks = {
   _type: 'secondLevelLinks';
-  secondLevelLink?: BasicLink;
+  secondLevelLink: BasicLink;
   thirdLevelLinks?: Array<
     {
       _key: string;
@@ -36,8 +36,8 @@ export type SecondLevelLinks = {
 
 export type LinkWithIcon = {
   _type: 'linkWithIcon';
-  icon?: string;
-  link?: BasicLink;
+  icon: string;
+  link: BasicLink;
 };
 
 export type ImageTextBlock = {
@@ -115,7 +115,7 @@ export type ContentAlign = {
 
 export type CarouselBlock = {
   _type: 'carouselBlock';
-  images?: Array<
+  images: Array<
     {
       _key: string;
     } & RichImage
@@ -136,12 +136,12 @@ export type NavTab = {
 export type BasicLink = {
   _type: 'basicLink';
   internalLink?: {
-    linkText?: string;
-    slug?: Slug;
+    linkText: string;
+    slug: Slug;
   };
   externalLink?: {
-    linkText?: string;
-    url?: string;
+    linkText: string;
+    url: string;
   };
 };
 
@@ -153,7 +153,7 @@ export type SiteSettings = {
   _rev: string;
   mainNav?: MainNav;
   footer?: Footer;
-  seo?: Seo;
+  seo: Seo;
 };
 
 export type Footer = {
@@ -215,10 +215,10 @@ export type ParentProduct = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  sku?: number;
-  productTitle?: string;
-  productSlug?: Slug;
-  price?: number;
+  sku: number;
+  productTitle: string;
+  productSlug: Slug;
+  price: number;
   productImage?: {
     asset?: {
       _ref: string;
@@ -442,7 +442,7 @@ export type Geopoint = {
 
 export type Slug = {
   _type: 'slug';
-  current?: string;
+  current: string;
   source?: string;
 };
 
@@ -521,7 +521,7 @@ export type HOMEPAGE_QUERYResult = {
             tags: Array<string> | null;
           } | null;
           altText: string | null;
-        }> | null;
+        }>;
         direction: 'horizontal' | 'vertical' | null;
       }
     | {
@@ -554,15 +554,15 @@ export type HOMEPAGE_QUERYResult = {
           link: {
             internalLink: {
               _type: null;
-              linkText: string | null;
+              linkText: string;
               slug: {
-                current: string | null;
-              } | null;
+                current: string;
+              };
             } | null;
             externalLink: {
               _type: null;
-              linkText: string | null;
-              url: string | null;
+              linkText: string;
+              url: string;
             } | null;
           } | null;
           isDark: boolean | null;
@@ -629,23 +629,23 @@ export type SITE_SETTINGS_QUERYResult = {
       _key: string;
       link: {
         internalLink: {
-          linkText: string | null;
-          slug: Slug | null;
+          linkText: string;
+          slug: Slug;
         } | null;
       } | null;
       secondLevelLinks: Array<{
         _key: string;
         secondLevelLink: {
           internalLink: {
-            linkText: string | null;
-            slug: Slug | null;
+            linkText: string;
+            slug: Slug;
           } | null;
-        } | null;
+        };
         thirdLevelLinks: Array<{
           _key: string;
           internalLink: {
-            linkText: string | null;
-            slug: Slug | null;
+            linkText: string;
+            slug: Slug;
           } | null;
         }> | null;
       }> | null;
@@ -655,26 +655,26 @@ export type SITE_SETTINGS_QUERYResult = {
     legalLinks: Array<{
       _key: string;
       internalLink: {
-        linkText: string | null;
-        slug: Slug | null;
+        linkText: string;
+        slug: Slug;
       } | null;
     }> | null;
     siteLinks: Array<{
       _key: string;
       internalLink: {
-        linkText: string | null;
-        slug: Slug | null;
+        linkText: string;
+        slug: Slug;
       } | null;
     }> | null;
     socialLinks: Array<{
       _key: string;
-      icon: string | null;
+      icon: string;
       link: {
         externalLink: {
-          url: string | null;
-          linkText: string | null;
+          url: string;
+          linkText: string;
         } | null;
-      } | null;
+      };
     }> | null;
     copyrightText: string | null;
   } | null;
@@ -686,7 +686,7 @@ export type SITEWIDE_METADATA_QUERYResult = {
     metaTitle: string | null;
     metaDescription: string | null;
     metaKeywords: Array<string> | null;
-  } | null;
+  };
 } | null;
 
 // Query TypeMap

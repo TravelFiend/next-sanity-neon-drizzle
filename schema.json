@@ -76,7 +76,7 @@
             "type": "inline",
             "name": "basicLink"
           },
-          "optional": true
+          "optional": false
         },
         "thirdLevelLinks": {
           "type": "objectAttribute",
@@ -121,7 +121,7 @@
           "value": {
             "type": "string"
           },
-          "optional": true
+          "optional": false
         },
         "link": {
           "type": "objectAttribute",
@@ -129,7 +129,7 @@
             "type": "inline",
             "name": "basicLink"
           },
-          "optional": true
+          "optional": false
         }
       }
     }
@@ -720,7 +720,7 @@
               }
             }
           },
-          "optional": true
+          "optional": false
         },
         "direction": {
           "type": "objectAttribute",
@@ -811,7 +811,7 @@
                 "value": {
                   "type": "string"
                 },
-                "optional": true
+                "optional": false
               },
               "slug": {
                 "type": "objectAttribute",
@@ -819,7 +819,7 @@
                   "type": "inline",
                   "name": "slug"
                 },
-                "optional": true
+                "optional": false
               }
             }
           },
@@ -835,14 +835,14 @@
                 "value": {
                   "type": "string"
                 },
-                "optional": true
+                "optional": false
               },
               "url": {
                 "type": "objectAttribute",
                 "value": {
                   "type": "string"
                 },
-                "optional": true
+                "optional": false
               }
             }
           },
@@ -908,7 +908,7 @@
           "type": "inline",
           "name": "seo"
         },
-        "optional": true
+        "optional": false
       }
     }
   },
@@ -1214,14 +1214,14 @@
         "value": {
           "type": "number"
         },
-        "optional": true
+        "optional": false
       },
       "productTitle": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
-        "optional": true
+        "optional": false
       },
       "productSlug": {
         "type": "objectAttribute",
@@ -1229,14 +1229,14 @@
           "type": "inline",
           "name": "slug"
         },
-        "optional": true
+        "optional": false
       },
       "price": {
         "type": "objectAttribute",
         "value": {
           "type": "number"
         },
-        "optional": true
+        "optional": false
       },
       "productImage": {
         "type": "objectAttribute",
@@ -2528,7 +2528,7 @@
           "value": {
             "type": "string"
           },
-          "optional": true
+          "optional": false
         },
         "source": {
           "type": "objectAttribute",

@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import type { BasicLink, Footer } from '@/sanity/types';
 
-const Footer = ({ footerData }) => {
+const Footer = ({ footerData }: { footerData: Footer }) => {
   if (!footerData) return null;
 
   const { copyrightText, siteLinks, legalLinks, socialLinks } = footerData;
 
-  const generateLinks = linkSection => {
+  const generateLinks = (linkSection: Array<{ _key: string } & BasicLink>) => {
     return linkSection?.map(({ _key, internalLink, externalLink }) => (
       <li key={_key}>
         {internalLink ? (
@@ -13,7 +14,7 @@ const Footer = ({ footerData }) => {
             {internalLink.linkText}
           </Link>
         ) : (
-          <a href={`/${externalLink.url}`}>{externalLink.linkText}</a>
+          <a href={`/${externalLink?.url}`}>{externalLink?.linkText}</a>
         )}
       </li>
     ));
@@ -23,13 +24,17 @@ const Footer = ({ footerData }) => {
     <footer className="bottom-0 w-screen text-center">
       <div className="flex flex-col items-center">
         <div className="justify flex w-full justify-around border-b-2 border-b-blue-400 sm:justify-end">
-          <ul className="flex flex-col pr-0 sm:pr-14">
-            {generateLinks(siteLinks)}
-          </ul>
+          {siteLinks ? (
+            <ul className="flex flex-col pr-0 sm:pr-14">
+              {generateLinks(siteLinks)}
+            </ul>
+          ) : null}
 
-          <ul className="flex flex-col pr-0 sm:pr-14">
-            {generateLinks(legalLinks)}
-          </ul>
+          {legalLinks ? (
+            <ul className="flex flex-col pr-0 sm:pr-14">
+              {generateLinks(legalLinks)}
+            </ul>
+          ) : null}
         </div>
 
         <div className="flex w-full flex-col-reverse items-center justify-between px-10 py-7 sm:flex-row">
@@ -41,9 +46,9 @@ const Footer = ({ footerData }) => {
                 <a
                   href={link?.externalLink?.url}
                   aria-label={
-                    link?.externalLink.linkText
+                    link?.externalLink?.linkText
                       ? link?.externalLink.linkText
-                      : `Social media link: ${link.externalLink.url}`
+                      : `Social media link: ${link.externalLink?.url}`
                   }
                 >
                   <div
