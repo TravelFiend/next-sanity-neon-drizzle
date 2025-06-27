@@ -18,13 +18,15 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    ignores: [
-      '**/node_modules',
-      '**/dist',
-      '**/coverage',
+    files: ['**/*.{js,ts,jsx,tsx}'],
+    excludedFiles: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/coverage/**',
       '**/.env*',
-      '**/.sanity',
-      '**/README.md'
+      '**/.sanity/**',
+      '**/README.md',
+      '**/src/sanity/types.ts'
     ]
   },
   ...studio,
