@@ -1,8 +1,13 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import TextBox from './TextBox';
 import CloudinaryImg from '../common/CloudinaryImg';
+import type { ImageTextBlock } from '@/sanity/types';
 
-const ImageTextBlock = ({ blockData }) => {
+type ImageTextBlockProps = {
+  blockData: ImageTextBlock;
+};
+
+const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ blockData }) => {
   const { image, imageAlignment, text } = blockData;
 
   return (
@@ -14,8 +19,8 @@ const ImageTextBlock = ({ blockData }) => {
     >
       <div className="relative h-auto w-1/2">
         <CloudinaryImg
-          src={image?.imageAsset?.public_id}
-          alt={image?.altText}
+          src={image.imageAsset.public_id!}
+          alt={image.altText!}
           className="h-auto object-cover"
           priority
           sizes="50vw"

@@ -153,7 +153,7 @@
             "type": "inline",
             "name": "richImage"
           },
-          "optional": true
+          "optional": false
         },
         "text": {
           "type": "objectAttribute",
@@ -161,7 +161,7 @@
             "type": "inline",
             "name": "textBlock"
           },
-          "optional": true
+          "optional": false
         },
         "imageAlignment": {
           "type": "objectAttribute",

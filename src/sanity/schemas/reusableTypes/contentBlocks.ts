@@ -203,12 +203,14 @@ const ImageTextBlock = defineType({
     defineField({
       name: 'image',
       title: 'Image',
-      type: 'richImage'
+      type: 'richImage',
+      validation: Rule => Rule.required()
     }),
     defineField({
       name: 'text',
       title: 'Text',
-      type: 'textBlock'
+      type: 'textBlock',
+      validation: Rule => Rule.required()
     }),
     defineField({
       name: 'imageAlignment',
