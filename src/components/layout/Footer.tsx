@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import type { BasicLink, Footer } from '@/sanity/types';
 
-const Footer = ({ footerData }: { footerData: Footer }) => {
+type FooterProps = {
+  footerData: Footer;
+};
+
+const Footer: React.FC<FooterProps> = ({ footerData }) => {
   if (!footerData) return null;
 
   const { copyrightText, siteLinks, legalLinks, socialLinks } = footerData;
