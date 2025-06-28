@@ -6,6 +6,10 @@ type SiteColors =
   | 'accent'
   | 'highlight'
   | 'black';
+type Opacity = 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
+type OutlineSize = 'sm' | 'md' | 'lg';
+type HorizontalAlignment = 'left' | 'center' | 'right';
+type VerticalAlignment = 'top' | 'center' | 'bottom';
 
 const bgColorClasses: Record<SiteColors, string> = {
   white: 'bg-white',
@@ -34,8 +38,6 @@ const textColorClasses: Record<SiteColors, string> = {
 const setTextColor = (color?: SiteColors): string => {
   return textColorClasses[color ?? 'white'];
 };
-
-type OutlineSize = 'sm' | 'md' | 'lg';
 
 const textOutlineClasses: Record<OutlineSize, Record<SiteColors, string>> = {
   sm: {
@@ -72,8 +74,6 @@ const setTextOutline = (color: SiteColors, size: OutlineSize): string => {
 };
 
 // TODO: don't pass opacity in dynamically, use tailwindcss opacity classes instead
-type Opacity = 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
-
 const opacityClasses: Record<Opacity, string> = {
   10: 'opacity-10',
   20: 'opacity-20',
@@ -90,8 +90,6 @@ const opacityClasses: Record<Opacity, string> = {
 const setOpacity = (opacity?: Opacity): string => {
   return opacityClasses[opacity ?? 100];
 };
-
-type HorizontalAlignment = 'left' | 'center' | 'right';
 
 const textAlignClasses: Record<HorizontalAlignment, string> = {
   left: 'text-left',
@@ -112,8 +110,6 @@ const JustifyClasses: Record<HorizontalAlignment, string> = {
 const setElementHorizontalAlignment = (lrc?: HorizontalAlignment): string => {
   return JustifyClasses[lrc ?? 'left'];
 };
-
-type VerticalAlignment = 'top' | 'center' | 'bottom';
 
 const VerticalAlignClasses: Record<VerticalAlignment, string> = {
   top: 'items-start',
