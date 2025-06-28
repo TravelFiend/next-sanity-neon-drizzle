@@ -1,6 +1,18 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 
-const Button = ({ onClick, label, ariaLabel, className }) => {
+type ButtonProps = {
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  label: string;
+  ariaLabel: string;
+  className: string;
+};
+
+const Button: React.FC<ButtonProps> = ({
+  onClick,
+  label,
+  ariaLabel,
+  className
+}) => {
   return (
     <button
       className={conditionalClasses(
