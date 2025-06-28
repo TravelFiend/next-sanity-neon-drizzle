@@ -59,15 +59,19 @@ const carouselBlockFragment = `
 const contentBlocksFragment = `
   _key,
   _type == "heroBlock" => {
+    _type,
     ${heroBlockFragment}
   },
   _type == "textBlock" => {
+    _type,
     ${textBlockFragment}
   },
   _type == "imageTextBlock" => {
+    _type,
     ${imageTextBlockFragment}
   },
   _type == "carouselBlock" => {
+    _type,
     ${carouselBlockFragment}
   }
 `;
