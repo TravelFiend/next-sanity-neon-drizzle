@@ -29,6 +29,7 @@ const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
     }
   },
   footer{
+    _type,
     legalLinks[]{
       _key,
       ${internalLinkFragment}
