@@ -4,6 +4,7 @@ const HorizontalAlign = defineField({
   name: 'horizontalAlign',
   title: 'Horizontal Align',
   type: 'string',
+  initialValue: 'left',
   options: {
     list: [
       { title: 'Left', value: 'left' },

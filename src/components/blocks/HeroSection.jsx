@@ -30,6 +30,8 @@ const HeroSection = ({ blockData, index }) => {
     overlay
   } = blockData;
 
+  if (!blockData) return null;
+
   const isFirst = index === 0;
 
   return (
@@ -80,7 +82,7 @@ const HeroSection = ({ blockData, index }) => {
             <h1
               className={conditionalClasses(
                 'text-outline-secondary-md text-7xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]',
-                textColor ? setTextColor(textColor) : 'text-white',
+                setTextColor(textColor),
                 showTextOutline &&
                   setTextOutline(textOutlineColor, textOutlineSize)
               )}
@@ -90,7 +92,7 @@ const HeroSection = ({ blockData, index }) => {
             <p
               className={conditionalClasses(
                 'font-outline-primary-xs text-2xl text-shadow-lg',
-                textColor ? setTextColor(textColor) : 'text-white',
+                setTextColor(textColor),
                 showTextOutline && setTextOutline(textOutlineColor, 'sm')
               )}
             >
