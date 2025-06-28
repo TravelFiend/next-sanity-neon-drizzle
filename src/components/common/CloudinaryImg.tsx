@@ -4,7 +4,17 @@ import { CldImage } from 'next-cloudinary';
 
 // TODO: Add more CldImage props as needed: https://next.cloudinary.dev/cldimage/configuration
 
-const CloudinaryImg = ({
+type CloudinaryImgProps = {
+  src: string;
+  alt: string;
+  className?: string;
+  priority?: boolean;
+  height?: number;
+  width?: number;
+  sizes?: string;
+};
+
+const CloudinaryImg: React.FC<CloudinaryImgProps> = ({
   src,
   alt,
   className = '',

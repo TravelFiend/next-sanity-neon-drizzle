@@ -59,7 +59,7 @@ export type HorizontalAlign = 'left' | 'center' | 'right';
 
 export type HeroBlock = {
   _type: 'heroBlock';
-  image?: RichImage;
+  image: RichImage;
   isFullWidth?: boolean;
   bgColor?: SiteColorsSelector;
   title?: string;
@@ -80,7 +80,7 @@ export type HeroBlock = {
 
 export type RichImage = {
   _type: 'richImage';
-  imageAsset?: CloudinaryAsset;
+  imageAsset: CloudinaryAsset;
   altText?: string;
 };
 
@@ -519,7 +519,7 @@ export type HOMEPAGE_QUERYResult = {
             height: number | null;
             duration: number | null;
             tags: Array<string> | null;
-          } | null;
+          };
           altText: string | null;
         }>;
         direction: 'horizontal' | 'vertical' | null;
@@ -539,9 +539,9 @@ export type HOMEPAGE_QUERYResult = {
             height: number | null;
             duration: number | null;
             tags: Array<string> | null;
-          } | null;
+          };
           altText: string | null;
-        } | null;
+        };
         isFullWidth: boolean | null;
         bgColor: SiteColorsSelector | null;
         title: string | null;
@@ -593,7 +593,7 @@ export type HOMEPAGE_QUERYResult = {
             height: number | null;
             duration: number | null;
             tags: Array<string> | null;
-          } | null;
+          };
           altText: string | null;
         } | null;
         text: {

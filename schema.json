@@ -281,7 +281,7 @@
             "type": "inline",
             "name": "richImage"
           },
-          "optional": true
+          "optional": false
         },
         "isFullWidth": {
           "type": "objectAttribute",
@@ -493,7 +493,7 @@
             "type": "inline",
             "name": "cloudinary.asset"
           },
-          "optional": true
+          "optional": false
         },
         "altText": {
           "type": "objectAttribute",

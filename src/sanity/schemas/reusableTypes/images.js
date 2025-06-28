@@ -10,7 +10,8 @@ export const RichImage = defineType({
     defineField({
       name: 'imageAsset',
       title: 'Image Asset',
-      type: 'cloudinary.asset'
+      type: 'cloudinary.asset',
+      validation: Rule => Rule.required()
     }),
     defineField({
       name: 'altText',
@@ -24,7 +25,7 @@ export const RichImage = defineType({
             return 'Cannot have alt text without an image';
           }
           if (context.parent?.imageAsset && !value) {
-            return 'Required';
+            return Rule.required();
           }
           return true;
         })

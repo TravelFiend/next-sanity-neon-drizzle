@@ -34,7 +34,8 @@ const HeroBlock = defineType({
     defineField({
       name: 'image',
       title: 'Image',
-      type: 'richImage'
+      type: 'richImage',
+      validation: Rule => Rule.required()
     }),
     defineField({
       name: 'isFullWidth',

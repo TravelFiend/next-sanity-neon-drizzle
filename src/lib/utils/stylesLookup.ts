@@ -1,17 +1,13 @@
-type SiteColors =
-  | 'white'
-  | 'primary'
-  | 'secondary'
-  | 'tertiary'
-  | 'accent'
-  | 'highlight'
-  | 'black';
-type Opacity = 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
-type OutlineSize = 'sm' | 'md' | 'lg';
-type HorizontalAlignment = 'left' | 'center' | 'right';
-type VerticalAlignment = 'top' | 'center' | 'bottom';
+import {
+  HorizontalAlign,
+  SiteColorsSelector,
+  VerticalAlign
+} from '@/sanity/types';
 
-const bgColorClasses: Record<SiteColors, string> = {
+type Opacity = 0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
+type OutlineSize = 'sm' | 'md' | 'lg';
+
+const bgColorClasses: Record<SiteColorsSelector, string> = {
   white: 'bg-white',
   primary: 'bg-primary',
   secondary: 'bg-secondary',
@@ -21,11 +17,11 @@ const bgColorClasses: Record<SiteColors, string> = {
   black: 'bg-black'
 };
 
-const setBgColor = (color?: SiteColors): string => {
+const setBgColor = (color?: SiteColorsSelector): string => {
   return color ? bgColorClasses[color] : '';
 };
 
-const textColorClasses: Record<SiteColors, string> = {
+const textColorClasses: Record<SiteColorsSelector, string> = {
   white: 'text-white',
   primary: 'text-primary',
   secondary: 'text-secondary',
@@ -35,11 +31,14 @@ const textColorClasses: Record<SiteColors, string> = {
   black: 'text-black'
 };
 
-const setTextColor = (color?: SiteColors): string => {
+const setTextColor = (color?: SiteColorsSelector): string => {
   return textColorClasses[color ?? 'white'];
 };
 
-const textOutlineClasses: Record<OutlineSize, Record<SiteColors, string>> = {
+const textOutlineClasses: Record<
+  OutlineSize,
+  Record<SiteColorsSelector, string>
+> = {
   sm: {
     white: 'font-outline-white-sm',
     primary: 'font-outline-primary-sm',
@@ -69,12 +68,16 @@ const textOutlineClasses: Record<OutlineSize, Record<SiteColors, string>> = {
   }
 };
 
-const setTextOutline = (color: SiteColors, size: OutlineSize): string => {
-  return textOutlineClasses[size][color] ?? '';
+const setTextOutline = (
+  color?: SiteColorsSelector,
+  size?: OutlineSize
+): string => {
+  return color && size ? textOutlineClasses[size][color] : '';
 };
 
 // TODO: don't pass opacity in dynamically, use tailwindcss opacity classes instead
 const opacityClasses: Record<Opacity, string> = {
+  0: 'opacity-0',
   10: 'opacity-10',
   20: 'opacity-20',
   30: 'opacity-30',
@@ -91,34 +94,34 @@ const setOpacity = (opacity?: Opacity): string => {
   return opacityClasses[opacity ?? 100];
 };
 
-const textAlignClasses: Record<HorizontalAlignment, string> = {
+const textAlignClasses: Record<HorizontalAlign, string> = {
   left: 'text-left',
   center: 'text-center',
   right: 'text-right'
 };
 
-const setTextAlignment = (lrc?: HorizontalAlignment): string => {
+const setTextAlignment = (lrc?: HorizontalAlign): string => {
   return textAlignClasses[lrc ?? 'left'];
 };
 
-const JustifyClasses: Record<HorizontalAlignment, string> = {
+const JustifyClasses: Record<HorizontalAlign, string> = {
   left: 'justify-left',
   center: 'justify-center',
   right: 'justify-end'
 };
 
-const setElementHorizontalAlignment = (lrc?: HorizontalAlignment): string => {
+const setElementHorizontalAlignment = (lrc?: HorizontalAlign): string => {
   return JustifyClasses[lrc ?? 'left'];
 };
 
-const VerticalAlignClasses: Record<VerticalAlignment, string> = {
+const VerticalAlignClasses: Record<VerticalAlign, string> = {
   top: 'items-start',
   center: 'items-center',
   bottom: 'items-end'
 };
 
-const setElementVerticalAlignment = (tcb: VerticalAlignment): string => {
-  return VerticalAlignClasses[tcb ?? 'items-start'];
+const setElementVerticalAlignment = (tcb?: VerticalAlign): string => {
+  return VerticalAlignClasses[tcb ?? 'top'];
 };
 
 export {

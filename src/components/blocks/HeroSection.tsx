@@ -10,10 +10,15 @@ import {
 } from '@/lib/utils/stylesLookup';
 import LinkButton from '../common/LinkButton';
 import CloudinaryImg from '../common/CloudinaryImg';
+import { HeroBlock } from '@/sanity/types';
 
+type HeroSectionProps = {
+  blockData: HeroBlock;
+  index: number;
+};
 // TODO: implement Sanity text shadow and text shadow color selections on FE
 
-const HeroSection = ({ blockData, index }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ blockData, index }) => {
   const {
     image,
     isFullWidth,
@@ -48,13 +53,13 @@ const HeroSection = ({ blockData, index }) => {
         <div
           className={conditionalClasses(
             'relative flex h-full',
-            setElementHorizontalAlignment(textBlockAlignment.horizontalAlign),
-            setElementVerticalAlignment(textBlockAlignment.verticalAlign)
+            setElementHorizontalAlignment(textBlockAlignment?.horizontalAlign),
+            setElementVerticalAlignment(textBlockAlignment?.verticalAlign)
           )}
         >
           <CloudinaryImg
-            src={image?.imageAsset?.public_id}
-            alt={image?.altText}
+            src={image.imageAsset.public_id!}
+            alt={image.altText!}
             className="object-cover"
             priority={isFirst}
             sizes="100vw"
