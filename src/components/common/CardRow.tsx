@@ -1,7 +1,12 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import CloudinaryImg from './CloudinaryImg';
+import { CarouselBlock } from '@/sanity/types';
 
-const CardRow = ({ cards }) => {
+type CardRowProps = {
+  cards: CarouselBlock['images'];
+};
+
+const CardRow: React.FC<CardRowProps> = ({ cards }) => {
   if (!cards || !Array.isArray(cards) || !cards.length) {
     throw new Error('Invalid cards data provided to CardRow component');
   }
@@ -24,8 +29,8 @@ const CardRow = ({ cards }) => {
           aria-label={`Item ${idx + 1} of ${cards.length}: ${card.altText}`}
         >
           <CloudinaryImg
-            src={card.imageAsset.public_id}
-            alt={card.altText}
+            src={card.imageAsset.public_id!}
+            alt={card.altText!}
             sizes={cards.length === 3 ? '33vw' : '25vw'}
             className="h-full w-full object-cover"
           />
