@@ -1,4 +1,9 @@
-import { defineField, defineType } from 'sanity';
+import {
+  defineField,
+  defineType,
+  type ValidationContext,
+  type ObjectRule
+} from 'sanity';
 import { LinkIcon } from '@sanity/icons';
 
 const linkFields = [
@@ -19,7 +24,10 @@ const internalLinkFields = [
     title: 'Slug',
     type: 'slug',
     options: {
-      source: (doc, { parent }) => parent?.linkText,
+      source: (doc, context) => {
+        const parent = context.parent as { linkText?: string };
+        return parent?.linkText ?? '';
+      },
       maxLength: 96,
       isUnique: (slug, context) => context.defaultIsUnique(slug, context)
     },
@@ -37,12 +45,17 @@ const externalLinkFields = [
   })
 ];
 
-const linkValidation = Rule =>
-  Rule.custom((value, context) => {
-    if (!context.parent?.internalLink && !context.parent?.externalLink) {
+const linkValidation = (Rule: ObjectRule) =>
+  Rule.custom((value: unknown, context: ValidationContext) => {
+    const parent = context.parent as {
+      internalLink?: unknown;
+      externalLink?: unknown;
+    };
+
+    if (!parent?.internalLink && !parent?.externalLink) {
       return 'Required: You must provide either an internal link or external URL.';
     }
-    if (context.parent?.internalLink && context.parent?.externalLink) {
+    if (parent?.internalLink && parent?.externalLink) {
       return 'You must provide either an internal link or external URL, but not both.';
     }
     return true;
@@ -52,6 +65,10 @@ const prepareLinkPreview = ({
   internalLinkText,
   externalLinkText,
   externalLinkURL
+}: {
+  internalLinkText: string;
+  externalLinkText: string;
+  externalLinkURL: string;
 }) => {
   const displayTitle =
     internalLinkText || externalLinkText || externalLinkURL || 'Link (empty)';
