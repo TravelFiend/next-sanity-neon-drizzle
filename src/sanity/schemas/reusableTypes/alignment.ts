@@ -41,7 +41,10 @@ const ContentAlign = defineField({
       horizontalAlign: 'horizontalAlign',
       verticalAlign: 'verticalAlign'
     },
-    prepare({ horizontalAlign, verticalAlign }) {
+    prepare(selection: Record<string, unknown>) {
+      const horizontalAlign = selection.horizontalAlign as string;
+      const verticalAlign = selection.verticalAlign as string;
+
       return {
         title: `Horizontal Align: ${horizontalAlign}, Vertical Align: ${verticalAlign}`
       };

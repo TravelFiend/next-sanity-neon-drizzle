@@ -4,7 +4,7 @@ type ButtonProps = {
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   label: string;
   ariaLabel: string;
-  className: string;
+  className?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({

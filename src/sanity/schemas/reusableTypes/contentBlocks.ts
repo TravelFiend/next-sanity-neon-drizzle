@@ -278,9 +278,10 @@ const CarouselBlock = defineType({
     select: {
       title: 'direction'
     },
-    prepare({ title }) {
+    prepare(selection: Record<string, unknown>) {
+      const title = (selection.title as string) ?? '';
       return {
-        title: `Carousel Block - ${title.charAt(0).toUpperCase() + title.slice(1)}`
+        title: `Carousel Block - ${title.charAt(0).toUpperCase()}${title.slice(1)}`
       };
     }
   }

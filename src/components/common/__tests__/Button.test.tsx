@@ -3,7 +3,9 @@ import Button from '../Button';
 
 describe('Button', () => {
   it('should render a clickable button', async () => {
-    const { queryByText } = render(<Button label="Click Me" />);
+    const { queryByText } = render(
+      <Button label="Click Me" onClick={() => {}} ariaLabel="Click Me" />
+    );
     expect(queryByText('Click Me')).toBeTruthy();
   });
 });

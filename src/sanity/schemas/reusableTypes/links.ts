@@ -61,15 +61,11 @@ const linkValidation = (Rule: ObjectRule) =>
     return true;
   });
 
-const prepareLinkPreview = ({
-  internalLinkText,
-  externalLinkText,
-  externalLinkURL
-}: {
-  internalLinkText: string;
-  externalLinkText: string;
-  externalLinkURL: string;
-}) => {
+const prepareLinkPreview = (selection: Record<string, unknown>) => {
+  const internalLinkText = selection.internalLinkText as string | undefined;
+  const externalLinkText = selection.externalLinkText as string | undefined;
+  const externalLinkURL = selection.externalLinkURL as string | undefined;
+
   const displayTitle =
     internalLinkText || externalLinkText || externalLinkURL || 'Link (empty)';
   const displaySubtitle = internalLinkText
