@@ -1,17 +1,34 @@
 import { Stack, Card, Text, Flex } from '@sanity/ui';
 import { PatchEvent, set } from 'sanity';
 
-const ColorPreviewRadio = ({ value, onChange, schemaType }) => {
-  const colorMap = {
-    white: '#FFFFFF',
-    primary: '#231123',
-    secondary: '#88AB75',
-    tertiary: '#DE8F6E',
-    accent: '#2D93AD',
-    highlight: '#EDFF86',
-    black: '#000000'
+type ColorPreviewRadioProps = {
+  value: string;
+  onChange: (event: PatchEvent) => void;
+  schemaType: {
+    options: {
+      list: Array<{
+        title: string;
+        value: keyof typeof colorMap;
+      }>;
+    };
   };
+};
 
+const colorMap = {
+  white: '#FFFFFF',
+  primary: '#231123',
+  secondary: '#88AB75',
+  tertiary: '#DE8F6E',
+  accent: '#2D93AD',
+  highlight: '#EDFF86',
+  black: '#000000'
+};
+
+const ColorPreviewRadio: React.FC<ColorPreviewRadioProps> = ({
+  value,
+  onChange,
+  schemaType
+}) => {
   return (
     <Stack space={2}>
       {schemaType.options.list.map(item => (
