@@ -16,13 +16,13 @@ const ContentBlocks: React.FC<ContentBlocksProps> = ({ contentBlocks }) => {
 
         switch (_type) {
           case 'heroBlock':
-            return <HeroSection key={_key} blockData={block} index={idx} />;
+            return <HeroSection key={_key} heroData={block} index={idx} />;
           case 'textBlock':
-            return <TextSection key={_key} blockData={block} />;
-          case 'carouselBlock':
-            return <CarouselSection key={_key} blockData={block} />;
+            return <TextSection key={_key} textData={block} />;
           case 'imageTextBlock':
-            return <ImageTextSection key={_key} blockData={block} />;
+            return <ImageTextSection key={_key} imageTextData={block} />;
+          case 'carouselBlock':
+            return <CarouselSection key={_key} carouselData={block} />;
           default:
             console.error(`${_type} is not a valid content block type`);
             return null;

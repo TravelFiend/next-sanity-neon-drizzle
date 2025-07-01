@@ -10,7 +10,9 @@
     "format": "prettier --write src/**/*.{js,jsx}",
     "test:lint": "next lint",
     "test:prettier": "prettier --check ./src",
-    "prepare": "husky"
+    "prepare": "husky",
+    "ts-schema": "npx sanity schema extract --enforce-required-fields --workspace development",
+    "ts-gen": "npx sanity typegen generate"
   },
   "dependencies": {
     "@focus-reactive/sanity-plugin-inline-svg-input": "^1.1.0",

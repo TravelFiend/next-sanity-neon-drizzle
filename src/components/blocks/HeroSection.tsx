@@ -13,12 +13,12 @@ import CloudinaryImg from '../common/CloudinaryImg';
 import type { HeroBlock } from '@/sanity/types';
 
 type HeroSectionProps = {
-  blockData: HeroBlock;
+  heroData: HeroBlock;
   index: number;
 };
 // TODO: implement Sanity text shadow and text shadow color selections on FE
 
-const HeroSection: React.FC<HeroSectionProps> = ({ blockData, index }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
   const {
     image,
     isFullWidth,
@@ -33,9 +33,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ blockData, index }) => {
     textAlignment,
     textBlockAlignment,
     overlay
-  } = blockData;
+  } = heroData;
 
-  if (!blockData) return null;
+  if (!heroData) return null;
 
   const isFirst = index === 0;
 

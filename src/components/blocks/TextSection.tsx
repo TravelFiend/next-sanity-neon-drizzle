@@ -1,7 +1,14 @@
+import type { TextBlock } from '@/sanity/types';
 import TextBox from './TextBox';
 
-const TextSection = ({ blockData }) => {
-  const { title, subtitle, body, alignment } = blockData;
+type TextSectionProps = {
+  textData: {
+    _key: string;
+  } & TextBlock;
+};
+
+const TextSection: React.FC<TextSectionProps> = ({ textData }) => {
+  const { title, subtitle, body, alignment } = textData;
 
   return (
     <section className="w-full py-10">

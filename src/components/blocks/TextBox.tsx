@@ -1,7 +1,22 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import { setTextAlignment } from '@/lib/utils/stylesLookup';
+import type { HorizontalAlign } from '@/sanity/types';
 
-const TextBox = ({ title, subtitle, body, alignment, className }) => {
+type TextBoxProps = {
+  title?: string;
+  subtitle?: string;
+  body?: string;
+  alignment?: HorizontalAlign;
+  className?: string;
+};
+
+const TextBox: React.FC<TextBoxProps> = ({
+  title,
+  subtitle,
+  body,
+  alignment,
+  className
+}) => {
   return (
     <div
       className={conditionalClasses(

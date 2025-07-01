@@ -6,19 +6,18 @@ import { useEffect, useState } from 'react';
 import MobileSubNav from './MobileSubNav';
 import { usePathname } from 'next/navigation';
 import DesktopSubNav from './DesktopSubNav';
-import type { NavTab, SecondLevelLinks } from '@/sanity/types';
+import type { MainNav, NavTab } from '@/sanity/types';
 
 type LinkDataProps = {
-  linkData: ({ _key: string } & NavTab)[] | undefined;
+  linkData?: MainNav['navTabs'];
 };
 
 const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
   const [areLinksOpen, setAreLinksOpen] = useState(false);
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
   const [parentLink, setParentLink] = useState<string | undefined>(undefined);
-  const [currentChildren, setCurrentChildren] = useState<
-    ({ _key: string } & SecondLevelLinks)[] | undefined
-  >(undefined);
+  const [currentChildren, setCurrentChildren] =
+    useState<NavTab['secondLevelLinks']>(undefined);
   const pathName = usePathname();
 
   useEffect(() => {

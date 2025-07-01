@@ -4,11 +4,11 @@ import CloudinaryImg from '../common/CloudinaryImg';
 import type { ImageTextBlock } from '@/sanity/types';
 
 type ImageTextBlockProps = {
-  blockData: ImageTextBlock;
+  imageTextData: ImageTextBlock;
 };
 
-const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ blockData }) => {
-  const { image, imageAlignment, text } = blockData;
+const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ imageTextData }) => {
+  const { image, imageAlignment, text } = imageTextData;
 
   return (
     <section

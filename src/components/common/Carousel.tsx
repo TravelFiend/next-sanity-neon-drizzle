@@ -6,8 +6,14 @@ import CloudinaryImg from './CloudinaryImg';
 import { useCallback, useEffect } from 'react';
 import CardRow from './CardRow';
 import Button from './Button';
+import type { CarouselBlock } from '@/sanity/types';
 
-const Carousel = ({ slidesData, direction }) => {
+type CarouselProps = {
+  slidesData: CarouselBlock['images'];
+  direction?: CarouselBlock['direction'];
+};
+
+const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     active: true,
@@ -30,11 +36,11 @@ const Carousel = ({ slidesData, direction }) => {
   }
 
   const handleKeyDown = useCallback(
-    event => {
-      event.preventDefault();
-      if (event.key === 'ArrowLeft') {
+    (evt: React.KeyboardEvent) => {
+      evt.preventDefault();
+      if (evt.key === 'ArrowLeft') {
         emblaApi?.scrollPrev();
-      } else if (event.key === 'ArrowRight') {
+      } else if (evt.key === 'ArrowRight') {
         emblaApi?.scrollNext();
       }
     },
@@ -58,15 +64,15 @@ const Carousel = ({ slidesData, direction }) => {
           <div className="flex h-full w-full">
             {slidesData.map((slide, idx) => (
               <div
-                key={slide.imageAsset._key}
+                key={slide._key}
                 className="relative mr-[1%] ml-[1%] h-full flex-[0_0_26%]"
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`Slide ${idx + 1} of ${slidesData.length}: ${slide.altText}`}
               >
                 <CloudinaryImg
-                  src={slide.imageAsset.public_id}
-                  alt={slide.altText}
+                  src={slide.imageAsset.public_id!}
+                  alt={slide.altText!}
                   sizes="25vw"
                   className="h-full w-full object-cover"
                 />
@@ -76,15 +82,15 @@ const Carousel = ({ slidesData, direction }) => {
           <div className="absolute inset-0 z-10 flex items-center justify-between px-4">
             <Button
               className="rounded-full"
-              onClick={() => emblaApi.scrollPrev()}
+              onClick={() => emblaApi!.scrollPrev()}
               label="Prev"
               ariaLabel="Previous slide"
             />
             <Button
               className="rounded-full"
-              onClick={() => emblaApi.scrollNext()}
+              onClick={() => emblaApi!.scrollNext()}
               label="Next"
-              aria-label="Next slide"
+              ariaLabel="Next slide"
             />
           </div>
         </div>
