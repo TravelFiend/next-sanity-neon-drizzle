@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import MobileSubNav from './MobileSubNav';
 import { usePathname } from 'next/navigation';
 import DesktopSubNav from './DesktopSubNav';
-import { NavTab, SecondLevelLinks } from '@/sanity/types';
+import type { NavTab, SecondLevelLinks } from '@/sanity/types';
 
 type LinkDataProps = {
   linkData: ({ _key: string } & NavTab)[] | undefined;

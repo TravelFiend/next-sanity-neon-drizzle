@@ -1,11 +1,17 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
+import type { CtaButton } from '@/sanity/types';
 import Link from 'next/link';
 
-const LinkButton = ({ linkData }) => {
-  const {
-    link: { internalLink, externalLink },
-    isDark
-  } = linkData;
+type LinkButtonProps = {
+  linkData: CtaButton;
+};
+
+const LinkButton: React.FC<LinkButtonProps> = ({ linkData }) => {
+  const { link, isDark } = linkData;
+
+  if (!link) return null;
+
+  const { internalLink, externalLink } = link;
 
   if (internalLink) {
     return (
@@ -18,7 +24,7 @@ const LinkButton = ({ linkData }) => {
             : 'border border-primary bg-white text-primary'
         )}
       >
-        {internalLink?.linkText}
+        {internalLink.linkText}
       </Link>
     );
   }
@@ -36,7 +42,7 @@ const LinkButton = ({ linkData }) => {
             : 'border border-primary bg-white text-primary'
         )}
       >
-        {externalLink?.linkText}
+        {externalLink.linkText}
       </a>
     );
   }
