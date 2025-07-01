@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity';
+import { defineType, defineField, type ValidationContext } from 'sanity';
 
 // https://www.sanity.io/plugins/sanity-plugin-cloudinary
 export const RichImage = defineType({
@@ -20,12 +20,16 @@ export const RichImage = defineType({
       description:
         '(ADA) A short description of the image. Should describe the visual contents of the image, i.e. "Medusa eating nachos", and not be used as cta-type text.',
       validation: Rule =>
-        Rule.custom((value, context) => {
-          if (!context.parent?.imageAsset && value) {
+        Rule.custom((value: unknown, context: ValidationContext) => {
+          const parent = context.parent as {
+            imageAsset: unknown;
+          };
+
+          if (parent?.imageAsset && value) {
             return 'Cannot have alt text without an image';
           }
-          if (context.parent?.imageAsset && !value) {
-            return Rule.required();
+          if (parent?.imageAsset && !value) {
+            return 'Alt text is required for images';
           }
           return true;
         })
