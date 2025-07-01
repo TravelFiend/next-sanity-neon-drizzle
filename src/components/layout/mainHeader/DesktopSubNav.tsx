@@ -4,8 +4,21 @@ import { Fragment, useEffect } from 'react';
 import Link from 'next/link';
 import useHoverState from '@/lib/hooks/useHoverState';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
+import type { NavTab } from '@/sanity/types';
 
-const DesktopSubNav = ({ isOpen, setIsOpen, parentLink, currentChildren }) => {
+type DesktopSubNavProps = {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  parentLink?: string;
+  currentChildren?: NavTab['secondLevelLinks'];
+};
+
+const DesktopSubNav: React.FC<DesktopSubNavProps> = ({
+  isOpen,
+  setIsOpen,
+  parentLink,
+  currentChildren
+}) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverState();
 
   useEffect(() => {
@@ -36,14 +49,14 @@ const DesktopSubNav = ({ isOpen, setIsOpen, parentLink, currentChildren }) => {
     >
       {currentChildren.map(
         ({ _key, secondLevelLink, thirdLevelLinks }, idx) => {
-          const childSlug = secondLevelLink.internalLink.slug.current;
-          const childText = secondLevelLink.internalLink.linkText;
+          const childSlug = secondLevelLink.internalLink?.slug.current;
+          const childText = secondLevelLink.internalLink?.linkText;
 
           return (
             <Fragment key={_key}>
               {idx === 0 ? (
                 <Link href={`/${parentLink}`} className="font-semibold">
-                  BROWSE ALL {parentLink.toUpperCase()}
+                  BROWSE ALL {parentLink?.toUpperCase()}
                 </Link>
               ) : null}
               <div className="mb-3 flex flex-col flex-wrap">
@@ -57,10 +70,10 @@ const DesktopSubNav = ({ isOpen, setIsOpen, parentLink, currentChildren }) => {
                       ({ _key: grandChildKey, internalLink }) => (
                         <li key={grandChildKey}>
                           <Link
-                            href={`/${parentLink}/${childSlug}/${internalLink.slug.current}`}
+                            href={`/${parentLink}/${childSlug}/${internalLink?.slug.current}`}
                           >
                             <span className="block">
-                              {internalLink.linkText}
+                              {internalLink?.linkText}
                             </span>
                           </Link>
                         </li>
