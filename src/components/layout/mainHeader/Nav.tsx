@@ -6,12 +6,19 @@ import { useEffect, useState } from 'react';
 import MobileSubNav from './MobileSubNav';
 import { usePathname } from 'next/navigation';
 import DesktopSubNav from './DesktopSubNav';
+import { NavTab, SecondLevelLinks } from '@/sanity/types';
 
-const Nav = ({ linkData }) => {
+type LinkDataProps = {
+  linkData: ({ _key: string } & NavTab)[] | undefined;
+};
+
+const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
   const [areLinksOpen, setAreLinksOpen] = useState(false);
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
-  const [parentLink, setParentLink] = useState(null);
-  const [currentChildren, setCurrentChildren] = useState(null);
+  const [parentLink, setParentLink] = useState<string | undefined>(undefined);
+  const [currentChildren, setCurrentChildren] = useState<
+    ({ _key: string } & SecondLevelLinks)[] | undefined
+  >(undefined);
   const pathName = usePathname();
 
   useEffect(() => {
@@ -28,10 +35,10 @@ const Nav = ({ linkData }) => {
     }
   };
 
-  const handleMainLinkClick = evt => {
-    const theKids = linkData.filter(
+  const handleMainLinkClick = (evt: React.MouseEvent<HTMLElement>) => {
+    const theKids = linkData?.filter(
       singleLinkData =>
-        singleLinkData.link.internalLink.linkText === evt.currentTarget.id
+        singleLinkData.link?.internalLink?.linkText === evt.currentTarget.id
     )[0];
 
     if (theKids?.secondLevelLinks === currentChildren) {
@@ -47,11 +54,11 @@ const Nav = ({ linkData }) => {
       return (
         <li
           key={_key}
-          id={link.internalLink.linkText}
+          id={link?.internalLink?.linkText}
           className="flex h-full w-full cursor-pointer list-none items-center hover:text-secondary sm:mr-1 sm:px-4"
           onClick={handleMainLinkClick}
         >
-          <span>{link.internalLink.linkText}</span>
+          <span>{link?.internalLink?.linkText}</span>
           <span className="sm:hidden">&rarr;</span>
         </li>
       );
@@ -62,8 +69,8 @@ const Nav = ({ linkData }) => {
         key={_key}
         className="flex h-full cursor-pointer items-center hover:text-secondary sm:mr-1 sm:px-4"
       >
-        <Link href={`/${link.internalLink.slug.current}`}>
-          {link.internalLink.linkText}
+        <Link href={`/${link?.internalLink?.slug.current}`}>
+          {link?.internalLink?.linkText}
         </Link>
       </li>
     );
