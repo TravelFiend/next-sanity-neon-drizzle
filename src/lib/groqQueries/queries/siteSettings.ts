@@ -9,7 +9,7 @@ const internalLinkFragment = `
 `;
 
 const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
-  mainNav->{
+  mainNav{
     _type,
     companyLogo,
     navTabs[]{
@@ -18,6 +18,7 @@ const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
         ${internalLinkFragment}
       },
       secondLevelLinks[]{
+        _type,
         _key,
         secondLevelLink{
           ${internalLinkFragment}
