@@ -1,18 +1,5 @@
 import { Stack, Card, Text, Flex } from '@sanity/ui';
-import { PatchEvent, set } from 'sanity';
-
-type ColorPreviewRadioProps = {
-  value: string;
-  onChange: (event: PatchEvent) => void;
-  schemaType: {
-    options: {
-      list: Array<{
-        title: string;
-        value: keyof typeof colorMap;
-      }>;
-    };
-  };
-};
+import { PatchEvent, set, type StringInputProps } from 'sanity';
 
 const colorMap = {
   white: '#FFFFFF',
@@ -24,36 +11,43 @@ const colorMap = {
   black: '#000000'
 };
 
-const ColorPreviewRadio: React.FC<ColorPreviewRadioProps> = ({
+const ColorPreviewRadio: React.FC<StringInputProps> = ({
   value,
   onChange,
   schemaType
 }) => {
+  const list = schemaType.options?.list ?? [];
+
   return (
     <Stack space={2}>
-      {schemaType.options.list.map(item => (
-        <Card
-          key={item.value}
-          padding={2}
-          tone={value === item.value ? 'primary' : 'default'}
-          radius={2}
-          style={{ cursor: 'pointer' }}
-          onClick={() => onChange(PatchEvent.from(set(item.value)))}
-        >
-          <Flex align="center" gap={3}>
-            <div
-              style={{
-                width: '20px',
-                height: '20px',
-                backgroundColor: colorMap[item.value],
-                borderRadius: '4px',
-                border: '1px solid #ccc'
-              }}
-            />
-            <Text>{item.title}</Text>
-          </Flex>
-        </Card>
-      ))}
+      {list.map(item => {
+        const val = typeof item === 'string' ? item : item.value;
+        const title = typeof item === 'string' ? item : item.title;
+
+        return (
+          <Card
+            key={val}
+            padding={2}
+            tone={value === val ? 'primary' : 'default'}
+            radius={2}
+            style={{ cursor: 'pointer' }}
+            onClick={() => onChange(PatchEvent.from(set(val)))}
+          >
+            <Flex align="center" gap={3}>
+              <div
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  backgroundColor: colorMap[val as keyof typeof colorMap],
+                  borderRadius: '4px',
+                  border: '1px solid #ccc'
+                }}
+              />
+              <Text>{title}</Text>
+            </Flex>
+          </Card>
+        );
+      })}
     </Stack>
   );
 };
