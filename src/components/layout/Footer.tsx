@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { BasicLink, Footer } from '@/sanity/types';
+import type { Footer } from '@/sanity/types';
 
 type FooterProps = {
   footerData: Footer;
@@ -10,7 +10,7 @@ const Footer: React.FC<FooterProps> = ({ footerData }) => {
 
   const { copyrightText, siteLinks, legalLinks, socialLinks } = footerData;
 
-  const generateLinks = (linkSection: Array<{ _key: string } & BasicLink>) => {
+  const generateLinks = (linkSection: Footer['legalLinks']) => {
     return linkSection?.map(({ _key, internalLink, externalLink }) => (
       <li key={_key}>
         {internalLink ? (
