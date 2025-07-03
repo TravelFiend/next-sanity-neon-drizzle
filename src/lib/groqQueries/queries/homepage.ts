@@ -4,7 +4,6 @@ import seoFragment from '../fragments/seo';
 import { sanityFetch } from '@/sanity/utils/live';
 
 const HOMEPAGE_QUERY = defineQuery(`*[_type == "homepage"][0]{
-  ...,
   _type,
   contentBlocks[]{
     ${contentBlocksFragment}
@@ -17,10 +16,6 @@ const getHomepage = async () => {
     const { data } = await sanityFetch({
       query: HOMEPAGE_QUERY
     });
-
-    if (!data?._type) {
-      return null;
-    }
 
     return data;
   } catch (err) {

@@ -11,14 +11,15 @@
     "test:lint": "next lint",
     "test:prettier": "prettier --check ./src",
     "prepare": "husky",
-    "ts-check": "npx tsc --noEmit",
-    "ts-schema": "npx sanity schema extract --enforce-required-fields --workspace development",
-    "ts-gen": "npx sanity typegen generate"
+    "ts-check": "bunx tsc --noEmit",
+    "ts-schema": "bunx sanity schema extract --enforce-required-fields --workspace development",
+    "ts-gen": "bunx sanity typegen generate"
   },
   "dependencies": {
     "@focus-reactive/sanity-plugin-inline-svg-input": "^1.1.0",
     "@sanity/icons": "^3.7.4",
     "@sanity/image-url": "^1.1.0",
+    "@types/jest": "^30.0.0",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "next": "15.3.4",

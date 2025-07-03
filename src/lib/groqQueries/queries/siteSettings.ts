@@ -13,6 +13,7 @@ const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
     _type,
     companyLogo,
     navTabs[]{
+      _type,
       _key,
       link{
         ${internalLinkFragment}
