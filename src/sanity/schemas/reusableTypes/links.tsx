@@ -5,6 +5,8 @@ import {
   type ObjectRule
 } from 'sanity';
 import { LinkIcon } from '@sanity/icons';
+// import { InlineSvgPreviewItem } from '@focus-reactive/sanity-plugin-inline-svg-input';
+import LinkWithIconPreview from '@/sanity/studioUI/LinkWithIconPreview';
 
 const linkFields = [
   defineField({
@@ -112,6 +114,16 @@ const BasicLink = defineType({
   }
 });
 
+// const LinkWithIconPreview = (props: PreviewProps) => {
+//   const { icon, title, subtitle } = props as unknown as {
+//     icon: string;
+//     title?: string;
+//     subtitle?: string;
+//   };
+
+//   return <InlineSvgPreviewItem icon={icon} title={title} subtitle={subtitle} />;
+// };
+
 const LinkWithIcon = defineType({
   name: 'linkWithIcon',
   type: 'object',
@@ -131,11 +143,27 @@ const LinkWithIcon = defineType({
   ],
   preview: {
     select: {
+      icon: 'icon',
       internalLinkText: 'link.internalLink.linkText',
       externalLinkText: 'link.externalLink.linkText',
       externalLinkURL: 'link.externalLink.url'
     },
-    prepare: prepareLinkPreview
+    prepare({ icon, internalLinkText, externalLinkText, externalLinkURL }) {
+      const title =
+        internalLinkText ||
+        externalLinkText ||
+        externalLinkURL ||
+        'Link (empty)';
+      const subtitle = internalLinkText
+        ? 'Internal Link'
+        : externalLinkText || externalLinkURL
+          ? 'External URL'
+          : 'Link';
+      return { icon, title, subtitle };
+    }
+  },
+  components: {
+    preview: LinkWithIconPreview
   }
 });
 
