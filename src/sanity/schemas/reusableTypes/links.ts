@@ -5,7 +5,7 @@ import {
   type ObjectRule
 } from 'sanity';
 import { LinkIcon } from '@sanity/icons';
-import LinkWithIconPreview from '@/sanity/studioUI/LinkWithIconPreview';
+import LinkWithIconPreview from '../../studioUI/LinkWithIconPreview';
 
 const linkFields = [
   defineField({
