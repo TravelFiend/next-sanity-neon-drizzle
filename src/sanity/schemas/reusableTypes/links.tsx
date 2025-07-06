@@ -5,7 +5,6 @@ import {
   type ObjectRule
 } from 'sanity';
 import { LinkIcon } from '@sanity/icons';
-// import { InlineSvgPreviewItem } from '@focus-reactive/sanity-plugin-inline-svg-input';
 import LinkWithIconPreview from '@/sanity/studioUI/LinkWithIconPreview';
 
 const linkFields = [
@@ -63,22 +62,38 @@ const linkValidation = (Rule: ObjectRule) =>
     return true;
   });
 
-const prepareLinkPreview = (selection: Record<string, unknown>) => {
-  const internalLinkText = selection.internalLinkText as string | undefined;
-  const externalLinkText = selection.externalLinkText as string | undefined;
-  const externalLinkURL = selection.externalLinkURL as string | undefined;
+type LinkPreviewParams = {
+  internalLinkText?: string;
+  externalLinkText?: string;
+  externalLinkURL?: string;
+};
 
-  const displayTitle =
+export const buildLinkPreview = ({
+  internalLinkText,
+  externalLinkText,
+  externalLinkURL
+}: LinkPreviewParams) => {
+  const title =
     internalLinkText || externalLinkText || externalLinkURL || 'Link (empty)';
-  const displaySubtitle = internalLinkText
+
+  const subtitle = internalLinkText
     ? 'Internal Link'
     : externalLinkText || externalLinkURL
       ? 'External URL'
       : 'Link';
 
+  return { title, subtitle };
+};
+
+const prepareLinkPreview = (selection: Record<string, unknown>) => {
+  const { internalLinkText, externalLinkText, externalLinkURL } = selection;
+
   return {
-    title: displayTitle,
-    subtitle: displaySubtitle,
+    ...buildLinkPreview({
+      internalLinkText: internalLinkText as string,
+      externalLinkText: externalLinkText as string,
+      externalLinkURL: externalLinkURL as string
+    }),
     media: LinkIcon
   };
 };
@@ -114,16 +129,6 @@ const BasicLink = defineType({
   }
 });
 
-// const LinkWithIconPreview = (props: PreviewProps) => {
-//   const { icon, title, subtitle } = props as unknown as {
-//     icon: string;
-//     title?: string;
-//     subtitle?: string;
-//   };
-
-//   return <InlineSvgPreviewItem icon={icon} title={title} subtitle={subtitle} />;
-// };
-
 const LinkWithIcon = defineType({
   name: 'linkWithIcon',
   type: 'object',
@@ -149,17 +154,14 @@ const LinkWithIcon = defineType({
       externalLinkURL: 'link.externalLink.url'
     },
     prepare({ icon, internalLinkText, externalLinkText, externalLinkURL }) {
-      const title =
-        internalLinkText ||
-        externalLinkText ||
-        externalLinkURL ||
-        'Link (empty)';
-      const subtitle = internalLinkText
-        ? 'Internal Link'
-        : externalLinkText || externalLinkURL
-          ? 'External URL'
-          : 'Link';
-      return { icon, title, subtitle };
+      return {
+        icon,
+        ...buildLinkPreview({
+          internalLinkText,
+          externalLinkText,
+          externalLinkURL
+        })
+      };
     }
   },
   components: {
