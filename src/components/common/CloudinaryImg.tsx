@@ -23,9 +23,7 @@ const CloudinaryImg: React.FC<CloudinaryImgProps> = ({
   width,
   sizes = ''
 }) => {
-  if (!src) {
-    return null;
-  }
+  if (!src) return null;
 
   return (
     <CldImage

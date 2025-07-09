@@ -22,7 +22,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "types": ["bun-types", "jest"]
   },
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "build", "dist", ".next"]
