@@ -46,7 +46,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
           'z-0 m-auto h-screen w-full',
           isFullWidth ? '' : 'p-10 sm:p-20',
           isFirst ? '' : 'h-[70vh]',
-          isFirst && !isFullWidth ? 'pt-28' : '',
           setBgColor(bgColor)
         )}
       >
@@ -109,6 +108,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
           </div>
         </div>
       </section>
+
+      {isFirst ? (
+        <div
+          className="-mt-[theme(height.12)] min-h-[theme(height.12)] w-full sm:-mt-[theme(height.16)] sm:min-h-[theme(height.16)]"
+          aria-hidden="true"
+        />
+      ) : null}
     </>
   );
 };
