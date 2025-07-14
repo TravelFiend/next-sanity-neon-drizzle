@@ -50,8 +50,10 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
         isOpen ? '-translate-x-0' : ''
       )}
     >
-      <li className="cursor-pointer" onClick={handleBackClick}>
-        &larr; Back
+      <li className="cursor-pointer">
+        <button className="w-full text-start" onClick={handleBackClick}>
+          &larr; Back
+        </button>
       </li>
 
       {currentChildren?.map((child, idx) => {

@@ -3,7 +3,7 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import useEmblaCarousel from 'embla-carousel-react';
 import CloudinaryImg from './CloudinaryImg';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import CardRow from './CardRow';
 import Button from './Button';
 import type { CarouselBlock } from '@/sanity/types';
@@ -35,31 +35,18 @@ const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
     throw new Error('Invalid slidesData provided to Carousel component');
   }
 
-  const handleKeyDown = useCallback(
-    (evt: React.KeyboardEvent) => {
-      evt.preventDefault();
-      if (evt.key === 'ArrowLeft') {
-        emblaApi?.scrollPrev();
-      } else if (evt.key === 'ArrowRight') {
-        emblaApi?.scrollNext();
-      }
-    },
-    [emblaApi]
-  );
-
   return (
     <>
       {slidesData.length > 4 ? (
         <div
           ref={emblaRef}
-          onKeyDown={handleKeyDown}
           className={conditionalClasses(
+            // Removed onKeyDown and tabIndex
             'relative flex h-full items-center justify-between overflow-hidden',
             direction === 'vertical' ? 'flex-col' : 'w-full'
           )}
           role="region"
           aria-roledescription="carousel"
-          tabIndex={0}
         >
           <div className="flex h-full w-full">
             {slidesData.map((slide, idx) => (
@@ -85,12 +72,15 @@ const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
               onClick={() => emblaApi!.scrollPrev()}
               label="Prev"
               ariaLabel="Previous slide"
+              // Keyboard navigation for carousel is handled by these buttons
+              // Ensure your Button component is a proper <button> element
             />
             <Button
               className="rounded-full"
               onClick={() => emblaApi!.scrollNext()}
               label="Next"
               ariaLabel="Next slide"
+              // Ensure your Button component is a proper <button> element
             />
           </div>
         </div>

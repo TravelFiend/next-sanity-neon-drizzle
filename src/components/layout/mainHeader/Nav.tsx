@@ -54,11 +54,16 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
         <li
           key={_key}
           id={link?.internalLink?.linkText}
-          className="flex h-full w-full cursor-pointer list-none items-center hover:text-secondary sm:mr-1 sm:px-4"
-          onClick={handleMainLinkClick}
+          className="flex h-full w-full list-none"
         >
-          <span>{link?.internalLink?.linkText}</span>
-          <span className="sm:hidden">&rarr;</span>
+          <button
+            id={link?.internalLink?.linkText}
+            className="w-full cursor-pointer items-center text-start hover:text-secondary sm:mr-1 sm:px-4"
+            onClick={handleMainLinkClick}
+          >
+            <span>{link?.internalLink?.linkText}</span>
+            <span className="sm:hidden">&rarr;</span>
+          </button>
         </li>
       );
     }
@@ -68,7 +73,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
         key={_key}
         className="flex h-full cursor-pointer items-center hover:text-secondary sm:mr-1 sm:px-4"
       >
-        <Link href={`/${link?.internalLink?.slug.current}`}>
+        <Link href={`/${link?.internalLink?.slug.current}`} className="w-full">
           {link?.internalLink?.linkText}
         </Link>
       </li>
@@ -77,7 +82,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
 
   return (
     <nav className="block h-full bg-cyan-600">
-      <div
+      <button
         className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
         onClick={handleBurgerClick}
       >
@@ -87,7 +92,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
             className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
           />
         ))}
-      </div>
+      </button>
 
       <ul
         className={conditionalClasses(
