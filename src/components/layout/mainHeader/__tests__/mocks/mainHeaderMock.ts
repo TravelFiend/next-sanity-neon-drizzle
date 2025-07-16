@@ -1,8 +1,6 @@
-import { SITE_SETTINGS_QUERYResult } from '@/sanity/types';
+import type { MainNav } from '@/sanity/types';
 
-type MainNavType = NonNullable<SITE_SETTINGS_QUERYResult>['mainNav'];
-
-const mainHeaderMock: MainNavType = {
+const mainHeaderMock: MainNav = {
   _type: 'mainNav',
   companyLogo:
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chart-radar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l9.5 7l-3.5 11h-12l-3.5 -11z" /><path d="M12 7.5l5.5 4l-2.5 5.5h-6.5l-2 -5.5z" /><path d="M2.5 10l9.5 3l9.5 -3" /><path d="M12 3v10l6 8" /><path d="M6 21l6 -8" /></svg>',
@@ -11,6 +9,7 @@ const mainHeaderMock: MainNavType = {
       _key: '12fa18f18fea',
       _type: 'navTab',
       link: {
+        _type: 'basicLink',
         internalLink: {
           linkText: 'Art',
           slug: {
@@ -24,6 +23,7 @@ const mainHeaderMock: MainNavType = {
           _key: '2db255e04ec1',
           _type: 'secondLevelLinks',
           secondLevelLink: {
+            _type: 'basicLink',
             internalLink: {
               linkText: 'Printmaking',
               slug: {
@@ -35,6 +35,7 @@ const mainHeaderMock: MainNavType = {
           thirdLevelLinks: [
             {
               _key: '39fd7fe2416f',
+              _type: 'basicLink',
               internalLink: {
                 linkText: 'Serigraphy',
                 slug: {
@@ -45,6 +46,7 @@ const mainHeaderMock: MainNavType = {
             },
             {
               _key: 'ab4379f9cc92',
+              _type: 'basicLink',
               internalLink: {
                 linkText: 'Lithography',
                 slug: {
@@ -61,6 +63,7 @@ const mainHeaderMock: MainNavType = {
       _key: 'bb61b20c2137',
       _type: 'navTab',
       link: {
+        _type: 'basicLink',
         internalLink: {
           linkText: 'Music',
           slug: {
@@ -74,6 +77,7 @@ const mainHeaderMock: MainNavType = {
           _key: '554c3481ea68',
           _type: 'secondLevelLinks',
           secondLevelLink: {
+            _type: 'basicLink',
             internalLink: {
               linkText: 'Electronic',
               slug: {
@@ -82,7 +86,7 @@ const mainHeaderMock: MainNavType = {
               }
             }
           },
-          thirdLevelLinks: null
+          thirdLevelLinks: undefined
         }
       ]
     },
@@ -90,6 +94,7 @@ const mainHeaderMock: MainNavType = {
       _key: '827c64e21251',
       _type: 'navTab',
       link: {
+        _type: 'basicLink',
         internalLink: {
           linkText: 'About',
           slug: {
@@ -98,7 +103,7 @@ const mainHeaderMock: MainNavType = {
           }
         }
       },
-      secondLevelLinks: null
+      secondLevelLinks: undefined
     }
   ]
 };

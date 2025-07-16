@@ -1,3 +1,5 @@
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
+import '@/app/globals.css';
 import type { Preview } from '@storybook/nextjs-vite';
 
 const preview: Preview = {
@@ -6,6 +8,9 @@ const preview: Preview = {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i
+      },
+      viewport: {
+        options: INITIAL_VIEWPORTS
       }
     },
 

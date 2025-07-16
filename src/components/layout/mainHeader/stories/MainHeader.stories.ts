@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import MainHeader from '../MainHeader';
-import mainNavMock from '../__tests__/mocks/mainHeaderMock';
+import mainHeaderMock from '../__tests__/mocks/mainHeaderMock';
 
 const meta = {
   title: 'UI/MainHeader',
@@ -10,7 +10,7 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    navData: mainNavMock
+    navData: mainHeaderMock
   }
 } satisfies Meta<typeof MainHeader>;
 
