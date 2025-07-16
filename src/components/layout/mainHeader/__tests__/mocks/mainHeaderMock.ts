@@ -1,0 +1,106 @@
+import { SITE_SETTINGS_QUERYResult } from '@/sanity/types';
+
+type MainNavType = NonNullable<SITE_SETTINGS_QUERYResult>['mainNav'];
+
+const mainHeaderMock: MainNavType = {
+  _type: 'mainNav',
+  companyLogo:
+    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chart-radar"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l9.5 7l-3.5 11h-12l-3.5 -11z" /><path d="M12 7.5l5.5 4l-2.5 5.5h-6.5l-2 -5.5z" /><path d="M2.5 10l9.5 3l9.5 -3" /><path d="M12 3v10l6 8" /><path d="M6 21l6 -8" /></svg>',
+  navTabs: [
+    {
+      _key: '12fa18f18fea',
+      _type: 'navTab',
+      link: {
+        internalLink: {
+          linkText: 'Art',
+          slug: {
+            _type: 'slug',
+            current: 'art'
+          }
+        }
+      },
+      secondLevelLinks: [
+        {
+          _key: '2db255e04ec1',
+          _type: 'secondLevelLinks',
+          secondLevelLink: {
+            internalLink: {
+              linkText: 'Printmaking',
+              slug: {
+                _type: 'slug',
+                current: 'printmaking'
+              }
+            }
+          },
+          thirdLevelLinks: [
+            {
+              _key: '39fd7fe2416f',
+              internalLink: {
+                linkText: 'Serigraphy',
+                slug: {
+                  _type: 'slug',
+                  current: 'serigraphy'
+                }
+              }
+            },
+            {
+              _key: 'ab4379f9cc92',
+              internalLink: {
+                linkText: 'Lithography',
+                slug: {
+                  _type: 'slug',
+                  current: 'lithography'
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      _key: 'bb61b20c2137',
+      _type: 'navTab',
+      link: {
+        internalLink: {
+          linkText: 'Music',
+          slug: {
+            _type: 'slug',
+            current: 'music'
+          }
+        }
+      },
+      secondLevelLinks: [
+        {
+          _key: '554c3481ea68',
+          _type: 'secondLevelLinks',
+          secondLevelLink: {
+            internalLink: {
+              linkText: 'Electronic',
+              slug: {
+                _type: 'slug',
+                current: 'electronic'
+              }
+            }
+          },
+          thirdLevelLinks: null
+        }
+      ]
+    },
+    {
+      _key: '827c64e21251',
+      _type: 'navTab',
+      link: {
+        internalLink: {
+          linkText: 'About',
+          slug: {
+            _type: 'slug',
+            current: 'about'
+          }
+        }
+      },
+      secondLevelLinks: null
+    }
+  ]
+};
+
+export default mainHeaderMock;
