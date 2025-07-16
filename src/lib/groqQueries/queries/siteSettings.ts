@@ -1,10 +1,15 @@
 import { defineQuery } from 'next-sanity';
 import { sanityFetch } from '@/sanity/utils/live';
 
-const internalLinkFragment = `
+const BasicLinkFragment = `
+  _type,
   internalLink{
     linkText,
     slug
+  },
+  externalLink{
+    linkText,
+    url
   }
 `;
 
@@ -16,17 +21,17 @@ const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
       _type,
       _key,
       link{
-        ${internalLinkFragment}
+        ${BasicLinkFragment}
       },
       secondLevelLinks[]{
         _type,
         _key,
         secondLevelLink{
-          ${internalLinkFragment}
+          ${BasicLinkFragment}
         },
         thirdLevelLinks[]{
           _key,
-          ${internalLinkFragment}
+          ${BasicLinkFragment}
         }
       }
     }
@@ -35,11 +40,11 @@ const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
     _type,
     legalLinks[]{
       _key,
-      ${internalLinkFragment}
+      ${BasicLinkFragment}
     },
     siteLinks[]{
       _key,
-      ${internalLinkFragment}
+      ${BasicLinkFragment}
     },
     socialLinks[]{
       _key,
