@@ -1,5 +1,5 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import type { CtaButton } from '@/sanity/types';
+import type { CtaButton } from '@sanityTypes/generatedTypes';
 import Link from 'next/link';
 
 type LinkButtonProps = {

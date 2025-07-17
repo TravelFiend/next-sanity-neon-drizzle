@@ -500,7 +500,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: src/lib/groqQueries/queries/homepage.ts
 // Variable: HOMEPAGE_QUERY
-// Query: *[_type == "homepage"][0]{  _type,  contentBlocks[]{      _key,  _type == "heroBlock" => {    _type,      _type,  image{      _key,  imageAsset{    _type,    _key,    _version,    public_id,    resource_type,    secure_url,    width,    height,    duration,    tags  },  altText  },  isFullWidth,  bgColor,  title,  subtitle,  textColor,  showTextOutline,  textOutlineColor,  textOutlineSize,  ctaButton{      link{    internalLink{      _type,      linkText,      slug{        current      }    },    externalLink{      _type,      linkText,      url    }  },  isDark  },  textAlignment,  textBlockAlignment{      horizontalAlign,  verticalAlign  },  overlay{    coverage,    color,    opacity  }  },  _type == "textBlock" => {    _type,      _type,  title,  subtitle,  body,  alignment  },  _type == "imageTextBlock" => {    _type,      _type,  image{      _key,  imageAsset{    _type,    _key,    _version,    public_id,    resource_type,    secure_url,    width,    height,    duration,    tags  },  altText  },  text{      _type,  title,  subtitle,  body,  alignment  },  imageAlignment  },  _type == "carouselBlock" => {    _type,      _type,  images[]{      _key,  imageAsset{    _type,    _key,    _version,    public_id,    resource_type,    secure_url,    width,    height,    duration,    tags  },  altText  },  direction  }  },    metaTitle,  metaDescription,  metaKeywords[]}
+// Query: *[_type == "homepage"][0]{  _type,  contentBlocks[]{      _key,  _type == "heroBlock" => {    _type,      _type,  image{      _key,  _type,  imageAsset{    _type,    _key,    _version,    public_id,    resource_type,    secure_url,    width,    height,    duration,    tags  },  altText  },  isFullWidth,  bgColor,  title,  subtitle,  textColor,  showTextOutline,  textOutlineColor,  textOutlineSize,  ctaButton{      link{    internalLink{      _type,      linkText,      slug{        current      }    },    externalLink{      _type,      linkText,      url    }  },  isDark  },  textAlignment,  textBlockAlignment{      horizontalAlign,  verticalAlign  },  overlay{    coverage,    color,    opacity  }  },  _type == "textBlock" => {    _type,      _type,  title,  subtitle,  body,  alignment  },  _type == "imageTextBlock" => {    _type,      _type,  image{      _key,  _type,  imageAsset{    _type,    _key,    _version,    public_id,    resource_type,    secure_url,    width,    height,    duration,    tags  },  altText  },  text{      _type,  title,  subtitle,  body,  alignment  },  imageAlignment  },  _type == "carouselBlock" => {    _type,      _type,  images[]{      _key,  _type,  imageAsset{    _type,    _key,    _version,    public_id,    resource_type,    secure_url,    width,    height,    duration,    tags  },  altText  },  direction  }  },    metaTitle,  metaDescription,  metaKeywords[]}
 export type HOMEPAGE_QUERYResult = {
   _type: 'homepage';
   contentBlocks: Array<
@@ -509,6 +509,7 @@ export type HOMEPAGE_QUERYResult = {
         _type: 'carouselBlock';
         images: Array<{
           _key: string;
+          _type: 'richImage';
           imageAsset: {
             _type: 'cloudinary.asset';
             _key: null;
@@ -530,6 +531,7 @@ export type HOMEPAGE_QUERYResult = {
         _type: 'heroBlock';
         image: {
           _key: null;
+          _type: 'richImage';
           imageAsset: {
             _type: 'cloudinary.asset';
             _key: null;
@@ -585,6 +587,7 @@ export type HOMEPAGE_QUERYResult = {
         _type: 'imageTextBlock';
         image: {
           _key: null;
+          _type: 'richImage';
           imageAsset: {
             _type: 'cloudinary.asset';
             _key: null;
@@ -624,7 +627,7 @@ export type HOMEPAGE_QUERYResult = {
 
 // Source: src/lib/groqQueries/queries/siteSettings.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[_type == "siteSettings"][0]{  mainNav{    _type,    companyLogo,    navTabs[]{      _type,      _key,      link{          internalLink{    linkText,    slug  }      },      secondLevelLinks[]{        _type,        _key,        secondLevelLink{            internalLink{    linkText,    slug  }        },        thirdLevelLinks[]{          _key,            internalLink{    linkText,    slug  }        }      }    }  },  footer{    _type,    legalLinks[]{      _key,        internalLink{    linkText,    slug  }    },    siteLinks[]{      _key,        internalLink{    linkText,    slug  }    },    socialLinks[]{      _key,      icon,      link{        externalLink{          url,          linkText        }      }    },    copyrightText  }}
+// Query: *[_type == "siteSettings"][0]{  mainNav{    _type,    companyLogo,    navTabs[]{      _type,      _key,      link{          _type,  internalLink{    linkText,    slug  },  externalLink{    linkText,    url  }      },      secondLevelLinks[]{        _type,        _key,        secondLevelLink{            _type,  internalLink{    linkText,    slug  },  externalLink{    linkText,    url  }        },        thirdLevelLinks[]{          _key,            _type,  internalLink{    linkText,    slug  },  externalLink{    linkText,    url  }        }      }    }  },  footer{    _type,    legalLinks[]{      _key,        _type,  internalLink{    linkText,    slug  },  externalLink{    linkText,    url  }    },    siteLinks[]{      _key,        _type,  internalLink{    linkText,    slug  },  externalLink{    linkText,    url  }    },    socialLinks[]{      _key,      icon,      link{        externalLink{          url,          linkText        }      }    },    copyrightText  }}
 export type SITE_SETTINGS_QUERYResult = {
   mainNav: {
     _type: 'mainNav';
@@ -633,25 +636,40 @@ export type SITE_SETTINGS_QUERYResult = {
       _type: 'navTab';
       _key: string;
       link: {
+        _type: 'basicLink';
         internalLink: {
           linkText: string;
           slug: Slug;
+        } | null;
+        externalLink: {
+          linkText: string;
+          url: string;
         } | null;
       } | null;
       secondLevelLinks: Array<{
         _type: 'secondLevelLinks';
         _key: string;
         secondLevelLink: {
+          _type: 'basicLink';
           internalLink: {
             linkText: string;
             slug: Slug;
           } | null;
+          externalLink: {
+            linkText: string;
+            url: string;
+          } | null;
         };
         thirdLevelLinks: Array<{
           _key: string;
+          _type: 'basicLink';
           internalLink: {
             linkText: string;
             slug: Slug;
+          } | null;
+          externalLink: {
+            linkText: string;
+            url: string;
           } | null;
         }> | null;
       }> | null;
@@ -661,16 +679,26 @@ export type SITE_SETTINGS_QUERYResult = {
     _type: 'footer';
     legalLinks: Array<{
       _key: string;
+      _type: 'basicLink';
       internalLink: {
         linkText: string;
         slug: Slug;
       } | null;
+      externalLink: {
+        linkText: string;
+        url: string;
+      } | null;
     }> | null;
     siteLinks: Array<{
       _key: string;
+      _type: 'basicLink';
       internalLink: {
         linkText: string;
         slug: Slug;
+      } | null;
+      externalLink: {
+        linkText: string;
+        url: string;
       } | null;
     }> | null;
     socialLinks: Array<{
@@ -700,8 +728,8 @@ export type SITEWIDE_METADATA_QUERYResult = {
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "homepage"][0]{\n  _type,\n  contentBlocks[]{\n    \n  _key,\n  _type == "heroBlock" => {\n    _type,\n    \n  _type,\n  image{\n    \n  _key,\n  imageAsset{\n    _type,\n    _key,\n    _version,\n    public_id,\n    resource_type,\n    secure_url,\n    width,\n    height,\n    duration,\n    tags\n  },\n  altText\n\n  },\n  isFullWidth,\n  bgColor,\n  title,\n  subtitle,\n  textColor,\n  showTextOutline,\n  textOutlineColor,\n  textOutlineSize,\n  ctaButton{\n    \n  link{\n    internalLink{\n      _type,\n      linkText,\n      slug{\n        current\n      }\n    },\n    externalLink{\n      _type,\n      linkText,\n      url\n    }\n  },\n  isDark\n\n  },\n  textAlignment,\n  textBlockAlignment{\n    \n  horizontalAlign,\n  verticalAlign\n\n  },\n  overlay{\n    coverage,\n    color,\n    opacity\n  }\n\n  },\n  _type == "textBlock" => {\n    _type,\n    \n  _type,\n  title,\n  subtitle,\n  body,\n  alignment\n\n  },\n  _type == "imageTextBlock" => {\n    _type,\n    \n  _type,\n  image{\n    \n  _key,\n  imageAsset{\n    _type,\n    _key,\n    _version,\n    public_id,\n    resource_type,\n    secure_url,\n    width,\n    height,\n    duration,\n    tags\n  },\n  altText\n\n  },\n  text{\n    \n  _type,\n  title,\n  subtitle,\n  body,\n  alignment\n\n  },\n  imageAlignment\n\n  },\n  _type == "carouselBlock" => {\n    _type,\n    \n  _type,\n  images[]{\n    \n  _key,\n  imageAsset{\n    _type,\n    _key,\n    _version,\n    public_id,\n    resource_type,\n    secure_url,\n    width,\n    height,\n    duration,\n    tags\n  },\n  altText\n\n  },\n  direction\n\n  }\n\n  },\n  \n  metaTitle,\n  metaDescription,\n  metaKeywords[]\n\n}': HOMEPAGE_QUERYResult;
-    '*[_type == "siteSettings"][0]{\n  mainNav{\n    _type,\n    companyLogo,\n    navTabs[]{\n      _type,\n      _key,\n      link{\n        \n  internalLink{\n    linkText,\n    slug\n  }\n\n      },\n      secondLevelLinks[]{\n        _type,\n        _key,\n        secondLevelLink{\n          \n  internalLink{\n    linkText,\n    slug\n  }\n\n        },\n        thirdLevelLinks[]{\n          _key,\n          \n  internalLink{\n    linkText,\n    slug\n  }\n\n        }\n      }\n    }\n  },\n  footer{\n    _type,\n    legalLinks[]{\n      _key,\n      \n  internalLink{\n    linkText,\n    slug\n  }\n\n    },\n    siteLinks[]{\n      _key,\n      \n  internalLink{\n    linkText,\n    slug\n  }\n\n    },\n    socialLinks[]{\n      _key,\n      icon,\n      link{\n        externalLink{\n          url,\n          linkText\n        }\n      }\n    },\n    copyrightText\n  }\n}': SITE_SETTINGS_QUERYResult;
+    '*[_type == "homepage"][0]{\n  _type,\n  contentBlocks[]{\n    \n  _key,\n  _type == "heroBlock" => {\n    _type,\n    \n  _type,\n  image{\n    \n  _key,\n  _type,\n  imageAsset{\n    _type,\n    _key,\n    _version,\n    public_id,\n    resource_type,\n    secure_url,\n    width,\n    height,\n    duration,\n    tags\n  },\n  altText\n\n  },\n  isFullWidth,\n  bgColor,\n  title,\n  subtitle,\n  textColor,\n  showTextOutline,\n  textOutlineColor,\n  textOutlineSize,\n  ctaButton{\n    \n  link{\n    internalLink{\n      _type,\n      linkText,\n      slug{\n        current\n      }\n    },\n    externalLink{\n      _type,\n      linkText,\n      url\n    }\n  },\n  isDark\n\n  },\n  textAlignment,\n  textBlockAlignment{\n    \n  horizontalAlign,\n  verticalAlign\n\n  },\n  overlay{\n    coverage,\n    color,\n    opacity\n  }\n\n  },\n  _type == "textBlock" => {\n    _type,\n    \n  _type,\n  title,\n  subtitle,\n  body,\n  alignment\n\n  },\n  _type == "imageTextBlock" => {\n    _type,\n    \n  _type,\n  image{\n    \n  _key,\n  _type,\n  imageAsset{\n    _type,\n    _key,\n    _version,\n    public_id,\n    resource_type,\n    secure_url,\n    width,\n    height,\n    duration,\n    tags\n  },\n  altText\n\n  },\n  text{\n    \n  _type,\n  title,\n  subtitle,\n  body,\n  alignment\n\n  },\n  imageAlignment\n\n  },\n  _type == "carouselBlock" => {\n    _type,\n    \n  _type,\n  images[]{\n    \n  _key,\n  _type,\n  imageAsset{\n    _type,\n    _key,\n    _version,\n    public_id,\n    resource_type,\n    secure_url,\n    width,\n    height,\n    duration,\n    tags\n  },\n  altText\n\n  },\n  direction\n\n  }\n\n  },\n  \n  metaTitle,\n  metaDescription,\n  metaKeywords[]\n\n}': HOMEPAGE_QUERYResult;
+    '*[_type == "siteSettings"][0]{\n  mainNav{\n    _type,\n    companyLogo,\n    navTabs[]{\n      _type,\n      _key,\n      link{\n        \n  _type,\n  internalLink{\n    linkText,\n    slug\n  },\n  externalLink{\n    linkText,\n    url\n  }\n\n      },\n      secondLevelLinks[]{\n        _type,\n        _key,\n        secondLevelLink{\n          \n  _type,\n  internalLink{\n    linkText,\n    slug\n  },\n  externalLink{\n    linkText,\n    url\n  }\n\n        },\n        thirdLevelLinks[]{\n          _key,\n          \n  _type,\n  internalLink{\n    linkText,\n    slug\n  },\n  externalLink{\n    linkText,\n    url\n  }\n\n        }\n      }\n    }\n  },\n  footer{\n    _type,\n    legalLinks[]{\n      _key,\n      \n  _type,\n  internalLink{\n    linkText,\n    slug\n  },\n  externalLink{\n    linkText,\n    url\n  }\n\n    },\n    siteLinks[]{\n      _key,\n      \n  _type,\n  internalLink{\n    linkText,\n    slug\n  },\n  externalLink{\n    linkText,\n    url\n  }\n\n    },\n    socialLinks[]{\n      _key,\n      icon,\n      link{\n        externalLink{\n          url,\n          linkText\n        }\n      }\n    },\n    copyrightText\n  }\n}': SITE_SETTINGS_QUERYResult;
     '*[_type == "siteSettings"][0]{\n  seo{\n    metaTitle,\n    metaDescription,\n    metaKeywords[]\n  }\n}': SITEWIDE_METADATA_QUERYResult;
   }
 }

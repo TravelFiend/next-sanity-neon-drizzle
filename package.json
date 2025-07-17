@@ -11,9 +11,9 @@
     "test:lint": "next lint",
     "test:prettier": "prettier --check ./src",
     "prepare": "husky",
-    "ts-check": "bunx tsc --noEmit",
-    "ts-schema": "bunx sanity schema extract --enforce-required-fields --workspace development",
-    "ts-gen": "bunx sanity typegen generate",
+    "ts:check": "bunx tsc --noEmit",
+    "ts:schema": "bunx sanity schema extract --enforce-required-fields --workspace development",
+    "ts:gen": "bunx sanity typegen generate",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

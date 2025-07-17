@@ -24,7 +24,7 @@ describe('MainHeader', () => {
 
   it('handles missing logo gracefully', () => {
     const { container } = render(
-      <MainHeader navData={{ ...mainHeaderMock, companyLogo: undefined }} />
+      <MainHeader navData={{ ...mainHeaderMock!, companyLogo: null }} />
     );
     const logo = container.querySelector('a[href="/"] div');
     expect(logo).toBeNull();

@@ -4,13 +4,13 @@ import { Fragment, useEffect } from 'react';
 import Link from 'next/link';
 import useHoverState from '@/lib/hooks/useHoverState';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import type { NavTab } from '@/sanity/types';
+import { SecondLevelLinksRes } from '@/sanity/types/writtenTypes';
 
 type DesktopSubNavProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   parentLink?: string;
-  currentChildren?: NavTab['secondLevelLinks'];
+  currentChildren?: SecondLevelLinksRes;
 };
 
 const DesktopSubNav: React.FC<DesktopSubNavProps> = ({

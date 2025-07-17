@@ -1,6 +1,6 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import { setTextAlignment } from '@/lib/utils/stylesLookup';
-import type { HorizontalAlign } from '@/sanity/types';
+import type { HorizontalAlign } from '@sanityTypes/generatedTypes';
 
 type TextBoxProps = {
   title?: string;

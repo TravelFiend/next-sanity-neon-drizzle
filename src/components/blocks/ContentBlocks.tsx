@@ -2,7 +2,7 @@ import TextSection from './TextSection';
 import HeroSection from './HeroSection';
 import CarouselSection from './CarouselSection';
 import ImageTextSection from './ImageTextSection';
-import type { ContentBlocks } from '@/sanity/types';
+import type { ContentBlocks } from '@sanityTypes/generatedTypes';
 
 type ContentBlocksProps = {
   contentBlocks: ContentBlocks;

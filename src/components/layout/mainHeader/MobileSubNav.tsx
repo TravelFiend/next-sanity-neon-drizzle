@@ -2,14 +2,17 @@ import { useState, Fragment, useEffect } from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type { NavTab, SecondLevelLinks } from '@/sanity/types';
+import {
+  SecondLevelLinksRes,
+  SingleSecondLevelLinkRes
+} from '@/sanity/types/writtenTypes';
 
 type MobileSubNavProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setAreChildrenOpen: React.Dispatch<React.SetStateAction<boolean>>;
   parentLink?: string;
-  currentChildren?: NavTab['secondLevelLinks'];
+  currentChildren?: SecondLevelLinksRes;
 };
 
 const MobileSubNav: React.FC<MobileSubNavProps> = ({
@@ -19,9 +22,9 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
   parentLink,
   currentChildren
 }) => {
-  const [expandedChild, setExpandedChild] = useState<
-    ({ _key: string } & SecondLevelLinks) | null
-  >(null);
+  const [expandedChild, setExpandedChild] =
+    useState<SingleSecondLevelLinkRes | null>(null);
+
   const pathName = usePathname();
 
   useEffect(() => {
@@ -29,7 +32,7 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
   }, [pathName]);
 
   useEffect(() => {
-    setIsOpen(true);
+    return currentChildren ? setIsOpen(true) : setIsOpen(false);
   }, [currentChildren, setIsOpen]);
 
   const handleBackClick = () => {
@@ -37,7 +40,7 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
     setExpandedChild(null);
   };
 
-  const handleChildLinkClick = (child: { _key: string } & SecondLevelLinks) => {
+  const handleChildLinkClick = (child: SingleSecondLevelLinkRes) => {
     setExpandedChild(prevExpanded =>
       prevExpanded?.thirdLevelLinks === child.thirdLevelLinks ? null : child
     );
@@ -57,17 +60,19 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
       </li>
 
       {currentChildren?.map((child, idx) => {
+        if (!child) return null;
+
         const { _key, secondLevelLink, thirdLevelLinks } = child;
 
-        const childSlug = secondLevelLink.internalLink?.slug.current;
-        const childText = secondLevelLink.internalLink?.linkText;
+        const childSlug = secondLevelLink?.internalLink?.slug?.current;
+        const childText = secondLevelLink?.internalLink?.linkText;
 
         return (
           <Fragment key={_key}>
-            {idx === 0 ? (
+            {idx === 0 && parentLink ? (
               <li className="font-semibold">
                 <Link href={`/${parentLink}`}>
-                  BROWSE ALL {parentLink?.toUpperCase()}
+                  BROWSE ALL {parentLink.toUpperCase()}
                 </Link>
               </li>
             ) : null}
@@ -91,7 +96,7 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
                   {thirdLevelLinks.map(
                     ({ _key: grandChildKey, internalLink }, idx) => (
                       <Fragment key={grandChildKey}>
-                        {idx === 0 ? (
+                        {idx === 0 && parentLink && childSlug ? (
                           <Link
                             href={`/${parentLink}/${childSlug}`}
                             className="font-semibold"
@@ -100,7 +105,7 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
                           </Link>
                         ) : null}
                         <Link
-                          href={`/${parentLink}/${childSlug}/${internalLink?.slug.current}`}
+                          href={`/${parentLink}/${childSlug}/${internalLink?.slug?.current || ''}`}
                         >
                           {internalLink?.linkText}
                         </Link>
@@ -110,7 +115,7 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
                 </ul>
               </li>
             ) : (
-              <Link className="mr-4" href={`/${parentLink}/${childSlug}`}>
+              <Link className="mr-4" href={`/${parentLink}/${childSlug || ''}`}>
                 {childText}
               </Link>
             )}

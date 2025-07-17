@@ -27,7 +27,7 @@ const eslintConfig = [{
     '**/.env*',
     '**/.sanity',
     '**/README.md',
-    '**/src/sanity/types.ts'
+    '**/src/sanity/types/generatedTypes.ts'
   ]
 },
 ...studio,
@@ -57,7 +57,8 @@ const eslintConfig = [{
       alias: {
         map: [
           ['@', './src'],
-          ['@groq', './src/lib/actions/groqQueries']
+          ['@groq', './src/lib/actions/groqQueries'],
+          ['@sanityTypes', './src/sanity/types']
       ],
         extensions: ['.js', '.jsx', '.ts', '.tsx']
       }
