@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import MainHeader from '../MainHeader';
-import mainHeaderMock from '../__tests__/mocks/mainHeaderMock';
+import mainHeaderMock from '../mocks/mainHeaderMock';
 
 const meta = {
   title: 'UI/MainHeader',
   component: MainHeader,
   parameters: {
-    layout: 'centered'
+    layout: 'fullscreen'
   },
   tags: ['autodocs'],
   args: {
@@ -18,3 +18,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const NoLogo: Story = {
+  args: {
+    navData: {
+      ...mainHeaderMock,
+      companyLogo: undefined
+    }
+  }
+};
+
+export const NoLinks: Story = {
+  args: {
+    navData: {
+      ...mainHeaderMock,
+      navTabs: []
+    }
+  }
+};

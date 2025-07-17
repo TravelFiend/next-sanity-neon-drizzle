@@ -82,17 +82,20 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
 
   return (
     <nav className="block h-full bg-cyan-600">
-      <button
-        className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
-        onClick={handleBurgerClick}
-      >
-        {[...Array(3)].map((_, index) => (
-          <div
-            key={index}
-            className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
-          />
-        ))}
-      </button>
+      {linkData?.length ? (
+        <button
+          className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
+          onClick={handleBurgerClick}
+          aria-label="Open navigation menu"
+        >
+          {[...Array(3)].map((_, index) => (
+            <div
+              key={index}
+              className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
+            />
+          ))}
+        </button>
+      ) : null}
 
       <ul
         className={conditionalClasses(

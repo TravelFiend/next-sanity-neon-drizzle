@@ -19,7 +19,9 @@ const MainHeader: React.FC<MainHeaderProps> = ({ navData }) => {
             aria-label="Company logo: Link to home page"
           />
         </Link>
-      ) : null}
+      ) : (
+        <span className="ml-6 block size-12 sm:size-16" aria-hidden="true" />
+      )}
 
       <Nav linkData={navData.navTabs} />
     </header>
