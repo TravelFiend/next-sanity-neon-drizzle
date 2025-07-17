@@ -1,9 +1,9 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import CloudinaryImg from './CloudinaryImg';
-import type { CarouselBlock } from '@sanityTypes/generatedTypes';
+import type { CarouselBlockRes } from '@sanityTypes/writtenTypes';
 
 type CardRowProps = {
-  cards: CarouselBlock['images'];
+  cards: CarouselBlockRes['images'];
 };
 
 const CardRow: React.FC<CardRowProps> = ({ cards }) => {

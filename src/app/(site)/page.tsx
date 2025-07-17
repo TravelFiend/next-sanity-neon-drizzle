@@ -1,5 +1,5 @@
 import { getHomepage } from '@/lib/groqQueries/queries/homepage';
-// import ContentBlocks from '@/components/blocks/ContentBlocks';
+import ContentBlocks from '@/components/blocks/ContentBlocks';
 
 const Home = async () => {
   const homepage = await getHomepage();
@@ -7,9 +7,9 @@ const Home = async () => {
     throw new Error('Homepage data not found');
   }
 
-  // const { contentBlocks } = homepage;
+  const { contentBlocks } = homepage;
 
-  // return <ContentBlocks contentBlocks={contentBlocks} />;
+  return <ContentBlocks contentBlocks={contentBlocks} />;
 };
 
 export default Home;

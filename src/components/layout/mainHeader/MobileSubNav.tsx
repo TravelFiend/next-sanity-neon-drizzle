@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import {
   SecondLevelLinksRes,
   SingleSecondLevelLinkRes
-} from '@/sanity/types/writtenTypes';
+} from '@sanityTypes/writtenTypes';
 
 type MobileSubNavProps = {
   isOpen: boolean;

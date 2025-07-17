@@ -10,10 +10,10 @@ import {
 } from '@/lib/utils/stylesLookup';
 import LinkButton from '../common/LinkButton';
 import CloudinaryImg from '../common/CloudinaryImg';
-import type { HeroBlock } from '@sanityTypes/generatedTypes';
+import { HeroBlockRes } from '@sanityTypes/writtenTypes';
 
 type HeroSectionProps = {
-  heroData: HeroBlock;
+  heroData: HeroBlockRes;
   index: number;
 };
 // TODO: implement Sanity text shadow and text shadow color selections on FE

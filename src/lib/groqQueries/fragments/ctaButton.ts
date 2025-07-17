@@ -1,4 +1,5 @@
 const CTAButtonFragment = `
+  _type,
   link{
     internalLink{
       _type,

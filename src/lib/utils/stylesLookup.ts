@@ -17,7 +17,7 @@ const bgColorClasses: Record<SiteColorsSelector, string> = {
   black: 'bg-black'
 };
 
-const setBgColor = (color?: SiteColorsSelector): string => {
+const setBgColor = (color?: SiteColorsSelector | null): string => {
   return color ? bgColorClasses[color] : '';
 };
 
@@ -31,7 +31,7 @@ const textColorClasses: Record<SiteColorsSelector, string> = {
   black: 'text-black'
 };
 
-const setTextColor = (color?: SiteColorsSelector): string => {
+const setTextColor = (color?: SiteColorsSelector | null): string => {
   return textColorClasses[color ?? 'white'];
 };
 
@@ -69,8 +69,8 @@ const textOutlineClasses: Record<
 };
 
 const setTextOutline = (
-  color?: SiteColorsSelector,
-  size?: OutlineSize
+  color?: SiteColorsSelector | null,
+  size?: OutlineSize | null
 ): string => {
   return color && size ? textOutlineClasses[size][color] : '';
 };
@@ -90,7 +90,7 @@ const opacityClasses: Record<Opacity, string> = {
   100: 'opacity-100'
 };
 
-const setOpacity = (opacity?: Opacity): string => {
+const setOpacity = (opacity?: Opacity | null): string => {
   return opacityClasses[opacity ?? 100];
 };
 
@@ -100,7 +100,7 @@ const textAlignClasses: Record<HorizontalAlign, string> = {
   right: 'text-right'
 };
 
-const setTextAlignment = (lrc?: HorizontalAlign): string => {
+const setTextAlignment = (lrc?: HorizontalAlign | null): string => {
   return textAlignClasses[lrc ?? 'left'];
 };
 
@@ -110,7 +110,9 @@ const JustifyClasses: Record<HorizontalAlign, string> = {
   right: 'justify-end'
 };
 
-const setElementHorizontalAlignment = (lrc?: HorizontalAlign): string => {
+const setElementHorizontalAlignment = (
+  lrc?: HorizontalAlign | null
+): string => {
   return JustifyClasses[lrc ?? 'left'];
 };
 
@@ -120,7 +122,7 @@ const VerticalAlignClasses: Record<VerticalAlign, string> = {
   bottom: 'items-end'
 };
 
-const setElementVerticalAlignment = (tcb?: VerticalAlign): string => {
+const setElementVerticalAlignment = (tcb?: VerticalAlign | null): string => {
   return VerticalAlignClasses[tcb ?? 'top'];
 };
 

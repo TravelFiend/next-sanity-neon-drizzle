@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Nav from './Nav';
-import { MainNavRes } from '@/sanity/types/writtenTypes';
+import { MainNavRes } from '@sanityTypes/writtenTypes';
 
 type MainHeaderProps = {
   navData: MainNavRes;

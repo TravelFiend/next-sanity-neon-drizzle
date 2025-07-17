@@ -6,11 +6,11 @@ import CloudinaryImg from './CloudinaryImg';
 import { useEffect } from 'react';
 import CardRow from './CardRow';
 import Button from './Button';
-import type { CarouselBlock } from '@sanityTypes/generatedTypes';
+import { CarouselBlockRes } from '@sanityTypes/writtenTypes';
 
 type CarouselProps = {
-  slidesData: CarouselBlock['images'];
-  direction?: CarouselBlock['direction'];
+  slidesData: CarouselBlockRes['images'];
+  direction?: CarouselBlockRes['direction'];
 };
 
 const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
@@ -41,7 +41,6 @@ const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
         <div
           ref={emblaRef}
           className={conditionalClasses(
-            // Removed onKeyDown and tabIndex
             'relative flex h-full items-center justify-between overflow-hidden',
             direction === 'vertical' ? 'flex-col' : 'w-full'
           )}
@@ -72,15 +71,12 @@ const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
               onClick={() => emblaApi!.scrollPrev()}
               label="Prev"
               ariaLabel="Previous slide"
-              // Keyboard navigation for carousel is handled by these buttons
-              // Ensure your Button component is a proper <button> element
             />
             <Button
               className="rounded-full"
               onClick={() => emblaApi!.scrollNext()}
               label="Next"
               ariaLabel="Next slide"
-              // Ensure your Button component is a proper <button> element
             />
           </div>
         </div>
