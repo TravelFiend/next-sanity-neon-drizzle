@@ -1,4 +1,4 @@
-import { getHomepage } from '@/lib/groqQueries/queries/homepage';
+import { getHomepage } from '@groq/queries/homepage';
 import ContentBlocks from '@/components/blocks/ContentBlocks';
 
 const Home = async () => {

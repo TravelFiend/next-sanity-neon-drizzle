@@ -6,7 +6,7 @@ import CloudinaryImg from './CloudinaryImg';
 import { useEffect } from 'react';
 import CardRow from './CardRow';
 import Button from './Button';
-import { CarouselBlockRes } from '@sanityTypes/writtenTypes';
+import type { CarouselBlockRes } from '@sanityTypes/writtenTypes';
 
 type CarouselProps = {
   slidesData: CarouselBlockRes['images'];

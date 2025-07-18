@@ -1,7 +1,6 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import { HeroBlockRes } from '@sanityTypes/writtenTypes';
-// import type { CtaButton } from '@sanityTypes/generatedTypes';
 import Link from 'next/link';
+import type { HeroBlockRes } from '@sanityTypes/writtenTypes';
 
 type LinkButtonProps = {
   linkData: HeroBlockRes['ctaButton'];

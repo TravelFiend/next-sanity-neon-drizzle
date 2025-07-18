@@ -2,7 +2,7 @@ import { useState, Fragment, useEffect } from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
+import type {
   SecondLevelLinksRes,
   SingleSecondLevelLinkRes
 } from '@sanityTypes/writtenTypes';
