@@ -30,3 +30,20 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {};
+
+export const Closed = {
+  args: {
+    isOpen: false
+  }
+};
+
+export const NoThirdLevelLinks = {
+  args: {
+    currentChildren: [
+      {
+        ...secondLevelLinksMock![0],
+        thirdLevelLinks: null
+      }
+    ]
+  }
+};
