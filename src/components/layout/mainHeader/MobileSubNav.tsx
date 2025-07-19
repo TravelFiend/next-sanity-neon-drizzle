@@ -97,7 +97,7 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
                 >
                   {thirdLevelLinks.map(
                     ({ _key: grandChildKey, internalLink }, idx) => (
-                      <Fragment key={grandChildKey}>
+                      <li key={grandChildKey}>
                         {idx === 0 && parentLink && childSlug ? (
                           <Link
                             href={`/${parentLink}/${childSlug}`}
@@ -111,15 +111,20 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
                         >
                           {internalLink?.linkText}
                         </Link>
-                      </Fragment>
+                      </li>
                     )
                   )}
                 </ul>
               </li>
             ) : (
-              <Link className="mr-4" href={`/${parentLink}/${childSlug || ''}`}>
-                {childText}
-              </Link>
+              <li>
+                <Link
+                  className="mr-4"
+                  href={`/${parentLink}/${childSlug || ''}`}
+                >
+                  {childText}
+                </Link>
+              </li>
             )}
           </Fragment>
         );
