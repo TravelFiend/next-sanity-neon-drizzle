@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, Fragment, useEffect } from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';

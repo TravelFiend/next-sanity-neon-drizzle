@@ -1,4 +1,48 @@
-import { MainNavRes } from '@/sanity/types/derivedTypes';
+import { MainNavRes, SecondLevelLinksRes } from '@/sanity/types/derivedTypes';
+
+const secondLevelLinksMock: SecondLevelLinksRes = [
+  {
+    _key: '2db255e04ec1',
+    _type: 'secondLevelLinks',
+    secondLevelLink: {
+      _type: 'basicLink',
+      internalLink: {
+        linkText: 'Printmaking',
+        slug: {
+          _type: 'slug',
+          current: 'printmaking'
+        }
+      },
+      externalLink: null
+    },
+    thirdLevelLinks: [
+      {
+        _key: '39fd7fe2416f',
+        _type: 'basicLink',
+        internalLink: {
+          linkText: 'Serigraphy',
+          slug: {
+            _type: 'slug',
+            current: 'serigraphy'
+          }
+        },
+        externalLink: null
+      },
+      {
+        _key: 'ab4379f9cc92',
+        _type: 'basicLink',
+        internalLink: {
+          linkText: 'Lithography',
+          slug: {
+            _type: 'slug',
+            current: 'lithography'
+          }
+        },
+        externalLink: null
+      }
+    ]
+  }
+];
 
 const mainHeaderMock: MainNavRes = {
   _type: 'mainNav',
@@ -19,49 +63,7 @@ const mainHeaderMock: MainNavRes = {
         },
         externalLink: null
       },
-      secondLevelLinks: [
-        {
-          _key: '2db255e04ec1',
-          _type: 'secondLevelLinks',
-          secondLevelLink: {
-            _type: 'basicLink',
-            internalLink: {
-              linkText: 'Printmaking',
-              slug: {
-                _type: 'slug',
-                current: 'printmaking'
-              }
-            },
-            externalLink: null
-          },
-          thirdLevelLinks: [
-            {
-              _key: '39fd7fe2416f',
-              _type: 'basicLink',
-              internalLink: {
-                linkText: 'Serigraphy',
-                slug: {
-                  _type: 'slug',
-                  current: 'serigraphy'
-                }
-              },
-              externalLink: null
-            },
-            {
-              _key: 'ab4379f9cc92',
-              _type: 'basicLink',
-              internalLink: {
-                linkText: 'Lithography',
-                slug: {
-                  _type: 'slug',
-                  current: 'lithography'
-                }
-              },
-              externalLink: null
-            }
-          ]
-        }
-      ]
+      secondLevelLinks: secondLevelLinksMock
     },
     {
       _key: 'bb61b20c2137',
@@ -115,4 +117,4 @@ const mainHeaderMock: MainNavRes = {
   ]
 };
 
-export default mainHeaderMock;
+export { secondLevelLinksMock, mainHeaderMock };
