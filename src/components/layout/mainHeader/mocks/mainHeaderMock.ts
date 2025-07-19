@@ -1,4 +1,4 @@
-import { MainNavRes } from '@/sanity/types/writtenTypes';
+import { MainNavRes } from '@/sanity/types/derivedTypes';
 
 const mainHeaderMock: MainNavRes = {
   _type: 'mainNav',

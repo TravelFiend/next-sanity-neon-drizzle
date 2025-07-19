@@ -3,10 +3,10 @@ import type {
   SITE_SETTINGS_QUERYResult
 } from './generatedTypes';
 
-// This is the non-nullable version of the Homepage query result
+// MainHeader
 export type HomepageRes = NonNullable<HOMEPAGE_QUERYResult>;
 
-// This is the type of the 'contentBlocks' array (which itself can be null or an array of union types)
+// ContentBlocks
 export type HomepageContentBlocksArray = HomepageRes['contentBlocks'];
 
 // This is the union type of all possible content block items
@@ -39,8 +39,6 @@ export type CarouselBlockRes = ContentBlockUnionType extends infer T
     ? T
     : never
   : never;
-
-// ... other derived types for navigation etc.
 
 // MainHeader and child components
 export type MainNavRes = NonNullable<SITE_SETTINGS_QUERYResult>['mainNav'];

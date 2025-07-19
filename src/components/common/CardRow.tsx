@@ -1,6 +1,6 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import CloudinaryImg from './CloudinaryImg';
-import type { CarouselBlockRes } from '@sanityTypes/writtenTypes';
+import type { CarouselBlockRes } from '@/sanity/types/derivedTypes';
 
 type CardRowProps = {
   cards: CarouselBlockRes['images'];

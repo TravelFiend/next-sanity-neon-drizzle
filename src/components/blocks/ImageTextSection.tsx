@@ -1,7 +1,7 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import TextBox from './TextBox';
 import CloudinaryImg from '../common/CloudinaryImg';
-import type { ImageTextBlockRes } from '@sanityTypes/writtenTypes';
+import type { ImageTextBlockRes } from '@/sanity/types/derivedTypes';
 
 type ImageTextBlockProps = {
   imageTextData: ImageTextBlockRes;

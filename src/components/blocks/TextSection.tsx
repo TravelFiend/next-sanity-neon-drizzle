@@ -1,5 +1,5 @@
 import TextBox from './TextBox';
-import type { TextBlockRes } from '@sanityTypes/writtenTypes';
+import type { TextBlockRes } from '@/sanity/types/derivedTypes';
 
 type TextSectionProps = {
   textData: {

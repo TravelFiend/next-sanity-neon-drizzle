@@ -9,7 +9,7 @@ import DesktopSubNav from './DesktopSubNav';
 import type {
   NavTabsRes,
   SecondLevelLinksRes
-} from '@sanityTypes/writtenTypes';
+} from '@/sanity/types/derivedTypes';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
