@@ -66,9 +66,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
           />
           {overlay?.coverage === 'fullImage' ? (
             <div
-              className={conditionalClasses(
-                `absolute z-10 h-full w-full ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`
-              )}
+              className={`absolute z-10 h-full w-full ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`}
             />
           ) : null}
 
