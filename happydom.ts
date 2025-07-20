@@ -12,4 +12,4 @@ bunExpect.extend({
   ...(toHaveNoViolations as any)
 });
 
-export { bunExpect as expect };
+Object.assign(globalThis, await import('bun:test'));

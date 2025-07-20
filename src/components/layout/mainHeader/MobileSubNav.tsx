@@ -51,8 +51,8 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
   return (
     <ul
       className={conditionalClasses(
-        'absolute left-1/6 flex w-5/6 translate-x-full flex-col bg-red-700 transition-transform sm:hidden',
-        isOpen ? '-translate-x-0' : ''
+        'absolute left-1/6 flex w-5/6 flex-col bg-red-700 transition-transform sm:hidden',
+        isOpen ? '-translate-x-0' : 'translate-x-full'
       )}
     >
       <li className="cursor-pointer">
@@ -81,7 +81,6 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
             {thirdLevelLinks ? (
               <li>
                 <button
-                  type="button"
                   onClick={() => handleChildLinkClick(child)}
                   className="flex w-full cursor-pointer justify-between"
                 >
@@ -97,21 +96,35 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
                 >
                   {thirdLevelLinks.map(
                     ({ _key: grandChildKey, internalLink }, idx) => (
-                      <li key={grandChildKey}>
+                      <Fragment key={grandChildKey}>
                         {idx === 0 && parentLink && childSlug ? (
-                          <Link
-                            href={`/${parentLink}/${childSlug}`}
-                            className="font-semibold"
-                          >
-                            BROWSE ALL {childText?.toUpperCase()}
-                          </Link>
-                        ) : null}
-                        <Link
-                          href={`/${parentLink}/${childSlug}/${internalLink?.slug?.current || ''}`}
-                        >
-                          {internalLink?.linkText}
-                        </Link>
-                      </li>
+                          <>
+                            <li key={grandChildKey}>
+                              <Link
+                                href={`/${parentLink}/${childSlug}`}
+                                className="font-semibold"
+                              >
+                                BROWSE ALL {childText?.toUpperCase()}
+                              </Link>
+                            </li>
+                            <li>
+                              <Link
+                                href={`/${parentLink}/${childSlug}/${internalLink?.slug?.current || ''}`}
+                              >
+                                {internalLink?.linkText}
+                              </Link>
+                            </li>
+                          </>
+                        ) : (
+                          <li>
+                            <Link
+                              href={`/${parentLink}/${childSlug}/${internalLink?.slug?.current || ''}`}
+                            >
+                              {internalLink?.linkText}
+                            </Link>
+                          </li>
+                        )}
+                      </Fragment>
                     )
                   )}
                 </ul>

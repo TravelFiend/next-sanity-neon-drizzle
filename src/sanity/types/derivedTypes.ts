@@ -7,38 +7,18 @@ import type {
 export type HomepageRes = NonNullable<HOMEPAGE_QUERYResult>;
 
 // ContentBlocks
-export type HomepageContentBlocksArray = HomepageRes['contentBlocks'];
+export type HomepageContentBlocksRes = HomepageRes['contentBlocks'];
+type ContentBlockUnionType = NonNullable<HomepageContentBlocksRes>[number];
 
-// This is the union type of all possible content block items
-type ContentBlockUnionType = NonNullable<HomepageContentBlocksArray>[number];
+type ExtractBlock<T extends ContentBlockUnionType['_type']> = Extract<
+  ContentBlockUnionType,
+  { _type: T }
+>;
 
-// *** THIS IS THE CRUCIAL DERIVATION FOR IMAGETEXTSECTION ***
-// We are extracting the exact shape of the 'imageTextBlock' from the HOMEPAGE_QUERYResult's union.
-// This type WILL include `string | null` for `public_id`, `altText`, etc.
-export type ImageTextBlockRes = ContentBlockUnionType extends infer T
-  ? T extends { _type: 'imageTextBlock' }
-    ? T
-    : never
-  : never;
-
-// Derive other block types similarly for consistency in ContentBlocks.tsx
-export type HeroBlockRes = ContentBlockUnionType extends infer T
-  ? T extends { _type: 'heroBlock' }
-    ? T
-    : never
-  : never;
-
-export type TextBlockRes = ContentBlockUnionType extends infer T
-  ? T extends { _type: 'textBlock' }
-    ? T
-    : never
-  : never;
-
-export type CarouselBlockRes = ContentBlockUnionType extends infer T
-  ? T extends { _type: 'carouselBlock' }
-    ? T
-    : never
-  : never;
+export type ImageTextBlockRes = ExtractBlock<'imageTextBlock'>;
+export type HeroBlockRes = ExtractBlock<'heroBlock'>;
+export type TextBlockRes = ExtractBlock<'textBlock'>;
+export type CarouselBlockRes = ExtractBlock<'carouselBlock'>;
 
 // MainHeader and child components
 export type MainNavRes = NonNullable<SITE_SETTINGS_QUERYResult>['mainNav'];

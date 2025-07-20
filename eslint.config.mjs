@@ -33,7 +33,7 @@ const eslintConfig = [{
 ...studio,
 ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:jsx-a11y/recommended'),
 {
-  files: ['**/*.test.{ts,tsx}'],
+  files: ['./**/*.test.{ts,tsx}'],
   plugins: { jest: pluginJest },
   languageOptions: {
     globals: pluginJest.environments.globals.globals
@@ -72,7 +72,7 @@ const eslintConfig = [{
     'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
     'id-length': ['error', {
       min: 3,
-      exceptions: ['S', 'of', 'to', 'sm', 'md', 'lg', 'js', 'e', '_']
+      exceptions: ['S', 'of', 'to', 'sm', 'md', 'lg', 'js', 'e', '_', 'it']
     }],
     'import/no-anonymous-default-export': 'error',
     'import/order': ['error', { groups: ['builtin'] }],
