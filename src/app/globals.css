@@ -104,6 +104,12 @@
   .font-outline-highlight-lg {
     -webkit-text-stroke: 0.25rem var(--color-highlight);
   }
+
+  html,
+  body {
+    overflow-x: hidden;
+    height: 100%;
+  }
 }
 
 @utility text-balance {

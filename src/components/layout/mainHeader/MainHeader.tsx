@@ -12,7 +12,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({ navData }) => {
   const { companyLogo, navTabs } = navData;
 
   return (
-    <header className="sticky top-0 z-50 flex h-12 w-full justify-between bg-primary/80 backdrop-blur-sm sm:h-16 dark:bg-secondary/80">
+    <header className="fixed top-0 z-50 flex h-12 w-full justify-between bg-primary/80 backdrop-blur-sm sm:h-16 dark:bg-secondary/80">
       {companyLogo ? (
         <Link href="/">
           <div
