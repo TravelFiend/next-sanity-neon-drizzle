@@ -25,7 +25,7 @@ export const RichImage = defineType({
             imageAsset: unknown;
           };
 
-          if (parent?.imageAsset && value) {
+          if (!parent?.imageAsset && value) {
             return 'Cannot have alt text without an image';
           }
           if (parent?.imageAsset && !value) {
