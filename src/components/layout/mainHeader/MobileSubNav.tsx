@@ -93,6 +93,7 @@ const MobileSubNav: React.FC<MobileSubNavProps> = ({
                     'w-full flex-col bg-fuchsia-900',
                     expandedChild?._key === _key ? 'flex' : 'hidden'
                   )}
+                  aria-hidden={expandedChild?._key === _key ? 'false' : 'true'}
                 >
                   {thirdLevelLinks.map(
                     ({ _key: grandChildKey, internalLink }, idx) => (

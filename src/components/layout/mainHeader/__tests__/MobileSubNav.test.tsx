@@ -75,11 +75,16 @@ describe('MobileSubNav component', () => {
       name: /Printmaking/i
     });
     expect(expandableButton).toHaveTextContent(/↓|&darr;/i);
-    // TODO: uncomment these lines when `mobile menu fix` PR is merged
-    // const thirdLevelLink = screen.queryByText('Lithography');
-    // expect(thirdLevelLink).not.toBeVisible();
-    // fireEvent.click(expandableButton);
-    // expect(thirdLevelLink).toBeInTheDocument();
+
+    const thirdLevelLink = screen.queryByText('Lithography');
+
+    expect(thirdLevelLink?.closest('ul')).not.toHaveClass('flex');
+    expect(thirdLevelLink?.closest('ul')).toHaveClass('hidden');
+
+    fireEvent.click(expandableButton);
+
+    expect(thirdLevelLink?.closest('ul')).not.toHaveClass('hidden');
+    expect(thirdLevelLink?.closest('ul')).toHaveClass('flex');
   });
 
   it('Does not render down arrow when there are no 3rd level links', () => {
