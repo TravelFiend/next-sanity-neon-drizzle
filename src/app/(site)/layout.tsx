@@ -9,6 +9,7 @@ const siteLayout = async ({ children }: { children: React.ReactNode }) => {
 
   if (!siteSettingsData) {
     console.warn('Site settings data is null');
+
     return (
       <>
         <main>{children}</main>
@@ -29,6 +30,7 @@ const siteLayout = async ({ children }: { children: React.ReactNode }) => {
       <Suspense fallback={<div className="h-12 sm:h-16" />}>
         {mainNav ? <MainHeader navData={mainNav} /> : null}
       </Suspense>
+
       <main>{children}</main>
       <SanityLive />
       {footer ? <Footer footerData={footer} /> : null}
