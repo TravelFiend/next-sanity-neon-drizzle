@@ -44,9 +44,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
       <section
         className={conditionalClasses(
           'z-0 m-auto h-screen w-full',
-          isFullWidth ? '' : 'p-20',
-          isFirst ? 'absolute top-0' : 'h-[70vh]',
-          isFirst && !isFullWidth ? 'pt-28' : '',
+          isFullWidth ? '' : 'p-10 sm:p-20',
+          isFirst ? '' : 'h-[70vh]',
           setBgColor(bgColor)
         )}
       >
@@ -66,25 +65,27 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
           />
           {overlay?.coverage === 'fullImage' ? (
             <div
-              className={`absolute z-10 h-full w-full ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`}
+              className={`absolute inset-0 z-10 ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`}
             />
           ) : null}
 
           <div
             className={conditionalClasses(
-              'absolute',
-              isFullWidth ? 'm-16 p-20' : 'm-6 p-14',
+              'absolute z-20',
+              isFullWidth
+                ? 'm-8 p-10 md:m-16 md:p-20'
+                : 'm-3 p-7 md:m-6 md:p-14',
               setTextAlignment(textAlignment)
             )}
           >
             {overlay?.coverage === 'textOnly' ? (
               <div
-                className={`absolute bottom-0 left-0 h-full w-full rounded-2xl ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`}
+                className={`absolute inset-0 rounded-2xl ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`}
               />
             ) : null}
             <h1
               className={conditionalClasses(
-                'text-outline-secondary-md text-7xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]',
+                'text-outline-secondary-md relative z-30 text-2xl font-bold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] md:text-7xl',
                 setTextColor(textColor),
                 showTextOutline &&
                   setTextOutline(textOutlineColor, textOutlineSize)
@@ -94,7 +95,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
             </h1>
             <p
               className={conditionalClasses(
-                'font-outline-primary-xs text-2xl text-shadow-lg',
+                'font-outline-primary-xs relative z-30 text-lg text-shadow-lg md:text-2xl',
                 setTextColor(textColor),
                 showTextOutline && setTextOutline(textOutlineColor, 'sm')
               )}
@@ -105,7 +106,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
           </div>
         </div>
       </section>
-      {isFirst ? <div className="-mt-12 h-screen sm:-mt-16" /> : null}
+
+      {isFirst ? (
+        <div
+          className="-mt-[theme(height.12)] min-h-[theme(height.12)] w-full sm:-mt-[theme(height.16)] sm:min-h-[theme(height.16)]"
+          aria-hidden="true"
+        />
+      ) : null}
     </>
   );
 };
