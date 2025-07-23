@@ -1,7 +1,7 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { mock } from 'bun:test';
-import MobileSubNav from '../MobileSubNav';
+import MobileSecondLinks from '../MobileSecondLinks';
 import { secondLevelLinksMock } from '../mocks/mainHeaderMock';
 import { resizeWindow } from '@/lib/utils/testingUtils';
 
@@ -10,8 +10,8 @@ let setAreChildrenOpenMock: ReturnType<typeof mock>;
 
 // Reusable helper to generate props with optional overrides
 const getProps = (
-  overrides: Partial<Parameters<typeof MobileSubNav>[0]> = {}
-): Parameters<typeof MobileSubNav>[0] => ({
+  overrides: Partial<Parameters<typeof MobileSecondLinks>[0]> = {}
+): Parameters<typeof MobileSecondLinks>[0] => ({
   isOpen: true,
   setIsOpen: setIsOpenMock,
   setAreChildrenOpen: setAreChildrenOpenMock,
@@ -30,15 +30,15 @@ afterEach(() => {
   setAreChildrenOpenMock.mockReset();
 });
 
-describe('MobileSubNav component', () => {
+describe('MobileSecondLinks component', () => {
   it('Has no accessibility violations', async () => {
-    const { container } = render(<MobileSubNav {...getProps()} />);
+    const { container } = render(<MobileSecondLinks {...getProps()} />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('Calls setAreChildrenOpen(false) and hides on Back click', () => {
-    render(<MobileSubNav {...getProps()} />);
+    render(<MobileSecondLinks {...getProps()} />);
 
     const backButton = screen.getByRole('button', { name: /← back/i });
     fireEvent.click(backButton);
@@ -62,7 +62,7 @@ describe('MobileSubNav component', () => {
   });
 
   it('Renders on smaller screens, hidden on larger screens', () => {
-    const { container } = render(<MobileSubNav {...getProps()} />);
+    const { container } = render(<MobileSecondLinks {...getProps()} />);
     const navList = container.querySelector('ul');
     expect(navList?.className).toContain('hidden');
     resizeWindow(375);
@@ -70,7 +70,7 @@ describe('MobileSubNav component', () => {
   });
 
   it('Renders down arrow when there are 3rd level links and expands when clicked', () => {
-    render(<MobileSubNav {...getProps()} />);
+    render(<MobileSecondLinks {...getProps()} />);
     const expandableButton = screen.getByRole('button', {
       name: /Printmaking/i
     });
@@ -89,7 +89,7 @@ describe('MobileSubNav component', () => {
 
   it('Does not render down arrow when there are no 3rd level links', () => {
     render(
-      <MobileSubNav
+      <MobileSecondLinks
         {...getProps({
           currentChildren: [
             {
@@ -106,15 +106,15 @@ describe('MobileSubNav component', () => {
   });
 
   it('Does not render links if no currentChildren', () => {
-    render(<MobileSubNav {...getProps({ currentChildren: null })} />);
+    render(<MobileSecondLinks {...getProps({ currentChildren: null })} />);
     const browseAll = screen.queryByText(/browse all/i);
     expect(browseAll).toBeNull();
   });
 
   it('Calls setIsOpen(false) when currentChildren becomes null', () => {
-    const { rerender } = render(<MobileSubNav {...getProps()} />);
+    const { rerender } = render(<MobileSecondLinks {...getProps()} />);
 
-    rerender(<MobileSubNav {...getProps({ currentChildren: null })} />);
+    rerender(<MobileSecondLinks {...getProps({ currentChildren: null })} />);
 
     expect(setIsOpenMock).toHaveBeenCalledWith(false);
   });

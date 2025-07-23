@@ -1,11 +1,11 @@
 import { fn } from 'storybook/test';
-import MobileSubNav from '../MobileSubNav';
+import MobileSecondLinks from '../MobileSecondLinks';
 import { secondLevelLinksMock } from '../mocks/mainHeaderMock';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 const meta = {
-  title: 'Layout/MainHeader/MobileSubNav',
-  component: MobileSubNav,
+  title: 'Layout/MainHeader/MobileSecondLinks',
+  component: MobileSecondLinks,
   globals: {
     viewport: { value: 'iphonese2', isRotated: false }
   },
@@ -24,7 +24,7 @@ const meta = {
     setIsOpen: { action: 'setIsOpen clicked' },
     setAreChildrenOpen: { action: 'setAreChildrenOpen clicked' }
   }
-} satisfies Meta<typeof MobileSubNav>;
+} satisfies Meta<typeof MobileSecondLinks>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

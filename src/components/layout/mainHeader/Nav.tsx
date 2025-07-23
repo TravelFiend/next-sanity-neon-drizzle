@@ -3,13 +3,13 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import MobileSubNav from './MobileSubNav';
+import MobileSecondLinks from './MobileSecondLinks';
 import { usePathname } from 'next/navigation';
 import DesktopSubNav from './DesktopSubNav';
 import type {
   NavTabsRes,
   SecondLevelLinksRes
-} from '@/sanity/types/derivedTypes';
+} from '@sanityTypes/derivedTypes';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
@@ -116,7 +116,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
         {mainLinks}
       </ul>
 
-      <MobileSubNav
+      <MobileSecondLinks
         isOpen={areChildLinksOpen}
         setIsOpen={setAreLinksOpen}
         setAreChildrenOpen={setAreChildLinksOpen}

@@ -1,4 +1,35 @@
-import { MainNavRes, SecondLevelLinksRes } from '@/sanity/types/derivedTypes';
+import {
+  MainNavRes,
+  SecondLevelLinksRes,
+  ThirdLevelLinkRes
+} from '@sanityTypes/derivedTypes';
+
+const thirdLevelLinksMock: ThirdLevelLinkRes = [
+  {
+    _key: '39fd7fe2416f',
+    _type: 'basicLink',
+    internalLink: {
+      linkText: 'Serigraphy',
+      slug: {
+        _type: 'slug',
+        current: 'serigraphy'
+      }
+    },
+    externalLink: null
+  },
+  {
+    _key: 'ab4379f9cc92',
+    _type: 'basicLink',
+    internalLink: {
+      linkText: 'Lithography',
+      slug: {
+        _type: 'slug',
+        current: 'lithography'
+      }
+    },
+    externalLink: null
+  }
+];
 
 const secondLevelLinksMock: SecondLevelLinksRes = [
   {
@@ -15,32 +46,7 @@ const secondLevelLinksMock: SecondLevelLinksRes = [
       },
       externalLink: null
     },
-    thirdLevelLinks: [
-      {
-        _key: '39fd7fe2416f',
-        _type: 'basicLink',
-        internalLink: {
-          linkText: 'Serigraphy',
-          slug: {
-            _type: 'slug',
-            current: 'serigraphy'
-          }
-        },
-        externalLink: null
-      },
-      {
-        _key: 'ab4379f9cc92',
-        _type: 'basicLink',
-        internalLink: {
-          linkText: 'Lithography',
-          slug: {
-            _type: 'slug',
-            current: 'lithography'
-          }
-        },
-        externalLink: null
-      }
-    ]
+    thirdLevelLinks: thirdLevelLinksMock
   }
 ];
 
@@ -117,4 +123,4 @@ const mainHeaderMock: MainNavRes = {
   ]
 };
 
-export { secondLevelLinksMock, mainHeaderMock };
+export { thirdLevelLinksMock, secondLevelLinksMock, mainHeaderMock };
