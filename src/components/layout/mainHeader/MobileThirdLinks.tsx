@@ -5,8 +5,8 @@ import conditionalClasses from '@/lib/utils/conditionalClasses';
 
 type MobileThirdLinksProps = {
   thirdLevelLinks: ThirdLevelLinkRes;
-  parentLink?: string;
-  childSlug?: string;
+  parentLink: string;
+  childSlug: string;
   childText?: string;
   isOpen: boolean;
 };
@@ -25,6 +25,7 @@ const MobileThirdLinks: React.FC<MobileThirdLinksProps> = ({
         isOpen ? 'flex' : 'hidden'
       )}
       aria-hidden={!isOpen}
+      data-testid="thirdLinks"
     >
       {thirdLevelLinks.map(({ _key: grandChildKey, internalLink }, idx) => (
         <Fragment key={grandChildKey}>

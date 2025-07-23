@@ -79,7 +79,7 @@ const MobileSecondLinks: React.FC<MobileSecondLinksProps> = ({
                 </Link>
               </li>
             ) : null}
-            {thirdLevelLinks ? (
+            {thirdLevelLinks && parentLink && childSlug ? (
               <li>
                 <button
                   onClick={() => handleChildLinkClick(child)}
