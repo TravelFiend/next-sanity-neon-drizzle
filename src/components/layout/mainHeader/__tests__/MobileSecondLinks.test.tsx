@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, beforeEach, afterEach, mock } from 'bun:test';
 import user from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import MobileSecondLinks from '../MobileSecondLinks';
@@ -28,6 +29,7 @@ beforeEach(() => {
 afterEach(() => {
   setIsOpenMock.mockReset();
   setAreChildrenOpenMock.mockReset();
+  cleanup();
 });
 
 describe('MobileSecondLinks component', () => {
@@ -37,13 +39,28 @@ describe('MobileSecondLinks component', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('Calls setAreChildrenOpen(false) one time', async () => {
+  it('Calls setAreChildrenOpen(false) and closes expanded child when back button is clicked', async () => {
     render(<MobileSecondLinks {...getProps()} />);
+
+    const expandableButton = screen.getByRole('button', {
+      name: /printmaking/i
+    });
     const backButton = screen.getByRole('button', { name: /← back/i });
 
+    await user.click(expandableButton);
+
+    const thirdLevelLink = screen.queryByText('Lithography');
+    const thirdLevelList = thirdLevelLink?.closest('ul');
+    expect(thirdLevelList).toHaveClass('flex');
+
     await user.click(backButton);
+
     expect(setAreChildrenOpenMock).toHaveBeenCalledTimes(1);
     expect(setAreChildrenOpenMock).toHaveBeenCalledWith(false);
+
+    await waitFor(() => {
+      expect(thirdLevelList).toHaveClass('hidden');
+    });
   });
 
   it('Renders down arrow when there are 3rd level links and toggles when clicked', async () => {
