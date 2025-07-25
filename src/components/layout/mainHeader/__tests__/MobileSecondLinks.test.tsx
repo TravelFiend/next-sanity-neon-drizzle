@@ -86,14 +86,6 @@ describe('MobileSecondLinks component', () => {
     expect(thirdLevelList).not.toHaveClass('flex');
     expect(thirdLevelList).toHaveClass('hidden');
   });
-  // it('Renders on smaller screens, hidden on larger screens', async () => {
-  //   render(<MobileSecondLinks {...getProps()} />);
-  //   const navList = screen.getByRole('list');
-  //   await resizeWindow(1024);
-  //   expect(navList).toHaveClass('hidden');
-  //   await resizeWindow(375);
-  //   expect(navList).toHaveClass('flex');
-  // });
 
   it('Does not render down arrow when there are no 3rd level links', () => {
     render(
