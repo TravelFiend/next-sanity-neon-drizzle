@@ -24,9 +24,10 @@
         "name": "next"
       }
     ],
-    "types": ["bun-types", "jest", "@testing-library/jest-dom"]
+    "types": ["bun-types", "jest", "@testing-library/jest-dom", "jest-axe"]
   },
   "include": [
+    "global.d.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",

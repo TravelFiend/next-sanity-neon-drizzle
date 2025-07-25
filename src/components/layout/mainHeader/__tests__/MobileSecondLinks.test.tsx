@@ -1,5 +1,5 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, mock } from 'bun:test';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import MobileSecondLinks from '../MobileSecondLinks';
