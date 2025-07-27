@@ -1,5 +1,5 @@
-import { describe, it, expect, afterEach } from 'bun:test';
-import { cleanup, render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'bun:test';
+import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import MobileThirdLinks from '../MobileThirdLinks';
 import { thirdLevelLinksMock } from '../mocks/mainHeaderMock';
@@ -11,10 +11,6 @@ const defaultProps = {
   childText: 'Printmaking',
   isOpen: true
 };
-
-afterEach(() => {
-  cleanup();
-});
 
 describe('ThirdLevelLinks component', () => {
   it('Has no accessibility violations', async () => {
