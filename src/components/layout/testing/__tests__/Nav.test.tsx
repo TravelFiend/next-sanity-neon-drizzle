@@ -93,4 +93,9 @@ describe('Nav component', () => {
       })
     ).toHaveLength(0);
   });
+
+  it("Doesn't render if no linkData passed", () => {
+    render(<Nav linkData={null} />);
+    expect(screen.queryByRole('navigation')).toBeNull();
+  });
 });
