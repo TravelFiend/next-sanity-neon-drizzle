@@ -58,7 +58,8 @@ const eslintConfig = [{
         map: [
           ['@', './src'],
           ['@groq', './src/lib/actions/groqQueries'],
-          ['@sanityTypes', './src/sanity/types']
+          ['@sanityTypes', './src/sanity/types'],
+          ['@mocks', './src/components/__mocks__']
       ],
         extensions: ['.js', '.jsx', '.ts', '.tsx']
       }

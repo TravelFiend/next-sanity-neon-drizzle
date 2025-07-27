@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach, afterEach, mock } from 'bun:test';
 import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import MobileSecondLinks from '../MobileSecondLinks';
-import { secondLevelLinksMock } from '../mocks/mainHeaderMock';
+import MobileSecondLinks from '../../mainHeader/MobileSecondLinks';
+import { secondLevelLinksMock } from '@mocks/layout/mainHeaderMock';
 // import { resizeWindow } from '@/lib/utils/testingUtils';
 
 let setIsOpenMock: ReturnType<typeof mock>;
@@ -48,8 +48,7 @@ describe('MobileSecondLinks component', () => {
 
     await user.click(expandableButton);
 
-    const thirdLevelLink = screen.queryByText('Lithography');
-    const thirdLevelList = thirdLevelLink?.closest('ul');
+    const thirdLevelList = screen.queryByText('Lithography')?.closest('ul');
     expect(thirdLevelList).toHaveClass('flex');
 
     await user.click(backButton);

@@ -57,3 +57,9 @@ This Project is setup to auto deploy on merge to `main` branch and generate a pr
 
 - `npx sanity schema extract --enforce-required-fields --workspace [workspace]` _(either `development` or `production` for our setup).  This creates a `schema.json` file at the root of the project._
 - `npx sanity@latest typegen generate` _this is the command that creates the `sanity.types.ts` file containing types for all your Sanity Studio schema types_
+
+## Testing
+
+We're using Bun's test runner with matchers and types for React Testing Library (RTL) extended from `@testing-library/jest-dom/matchers` and specifically the `.toHaveNoViolations()` assertion from `jest-axe`.  Bun's test runner isn't built out completely yet so we have to add a cleanup function for `afterEach` test runs to our test preload array in `bunfig.toml`. This can be found in `testing-library.ts`.
+
+RTL and happy-dom doesn't allow for testing with tailwind's media query classes _Like `sm:hidden`_, but we can test for conditional classes _Like `isOpen ? 'hidden' : 'flex'`_.  We'll eventually want to add `Cypress` or `Playwright` if we want to test Tailwind's media queries and implement E2E testing.

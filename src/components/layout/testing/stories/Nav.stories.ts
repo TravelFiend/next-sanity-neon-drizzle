@@ -1,5 +1,5 @@
-import Nav from '../Nav';
-import { mainHeaderMock } from '../mocks/mainHeaderMock';
+import Nav from '../../mainHeader/Nav';
+import { mainHeaderMock } from '@mocks/layout/mainHeaderMock';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 const meta = {

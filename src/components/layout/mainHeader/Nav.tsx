@@ -58,11 +58,11 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
       return (
         <li
           key={_key}
-          id={link?.internalLink?.linkText || ''}
+          id={link?.internalLink?.linkText}
           className="flex h-full w-full list-none"
         >
           <button
-            id={link?.internalLink?.linkText || ''}
+            id={link?.internalLink?.linkText}
             className="w-full cursor-pointer items-center text-start hover:text-secondary sm:mr-1 sm:px-4"
             onClick={handleMainLinkClick}
           >
@@ -83,7 +83,6 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
           className="w-full"
         >
           {' '}
-          {/* Provide fallback for href */}
           {link?.internalLink?.linkText}
         </Link>
       </li>
@@ -109,8 +108,8 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
 
       <ul
         className={conditionalClasses(
-          'absolute left-1/6 flex w-5/6 translate-x-full flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
-          areLinksOpen ? '-translate-x-0' : ''
+          'absolute left-1/6 flex w-5/6 flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
+          areLinksOpen ? '-translate-x-0' : 'translate-x-full'
         )}
       >
         {mainLinks}
