@@ -17,7 +17,8 @@ export type ThirdLevelLinkRes = NonNullable<
 
 // Footer
 export type FooterRes = NonNullable<SITE_SETTINGS_QUERYResult>['footer'];
-export type FooterLegalLinksRes = NonNullable<FooterRes>['legalLinks'];
+export type NonNullFooterRes = NonNullable<FooterRes>;
+export type BasicLinkRes = NonNullable<FooterRes>['legalLinks'];
 
 /* CONTENT TYPES */
 

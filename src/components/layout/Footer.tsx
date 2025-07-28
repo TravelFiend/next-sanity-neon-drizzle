@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { FooterRes, FooterLegalLinksRes } from '@sanityTypes/derivedTypes';
+import type { FooterRes, BasicLinkRes } from '@sanityTypes/derivedTypes';
 
 type FooterProps = {
   footerData: FooterRes;
@@ -10,7 +10,7 @@ const Footer: React.FC<FooterProps> = ({ footerData }) => {
 
   const { copyrightText, siteLinks, legalLinks, socialLinks } = footerData;
 
-  const generateLinks = (linkSection: FooterLegalLinksRes) => {
+  const generateLinks = (linkSection: BasicLinkRes) => {
     return linkSection?.map(({ _key, internalLink, externalLink }) => (
       <li key={_key}>
         {internalLink ? (
@@ -42,7 +42,7 @@ const Footer: React.FC<FooterProps> = ({ footerData }) => {
         </div>
 
         <div className="flex w-full flex-col-reverse items-center justify-between px-10 py-7 sm:flex-row">
-          <p>© {copyrightText}</p>
+          {copyrightText && <p>© {copyrightText}</p>}
 
           <ul className="flex justify-center">
             {socialLinks?.map(({ _key, icon, link }) => (
