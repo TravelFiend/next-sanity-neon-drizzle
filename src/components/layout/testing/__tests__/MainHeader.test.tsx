@@ -20,7 +20,7 @@ describe('MainHeader component', () => {
 
   it('Handles missing logo gracefully', () => {
     const { container } = render(
-      <MainHeader navData={{ ...mainHeaderMock!, companyLogo: null }} />
+      <MainHeader navData={{ ...mainHeaderMock, companyLogo: null }} />
     );
     const logo = container.querySelector('a[href="/"] div');
     expect(logo).toBeNull();

@@ -7,7 +7,8 @@ import type {
 
 // MainHeader and child components
 export type MainNavRes = NonNullable<SITE_SETTINGS_QUERYResult>['mainNav'];
-export type NavTabsRes = NonNullable<MainNavRes>['navTabs'];
+export type NonNullMainNavRes = NonNullable<MainNavRes>;
+export type NavTabsRes = NonNullMainNavRes['navTabs'];
 export type NavTabItemRes = NonNullable<NavTabsRes>[number];
 export type SecondLevelLinksRes = NavTabItemRes['secondLevelLinks'];
 export type SingleSecondLevelLinkRes = NonNullable<SecondLevelLinksRes>[number];
