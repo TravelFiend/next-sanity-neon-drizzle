@@ -1,12 +1,8 @@
 import Link from 'next/link';
-import type { SITE_SETTINGS_QUERYResult } from '@sanityTypes/generatedTypes';
-
-type FooterLegalLinksFromSanity = NonNullable<
-  NonNullable<SITE_SETTINGS_QUERYResult>['footer']
->['legalLinks'];
+import type { FooterRes, FooterLegalLinksRes } from '@sanityTypes/derivedTypes';
 
 type FooterProps = {
-  footerData: NonNullable<SITE_SETTINGS_QUERYResult>['footer'];
+  footerData: FooterRes;
 };
 
 const Footer: React.FC<FooterProps> = ({ footerData }) => {
@@ -14,7 +10,7 @@ const Footer: React.FC<FooterProps> = ({ footerData }) => {
 
   const { copyrightText, siteLinks, legalLinks, socialLinks } = footerData;
 
-  const generateLinks = (linkSection: FooterLegalLinksFromSanity) => {
+  const generateLinks = (linkSection: FooterLegalLinksRes) => {
     return linkSection?.map(({ _key, internalLink, externalLink }) => (
       <li key={_key}>
         {internalLink ? (
