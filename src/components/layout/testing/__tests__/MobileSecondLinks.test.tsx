@@ -106,7 +106,7 @@ describe('MobileSecondLinks component', () => {
   });
 
   it('Does not render links if no currentChildren', () => {
-    render(<MobileSecondLinks {...getProps({ currentChildren: null })} />);
+    render(<MobileSecondLinks {...getProps({ currentChildren: undefined })} />);
     const browseAll = screen.queryByRole('link', {
       name: /browse all/i
     });
@@ -117,7 +117,9 @@ describe('MobileSecondLinks component', () => {
   it('Calls setIsOpen(false) when currentChildren becomes null', () => {
     const { rerender } = render(<MobileSecondLinks {...getProps()} />);
     expect(setIsOpenMock).toHaveBeenCalledWith(true);
-    rerender(<MobileSecondLinks {...getProps({ currentChildren: null })} />);
+    rerender(
+      <MobileSecondLinks {...getProps({ currentChildren: undefined })} />
+    );
     expect(setIsOpenMock).toHaveBeenCalledWith(false);
   });
 });
