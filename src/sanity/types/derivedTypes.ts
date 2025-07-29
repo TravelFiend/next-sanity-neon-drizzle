@@ -6,19 +6,24 @@ import type {
 /* LAYOUT TYPES */
 
 // MainHeader and child components
-export type MainNavRes = NonNullable<SITE_SETTINGS_QUERYResult>['mainNav'];
-export type NonNullMainNavRes = NonNullable<MainNavRes>;
-export type NavTabsRes = NonNullMainNavRes['navTabs'];
+export type MainNavRes = NonNullable<
+  NonNullable<SITE_SETTINGS_QUERYResult>['mainNav']
+>;
+// export type NonNullMainNavRes = NonNullable<MainNavRes>;
+export type NavTabsRes = NonNullable<MainNavRes['navTabs']>;
 export type NavTabItemRes = NonNullable<NavTabsRes>[number];
-export type SecondLevelLinksRes = NavTabItemRes['secondLevelLinks'];
+export type SecondLevelLinksRes = NonNullable<
+  NavTabItemRes['secondLevelLinks']
+>;
 export type SingleSecondLevelLinkRes = NonNullable<SecondLevelLinksRes>[number];
 export type ThirdLevelLinkRes = NonNullable<
   SingleSecondLevelLinkRes['thirdLevelLinks']
 >;
 
 // Footer
-export type FooterRes = NonNullable<SITE_SETTINGS_QUERYResult>['footer'];
-export type NonNullFooterRes = NonNullable<FooterRes>;
+export type FooterRes = NonNullable<
+  NonNullable<SITE_SETTINGS_QUERYResult>['footer']
+>;
 export type BasicLinkRes = NonNullable<FooterRes>['legalLinks'];
 
 /* CONTENT TYPES */

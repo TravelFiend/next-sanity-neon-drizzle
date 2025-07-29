@@ -1,6 +1,6 @@
-import { NonNullFooterRes } from '@sanityTypes/derivedTypes';
+import { FooterRes } from '@sanityTypes/derivedTypes';
 
-const footerMock: NonNullFooterRes = {
+const footerMock: FooterRes = {
   _type: 'footer',
   copyrightText: 'MJM-LLC 2025',
   legalLinks: [

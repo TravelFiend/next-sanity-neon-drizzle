@@ -41,7 +41,7 @@ export const NoThirdLevelLinks = {
   args: {
     currentChildren: [
       {
-        ...secondLevelLinksMock![0],
+        ...secondLevelLinksMock[0],
         thirdLevelLinks: null
       }
     ]
