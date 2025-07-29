@@ -1,5 +1,5 @@
 import Footer from '../../Footer';
-import { footerMock } from '@mocks/layout/footerMock';
+import { footerMock } from '@/components/layout/testing/__mocks__/footerMock';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 const meta = {

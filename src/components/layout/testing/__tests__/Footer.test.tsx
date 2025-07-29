@@ -2,7 +2,7 @@ import { describe, it, expect } from 'bun:test';
 import { render, screen, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import Footer from '../../Footer';
-import { footerMock } from '@mocks/layout/footerMock';
+import { footerMock } from '@/components/layout/testing/__mocks__/footerMock';
 
 describe('Footer component', () => {
   it('Has no accessibility violations', async () => {

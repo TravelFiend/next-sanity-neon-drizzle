@@ -1,6 +1,6 @@
 import { fn } from 'storybook/test';
 import MobileSecondLinks from '../../mainHeader/MobileSecondLinks';
-import { secondLevelLinksMock } from '@mocks/layout/mainHeaderMock';
+import { secondLevelLinksMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 const meta = {

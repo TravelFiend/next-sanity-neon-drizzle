@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import user from '@testing-library/user-event';
 import Nav from '../../mainHeader/Nav';
-import { navTabsMock } from '@mocks/layout/mainHeaderMock';
+import { navTabsMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 import { resizeWindow } from '@/lib/utils/testingUtils';
 import { setupPathnameMock } from '@mocks/next/mockNextNav';
 
