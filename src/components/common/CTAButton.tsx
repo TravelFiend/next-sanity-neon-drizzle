@@ -2,17 +2,15 @@ import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import type { HeroBlockRes } from '@sanityTypes/derivedTypes';
 
-type LinkButtonProps = {
+type CTAButtonProps = {
   linkData: HeroBlockRes['ctaButton'];
 };
 
-const LinkButton: React.FC<LinkButtonProps> = ({ linkData }) => {
+const CTAButton: React.FC<CTAButtonProps> = ({ linkData }) => {
   if (!linkData) return null;
-
   const { link, isDark } = linkData;
 
   if (!link) return null;
-
   const { internalLink, externalLink } = link;
 
   if (internalLink) {
@@ -50,4 +48,4 @@ const LinkButton: React.FC<LinkButtonProps> = ({ linkData }) => {
   }
 };
 
-export default LinkButton;
+export default CTAButton;
