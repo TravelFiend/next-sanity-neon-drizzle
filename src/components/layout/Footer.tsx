@@ -4,6 +4,7 @@ import type { SITE_SETTINGS_QUERYResult } from '@sanityTypes/generatedTypes';
 type FooterLegalLinksFromSanity = NonNullable<
   NonNullable<SITE_SETTINGS_QUERYResult>['footer']
 >['legalLinks'];
+import cleanSVG from '@/lib/utils/sanitizeSVG';
 
 type FooterProps = {
   footerData: NonNullable<SITE_SETTINGS_QUERYResult>['footer'];
@@ -61,7 +62,7 @@ const Footer: React.FC<FooterProps> = ({ footerData }) => {
                 >
                   <div
                     className="size-10 sm:size-15"
-                    dangerouslySetInnerHTML={{ __html: icon }}
+                    dangerouslySetInnerHTML={{ __html: cleanSVG(icon) }}
                   />
                 </a>
               </li>
