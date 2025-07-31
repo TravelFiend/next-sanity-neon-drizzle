@@ -1,6 +1,6 @@
 'use client';
 
-/* This seems like a thin wrapper for a simple component, but it's
+/* This seems like a thin wrapper for a simple component, but its
   purpose is to be able to use the CldImage component in server
   components without needing to turn any file that uses CldImage
   into a client-side component. */

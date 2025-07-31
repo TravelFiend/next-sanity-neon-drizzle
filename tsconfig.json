@@ -17,8 +17,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@groq/*": ["./src/lib/groqQueries/*"],
-      "@sanityTypes/*": ["./src/sanity/types/*"],
-      "@mocks/*": ["./src/components/__mocks__/*"]
+      "@sanityTypes/*": ["./src/sanity/types/*"]
     },
     "plugins": [
       {
