@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Nav from './Nav';
+import cleanSVG from '@/lib/utils/sanitizeSVG';
 import type { MainNav } from '@/sanity/types';
 
 type MainHeaderProps = {
@@ -15,7 +16,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({ navData }) => {
         <Link href="/">
           <div
             className="ml-6 flex size-12 items-center sm:size-16"
-            dangerouslySetInnerHTML={{ __html: navData.companyLogo }}
+            dangerouslySetInnerHTML={{ __html: cleanSVG(navData.companyLogo) }}
             aria-label="Company logo: Link to home page"
           />
         </Link>
