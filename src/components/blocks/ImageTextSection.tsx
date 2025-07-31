@@ -8,6 +8,8 @@ type ImageTextBlockProps = {
 };
 
 const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ imageTextData }) => {
+  if (!imageTextData) return null;
+
   const { image, imageAlignment, text } = imageTextData;
 
   return (
@@ -19,7 +21,7 @@ const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ imageTextData }) => {
     >
       <div className="relative h-auto w-1/2">
         <CloudinaryImg
-          src={image.imageAsset.public_id!}
+          src={image.imageAsset.public_id}
           alt={image.altText!}
           className="h-auto object-cover"
           sizes="50vw"
