@@ -6,7 +6,10 @@ import { useEffect, useState } from 'react';
 import MobileSubNav from './MobileSubNav';
 import { usePathname } from 'next/navigation';
 import DesktopSubNav from './DesktopSubNav';
-import { NavTabsRes, SecondLevelLinksRes } from '@/sanity/types/writtenTypes';
+import type {
+  NavTabsRes,
+  SecondLevelLinksRes
+} from '@/sanity/types/derivedTypes';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;

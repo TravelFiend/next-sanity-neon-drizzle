@@ -10,10 +10,10 @@ import {
 } from '@/lib/utils/stylesLookup';
 import LinkButton from '../common/LinkButton';
 import CloudinaryImg from '../common/CloudinaryImg';
-import type { HeroBlock } from '@sanityTypes/generatedTypes';
+import type { HeroBlockRes } from '@/sanity/types/derivedTypes';
 
 type HeroSectionProps = {
-  heroData: HeroBlock;
+  heroData: HeroBlockRes;
   index: number;
 };
 // TODO: implement Sanity text shadow and text shadow color selections on FE
@@ -65,9 +65,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
           />
           {overlay?.coverage === 'fullImage' ? (
             <div
-              className={conditionalClasses(
-                `absolute inset-0 z-10 ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`
-              )}
+              className={`absolute inset-0 z-10 ${setBgColor(overlay.color)} ${setOpacity(overlay.opacity)}`}
             />
           ) : null}
 

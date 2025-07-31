@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import MainHeader from '@/components/layout/mainHeader/MainHeader';
 import Footer from '@/components/layout/Footer';
-import { getSiteSettings } from '@/lib/groqQueries/queries/siteSettings';
+import { getSiteSettings } from '@groq/queries/siteSettings';
 import { SanityLive } from '@/sanity/utils/live';
 
 const siteLayout = async ({ children }: { children: React.ReactNode }) => {

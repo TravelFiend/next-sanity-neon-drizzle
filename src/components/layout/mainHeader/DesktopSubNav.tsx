@@ -4,7 +4,7 @@ import { Fragment, useEffect } from 'react';
 import Link from 'next/link';
 import useHoverState from '@/lib/hooks/useHoverState';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import { SecondLevelLinksRes } from '@/sanity/types/writtenTypes';
+import type { SecondLevelLinksRes } from '@/sanity/types/derivedTypes';
 
 type DesktopSubNavProps = {
   isOpen: boolean;

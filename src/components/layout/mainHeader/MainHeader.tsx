@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Nav from './Nav';
-import { MainNavRes } from '@/sanity/types/writtenTypes';
 import cleanSVG from '@/lib/utils/sanitizeSVG';
+import type { MainNavRes } from '@sanityTypes/derivedTypes';
 
 type MainHeaderProps = {
   navData: MainNavRes;

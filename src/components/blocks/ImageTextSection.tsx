@@ -1,10 +1,10 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import TextBox from './TextBox';
 import CloudinaryImg from '../common/CloudinaryImg';
-import type { ImageTextBlock } from '@sanityTypes/generatedTypes';
+import type { ImageTextBlockRes } from '@/sanity/types/derivedTypes';
 
 type ImageTextBlockProps = {
-  imageTextData: ImageTextBlock;
+  imageTextData: ImageTextBlockRes;
 };
 
 const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ imageTextData }) => {

@@ -1,12 +1,14 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import type { CtaButton } from '@sanityTypes/generatedTypes';
 import Link from 'next/link';
+import type { HeroBlockRes } from '@/sanity/types/derivedTypes';
 
 type LinkButtonProps = {
-  linkData: CtaButton;
+  linkData: HeroBlockRes['ctaButton'];
 };
 
 const LinkButton: React.FC<LinkButtonProps> = ({ linkData }) => {
+  if (!linkData) return null;
+
   const { link, isDark } = linkData;
 
   if (!link) return null;

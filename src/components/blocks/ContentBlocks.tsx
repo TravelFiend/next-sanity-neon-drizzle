@@ -2,16 +2,16 @@ import TextSection from './TextSection';
 import HeroSection from './HeroSection';
 import CarouselSection from './CarouselSection';
 import ImageTextSection from './ImageTextSection';
-import type { ContentBlocks } from '@sanityTypes/generatedTypes';
+import type { HOMEPAGE_QUERYResult } from '@sanityTypes/generatedTypes';
 
 type ContentBlocksProps = {
-  contentBlocks: ContentBlocks;
+  contentBlocks: NonNullable<HOMEPAGE_QUERYResult>['contentBlocks'];
 };
 
 const ContentBlocks: React.FC<ContentBlocksProps> = ({ contentBlocks }) => {
   return (
     <>
-      {contentBlocks.map((block, idx) => {
+      {contentBlocks?.map((block, idx) => {
         const { _key, _type } = block;
 
         switch (_type) {

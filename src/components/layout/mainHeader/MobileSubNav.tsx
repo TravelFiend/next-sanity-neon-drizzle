@@ -2,10 +2,10 @@ import { useState, Fragment, useEffect } from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
+import type {
   SecondLevelLinksRes,
   SingleSecondLevelLinkRes
-} from '@/sanity/types/writtenTypes';
+} from '@/sanity/types/derivedTypes';
 
 type MobileSubNavProps = {
   isOpen: boolean;

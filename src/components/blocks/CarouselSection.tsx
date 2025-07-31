@@ -1,8 +1,8 @@
 import Carousel from '../common/Carousel';
-import type { CarouselBlock } from '@sanityTypes/generatedTypes';
+import type { CarouselBlockRes } from '@/sanity/types/derivedTypes';
 
 type CarouselSectionProps = {
-  carouselData: CarouselBlock;
+  carouselData: CarouselBlockRes;
 };
 
 const CarouselSection: React.FC<CarouselSectionProps> = ({ carouselData }) => {
