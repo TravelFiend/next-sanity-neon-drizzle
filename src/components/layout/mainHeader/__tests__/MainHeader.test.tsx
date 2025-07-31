@@ -1,28 +1,24 @@
-import { axe } from 'jest-axe';
 import { render } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import MainHeader from '../MainHeader';
-import mainHeaderMock from '../mocks/mainHeaderMock';
+import { mainHeaderMock } from '../mocks/mainHeaderMock';
+import { resizeWindow } from '@/lib/utils/testingUtils';
 
-const resizeWindow = (width: number) => {
-  window.innerWidth = width;
-  window.dispatchEvent(new Event('resize'));
-};
-
-describe('MainHeader', () => {
-  it('has no accessibility violations', async () => {
+describe('MainHeader component', () => {
+  it('Has no accessibility violations', async () => {
     const { container } = render(<MainHeader navData={mainHeaderMock} />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
-  it('renders the logo if provided', () => {
+  it('Renders the logo if provided', () => {
     const { container } = render(<MainHeader navData={mainHeaderMock} />);
     const logo = container.querySelector('a[href="/"] div');
     expect(logo).toBeInTheDocument();
     expect(logo?.innerHTML).toContain('<svg');
   });
 
-  it('handles missing logo gracefully', () => {
+  it('Handles missing logo gracefully', () => {
     const { container } = render(
       <MainHeader navData={{ ...mainHeaderMock!, companyLogo: null }} />
     );
@@ -30,20 +26,20 @@ describe('MainHeader', () => {
     expect(logo).toBeNull();
   });
 
-  // test('renders main links on larger screens', () => {
-  //   render(<MainHeader navData={mainHeaderMock} />);
-
-  //   const mainLinks = screen.getAllByText('Art');
-  //   expect(mainLinks).toBeVisible();
-  // });
-
-  test('renders mobile version on small screens', () => {
-    resizeWindow(375);
+  it('Renders desktop version on larger screens, and mobile version on smaller screens', () => {
     const { container } = render(<MainHeader navData={mainHeaderMock} />);
 
     const burger = container.querySelector(
-      '[aria-label="Company logo: Link to home page"]'
+      '[aria-label="Open navigation menu"]'
     );
+    expect(burger?.className).toContain('hidden');
+
+    const navList = container.querySelector('nav ul');
+    expect(navList?.className).toContain('flex-row');
+
+    resizeWindow(375);
+
     expect(burger).toBeVisible();
+    expect(navList?.className).toContain('flex-col');
   });
 });

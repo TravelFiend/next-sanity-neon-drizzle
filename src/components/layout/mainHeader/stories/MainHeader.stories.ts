@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import MainHeader from '../MainHeader';
-import mainHeaderMock from '../mocks/mainHeaderMock';
+import { mainHeaderMock } from '../mocks/mainHeaderMock';
 
 const meta = {
-  title: 'UI/MainHeader',
+  title: 'Layout/MainHeader',
   component: MainHeader,
   parameters: {
     layout: 'fullscreen'

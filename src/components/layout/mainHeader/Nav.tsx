@@ -116,7 +116,6 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
         {mainLinks}
       </ul>
 
-      {/* Ensure currentChildren is handled correctly by MobileSubNav and DesktopSubNav */}
       <MobileSubNav
         isOpen={areChildLinksOpen}
         setIsOpen={setAreLinksOpen}
