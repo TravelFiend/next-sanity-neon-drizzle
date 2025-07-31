@@ -22,7 +22,6 @@ const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ imageTextData }) => {
           src={image.imageAsset.public_id!}
           alt={image.altText!}
           className="h-auto object-cover"
-          priority
           sizes="50vw"
         />
       </div>
