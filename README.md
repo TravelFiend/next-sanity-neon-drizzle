@@ -60,6 +60,8 @@ This Project is setup to auto deploy on merge to `main` branch and generate a pr
 
 ## Testing
 
+_For components that rely on environment variables, like the `CloudinaryImg` component, we need to create a `.env.test` file to place these variables in.  It's in `.gitignore` so will not show up when cloning the repo._
+
 We're using Bun's test runner with matchers and types for React Testing Library (RTL) extended from `@testing-library/jest-dom/matchers` and specifically the `.toHaveNoViolations()` assertion from `jest-axe`.  Bun's test runner isn't built out completely yet so we have to add a cleanup function for `afterEach` test runs to our test preload array in `bunfig.toml`. This can be found in `testing-library.ts`.
 
 RTL and happy-dom doesn't allow for testing with tailwind's media query classes _Like `sm:hidden`_, but we can test for conditional classes _Like `isOpen ? 'hidden' : 'flex'`_.  We'll eventually want to add `Cypress` or `Playwright` if we want to test Tailwind's media queries and implement E2E testing.
