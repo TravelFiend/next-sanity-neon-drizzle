@@ -33,6 +33,5 @@ describe('CardRow component', () => {
       expect(wrapperDiv).toHaveClass('flex-[0_0_23%]');
       expect(wrapperDiv).not.toHaveClass('flex-[0_0_32%]');
     }
-    screen.debug();
   });
 });
