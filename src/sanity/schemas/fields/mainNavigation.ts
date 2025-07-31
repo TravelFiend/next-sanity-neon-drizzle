@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
-import type { BasicLink, SecondLevelLinks } from '@/sanity/types';
+import type { BasicLink, SecondLevelLinks } from '@sanityTypes/generatedTypes';
 
 const nestedLinksPreview = (
   nestedLinks?: SecondLevelLinks[] | BasicLink[]

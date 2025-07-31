@@ -1,4 +1,4 @@
-import type { TextBlock } from '@/sanity/types';
+import type { TextBlock } from '@sanityTypes/generatedTypes';
 import TextBox from './TextBox';
 
 type TextSectionProps = {

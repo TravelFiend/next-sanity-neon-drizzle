@@ -2,6 +2,7 @@
 // TODO: only query needed properties
 const richImageFragment = `
   _key,
+  _type,
   imageAsset{
     _type,
     _key,

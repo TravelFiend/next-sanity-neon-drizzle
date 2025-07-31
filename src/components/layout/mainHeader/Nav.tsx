@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import MobileSubNav from './MobileSubNav';
 import { usePathname } from 'next/navigation';
 import DesktopSubNav from './DesktopSubNav';
-import type { MainNav, NavTab } from '@/sanity/types';
+import { NavTabsRes, SecondLevelLinksRes } from '@/sanity/types/writtenTypes';
 
 type LinkDataProps = {
-  linkData?: MainNav['navTabs'];
+  linkData?: NavTabsRes;
 };
 
 const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
@@ -17,7 +17,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
   const [parentLink, setParentLink] = useState<string | undefined>(undefined);
   const [currentChildren, setCurrentChildren] =
-    useState<NavTab['secondLevelLinks']>(undefined);
+    useState<SecondLevelLinksRes | null>(null);
   const pathName = usePathname();
 
   useEffect(() => {
@@ -34,17 +34,19 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
     }
   };
 
+  if (!linkData) return null;
+
   const handleMainLinkClick = (evt: React.MouseEvent<HTMLElement>) => {
     const theKids = linkData?.filter(
       singleLinkData =>
-        singleLinkData.link?.internalLink?.linkText === evt.currentTarget.id
-    )[0];
+        singleLinkData?.link?.internalLink?.linkText === evt.currentTarget.id
+    )?.[0];
 
     if (theKids?.secondLevelLinks === currentChildren) {
       setAreChildLinksOpen(!areChildLinksOpen);
     }
 
-    setCurrentChildren(theKids?.secondLevelLinks);
+    setCurrentChildren(theKids?.secondLevelLinks || null);
     setParentLink(evt.currentTarget.id.toLowerCase());
   };
 
@@ -53,12 +55,17 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
       return (
         <li
           key={_key}
-          id={link?.internalLink?.linkText}
-          className="flex h-full w-full cursor-pointer list-none items-center hover:text-secondary sm:mr-1 sm:px-4"
-          onClick={handleMainLinkClick}
+          id={link?.internalLink?.linkText || ''}
+          className="flex h-full w-full list-none"
         >
-          <span>{link?.internalLink?.linkText}</span>
-          <span className="sm:hidden">&rarr;</span>
+          <button
+            id={link?.internalLink?.linkText || ''}
+            className="w-full cursor-pointer items-center text-start hover:text-secondary sm:mr-1 sm:px-4"
+            onClick={handleMainLinkClick}
+          >
+            <span>{link?.internalLink?.linkText}</span>
+            <span className="sm:hidden">&rarr;</span>
+          </button>
         </li>
       );
     }
@@ -68,7 +75,12 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
         key={_key}
         className="flex h-full cursor-pointer items-center hover:text-secondary sm:mr-1 sm:px-4"
       >
-        <Link href={`/${link?.internalLink?.slug.current}`}>
+        <Link
+          href={`/${link?.internalLink?.slug?.current || ''}`}
+          className="w-full"
+        >
+          {' '}
+          {/* Provide fallback for href */}
           {link?.internalLink?.linkText}
         </Link>
       </li>
@@ -77,17 +89,20 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
 
   return (
     <nav className="block h-full bg-cyan-600">
-      <div
-        className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
-        onClick={handleBurgerClick}
-      >
-        {[...Array(3)].map((_, index) => (
-          <div
-            key={index}
-            className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
-          />
-        ))}
-      </div>
+      {linkData?.length ? (
+        <button
+          className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
+          onClick={handleBurgerClick}
+          aria-label="Open navigation menu"
+        >
+          {[...Array(3)].map((_, index) => (
+            <div
+              key={index}
+              className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
+            />
+          ))}
+        </button>
+      ) : null}
 
       <ul
         className={conditionalClasses(
@@ -98,6 +113,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
         {mainLinks}
       </ul>
 
+      {/* Ensure currentChildren is handled correctly by MobileSubNav and DesktopSubNav */}
       <MobileSubNav
         isOpen={areChildLinksOpen}
         setIsOpen={setAreLinksOpen}

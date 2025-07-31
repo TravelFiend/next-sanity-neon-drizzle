@@ -2,7 +2,7 @@ import type {
   HorizontalAlign,
   SiteColorsSelector,
   VerticalAlign
-} from '@/sanity/types';
+} from '@sanityTypes/generatedTypes';
 
 type Opacity = 0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
 type OutlineSize = 'sm' | 'md' | 'lg';

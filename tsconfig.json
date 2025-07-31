@@ -16,14 +16,22 @@
     "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"],
-      "@groq/*": ["./src/lib/groqQueries/*"]
+      "@groq/*": ["./src/lib/groqQueries/*"],
+      "@sanityTypes/*": ["./src/sanity/types/*"]
     },
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "types": ["bun-types", "jest", "@testing-library/jest-dom"]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src"
+  ],
   "exclude": ["node_modules", "build", "dist", ".next"]
 }

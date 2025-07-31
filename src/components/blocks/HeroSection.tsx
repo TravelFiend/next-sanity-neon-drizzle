@@ -10,7 +10,7 @@ import {
 } from '@/lib/utils/stylesLookup';
 import LinkButton from '../common/LinkButton';
 import CloudinaryImg from '../common/CloudinaryImg';
-import type { HeroBlock } from '@/sanity/types';
+import type { HeroBlock } from '@sanityTypes/generatedTypes';
 
 type HeroSectionProps = {
   heroData: HeroBlock;
