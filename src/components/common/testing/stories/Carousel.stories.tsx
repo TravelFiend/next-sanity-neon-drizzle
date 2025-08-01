@@ -25,3 +25,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const LessThan5Cards: Story = {
+  args: {
+    cards: cardsMock.slice(0, 4)
+  }
+};

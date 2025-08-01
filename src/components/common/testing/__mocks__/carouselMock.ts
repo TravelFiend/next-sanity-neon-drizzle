@@ -2,7 +2,7 @@ import type { CardsRes } from '@sanityTypes/derivedTypes';
 
 const cardsMock: CardsRes = [
   {
-    _key: 'd6a35b765729',
+    _key: '1',
     _type: 'richImage',
     altText: 'A plate of sweets',
     imageAsset: {
@@ -13,14 +13,13 @@ const cardsMock: CardsRes = [
       height: 1200,
       public_id: 'samples/dessert-on-a-plate',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252285/samples/dessert-on-a-plate.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252285/samples/dessert-on-a-plate.jpg`,
       tags: [],
       width: 1200
     }
   },
   {
-    _key: 'ef9754996cc2',
+    _key: '2',
     _type: 'richImage',
     altText: 'Cat in a chair',
     imageAsset: {
@@ -31,14 +30,13 @@ const cardsMock: CardsRes = [
       height: 1024,
       public_id: 'samples/animals/cat',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252273/samples/animals/cat.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252273/samples/animals/cat.jpg`,
       tags: [],
       width: 768
     }
   },
   {
-    _key: '268cd66f027a',
+    _key: '3',
     _type: 'richImage',
     altText: 'Nicely designed car interior',
     imageAsset: {
@@ -49,14 +47,13 @@ const cardsMock: CardsRes = [
       height: 2667,
       public_id: 'samples/ecommerce/car-interior-design',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252276/samples/ecommerce/car-interior-design.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252276/samples/ecommerce/car-interior-design.jpg`,
       tags: [],
       width: 2000
     }
   },
   {
-    _key: '0ecfb081b0fa',
+    _key: '4',
     _type: 'richImage',
     altText: 'Woman walking outside',
     imageAsset: {
@@ -67,14 +64,13 @@ const cardsMock: CardsRes = [
       height: 963,
       public_id: 'samples/outdoor-woman',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252284/samples/outdoor-woman.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252284/samples/outdoor-woman.jpg`,
       tags: [],
       width: 640
     }
   },
   {
-    _key: 'b9742e0a23fe',
+    _key: '5',
     _type: 'richImage',
     altText: 'An assortment of colorful spices',
     imageAsset: {
@@ -85,8 +81,7 @@ const cardsMock: CardsRes = [
       height: 2000,
       public_id: 'samples/food/spices',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252276/samples/food/spices.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252276/samples/food/spices.jpg`,
       tags: [],
       width: 2000
     }
