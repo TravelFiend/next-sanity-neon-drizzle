@@ -24,7 +24,7 @@ describe('CardRow component', () => {
   });
 
   it('Renders each image with 1/4 width when there are 4 images', () => {
-    render(<CardRow cards={cardsMock} />);
+    render(<CardRow cards={cardsMock.slice(0, 4)} />);
     const cards = screen.getAllByRole('img');
     expect(cards).toHaveLength(4);
 
