@@ -10,7 +10,7 @@ const CarouselSection: React.FC<CarouselSectionProps> = ({ carouselData }) => {
 
   return (
     <section className="flex h-80 w-screen">
-      <Carousel slidesData={images} direction={direction} />
+      <Carousel cards={images} direction={direction} />
     </section>
   );
 };

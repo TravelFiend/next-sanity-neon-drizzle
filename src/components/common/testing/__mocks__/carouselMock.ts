@@ -2,7 +2,7 @@ import type { CardsRes } from '@sanityTypes/derivedTypes';
 
 const cardsMock: CardsRes = [
   {
-    _key: '1',
+    _key: 'd6a35b765729',
     _type: 'richImage',
     altText: 'A plate of sweets',
     imageAsset: {
@@ -20,7 +20,7 @@ const cardsMock: CardsRes = [
     }
   },
   {
-    _key: '2',
+    _key: 'ef9754996cc2',
     _type: 'richImage',
     altText: 'Cat in a chair',
     imageAsset: {
@@ -38,7 +38,7 @@ const cardsMock: CardsRes = [
     }
   },
   {
-    _key: '3',
+    _key: '268cd66f027a',
     _type: 'richImage',
     altText: 'Nicely designed car interior',
     imageAsset: {
@@ -56,7 +56,7 @@ const cardsMock: CardsRes = [
     }
   },
   {
-    _key: '4',
+    _key: '0ecfb081b0fa',
     _type: 'richImage',
     altText: 'Woman walking outside',
     imageAsset: {
@@ -71,6 +71,24 @@ const cardsMock: CardsRes = [
         'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252284/samples/outdoor-woman.jpg',
       tags: [],
       width: 640
+    }
+  },
+  {
+    _key: 'b9742e0a23fe',
+    _type: 'richImage',
+    altText: 'An assortment of colorful spices',
+    imageAsset: {
+      _key: null,
+      _type: 'cloudinary.asset',
+      _version: null,
+      duration: null,
+      height: 2000,
+      public_id: 'samples/food/spices',
+      resource_type: 'image',
+      secure_url:
+        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252276/samples/food/spices.jpg',
+      tags: [],
+      width: 2000
     }
   }
 ];

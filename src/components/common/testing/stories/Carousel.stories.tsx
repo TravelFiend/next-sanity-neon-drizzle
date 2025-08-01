@@ -1,33 +1,27 @@
-import CardRow from '../../CardRow';
+import Carousel from '../../Carousel';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { cardsMock } from '../__mocks__/carouselMock';
 
 const meta = {
-  title: 'Components/CardRow',
-  component: CardRow,
+  title: 'Components/Carousel',
+  component: Carousel,
   parameters: {
     layout: 'fullscreen'
   },
   tags: ['autodocs'],
   args: {
-    cards: cardsMock.slice(0, 4)
+    cards: cardsMock
   },
   decorators: [
     Story => (
-      <div style={{ height: '400px', width: '100%' }}>
+      <div className="flex h-80 w-screen">
         <Story />
       </div>
     )
   ]
-} satisfies Meta<typeof CardRow>;
+} satisfies Meta<typeof Carousel>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const FourImages: Story = {};
-
-export const ThreeImages: Story = {
-  args: {
-    cards: cardsMock.slice(0, 3)
-  }
-};
+export const Default: Story = {};
