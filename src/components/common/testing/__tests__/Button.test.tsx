@@ -1,9 +1,11 @@
-import { render } from '@testing-library/react';
+import { describe, it, expect, mock } from 'bun:test';
+import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import Button from '../../Button';
+import user from '@testing-library/user-event';
 
 describe('Button', () => {
-  it('should have no accessibility vilations', async () => {
+  it('Has no accessibility vilations', async () => {
     const { container } = render(
       <Button label="Click Me" onClick={() => {}} ariaLabel="Click Me" />
     );
@@ -11,10 +13,30 @@ describe('Button', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('should render a clickable button', async () => {
-    const { queryByText } = render(
-      <Button label="Click Me" onClick={() => {}} ariaLabel="Click Me" />
+  it('Should render a clickable button and fire onClick when clicked', async () => {
+    const handleClickMock = mock(() => {});
+    render(
+      <Button label="Click Me" onClick={handleClickMock} ariaLabel="Click Me" />
     );
-    expect(queryByText('Click Me')).toBeTruthy();
+
+    const theButton = screen.getByRole('button');
+    expect(theButton).toBeInTheDocument();
+
+    await user.click(theButton);
+
+    expect(handleClickMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('Should render with classname passed as prop', () => {
+    render(
+      <Button
+        label="Click Me"
+        onClick={() => {}}
+        ariaLabel="Click Me"
+        className="text-green-500"
+      />
+    );
+
+    expect(screen.getByRole('button')).toHaveClass('text-green-500');
   });
 });

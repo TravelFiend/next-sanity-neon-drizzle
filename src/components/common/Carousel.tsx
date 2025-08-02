@@ -9,11 +9,11 @@ import Button from './Button';
 import type { CarouselBlockRes } from '@sanityTypes/derivedTypes';
 
 type CarouselProps = {
-  slidesData: CarouselBlockRes['images'];
+  cards: CarouselBlockRes['images'];
   direction?: CarouselBlockRes['direction'];
 };
 
-const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
+const Carousel: React.FC<CarouselProps> = ({ cards, direction }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     active: true,
@@ -22,22 +22,22 @@ const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
   });
 
   useEffect(() => {
-    if (emblaApi && slidesData.length > 4) {
+    if (emblaApi && cards.length > 4) {
       emblaApi.reInit({
         loop: true,
         align: 'start',
         axis: direction === 'vertical' ? 'y' : 'x'
       });
     }
-  }, [emblaApi, slidesData.length, direction]);
+  }, [emblaApi, cards.length, direction]);
 
-  if (!slidesData || !Array.isArray(slidesData) || !slidesData.length) {
-    throw new Error('Invalid slidesData provided to Carousel component');
+  if (!cards || !Array.isArray(cards) || !cards.length) {
+    throw new Error('Invalid cards provided to Carousel component');
   }
 
   return (
     <>
-      {slidesData.length > 4 ? (
+      {cards.length > 4 ? (
         <div
           ref={emblaRef}
           className={conditionalClasses(
@@ -48,13 +48,13 @@ const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
           aria-roledescription="carousel"
         >
           <div className="flex h-full w-full">
-            {slidesData.map((slide, idx) => (
+            {cards.map((slide, idx) => (
               <div
                 key={slide._key}
                 className="relative mr-[1%] ml-[1%] h-full flex-[0_0_26%]"
                 role="group"
                 aria-roledescription="slide"
-                aria-label={`Slide ${idx + 1} of ${slidesData.length}: ${slide.altText}`}
+                aria-label={`Slide ${idx + 1} of ${cards.length}: ${slide.altText}`}
               >
                 <CloudinaryImg
                   src={slide.imageAsset.public_id!}
@@ -81,7 +81,7 @@ const Carousel: React.FC<CarouselProps> = ({ slidesData, direction }) => {
           </div>
         </div>
       ) : (
-        <CardRow cards={slidesData} />
+        <CardRow cards={cards} />
       )}
     </>
   );

@@ -13,8 +13,7 @@ const cardsMock: CardsRes = [
       height: 1200,
       public_id: 'samples/dessert-on-a-plate',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252285/samples/dessert-on-a-plate.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252285/samples/dessert-on-a-plate.jpg`,
       tags: [],
       width: 1200
     }
@@ -31,8 +30,7 @@ const cardsMock: CardsRes = [
       height: 1024,
       public_id: 'samples/animals/cat',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252273/samples/animals/cat.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252273/samples/animals/cat.jpg`,
       tags: [],
       width: 768
     }
@@ -49,8 +47,7 @@ const cardsMock: CardsRes = [
       height: 2667,
       public_id: 'samples/ecommerce/car-interior-design',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252276/samples/ecommerce/car-interior-design.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252276/samples/ecommerce/car-interior-design.jpg`,
       tags: [],
       width: 2000
     }
@@ -67,10 +64,26 @@ const cardsMock: CardsRes = [
       height: 963,
       public_id: 'samples/outdoor-woman',
       resource_type: 'image',
-      secure_url:
-        'https://res.cloudinary.com/dz03hfmuq/image/upload/v1742252284/samples/outdoor-woman.jpg',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252284/samples/outdoor-woman.jpg`,
       tags: [],
       width: 640
+    }
+  },
+  {
+    _key: '5',
+    _type: 'richImage',
+    altText: 'An assortment of colorful spices',
+    imageAsset: {
+      _key: null,
+      _type: 'cloudinary.asset',
+      _version: null,
+      duration: null,
+      height: 2000,
+      public_id: 'samples/food/spices',
+      resource_type: 'image',
+      secure_url: `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/v1742252276/samples/food/spices.jpg`,
+      tags: [],
+      width: 2000
     }
   }
 ];
