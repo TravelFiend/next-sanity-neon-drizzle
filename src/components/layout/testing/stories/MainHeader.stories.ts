@@ -22,7 +22,7 @@ export const Default: Story = {};
 export const NoLogo: Story = {
   args: {
     navData: {
-      ...mainHeaderMock!,
+      ...mainHeaderMock,
       companyLogo: null
     }
   }
@@ -31,7 +31,7 @@ export const NoLogo: Story = {
 export const NoLinks: Story = {
   args: {
     navData: {
-      ...mainHeaderMock!,
+      ...mainHeaderMock,
       navTabs: []
     }
   }

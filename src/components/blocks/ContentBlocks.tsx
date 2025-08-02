@@ -2,10 +2,10 @@ import TextSection from './TextSection';
 import HeroSection from './HeroSection';
 import CarouselSection from './CarouselSection';
 import ImageTextSection from './ImageTextSection';
-import type { HOMEPAGE_QUERYResult } from '@sanityTypes/generatedTypes';
+import type { HomepageContentBlocksRes } from '@sanityTypes/derivedTypes';
 
 type ContentBlocksProps = {
-  contentBlocks: NonNullable<HOMEPAGE_QUERYResult>['contentBlocks'];
+  contentBlocks: HomepageContentBlocksRes;
 };
 
 const ContentBlocks: React.FC<ContentBlocksProps> = ({ contentBlocks }) => {

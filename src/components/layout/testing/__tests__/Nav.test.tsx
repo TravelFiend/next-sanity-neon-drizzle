@@ -3,11 +3,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import user from '@testing-library/user-event';
 import Nav from '../../mainHeader/Nav';
-import { mainHeaderMock } from '@mocks/layout/mainHeaderMock';
+import { navTabsMock } from '@mocks/layout/mainHeaderMock';
 import { resizeWindow } from '@/lib/utils/testingUtils';
 import { setupPathnameMock } from '@mocks/next/mockNextNav';
 
-const navTabs = mainHeaderMock!['navTabs'];
+const navTabs = navTabsMock;
 
 describe('Nav component', () => {
   it('Has no accessibility violations', async () => {
@@ -95,7 +95,7 @@ describe('Nav component', () => {
   });
 
   it("Doesn't render if no linkData passed", () => {
-    render(<Nav linkData={null} />);
+    render(<Nav linkData={undefined} />);
     expect(screen.queryByRole('navigation')).toBeNull();
   });
 });
