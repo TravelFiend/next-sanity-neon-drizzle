@@ -33,7 +33,7 @@ const eslintConfig = [{
 ...studio,
 ...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:jsx-a11y/recommended'),
 {
-  files: ['./**/*.test.{ts,tsx}'],
+  files: ['**/*.test.{js,jsx,ts,tsx}'],
   plugins: { jest: pluginJest },
   languageOptions: {
     globals: pluginJest.environments.globals.globals
