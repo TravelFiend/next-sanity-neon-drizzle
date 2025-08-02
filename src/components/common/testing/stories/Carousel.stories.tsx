@@ -1,6 +1,6 @@
-import Carousel from '../../Carousel';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { cardsMock } from '../__mocks__/carouselMock';
+import Carousel from '../../Carousel';
 
 const meta = {
   title: 'Components/Carousel',
