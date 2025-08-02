@@ -2,7 +2,7 @@ import { describe, it, expect } from 'bun:test';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import MainHeader from '../../mainHeader/MainHeader';
-import { mainHeaderMock } from '@mocks/layout/mainHeaderMock';
+import { mainHeaderMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 
 describe('MainHeader component', () => {
   it('Has no accessibility violations', async () => {

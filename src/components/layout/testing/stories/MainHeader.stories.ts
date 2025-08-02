@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import MainHeader from '../../mainHeader/MainHeader';
-import { mainHeaderMock } from '@mocks/layout/mainHeaderMock';
+import { mainHeaderMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 
 const meta = {
   title: 'Layout/MainHeader',

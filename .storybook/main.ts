@@ -12,6 +12,11 @@ const config: StorybookConfig = {
     name: '@storybook/nextjs-vite',
     options: {}
   },
-  staticDirs: ['../public']
+  staticDirs: ['../public'],
+  env: config => ({
+    ...config,
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || ''
+  })
 };
 export default config;

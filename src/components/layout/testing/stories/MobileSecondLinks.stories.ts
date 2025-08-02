@@ -1,6 +1,6 @@
 import { fn } from 'storybook/test';
 import MobileSecondLinks from '../../mainHeader/MobileSecondLinks';
-import { secondLevelLinksMock } from '@mocks/layout/mainHeaderMock';
+import { secondLevelLinksMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 const meta = {
@@ -30,12 +30,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {};
-
-export const Closed = {
-  args: {
-    isOpen: false
-  }
-};
 
 export const NoThirdLevelLinks = {
   args: {

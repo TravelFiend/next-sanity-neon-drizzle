@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import MobileSecondLinks from '../../mainHeader/MobileSecondLinks';
-import { secondLevelLinksMock } from '@mocks/layout/mainHeaderMock';
+import { secondLevelLinksMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 // import { resizeWindow } from '@/lib/utils/testingUtils';
 
 let setIsOpenMock: ReturnType<typeof mock>;

@@ -29,8 +29,8 @@ const CardRow: React.FC<CardRowProps> = ({ cards }) => {
           aria-label={`Item ${idx + 1} of ${cards.length}: ${card.altText}`}
         >
           <CloudinaryImg
-            src={card.imageAsset.public_id!}
-            alt={card.altText!}
+            src={card.imageAsset.public_id}
+            alt={card.altText}
             sizes={cards.length === 3 ? '33vw' : '25vw'}
             className="h-full w-full object-cover"
           />

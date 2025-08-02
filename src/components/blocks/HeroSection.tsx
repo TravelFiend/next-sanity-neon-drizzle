@@ -56,7 +56,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
         )}
       >
         <CloudinaryImg
-          src={image.imageAsset.public_id!}
+          src={image.imageAsset.public_id}
           alt={image.altText!}
           className="object-cover"
           priority={isFirst}
