@@ -86,19 +86,37 @@ const BasicLink = defineType({
   type: 'object',
   fields: [
     defineField({
+      name: 'linkType',
+      title: 'Link Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Internal Link', value: 'internal' },
+          { title: 'External URL', value: 'external' }
+        ],
+        layout: 'radio',
+        direction: 'horizontal'
+      },
+      validation: Rule => Rule.required()
+    }),
+    defineField({
       name: 'internalLink',
       title: 'Internal Link',
       description: 'This should be just the final part of a url, e.g. "/about"',
       type: 'object',
       options: { collapsed: false },
       fields: internalLinkFields,
+      hidden: ({ parent }) => parent.linkType !== 'internal',
       validation: linkValidation
     }),
     defineField({
       name: 'externalLink',
       title: 'External Link',
+      description: 'A full URL to a page on a different website',
       type: 'object',
+      options: { collapsed: false },
       fields: externalLinkFields,
+      hidden: ({ parent }) => parent.linkType !== 'external',
       validation: linkValidation
     })
   ],
