@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import CTAButton from '../../CTAButton';
-import { ctaButtonMock } from '../__mocks__/linkMock';
+import { externalLinkMock, internalLinkMock } from '../__mocks__/linkMock';
 
 const meta = {
   title: 'Components/CTAButton',
@@ -11,12 +11,11 @@ const meta = {
   tags: ['autodocs'],
   args: {
     linkData: {
-      ...ctaButtonMock,
+      _type: 'ctaButton',
+      isDark: false,
       link: {
         externalLink: null,
-        internalLink: {
-          ...ctaButtonMock.link!.internalLink!
-        }
+        internalLink: internalLinkMock
       }
     }
   }
@@ -30,11 +29,10 @@ export const InternalLink: Story = {};
 export const ExternalLink: Story = {
   args: {
     linkData: {
-      ...ctaButtonMock,
+      _type: 'ctaButton',
+      isDark: false,
       link: {
-        externalLink: {
-          ...ctaButtonMock.link!.externalLink!
-        },
+        externalLink: externalLinkMock,
         internalLink: null
       }
     }
@@ -44,8 +42,12 @@ export const ExternalLink: Story = {
 export const IsDarkButton: Story = {
   args: {
     linkData: {
-      ...ctaButtonMock,
-      isDark: true
+      _type: 'ctaButton',
+      isDark: true,
+      link: {
+        externalLink: externalLinkMock,
+        internalLink: null
+      }
     }
   }
 };
