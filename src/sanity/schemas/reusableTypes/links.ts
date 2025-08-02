@@ -5,6 +5,7 @@ import {
   type ObjectRule
 } from 'sanity';
 import { LinkIcon } from '@sanity/icons';
+import LinkWithIconPreview from '../../studioUI/LinkWithIconPreview';
 
 const linkFields = [
   defineField({
@@ -61,22 +62,38 @@ const linkValidation = (Rule: ObjectRule) =>
     return true;
   });
 
-const prepareLinkPreview = (selection: Record<string, unknown>) => {
-  const internalLinkText = selection.internalLinkText as string | undefined;
-  const externalLinkText = selection.externalLinkText as string | undefined;
-  const externalLinkURL = selection.externalLinkURL as string | undefined;
+type LinkPreviewParams = {
+  internalLinkText?: string;
+  externalLinkText?: string;
+  externalLinkURL?: string;
+};
 
-  const displayTitle =
+export const buildLinkPreview = ({
+  internalLinkText,
+  externalLinkText,
+  externalLinkURL
+}: LinkPreviewParams) => {
+  const title =
     internalLinkText || externalLinkText || externalLinkURL || 'Link (empty)';
-  const displaySubtitle = internalLinkText
+
+  const subtitle = internalLinkText
     ? 'Internal Link'
     : externalLinkText || externalLinkURL
       ? 'External URL'
       : 'Link';
 
+  return { title, subtitle };
+};
+
+const prepareLinkPreview = (selection: Record<string, unknown>) => {
+  const { internalLinkText, externalLinkText, externalLinkURL } = selection;
+
   return {
-    title: displayTitle,
-    subtitle: displaySubtitle,
+    ...buildLinkPreview({
+      internalLinkText: internalLinkText as string,
+      externalLinkText: externalLinkText as string,
+      externalLinkURL: externalLinkURL as string
+    }),
     media: LinkIcon
   };
 };
@@ -149,11 +166,24 @@ const LinkWithIcon = defineType({
   ],
   preview: {
     select: {
+      icon: 'icon',
       internalLinkText: 'link.internalLink.linkText',
       externalLinkText: 'link.externalLink.linkText',
       externalLinkURL: 'link.externalLink.url'
     },
-    prepare: prepareLinkPreview
+    prepare({ icon, internalLinkText, externalLinkText, externalLinkURL }) {
+      return {
+        icon,
+        ...buildLinkPreview({
+          internalLinkText,
+          externalLinkText,
+          externalLinkURL
+        })
+      };
+    }
+  },
+  components: {
+    preview: LinkWithIconPreview
   }
 });
 
