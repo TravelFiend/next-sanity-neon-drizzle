@@ -1,5 +1,5 @@
 import Carousel from '../common/Carousel';
-import type { CarouselBlockRes } from '@/sanity/types/derivedTypes';
+import type { CarouselBlockRes } from '@sanityTypes/derivedTypes';
 
 type CarouselSectionProps = {
   carouselData: CarouselBlockRes;

@@ -1,6 +1,6 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import { setTextAlignment } from '@/lib/utils/stylesLookup';
-import type { TextBlockRes } from '@/sanity/types/derivedTypes';
+import type { TextBlockRes } from '@sanityTypes/derivedTypes';
 
 type TextBoxProps = {
   title?: TextBlockRes['title'];

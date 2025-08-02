@@ -26,3 +26,6 @@ export type NavTabsRes = NonNullable<MainNavRes>['navTabs'];
 export type NavTabItemRes = NonNullable<NavTabsRes>[number];
 export type SecondLevelLinksRes = NavTabItemRes['secondLevelLinks'];
 export type SingleSecondLevelLinkRes = NonNullable<SecondLevelLinksRes>[number];
+export type ThirdLevelLinkRes = NonNullable<
+  SingleSecondLevelLinkRes['thirdLevelLinks']
+>;

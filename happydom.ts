@@ -11,5 +11,3 @@ bunExpect.extend({
   ...(matchers as any),
   ...(toHaveNoViolations as any)
 });
-
-Object.assign(globalThis, await import('bun:test'));
