@@ -57,8 +57,8 @@ describe('CTAButton component', () => {
       _type: 'ctaButton',
       isDark: false,
       link: {
-        internalLink: null,
-        externalLink: externalLinkMock
+        internalLink: internalLinkMock,
+        externalLink: null
       }
     };
 
