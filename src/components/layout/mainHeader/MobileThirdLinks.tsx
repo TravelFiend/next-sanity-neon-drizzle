@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
-import type { ThirdLevelLinkRes } from '@sanityTypes/derivedTypes';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
+import type { ThirdLevelLinkRes } from '@sanityTypes/derivedTypes';
 
 type MobileThirdLinksProps = {
   thirdLevelLinks: ThirdLevelLinkRes;
