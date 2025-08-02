@@ -22,8 +22,8 @@ const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ imageTextData }) => {
       <div className="relative h-auto w-1/2">
         <CloudinaryImg
           src={image.imageAsset.public_id}
-          alt={image.altText!}
-          className="h-auto object-cover"
+          alt={image.altText}
+          className="min-h-auto object-cover"
           sizes="50vw"
         />
       </div>
