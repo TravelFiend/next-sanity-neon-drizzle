@@ -45,3 +45,7 @@ export type HeroBlockRes = ExtractBlock<'heroBlock'>;
 export type TextBlockRes = ExtractBlock<'textBlock'>;
 export type CarouselBlockRes = ExtractBlock<'carouselBlock'>;
 export type CardsRes = NonNullable<CarouselBlockRes['images']>;
+
+/* COMPONENTS */
+
+export type CTAButtonRes = NonNullable<HeroBlockRes['ctaButton']>;
