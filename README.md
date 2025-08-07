@@ -12,9 +12,13 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:7890](http://localhost:7890) with your browser to see the result.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Sanity
+
+To connect to a Sanity project, you must be a member of the Sanity org.  When first starting a new project with this template, download the Sanity CLI and run `sanity login`.  Once logged in, run `sanity init` and follow the prompts.  Since this project uses an embedded Sanity studio, exit the prompts at the step that says: __"Project output path: "__ with either `option + C` (macOS) or `control + C` (windows) so as to not allow Sanity to create a standalone studio within your project.
+
+Make sure to update the `projectId` everywhere in the codebase, including `.env.local`, `sanity.cli.ts`, and both configs in `sanity.config.ts` with the projectId you'd like to use from YOUR Sanity org.
 
 ## Husky and lint-staged
 
@@ -43,6 +47,7 @@ This Project is setup to auto deploy on merge to `main` branch and generate a pr
 - __NEXT_PUBLIC_SANITY_PROJECT_ID__ *Found at the top of the Sanity dashboard inside your project*
 - __SANITY_API_DEPLOY_TOKEN__  *set in the Sanity dashboard, under "API -> Tokens"*
 - __NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME__ *found in the top-left of the Cloudinary dashboard after logging in*
+- __DATABASE_URL__ *You can find your Neon database connection string by clicking the Connect button on your Neon Project Dashboard to open the Connect to your database modal.*
 
 ### Be sure to set secrets in your Github repo (settings -> Secrets and Variables -> Actions):
 

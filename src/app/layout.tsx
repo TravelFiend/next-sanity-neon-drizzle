@@ -31,9 +31,9 @@ export const generateMetadata = async () => {
   const metadata = await getSitewideMetaData();
   if (!metadata)
     return {
-      title: 'MJM LLC or whatever our company name will be',
-      description: 'Cool stuff for art and music lovers',
-      keywords: ['Art', 'Music', 'Posters'],
+      title: 'Neon Drizzle',
+      description: 'Abracadabra and to all a good night',
+      keywords: ['SEOKeyword', 'SEOKeyword1', 'SEOKeyword2'],
       generator: 'Next.js'
     };
 
