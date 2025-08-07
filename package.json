@@ -47,7 +47,7 @@
     "@sanity/vision": "3.99.0",
     "@storybook/addon-a11y": "9.0.17",
     "@storybook/addon-docs": "9.0.17",
-    "@storybook/addon-onboarding": "9.0.17",
+    "@storybook/addon-onboarding": "9.1.1",
     "@storybook/nextjs-vite": "^9.0.17",
     "@tailwindcss/postcss": "^4.1.11",
     "@testing-library/jest-dom": "^6.6.3",
