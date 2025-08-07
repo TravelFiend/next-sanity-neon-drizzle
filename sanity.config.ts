@@ -16,7 +16,7 @@ const config = defineConfig([
     title: 'Production',
     basePath: '/admin',
     subtitle: "Don't you even think about changin' anything here boy",
-    projectId: 'ihpejoz1',
+    projectId: 'veo5jgzp',
     dataset: 'production',
     plugins: [
       structureTool({
