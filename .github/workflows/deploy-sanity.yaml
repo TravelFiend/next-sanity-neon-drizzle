@@ -2,11 +2,9 @@ name: Deploy Sanity Schema & Studio
 
 on:
   workflow_call:
-    inputs:
-      studio_hostname:
-        required: true
-        type: string
     secrets:
+      SANITY_STUDIO_HOSTNAME:
+        required: true
       SANITY_AUTH_TOKEN:
         required: true
 
@@ -14,7 +12,7 @@ jobs:
   deploy-sanity:
     runs-on: ubuntu-latest
     env:
-      SANITY_STUDIO_HOSTNAME: ${{ inputs.studio_hostname }}
+      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME }}
       SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
 
     steps:

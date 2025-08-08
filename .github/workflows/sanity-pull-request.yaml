@@ -11,20 +11,7 @@ permissions:
 
 jobs:
   deploy-sanity:
-    name: Deploy Sanity Schema & Studio - DEV
-    runs-on: ubuntu-latest
-    env:
-      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
+    uses: ./.github/workflows/deploy-sanity.yaml
+    secrets:
       SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-sanity
-
-      - name: Deploy Sanity Schema
-        run: bunx sanity schema deploy --non-interactive
-
-      - name: Deploy Sanity Studio
-        run: bun run sanity deploy --non-interactive
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
