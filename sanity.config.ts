@@ -15,8 +15,8 @@ const config = defineConfig([
     name: 'production',
     title: 'Production',
     basePath: '/admin',
-    subtitle: "Don't you even think about changin' anything here boy",
-    projectId: 'ihpejoz1',
+    subtitle: 'Production dataset for Neon Drizzle',
+    projectId: '133b4mp9',
     dataset: 'production',
     plugins: [
       structureTool({
@@ -36,8 +36,8 @@ const config = defineConfig([
     name: 'development',
     title: 'Development',
     basePath: '/dev-admin',
-    subtitle: "Fuck it, do whatever, I don't care",
-    projectId: 'ihpejoz1',
+    subtitle: 'Development dataset for Neon Drizzle',
+    projectId: '133b4mp9',
     dataset: 'development',
     plugins: [
       structureTool({

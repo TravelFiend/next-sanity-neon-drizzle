@@ -2,6 +2,7 @@
 src/stories/Configure.mdx
 # bun
 bun.lockb
+bun.lock
 
 # dependencies
 /node_modules

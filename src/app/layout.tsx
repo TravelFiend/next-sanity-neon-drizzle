@@ -31,9 +31,9 @@ export const generateMetadata = async () => {
   const metadata = await getSitewideMetaData();
   if (!metadata)
     return {
-      title: 'Neon Drizzle - Boilerplate',
-      description: 'Starter Template for new online businesses',
-      keywords: [],
+      title: 'Neon Drizzle',
+      description: 'Abracadabra and to all a good night',
+      keywords: ['SEOKeyword', 'SEOKeyword1', 'SEOKeyword2'],
       generator: 'Next.js'
     };
 
