@@ -14,9 +14,17 @@ jobs:
     name: Deploy Sanity Schema & Studio - DEV
     runs-on: ubuntu-latest
     env:
-      SANITY_STUDIO_HOSTNAME_DEV: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
+      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
+
     steps:
-      - name: Call reusable workflow for DEV studio
-        uses: ./.github/workflows/deploy-sanity.yaml
-        with:
-          studio_hostname: ${{ env.SANITY_STUDIO_HOSTNAME_DEV }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-sanity
+
+      - name: Deploy Sanity Schema
+        run: bunx sanity schema deploy --non-interactive
+
+      - name: Deploy Sanity Studio
+        run: bun run sanity deploy --non-interactive
