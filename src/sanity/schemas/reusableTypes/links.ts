@@ -123,7 +123,7 @@ const BasicLink = defineType({
       type: 'object',
       options: { collapsed: false },
       fields: internalLinkFields,
-      hidden: ({ parent }) => parent.linkType !== 'internal',
+      hidden: ({ parent }) => parent?.linkType !== 'internal',
       validation: linkValidation
     }),
     defineField({
@@ -133,7 +133,7 @@ const BasicLink = defineType({
       type: 'object',
       options: { collapsed: false },
       fields: externalLinkFields,
-      hidden: ({ parent }) => parent.linkType !== 'external',
+      hidden: ({ parent }) => parent?.linkType !== 'external',
       validation: linkValidation
     })
   ],
