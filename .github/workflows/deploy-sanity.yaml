@@ -1,3 +1,5 @@
+# .github/workflows/deploy-sanity.yaml
+
 name: Deploy Sanity Schema & Studio
 
 on:
@@ -6,16 +8,16 @@ on:
       studio_hostname:
         required: true
         type: string
-      token_secret:
+    secrets:
+      SANITY_AUTH_TOKEN: # The token is now a secret
         required: true
-        type: string
 
 jobs:
   deploy-sanity:
     runs-on: ubuntu-latest
     env:
-      SANITY_STUDIO_HOSTNAME: ${{ secrets[inputs.studio_hostname] }}
-      SANITY_AUTH_TOKEN: ${{ secrets[inputs.token_secret] }}
+      SANITY_STUDIO_HOSTNAME: ${{ inputs.studio_hostname }}
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
 
     steps:
       - name: Checkout
