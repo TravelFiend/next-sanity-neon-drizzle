@@ -22,8 +22,13 @@ jobs:
 
       - uses: ./.github/actions/setup-sanity
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Deploy Sanity Schema
-        run: npx sanity schema deploy --non-interactive
+        run: bunx sanity schema deploy --non-interactive
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
 
