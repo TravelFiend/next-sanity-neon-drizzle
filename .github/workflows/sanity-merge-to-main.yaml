@@ -1,0 +1,13 @@
+name: neon-drizzle.sanity.studio
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-sanity:
+    uses: ./.github/workflows/deploy-sanity.yaml
+    with:
+      studio_hostname: SANITY_STUDIO_HOSTNAME_PROD
+      token_secret: SANITY_API_DEPLOY_TOKEN

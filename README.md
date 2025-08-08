@@ -60,8 +60,8 @@ This Project is setup to auto deploy on merge to `main` branch and generate a pr
 
 **Sanity Typegen commands**
 
-- `npx sanity schema extract --enforce-required-fields --workspace [workspace]` _(either `development` or `production` for our setup).  This creates a `schema.json` file at the root of the project._
-- `npx sanity@latest typegen generate` _this is the command that creates the `sanity.types.ts` file containing types for all your Sanity Studio schema types_
+- `bunx sanity schema extract --enforce-required-fields --workspace [workspace]` _(either `development` or `production` for our setup).  This creates a `schema.json` file at the root of the project._
+- `bunx sanity@latest typegen generate` _this is the command that creates the `sanity.types.ts` file containing types for all your Sanity Studio schema types_
 
 ## Testing
 

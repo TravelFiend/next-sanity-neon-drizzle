@@ -1,0 +1,30 @@
+name: Deploy Sanity Schema & Studio
+
+on:
+  workflow_call:
+    inputs:
+      studio_hostname:
+        required: true
+        type: string
+      token_secret:
+        required: true
+        type: string
+
+jobs:
+  deploy-sanity:
+    runs-on: ubuntu-latest
+    env:
+      SANITY_STUDIO_HOSTNAME: ${{ secrets[inputs.studio_hostname] }}
+      SANITY_AUTH_TOKEN: ${{ secrets[inputs.token_secret] }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-sanity
+
+      - name: Deploy Sanity Schema
+        run: bunx sanity schema deploy --non-interactive
+
+      - name: Deploy Sanity Studio
+        run: bun run sanity deploy --non-interactive
