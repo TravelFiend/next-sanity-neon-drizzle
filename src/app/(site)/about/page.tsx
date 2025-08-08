@@ -2,7 +2,7 @@ import ContentWrapper from '@/components/common/ContentWrapper';
 
 export const metadata = {
   title: 'About Us',
-  description: 'Learn about MJM LLC'
+  description: 'Learn about [COMPANY NAME HERE]'
 };
 
 const AboutUsPage = () => {

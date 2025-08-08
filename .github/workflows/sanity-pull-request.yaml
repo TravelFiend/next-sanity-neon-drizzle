@@ -1,4 +1,4 @@
-name: mjm-fe-dev.sanity.studio
+name: neon-drizzle-fe-dev.sanity.studio
 
 on:
   pull_request:

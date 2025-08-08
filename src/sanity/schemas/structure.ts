@@ -6,7 +6,7 @@ export const getDefaultDocumentNode = (S: StructureBuilder) => {
 
 const structure: StructureResolver = S =>
   S.list()
-    .title('MJM Admin')
+    .title('Neon Drizzle Admin')
     .items([
       S.listItem()
         .title('Homepage')
