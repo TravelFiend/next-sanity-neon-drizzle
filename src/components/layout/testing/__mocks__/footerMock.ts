@@ -2,7 +2,7 @@ import { FooterRes } from '@sanityTypes/derivedTypes';
 
 const footerMock: FooterRes = {
   _type: 'footer',
-  copyrightText: 'MJM-LLC 2025',
+  copyrightText: 'NEON DRIZZLE 2025',
   legalLinks: [
     {
       _key: '123',

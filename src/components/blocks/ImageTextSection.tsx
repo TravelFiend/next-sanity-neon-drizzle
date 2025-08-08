@@ -1,5 +1,5 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import TextBox from './TextBox';
+import TextBox from '../common/TextBox';
 import CloudinaryImg from '../common/CloudinaryImg';
 import type { ImageTextBlockRes } from '@sanityTypes/derivedTypes';
 

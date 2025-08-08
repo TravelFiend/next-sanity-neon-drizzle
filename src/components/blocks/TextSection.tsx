@@ -1,4 +1,4 @@
-import TextBox from './TextBox';
+import TextBox from '../common/TextBox';
 import type { TextBlockRes } from '@sanityTypes/derivedTypes';
 
 type TextSectionProps = {

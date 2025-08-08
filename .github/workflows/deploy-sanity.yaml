@@ -1,21 +1,21 @@
-name: neon-drizzle-fe-dev.sanity.studio
+name: Deploy Sanity Schema & Studio
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-
-permissions:
-  pull-requests: write
-  contents: read
-  actions: write
+  workflow_call:
+    inputs:
+      studio_hostname:
+        required: true
+        type: string
+    secrets:
+      SANITY_AUTH_TOKEN:
+        required: true
 
 jobs:
   deploy-sanity:
-    name: Deploy Sanity Schema & Studio - DEV
     runs-on: ubuntu-latest
     env:
-      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
-      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_DEV }}
+      SANITY_STUDIO_HOSTNAME: ${{ inputs.studio_hostname }}
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
 
     steps:
       - name: Checkout

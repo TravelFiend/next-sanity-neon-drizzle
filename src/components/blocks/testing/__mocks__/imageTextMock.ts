@@ -1,12 +1,5 @@
+import { textBlockMock } from '@/components/common/testing/__mocks__/textBlockMock';
 import { ImageTextBlockRes } from '@/sanity/types/derivedTypes';
-
-const textBlockMock: ImageTextBlockRes['text'] = {
-  _type: 'textBlock',
-  alignment: 'left',
-  body: 'A bunch of bodily words',
-  subtitle: 'Subtitle',
-  title: 'Title'
-};
 
 const imageTextMock: ImageTextBlockRes = {
   _key: '123',
