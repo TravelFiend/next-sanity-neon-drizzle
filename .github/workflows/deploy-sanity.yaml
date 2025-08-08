@@ -12,7 +12,7 @@ jobs:
   deploy-sanity:
     runs-on: ubuntu-latest
     env:
-      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME }} # Use the secret's value
+      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME }}
       SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
 
     steps:
