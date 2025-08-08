@@ -7,13 +7,20 @@ on:
 
 jobs:
   deploy-sanity:
+    name: Deploy Sanity Schema & Studio - PROD
     runs-on: ubuntu-latest
     env:
-      # Use a job-level env variable to store the secret value
-      SANITY_STUDIO_HOSTNAME_PROD: ${{ secrets.SANITY_STUDIO_HOSTNAME_PROD }}
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_API_DEPLOY_TOKEN }}
+      SANITY_STUDIO_HOSTNAME: ${{ secrets.SANITY_STUDIO_HOSTNAME_PROD }}
+
     steps:
-      - name: Call reusable workflow for PROD studio
-        uses: ./.github/workflows/deploy-sanity.yaml
-        with:
-          # Pass the environment variable to the input
-          studio_hostname: ${{ env.SANITY_STUDIO_HOSTNAME_PROD }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-sanity
+
+      - name: Deploy Sanity Schema
+        run: bunx sanity schema deploy --non-interactive
+
+      - name: Deploy Sanity Studio
+        run: bun run sanity deploy --non-interactive
