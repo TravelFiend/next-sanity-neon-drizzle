@@ -1,5 +1,3 @@
-# .github/workflows/neon-drizzle.sanity.studio.yaml
-
 name: neon-drizzle.sanity.studio
 
 on:
