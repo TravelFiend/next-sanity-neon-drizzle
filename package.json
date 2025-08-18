@@ -44,7 +44,7 @@
     "@next/eslint-plugin-next": "^15.3.4",
     "@sanity/color-input": "^4.0.3",
     "@sanity/eslint-config-studio": "^5.0.2",
-    "@sanity/vision": "4.3.0",
+    "@sanity/vision": "4.4.1",
     "@storybook/addon-a11y": "9.1.1",
     "@storybook/addon-docs": "9.1.1",
     "@storybook/addon-onboarding": "9.1.1",
