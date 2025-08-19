@@ -3,19 +3,15 @@ import { defineConfig } from 'drizzle-kit';
 
 config({ path: '.env.local' });
 
-const USER = process.env.DB_USERNAME;
-const PW = process.env.DB_PASSWORD;
-const HOST = process.env.DB_HOST;
-const PORT = process.env.DB_PORT;
-const DB_NAME = process.env.DB_NAME;
-
-export const DATABASE_URL = `postgresql://${USER}:${PW}@${HOST}:${PORT}/${DB_NAME}`;
+export const DATABASE_URL = process.env.DATABASE_URL!;
 
 export default defineConfig({
-  out: './drizzle',
-  schema: './src/db/schemas/index.ts',
+  schema: './src/drizzle/schemas/index.ts',
+  out: './src/drizzle/migrations',
   dialect: 'postgresql',
   dbCredentials: {
     url: DATABASE_URL
-  }
+  },
+  verbose: true,
+  strict: true
 });

@@ -1,0 +1,1 @@
+ALTER TABLE "users" ALTER COLUMN "zip_code" SET DATA TYPE varchar(15);

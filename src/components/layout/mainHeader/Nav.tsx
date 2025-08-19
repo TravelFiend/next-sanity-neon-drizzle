@@ -10,6 +10,7 @@ import type {
   NavTabsRes,
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
+import UserIcon from '@/components/icons/userIcon';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
@@ -112,7 +113,12 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
           areLinksOpen ? '-translate-x-0' : 'translate-x-full'
         )}
       >
+        <UserIcon className="h-5 sm:hidden" />
         {mainLinks}
+        <div className="hidden h-20 items-center justify-center px-3 sm:flex">
+          <p>Signup/Login</p>
+          <UserIcon className="hidden sm:block" fill="text-tertiary" />
+        </div>
       </ul>
 
       <MobileSecondLinks
