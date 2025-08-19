@@ -10,13 +10,16 @@ import type {
   NavTabsRes,
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
-import UserIcon from '@/components/icons/userIcon';
+import UserIcon from '@/components/icons/UserIcon';
+import CustomerAuth from '../auth/CustomerAuth';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
 };
 
 const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
+  const [isCustomerModalOpen, setIsCustomerModalOpen] =
+    useState<boolean>(false);
   const [areLinksOpen, setAreLinksOpen] = useState(false);
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
   const [parentLink, setParentLink] = useState<string | undefined>(undefined);
@@ -38,8 +41,6 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
     }
   };
 
-  if (!linkData) return null;
-
   const handleMainLinkClick = (evt: React.MouseEvent<HTMLElement>) => {
     const theKids = linkData?.filter(
       singleLinkData =>
@@ -53,6 +54,9 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
     setCurrentChildren(theKids?.secondLevelLinks || null);
     setParentLink(evt.currentTarget.id.toLowerCase());
   };
+
+  const handleOpenModal = () => setIsCustomerModalOpen(true);
+  const handleCloseModal = () => setIsCustomerModalOpen(false);
 
   const mainLinks = linkData?.map(({ _key, link, secondLevelLinks }) => {
     if (secondLevelLinks) {
@@ -91,8 +95,8 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
   });
 
   return (
-    <nav className="block h-full bg-cyan-600">
-      {linkData?.length ? (
+    <>
+      <nav className="block h-full bg-cyan-600">
         <button
           className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
           onClick={handleBurgerClick}
@@ -105,36 +109,55 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
             />
           ))}
         </button>
-      ) : null}
 
-      <ul
-        className={conditionalClasses(
-          'absolute left-1/6 flex w-5/6 flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
-          areLinksOpen ? '-translate-x-0' : 'translate-x-full'
-        )}
-      >
-        <UserIcon className="h-5 sm:hidden" />
-        {mainLinks}
-        <div className="hidden h-20 items-center justify-center px-3 sm:flex">
-          <p>Signup/Login</p>
-          <UserIcon className="hidden sm:block" fill="text-tertiary" />
-        </div>
-      </ul>
+        <ul
+          className={conditionalClasses(
+            'absolute left-1/6 flex w-5/6 flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
+            areLinksOpen ? '-translate-x-0' : 'translate-x-full'
+          )}
+        >
+          <li className="m-3 flex h-5 items-center sm:hidden">
+            <button
+              type="button"
+              className="flex cursor-pointer items-center hover:text-secondary"
+              onClick={handleOpenModal}
+            >
+              <UserIcon className="h-7" />
+              Login/Signup
+            </button>
+          </li>
 
-      <MobileSecondLinks
-        isOpen={areChildLinksOpen}
-        setIsOpen={setAreLinksOpen}
-        setAreChildrenOpen={setAreChildLinksOpen}
-        parentLink={parentLink}
-        currentChildren={currentChildren}
-      />
-      <DesktopSubNav
-        isOpen={areChildLinksOpen}
-        setIsOpen={setAreChildLinksOpen}
-        parentLink={parentLink}
-        currentChildren={currentChildren}
-      />
-    </nav>
+          {mainLinks}
+
+          <li className="hidden h-20 px-3 sm:flex">
+            <button
+              type="button"
+              className="flex cursor-pointer items-center hover:text-secondary"
+              onClick={handleOpenModal}
+            >
+              <p>Signup/Login</p>
+              <UserIcon className="h-8" />
+            </button>
+          </li>
+        </ul>
+
+        <MobileSecondLinks
+          isOpen={areChildLinksOpen}
+          setIsOpen={setAreLinksOpen}
+          setAreChildrenOpen={setAreChildLinksOpen}
+          parentLink={parentLink}
+          currentChildren={currentChildren}
+        />
+        <DesktopSubNav
+          isOpen={areChildLinksOpen}
+          setIsOpen={setAreChildLinksOpen}
+          parentLink={parentLink}
+          currentChildren={currentChildren}
+        />
+      </nav>
+
+      {isCustomerModalOpen ? <CustomerAuth onClose={handleCloseModal} /> : null}
+    </>
   );
 };
 
