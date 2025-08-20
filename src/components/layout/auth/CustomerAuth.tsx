@@ -18,8 +18,6 @@ const CustomerAuth: FC<CustomerAuthProps> = ({ onClose }) => {
   );
   const [loginState, loginAction, isLoginPending] = useActionState(login, null);
 
-  console.warn({ signupState, loginState });
-
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -75,6 +73,23 @@ const CustomerAuth: FC<CustomerAuthProps> = ({ onClose }) => {
             className="rounded border p-2 text-primary-light"
             name="password"
           />
+
+          <ul className="h-9">
+            {signupState?.errors
+              ? Object.entries(signupState?.errors).map(([key, value]) => (
+                  <li key={key} className="text-sm text-error">
+                    {value}
+                  </li>
+                ))
+              : null}
+            {loginState?.errors
+              ? Object.entries(loginState?.errors).map(([key, value]) => (
+                  <li key={key} className="text-sm text-error">
+                    {value}
+                  </li>
+                ))
+              : null}
+          </ul>
 
           <button
             type="submit"

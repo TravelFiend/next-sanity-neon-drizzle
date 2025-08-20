@@ -135,7 +135,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
               className="flex cursor-pointer items-center hover:text-secondary"
               onClick={handleOpenModal}
             >
-              <p>Signup/Login</p>
+              <p>Login/Signup</p>
               <UserIcon className="h-8" />
             </button>
           </li>

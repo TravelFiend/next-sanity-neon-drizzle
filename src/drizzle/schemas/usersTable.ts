@@ -1,4 +1,11 @@
-import { date, integer, pgEnum, pgTable, varchar } from 'drizzle-orm/pg-core';
+import {
+  date,
+  integer,
+  pgEnum,
+  pgTable,
+  timestamp,
+  varchar
+} from 'drizzle-orm/pg-core';
 
 export const roleEnum = pgEnum('role', ['customer', 'artist', 'musician']);
 
@@ -14,5 +21,9 @@ export const usersTable = pgTable('users', {
   city: varchar('city', { length: 50 }),
   state: varchar('state_abbreviation', { length: 2 }),
   zipCode: varchar('zip_code', { length: 15 }),
-  role: roleEnum().notNull().default('customer')
+  role: roleEnum().notNull().default('customer'),
+  createdAt: timestamp().notNull().defaultNow()
 });
+
+export type SelectUser = typeof usersTable.$inferSelect;
+export type InsertUser = typeof usersTable.$inferInsert;
