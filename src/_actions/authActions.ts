@@ -1,7 +1,7 @@
 'use server';
 
-import { db } from '@/drizzle/db';
-import { usersTable } from '@/drizzle/schemas';
+import { db } from '@/_drizzle/db';
+import { usersTable } from '@/_drizzle/schemas';
 import { hash, verify } from 'argon2';
 import { DrizzleError, eq } from 'drizzle-orm';
 

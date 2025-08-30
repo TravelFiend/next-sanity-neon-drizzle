@@ -29,6 +29,27 @@
       "when": 1755666308901,
       "tag": "0003_chemical_sunspot",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1756461997721,
+      "tag": "0004_chubby_purifiers",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1756465213618,
+      "tag": "0005_nifty_calypso",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1756535015071,
+      "tag": "0006_ambitious_zaladane",
+      "breakpoints": true
     }
   ]
 }

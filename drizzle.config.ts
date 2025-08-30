@@ -6,8 +6,8 @@ config({ path: '.env.local' });
 export const DATABASE_URL = process.env.DATABASE_URL!;
 
 export default defineConfig({
-  schema: './src/drizzle/schemas/index.ts',
-  out: './src/drizzle/migrations',
+  schema: './src/_drizzle/schemas/index.ts',
+  out: './src/_drizzle/migrations',
   dialect: 'postgresql',
   dbCredentials: {
     url: DATABASE_URL
