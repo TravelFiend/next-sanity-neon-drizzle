@@ -64,11 +64,12 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
             name="email"
           />
           <ul className="h-5">
-            {signupState?.errors?.email?.map((err: string, idx: number) => (
-              <li key={idx} className="text-sm text-error">
-                {err}
-              </li>
-            ))}
+            {!signupState?.success &&
+              signupState?.errors?.email?.map((err: string, idx: number) => (
+                <li key={idx} className="text-sm text-error">
+                  {err}
+                </li>
+              ))}
           </ul>
 
           <label htmlFor="password" className="font-sans text-primary-light">
@@ -84,13 +85,25 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
           <ul className="h-14">
             {signupState?.message ? (
               <li className="text-sm text-success">{signupState.message}</li>
+            ) : loginState?.message ? (
+              <li className="text-sm text-success">{loginState.message}</li>
             ) : null}
-            {signupState?.errors?.password?.map((err: string) => (
-              <li key={err} className="text-sm text-error">
-                {err}
-              </li>
-            ))}
-            {loginState?.errors
+
+            {!signupState?.success &&
+              signupState?.errors?.password?.map(err => (
+                <li key={err} className="text-sm text-error">
+                  {err}
+                </li>
+              ))}
+
+            {!loginState?.success &&
+              loginState?.errors?.login.map((err: string) => (
+                <li key={err} className="text-sm text-error">
+                  {err}
+                </li>
+              ))}
+
+            {!loginState?.success && loginState?.errors
               ? Object.entries(loginState?.errors).map(([key, value]) => (
                   <li key={key} className="text-sm text-error">
                     {value}

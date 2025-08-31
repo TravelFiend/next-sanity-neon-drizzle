@@ -2,40 +2,41 @@
 
 import { hash, verify } from 'argon2';
 import { eq } from 'drizzle-orm';
-import { z } from 'zod/v4';
 import { db } from '@/_drizzle/db';
 import { type InsertUser, usersTable } from '@/_drizzle/schemas';
-import { type UserSignup, signupZodSchema } from '@/_zodSchemas/usersZod';
+import {
+  type UserLogin,
+  type UserSignup,
+  loginZodSchema,
+  signupZodSchema
+} from '@/_zodSchemas/usersZod';
+import zodValidate from '@/lib/utils/zodValidate';
 
-const signup = async (prevState: unknown, formData: FormData) => {
+type ActionState<T> =
+  | {
+      success: false;
+      errors: Record<string, string[]>;
+      message?: string;
+    }
+  | {
+      success: true;
+      data?: T;
+      message?: string;
+    };
+
+const signup = async (
+  prevState: unknown,
+  formData: FormData
+): Promise<ActionState<UserSignup>> => {
   const raw = {
     email: formData.get('email'),
     password: formData.get('password')
   };
+  const parsed = zodValidate(raw, signupZodSchema);
 
-  const parsed = signupZodSchema.safeParse(raw);
-
-  const errs: Record<string, string[]> = {};
-  if (!parsed.success) {
-    // TODO: handle `errors` destructured from `z.treeifyError(parsed.error)`
-    const { properties } = z.treeifyError(parsed.error);
-
-    if (properties) {
-      for (const [key, value] of Object.entries(properties)) {
-        if (value.errors) {
-          errs[key] = value.errors;
-        }
-      }
-    }
-
-    return {
-      success: false,
-      errors: errs
-    };
-  }
+  if (!parsed.success) return parsed;
 
   const { email, password }: UserSignup = parsed.data;
-
   const pwHash = await hash(password);
 
   const newUser: InsertUser = {
@@ -66,18 +67,21 @@ const signup = async (prevState: unknown, formData: FormData) => {
   };
 };
 
-const login = async (prevState: unknown, formData: FormData) => {
-  const email = formData.get('email');
-  const password = formData.get('password');
+const login = async (
+  prevState: unknown,
+  formData: FormData
+): Promise<ActionState<UserLogin>> => {
+  const raw = {
+    email: formData.get('email'),
+    password: formData.get('password')
+  };
 
-  // to make TS happy
-  if (typeof password !== 'string') {
-    throw new Error('Password is required and must be a string');
-  }
+  const parsed = zodValidate(raw, loginZodSchema);
 
-  if (!email || typeof email !== 'string') {
-    throw new Error('Must provide an email and it must be a string');
-  }
+  if (!parsed.success) return parsed;
+
+  const { email, password }: UserLogin = parsed.data;
+
   const storedHash = await db
     .select({ password: usersTable.password })
     .from(usersTable)
@@ -86,8 +90,13 @@ const login = async (prevState: unknown, formData: FormData) => {
   const isVerified = await verify(storedHash[0].password, password);
 
   return isVerified
-    ? { message: 'Verified!' }
-    : { errors: { login: 'Incorrect email and/or password' } };
+    ? { success: true, message: 'Verified!' }
+    : {
+        success: false,
+        errors: {
+          login: ['Incorrect email and/or password']
+        }
+      };
 };
 
 export { signup, login };
