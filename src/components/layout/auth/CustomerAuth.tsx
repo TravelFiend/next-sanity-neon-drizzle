@@ -4,9 +4,9 @@ import { login, signup } from '@/_actions/authActions';
 import { useActionState, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-interface CustomerAuthProps {
+type CustomerAuthProps = {
   onClose: () => void;
-}
+};
 
 const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
   const [mounted, setMounted] = useState(false);
@@ -90,26 +90,18 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
             ) : null}
 
             {!signupState?.success &&
-              signupState?.errors?.password?.map(err => (
+              signupState?.errors.password.map(err => (
                 <li key={err} className="text-sm text-error">
                   {err}
                 </li>
               ))}
 
             {!loginState?.success &&
-              loginState?.errors?.login.map((err: string) => (
+              loginState?.errors.login.map((err: string) => (
                 <li key={err} className="text-sm text-error">
                   {err}
                 </li>
               ))}
-
-            {!loginState?.success && loginState?.errors
-              ? Object.entries(loginState?.errors).map(([key, value]) => (
-                  <li key={key} className="text-sm text-error">
-                    {value}
-                  </li>
-                ))
-              : null}
           </ul>
 
           <button
