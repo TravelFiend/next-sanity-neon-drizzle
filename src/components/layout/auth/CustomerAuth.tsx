@@ -65,7 +65,7 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
           />
           <ul className="h-5">
             {!signupState?.success &&
-              signupState?.errors?.email?.map((err: string, idx: number) => (
+              signupState?.errors.email?.map((err: string, idx: number) => (
                 <li key={idx} className="text-sm text-error">
                   {err}
                 </li>
@@ -90,14 +90,14 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
             ) : null}
 
             {!signupState?.success &&
-              signupState?.errors.password.map(err => (
+              signupState?.errors.password?.map(err => (
                 <li key={err} className="text-sm text-error">
                   {err}
                 </li>
               ))}
 
             {!loginState?.success &&
-              loginState?.errors.login.map((err: string) => (
+              loginState?.errors.login?.map((err: string) => (
                 <li key={err} className="text-sm text-error">
                   {err}
                 </li>
