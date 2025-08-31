@@ -34,7 +34,7 @@ export const userAddressesTable = pgTable('user_addresses', {
   userId: integer('user_id')
     .references(() => usersTable.id)
     .notNull(),
-  addressType: addressTypeEnum().notNull().default('shipping'),
+  addressType: addressTypeEnum('address_type').notNull().default('shipping'),
   address1: varchar('address_1', { length: 255 }).notNull(),
   address2: varchar('address_2', { length: 255 }),
   city: varchar('city', { length: 50 }).notNull(),
