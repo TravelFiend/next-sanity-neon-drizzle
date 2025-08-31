@@ -1,57 +1,58 @@
 'use server';
 
-import { db } from '@/_drizzle/db';
-import { usersTable } from '@/_drizzle/schemas';
 import { hash, verify } from 'argon2';
-import { DrizzleError, eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
+import { z } from 'zod/v4';
+import { db } from '@/_drizzle/db';
+import { type InsertUser, usersTable } from '@/_drizzle/schemas';
+import { type UserSignup, signupZodSchema } from '@/_zodSchemas/usersZod';
 
 const signup = async (prevState: unknown, formData: FormData) => {
-  const email = formData.get('email');
-  const password = formData.get('password');
+  const raw = {
+    email: formData.get('email'),
+    password: formData.get('password')
+  };
 
-  const errors: { password?: string; email?: string } = {};
+  const parsed = signupZodSchema.safeParse(raw);
 
-  let safePassword = '';
-  let safeEmail = '';
-  // to make TS happy
-  if (typeof password !== 'string') {
-    errors.password = 'Password is required and must be a string';
-  } else if (password.trim().length < 8) {
-    errors.password = 'Password must be at least 8 characters long.';
-  } else {
-    safePassword = password;
-  }
+  const errs: Record<string, string[]> = {};
+  if (!parsed.success) {
+    // TODO: handle `errors` destructured from `z.treeifyError(parsed.error)`
+    const { properties } = z.treeifyError(parsed.error);
 
-  if (!email || typeof email !== 'string') {
-    errors.email = 'Must provide an email and it must be a string';
-  } else {
-    safeEmail = email;
-  }
+    if (properties) {
+      for (const [key, value] of Object.entries(properties)) {
+        if (value.errors) {
+          errs[key] = value.errors;
+        }
+      }
+    }
 
-  if (Object.keys(errors).length) {
     return {
       success: false,
-      errors
+      errors: errs
     };
   }
 
-  const pwHash = await hash(safePassword);
+  const { email, password }: UserSignup = parsed.data;
 
-  const newUser: typeof usersTable.$inferInsert = {
-    email: safeEmail,
+  const pwHash = await hash(password);
+
+  const newUser: InsertUser = {
+    email,
     password: pwHash
   };
 
   try {
     await db.insert(usersTable).values(newUser);
   } catch (err) {
-    if (err instanceof DrizzleError) {
+    if (err instanceof Error) {
       const cause = err.cause as { code?: string };
       if (cause.code === '23505') {
         return {
           success: false,
           errors: {
-            email: 'An account already exists with this email.'
+            email: ['An account already exists with this email.']
           }
         };
       }
@@ -61,7 +62,7 @@ const signup = async (prevState: unknown, formData: FormData) => {
 
   return {
     success: true,
-    message: 'Account succesfully created!'
+    message: 'Account successfully created!'
   };
 };
 

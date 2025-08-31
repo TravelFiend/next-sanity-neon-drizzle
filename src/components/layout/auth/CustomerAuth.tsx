@@ -1,14 +1,14 @@
 'use client';
 
 import { login, signup } from '@/_actions/authActions';
-import { FC, useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface CustomerAuthProps {
   onClose: () => void;
 }
 
-const CustomerAuth: FC<CustomerAuthProps> = ({ onClose }) => {
+const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
   const [mounted, setMounted] = useState(false);
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
 
@@ -63,6 +63,13 @@ const CustomerAuth: FC<CustomerAuthProps> = ({ onClose }) => {
             className="rounded border p-2 text-primary-light"
             name="email"
           />
+          <ul className="h-5">
+            {signupState?.errors?.email?.map((err: string, idx: number) => (
+              <li key={idx} className="text-sm text-error">
+                {err}
+              </li>
+            ))}
+          </ul>
 
           <label htmlFor="password" className="font-sans text-primary-light">
             <span className="text-error">*</span>Password:{' '}
@@ -74,14 +81,15 @@ const CustomerAuth: FC<CustomerAuthProps> = ({ onClose }) => {
             name="password"
           />
 
-          <ul className="h-9">
-            {signupState?.errors
-              ? Object.entries(signupState?.errors).map(([key, value]) => (
-                  <li key={key} className="text-sm text-error">
-                    {value}
-                  </li>
-                ))
-              : null}
+          <ul className="h-14">
+            {signupState?.message ? (
+              <li className="text-sm text-success">{signupState.message}</li>
+            ) : null}
+            {signupState?.errors?.password?.map((err: string) => (
+              <li key={err} className="text-sm text-error">
+                {err}
+              </li>
+            ))}
             {loginState?.errors
               ? Object.entries(loginState?.errors).map(([key, value]) => (
                   <li key={key} className="text-sm text-error">
