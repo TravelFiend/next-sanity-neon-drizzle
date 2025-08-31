@@ -1,6 +1,6 @@
 import { seed } from 'drizzle-seed';
-import { db } from './db';
-import { usersTable, userAddressesTable } from './schemas';
+import { db } from '../db';
+import { usersTable, userAddressesTable } from '../schemas';
 import { sql } from 'drizzle-orm';
 
 const seedIt = async () => {
