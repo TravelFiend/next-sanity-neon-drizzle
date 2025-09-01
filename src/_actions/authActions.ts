@@ -48,8 +48,10 @@ const signup = async (
     await db.insert(usersTable).values(newUser);
   } catch (err) {
     if (err instanceof Error) {
-      const cause = err.cause as { code?: string };
-      if (cause.code === '23505') {
+      console.error('Insert failed:', err);
+
+      const cause = err.cause as { constraint?: string };
+      if (cause.constraint === 'users_email_unique') {
         return {
           success: false,
           errors: {
