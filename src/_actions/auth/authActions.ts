@@ -9,8 +9,9 @@ import {
   type UserSignup,
   loginZodSchema,
   signupZodSchema
-} from '@/_zodSchemas/usersZod';
+} from '@/_zodSchemas/authZod';
 import zodValidate from '@/lib/utils/zodValidate';
+import { createUserSession } from '@/auth/session';
 
 type ActionState<T> =
   | {
@@ -45,7 +46,12 @@ const signup = async (
   };
 
   try {
-    await db.insert(usersTable).values(newUser);
+    const [user] = await db
+      .insert(usersTable)
+      .values(newUser)
+      .returning({ id: usersTable.id, role: usersTable.role });
+
+    await createUserSession(user);
   } catch (err) {
     if (err instanceof Error) {
       console.error('Insert failed:', err);

@@ -1,6 +1,7 @@
 'use client';
 
-import { login, signup } from '@/_actions/authActions';
+import { login, signup } from '@/_actions/auth/authActions';
+import { getSessionUser } from '@/auth/session';
 import { useActionState, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -17,9 +18,15 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
     null
   );
   const [loginState, loginAction, isLoginPending] = useActionState(login, null);
+  const [user, setUser] = useState<{ id: number; role: string } | null>(null);
 
   useEffect(() => {
     setMounted(true);
+
+    (async () => {
+      const currentUser = await getSessionUser();
+      setUser(currentUser);
+    })();
   }, []);
 
   if (!mounted) return null;
@@ -42,6 +49,13 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
       />
 
       <div className="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
+        {/* TODO: Put this somewhere better */}
+        {user ? (
+          <div className="text-blue-800">
+            <p>{user.id}</p>
+            <p>{user.role}</p>
+          </div>
+        ) : null}
         <h2
           id="signup-modal-title"
           className="mb-4 font-sans text-xl text-primary"

@@ -32,22 +32,22 @@ const authBaseSchema = userInsertSchema.pick({
   password: true
 });
 
-export const signupZodSchema = authBaseSchema;
+const signupZodSchema = authBaseSchema;
 
-export const loginZodSchema = authBaseSchema.extend({
+const loginZodSchema = authBaseSchema.extend({
   password: z.string().min(1, { error: 'Please enter a password' })
 });
 
-export const userSelectSchema = createSelectSchema(usersTable);
+const userSelectSchema = createSelectSchema(usersTable);
 
-export type UserSignup = z.infer<typeof signupZodSchema>;
-export type UserLogin = z.infer<typeof loginZodSchema>;
-export type UserSelect = z.infer<typeof userSelectSchema>;
+type UserSignup = z.infer<typeof signupZodSchema>;
+type UserLogin = z.infer<typeof loginZodSchema>;
+type UserSelect = z.infer<typeof userSelectSchema>;
 
 // ZOD USER ADDRESS
 const addressTypeZodEnum = z.enum(addressTypeEnum.enumValues);
 
-export const userAddressInsertSchema = createInsertSchema(userAddressesTable, {
+const userAddressInsertSchema = createInsertSchema(userAddressesTable, {
   addressType: addressTypeZodEnum,
   address1: schema => schema.min(1, 'Address is required'),
   city: schema => schema.min(1, 'City is required'),
@@ -59,7 +59,27 @@ export const userAddressInsertSchema = createInsertSchema(userAddressesTable, {
     })
 });
 
-export const userAddressSelectSchema = createSelectSchema(userAddressesTable);
+const userAddressSelectSchema = createSelectSchema(userAddressesTable);
 
-export type userAddressInsert = z.infer<typeof userAddressInsertSchema>;
-export type userAddressSelect = z.infer<typeof userAddressSelectSchema>;
+type UserAddressInsert = z.infer<typeof userAddressInsertSchema>;
+type UserAddressSelect = z.infer<typeof userAddressSelectSchema>;
+
+// SESSION
+const sessionSchema = z.object({
+  id: z.number(),
+  role: rolesZodEnum
+});
+
+export {
+  signupZodSchema,
+  loginZodSchema,
+  userSelectSchema,
+  type UserSignup,
+  type UserLogin,
+  type UserSelect,
+  userAddressInsertSchema,
+  userAddressSelectSchema,
+  type UserAddressInsert,
+  type UserAddressSelect,
+  sessionSchema
+};
