@@ -1,5 +1,3 @@
-'use server';
-
 import { z } from 'zod/v4';
 import { sessionSchema } from '@/_zodSchemas/authZod';
 import { redis } from '@/redis/redis';
