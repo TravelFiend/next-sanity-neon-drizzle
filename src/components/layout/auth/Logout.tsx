@@ -1,8 +1,8 @@
 import { logout } from '@/_actions/auth/authActions';
-import { UserSelect } from '@/_zodSchemas/authZod';
+import { UserSession } from '@/auth/session';
 
 type LogoutProps = {
-  user: UserSelect;
+  user: UserSession;
 };
 
 const Logout: React.FC<LogoutProps> = ({ user }) => {

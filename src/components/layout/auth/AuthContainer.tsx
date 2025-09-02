@@ -1,9 +1,10 @@
 'use client';
 
-import { login, logout, signup } from '@/_actions/auth/authActions';
-import { getSessionUser } from '@/auth/session';
+import { login, signup } from '@/_actions/auth/authActions';
+import { getSessionUser, UserSession } from '@/auth/session';
 import { useActionState, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import Logout from './Logout';
 
 type AuthContainerProps = {
   onClose: () => void;
@@ -18,13 +19,14 @@ const AuthContainer: React.FC<AuthContainerProps> = ({ onClose }) => {
     null
   );
   const [loginState, loginAction, isLoginPending] = useActionState(login, null);
-  const [user, setUser] = useState<{ id: number; role: string } | null>(null);
+  const [user, setUser] = useState<UserSession | null>(null);
 
   useEffect(() => {
     setMounted(true);
 
     (async () => {
       const currentUser = await getSessionUser();
+
       setUser(currentUser);
     })();
   }, []);
@@ -127,15 +129,8 @@ const AuthContainer: React.FC<AuthContainerProps> = ({ onClose }) => {
           >
             {isSignupPending || isLoginPending ? 'Submitting...' : 'Submit'}
           </button>
-          {user ? (
-            <button
-              type="submit"
-              className="rounded-lg border border-accent-dark p-4 text-primary-light active:bg-secondary-dark active:text-white"
-              onClick={logout}
-            >
-              Log Out
-            </button>
-          ) : null}
+
+          {user ? <Logout user={user} /> : null}
 
           <button
             type="button"

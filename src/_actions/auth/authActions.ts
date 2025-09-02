@@ -47,10 +47,11 @@ const signup = async (
   };
 
   try {
-    const [user] = await db
-      .insert(usersTable)
-      .values(newUser)
-      .returning({ id: usersTable.id, role: usersTable.role });
+    const [user] = await db.insert(usersTable).values(newUser).returning({
+      id: usersTable.id,
+      role: usersTable.role,
+      email: usersTable.email
+    });
 
     await createUserSession(user);
   } catch (err) {
@@ -90,7 +91,13 @@ const login = async (
   const { email, password }: UserLogin = parsed.data;
 
   const existingUser = await db.query.usersTable.findFirst({
-    where: eq(usersTable.email, email)
+    where: eq(usersTable.email, email),
+    columns: {
+      id: true,
+      email: true,
+      password: true,
+      role: true
+    }
   });
 
   if (!existingUser) {

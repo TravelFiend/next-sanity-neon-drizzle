@@ -9,7 +9,7 @@ import { cache } from 'react';
 const SESSION_EXPIRATION = 60 * 60 * 24 * 7; // 7 days
 const COOKIE_SESSION_KEY = 'session-id';
 
-type UserSession = z.infer<typeof sessionSchema>;
+export type UserSession = z.infer<typeof sessionSchema>;
 
 const createUserSession = async (user: UserSession) => {
   const sessionId = crypto.randomUUID();
