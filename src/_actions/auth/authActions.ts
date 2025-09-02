@@ -1,7 +1,7 @@
 'use server';
 
-import { hash, verify } from 'argon2';
 import { eq } from 'drizzle-orm';
+import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
 import { type InsertUser, usersTable } from '@/_drizzle/schemas';
 import {
@@ -11,7 +11,8 @@ import {
   signupZodSchema
 } from '@/_zodSchemas/authZod';
 import zodValidate from '@/lib/utils/zodValidate';
-import { createUserSession } from '@/auth/session';
+import { createUserSession, removeSessionUser } from '@/auth/session';
+import { redirect } from 'next/navigation';
 
 type ActionState<T> =
   | {
@@ -71,7 +72,7 @@ const signup = async (
 
   return {
     success: true,
-    message: 'Account successfully created!'
+    message: 'Account successfully created'
   };
 };
 
@@ -85,26 +86,52 @@ const login = async (
   };
 
   const parsed = zodValidate(raw, loginZodSchema);
-
   if (!parsed.success) return parsed;
-
   const { email, password }: UserLogin = parsed.data;
 
-  const storedHash = await db
-    .select({ password: usersTable.password })
-    .from(usersTable)
-    .where(eq(usersTable.email, email));
+  const existingUser = await db.query.usersTable.findFirst({
+    where: eq(usersTable.email, email)
+  });
 
-  const isVerified = await verify(storedHash[0].password, password);
+  if (!existingUser) {
+    return {
+      success: false,
+      errors: {
+        login: ['blah blah blah']
+      }
+    };
+  }
 
-  return isVerified
-    ? { success: true, message: 'Verified!' }
-    : {
+  try {
+    const isVerified = await verify(existingUser.password, password);
+
+    if (isVerified) {
+      await createUserSession(existingUser);
+
+      return {
+        success: true,
+        message: 'Login successful'
+      };
+    } else {
+      throw new Error('Incorrect email and/or password');
+    }
+  } catch (err) {
+    if (err instanceof Error) {
+      return {
         success: false,
         errors: {
-          login: ['Incorrect email and/or password']
+          login: [err.message]
         }
       };
+    }
+
+    throw err;
+  }
 };
 
-export { signup, login };
+const logout = async () => {
+  await removeSessionUser();
+  redirect('/');
+};
+
+export { signup, login, logout };

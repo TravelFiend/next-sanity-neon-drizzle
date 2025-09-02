@@ -1,15 +1,15 @@
 'use client';
 
-import { login, signup } from '@/_actions/auth/authActions';
+import { login, logout, signup } from '@/_actions/auth/authActions';
 import { getSessionUser } from '@/auth/session';
 import { useActionState, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-type CustomerAuthProps = {
+type AuthContainerProps = {
   onClose: () => void;
 };
 
-const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
+const AuthContainer: React.FC<AuthContainerProps> = ({ onClose }) => {
   const [mounted, setMounted] = useState(false);
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
 
@@ -28,6 +28,14 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
       setUser(currentUser);
     })();
   }, []);
+
+  useEffect(() => {
+    if (loginState?.message || signupState?.message) {
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    }
+  }, [loginState, signupState, onClose]);
 
   if (!mounted) return null;
 
@@ -49,13 +57,6 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
       />
 
       <div className="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
-        {/* TODO: Put this somewhere better */}
-        {user ? (
-          <div className="text-blue-800">
-            <p>{user.id}</p>
-            <p>{user.role}</p>
-          </div>
-        ) : null}
         <h2
           id="signup-modal-title"
           className="mb-4 font-sans text-xl text-primary"
@@ -76,6 +77,7 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
             placeholder="youremail@example.com"
             className="rounded border p-2 text-primary-light"
             name="email"
+            required
           />
           <ul className="h-5">
             {!signupState?.success &&
@@ -94,6 +96,7 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
             type="password"
             className="rounded border p-2 text-primary-light"
             name="password"
+            required
           />
 
           <ul className="h-14">
@@ -120,10 +123,20 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
 
           <button
             type="submit"
-            className="border border-accent-dark p-4 text-primary-light active:bg-secondary-dark active:text-white"
+            className="rounded-lg border border-accent-dark p-4 text-primary-light active:bg-secondary-dark active:text-white"
           >
             {isSignupPending || isLoginPending ? 'Submitting...' : 'Submit'}
           </button>
+          {user ? (
+            <button
+              type="submit"
+              className="rounded-lg border border-accent-dark p-4 text-primary-light active:bg-secondary-dark active:text-white"
+              onClick={logout}
+            >
+              Log Out
+            </button>
+          ) : null}
+
           <button
             type="button"
             className="text-primary-light underline"
@@ -148,4 +161,4 @@ const CustomerAuth: React.FC<CustomerAuthProps> = ({ onClose }) => {
   );
 };
 
-export default CustomerAuth;
+export default AuthContainer;

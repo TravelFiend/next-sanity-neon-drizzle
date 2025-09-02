@@ -11,7 +11,7 @@ import type {
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
 import UserIcon from '@/components/icons/UserIcon';
-import CustomerAuth from '../auth/CustomerAuth';
+import AuthContainer from '../auth/AuthContainer';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
@@ -156,7 +156,9 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
         />
       </nav>
 
-      {isCustomerModalOpen ? <CustomerAuth onClose={handleCloseModal} /> : null}
+      {isCustomerModalOpen ? (
+        <AuthContainer onClose={handleCloseModal} />
+      ) : null}
     </>
   );
 };

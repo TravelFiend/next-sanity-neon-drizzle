@@ -42,6 +42,7 @@ const userSelectSchema = createSelectSchema(usersTable);
 
 type UserSignup = z.infer<typeof signupZodSchema>;
 type UserLogin = z.infer<typeof loginZodSchema>;
+// TODO: make a new type that only grabs necessary data from user
 type UserSelect = z.infer<typeof userSelectSchema>;
 
 // ZOD USER ADDRESS

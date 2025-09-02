@@ -1,3 +1,5 @@
+'use server';
+
 import { z } from 'zod/v4';
 import { sessionSchema } from '@/_zodSchemas/authZod';
 import { redis } from '@/redis/redis';
@@ -36,4 +38,15 @@ const getSessionUser = cache(async () => {
   return getSessionUserById(sessionId);
 });
 
-export { createUserSession, getSessionUser };
+const removeSessionUser = async () => {
+  const cookieStore = await cookies();
+  const sessionId = cookieStore.get(COOKIE_SESSION_KEY)?.value;
+
+  if (!sessionId) return null;
+
+  await redis.del(`session:${sessionId}`);
+  // eslint-disable-next-line drizzle/enforce-delete-with-where
+  cookieStore.delete(COOKIE_SESSION_KEY);
+};
+
+export { createUserSession, getSessionUser, removeSessionUser };
