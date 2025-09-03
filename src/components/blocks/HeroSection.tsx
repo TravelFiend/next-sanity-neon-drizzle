@@ -19,6 +19,8 @@ type HeroSectionProps = {
 // TODO: implement Sanity text shadow and text shadow color selections on FE
 
 const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
+  if (!heroData) return null;
+
   const {
     image,
     isFullWidth,
@@ -34,8 +36,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
     textBlockAlignment,
     overlay
   } = heroData;
-
-  if (!heroData) return null;
 
   const isFirst = index === 0;
 

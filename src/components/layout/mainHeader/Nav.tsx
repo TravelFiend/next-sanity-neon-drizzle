@@ -11,15 +11,12 @@ import type {
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
 import UserIcon from '@/components/icons/UserIcon';
-import AuthContainer from '../auth/AuthContainer';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
 };
 
 const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
-  const [isCustomerModalOpen, setIsCustomerModalOpen] =
-    useState<boolean>(false);
   const [areLinksOpen, setAreLinksOpen] = useState(false);
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
   const [parentLink, setParentLink] = useState<string | undefined>(undefined);
@@ -54,9 +51,6 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
     setCurrentChildren(theKids?.secondLevelLinks || null);
     setParentLink(evt.currentTarget.id.toLowerCase());
   };
-
-  const handleOpenModal = () => setIsCustomerModalOpen(true);
-  const handleCloseModal = () => setIsCustomerModalOpen(false);
 
   const mainLinks = linkData?.map(({ _key, link, secondLevelLinks }) => {
     if (secondLevelLinks) {
@@ -95,71 +89,63 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
   });
 
   return (
-    <>
-      <nav className="block h-full bg-cyan-600">
-        <button
-          className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
-          onClick={handleBurgerClick}
-          aria-label="Open navigation menu"
-        >
-          {[...Array(3)].map((_, index) => (
-            <div
-              key={index}
-              className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
-            />
-          ))}
-        </button>
+    <nav className="block h-full bg-cyan-600">
+      <button
+        className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
+        onClick={handleBurgerClick}
+        aria-label="Open navigation menu"
+      >
+        {[...Array(3)].map((_, index) => (
+          <div
+            key={index}
+            className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
+          />
+        ))}
+      </button>
 
-        <ul
-          className={conditionalClasses(
-            'absolute left-1/6 flex w-5/6 flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
-            areLinksOpen ? '-translate-x-0' : 'translate-x-full'
-          )}
-        >
-          <li className="m-3 flex h-5 items-center sm:hidden">
-            <button
-              type="button"
-              className="flex cursor-pointer items-center hover:text-secondary"
-              onClick={handleOpenModal}
-            >
-              <UserIcon className="h-7" />
-              Login/Signup
-            </button>
-          </li>
+      <ul
+        className={conditionalClasses(
+          'absolute left-1/6 flex w-5/6 flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
+          areLinksOpen ? '-translate-x-0' : 'translate-x-full'
+        )}
+      >
+        <li className="m-3 flex h-5 items-center sm:hidden">
+          <button
+            type="button"
+            className="flex cursor-pointer items-center hover:text-secondary"
+            onClick={() => {}}
+          >
+            <UserIcon className="h-7" />
+          </button>
+        </li>
 
-          {mainLinks}
+        {mainLinks}
 
-          <li className="hidden h-20 px-3 sm:flex">
-            <button
-              type="button"
-              className="flex cursor-pointer items-center hover:text-secondary"
-              onClick={handleOpenModal}
-            >
-              <p>Login/Signup</p>
-              <UserIcon className="h-8" />
-            </button>
-          </li>
-        </ul>
+        <li className="hidden h-20 px-3 sm:flex">
+          <button
+            type="button"
+            className="flex cursor-pointer items-center hover:text-secondary"
+            onClick={() => {}}
+          >
+            <UserIcon className="h-8" />
+          </button>
+        </li>
+      </ul>
 
-        <MobileSecondLinks
-          isOpen={areChildLinksOpen}
-          setIsOpen={setAreLinksOpen}
-          setAreChildrenOpen={setAreChildLinksOpen}
-          parentLink={parentLink}
-          currentChildren={currentChildren}
-        />
-        <DesktopSubNav
-          isOpen={areChildLinksOpen}
-          setIsOpen={setAreChildLinksOpen}
-          parentLink={parentLink}
-          currentChildren={currentChildren}
-        />
-      </nav>
-
-      {isCustomerModalOpen ? (
-        <AuthContainer onClose={handleCloseModal} />
-      ) : null}
-    </>
+      <MobileSecondLinks
+        isOpen={areChildLinksOpen}
+        setIsOpen={setAreLinksOpen}
+        setAreChildrenOpen={setAreChildLinksOpen}
+        parentLink={parentLink}
+        currentChildren={currentChildren}
+      />
+      <DesktopSubNav
+        isOpen={areChildLinksOpen}
+        setIsOpen={setAreChildLinksOpen}
+        parentLink={parentLink}
+        currentChildren={currentChildren}
+      />
+    </nav>
   );
 };
 

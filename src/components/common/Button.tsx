@@ -1,3 +1,5 @@
+'use client';
+
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 
 type ButtonProps = {

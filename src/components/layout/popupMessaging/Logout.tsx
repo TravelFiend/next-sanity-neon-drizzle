@@ -3,9 +3,15 @@ import { UserSession } from '@/auth/session';
 
 type LogoutProps = {
   user: UserSession;
+  logoutFunc: () => void;
 };
 
-const Logout: React.FC<LogoutProps> = ({ user }) => {
+const Logout: React.FC<LogoutProps> = ({ user, logoutFunc }) => {
+  const handleLogout = () => {
+    logoutFunc();
+    logout();
+  };
+
   return (
     <>
       <h2
@@ -18,7 +24,7 @@ const Logout: React.FC<LogoutProps> = ({ user }) => {
       <button
         type="submit"
         className="rounded-lg border border-accent-dark p-4 text-primary-light active:bg-secondary-dark active:text-white"
-        onClick={logout}
+        onClick={handleLogout}
       >
         Log Out
       </button>

@@ -15,7 +15,7 @@ const userInsertSchema = createInsertSchema(usersTable, {
     schema.max(255).pipe(z.email({ error: 'Please provide a valid email' })),
   password: schema =>
     schema
-      .min(8, { error: 'Password must be at least 8 characters long' })
+      .min(8, { error: 'Must be at least 8 characters long' })
       .regex(/[a-z]/, { error: 'Must contain at least one lowercase letter' })
       .regex(/[A-Z]/, { error: 'Must contain at least one uppercase letter' })
       .regex(/[0-9]/, { error: 'Must contain at least one number' })

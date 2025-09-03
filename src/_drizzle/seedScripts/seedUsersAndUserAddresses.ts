@@ -2,6 +2,7 @@ import { seed } from 'drizzle-seed';
 import { db } from '../db';
 import { usersTable, userAddressesTable } from '../schemas';
 import { sql } from 'drizzle-orm';
+import { fixSequences } from './utils';
 
 const seedIt = async () => {
   await db.execute(sql`TRUNCATE TABLE users RESTART IDENTITY CASCADE`);
@@ -60,9 +61,7 @@ const seedIt = async () => {
     }
   }));
 
-  await db.execute(sql`
-    SELECT setval('users_id_seq', (SELECT COALESCE(MAX(id), 0) FROM users));
-  `);
+  fixSequences();
 };
 
 seedIt();

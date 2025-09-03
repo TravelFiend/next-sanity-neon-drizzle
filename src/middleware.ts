@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
-const middleware = request => {
+const middleware = (request: NextRequest) => {
   const path = request.nextUrl.pathname;
   if (path.startsWith('/admin') || path.startsWith('/dev-admin')) {
     //TODO: Write auth code and check for admin status

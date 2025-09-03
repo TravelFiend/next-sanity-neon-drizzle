@@ -24,6 +24,7 @@ type ActionState<T> =
       success: true;
       data?: T;
       message?: string;
+      userId: number;
     };
 
 const signup = async (
@@ -54,6 +55,12 @@ const signup = async (
     });
 
     await createUserSession(user);
+
+    return {
+      success: true,
+      message: 'Account successfully created',
+      userId: user.id
+    };
   } catch (err) {
     if (err instanceof Error) {
       console.error('Insert failed:', err);
@@ -70,11 +77,6 @@ const signup = async (
     }
     throw err;
   }
-
-  return {
-    success: true,
-    message: 'Account successfully created'
-  };
 };
 
 const login = async (
@@ -117,7 +119,8 @@ const login = async (
 
       return {
         success: true,
-        message: 'Login successful'
+        message: 'Login successful',
+        userId: existingUser.id
       };
     } else {
       throw new Error('Incorrect email and/or password');
@@ -141,4 +144,30 @@ const logout = async () => {
   redirect('/');
 };
 
-export { signup, login, logout };
+// Unified auth action
+type AuthActionState = ActionState<UserSignup> | ActionState<UserLogin>;
+
+export type AuthMode = 'signup' | 'login';
+
+const authAction = async (
+  prevState: unknown,
+  formData: FormData
+): Promise<AuthActionState> => {
+  const mode = formData.get('mode') as AuthMode;
+
+  switch (mode) {
+    case 'signup': {
+      return await signup(prevState, formData);
+    }
+    case 'login': {
+      return await login(prevState, formData);
+    }
+    default:
+      return {
+        success: false,
+        errors: { general: ['Unknown action'] }
+      };
+  }
+};
+
+export { authAction, logout };

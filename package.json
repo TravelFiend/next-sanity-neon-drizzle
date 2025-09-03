@@ -16,9 +16,9 @@
     "ts:gen": "bunx sanity typegen generate",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "db:push": "bunx drizzle-kit push",
-    "db:gen": "bunx drizzle-kit generate",
-    "db:migrate": "bunx drizzle-kit migrate"
+    "db:push": "bunx drizzle-kit push --config=src/_drizzle/drizzle.config.ts",
+    "db:gen": "bunx drizzle-kit generate --config=src/_drizzle/drizzle.config.ts",
+    "db:migrate": "bunx drizzle-kit migrate --config=src/_drizzle/drizzle.config.ts"
   },
   "dependencies": {
     "@focus-reactive/sanity-plugin-inline-svg-input": "^1.2.0",
