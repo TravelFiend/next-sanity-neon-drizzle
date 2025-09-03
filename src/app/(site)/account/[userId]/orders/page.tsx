@@ -1,9 +1,7 @@
-const OrdersPage: React.FC = () => {
+export default function OrdersPage() {
   return (
     <>
       <p>ORDER HISTORY</p>
     </>
   );
-};
-
-export default OrdersPage;
+}

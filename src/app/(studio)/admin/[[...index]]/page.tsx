@@ -5,6 +5,6 @@ import { NextStudio } from 'next-sanity/studio';
 
 export const dynamic = 'force-static';
 
-const AdminPage = () => <NextStudio config={config} />;
-
-export default AdminPage;
+export default function AdminPage() {
+  return <NextStudio config={config} />;
+}

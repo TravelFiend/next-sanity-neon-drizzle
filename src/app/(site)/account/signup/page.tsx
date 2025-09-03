@@ -1,7 +1,7 @@
 import ContentWrapper from '@/components/common/ContentWrapper';
 import AuthForm from '@/components/account/AuthForm';
 
-const SignUpPage: React.FC = () => {
+export default function SignUpPage() {
   return (
     <ContentWrapper>
       <section className="mt-16 flex w-full flex-col justify-between sm:mt-32 sm:w-11/12 md:flex-row xl:w-2/3">
@@ -20,6 +20,4 @@ const SignUpPage: React.FC = () => {
       </section>
     </ContentWrapper>
   );
-};
-
-export default SignUpPage;
+}

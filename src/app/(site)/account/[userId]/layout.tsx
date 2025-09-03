@@ -2,7 +2,7 @@ import Link from 'next/link';
 import ContentWrapper from '@/components/common/ContentWrapper';
 
 type AccountPageLayoutProps = {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
   children: React.ReactNode;
 };
 
@@ -10,7 +10,7 @@ export default async function AccountPageLayout({
   params,
   children
 }: AccountPageLayoutProps) {
-  const { userId } = params;
+  const { userId } = await params;
 
   return (
     <ContentWrapper>

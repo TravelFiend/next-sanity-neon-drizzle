@@ -1,9 +1,7 @@
-const AccountSettingsPage: React.FC = async () => {
+export default function AccountSettingsPage() {
   return (
     <>
       <p>ACCOUNT SETTINGS (update info, change password, etc)</p>
     </>
   );
-};
-
-export default AccountSettingsPage;
+}

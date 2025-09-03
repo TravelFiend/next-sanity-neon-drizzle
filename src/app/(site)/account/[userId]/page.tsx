@@ -4,7 +4,7 @@ type AccountPageProps = {
   params: Promise<{ userId: string }>;
 };
 
-const AccountPage: React.FC<AccountPageProps> = async ({ params }) => {
+export default async function AccountPage({ params }: AccountPageProps) {
   const { userId } = await params;
 
   return (
@@ -21,6 +21,4 @@ const AccountPage: React.FC<AccountPageProps> = async ({ params }) => {
       </form>
     </>
   );
-};
-
-export default AccountPage;
+}
