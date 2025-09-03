@@ -98,10 +98,6 @@ describe('Nav component', () => {
     render(<Nav linkData={undefined} />);
 
     expect(screen.getByRole('navigation')).toBeInTheDocument();
-    expect(
-      screen.getAllByRole('button', {
-        name: 'Login/Signup'
-      })
-    ).toHaveLength(2);
+    expect(screen.getAllByTitle('Account Icon')).toHaveLength(2);
   });
 });

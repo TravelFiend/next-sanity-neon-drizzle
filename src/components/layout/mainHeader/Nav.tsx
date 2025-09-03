@@ -10,7 +10,7 @@ import type {
   NavTabsRes,
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
-import UserIcon from '@/components/icons/UserIcon';
+import AccountIcon from '@/components/icons/AccountIcon';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
@@ -115,7 +115,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
             className="flex cursor-pointer items-center hover:text-secondary"
             onClick={() => {}}
           >
-            <UserIcon className="h-7" />
+            <AccountIcon className="h-7" />
           </button>
         </li>
 
@@ -127,7 +127,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
             className="flex cursor-pointer items-center hover:text-secondary"
             onClick={() => {}}
           >
-            <UserIcon className="h-8" />
+            <AccountIcon className="h-8" />
           </button>
         </li>
       </ul>
