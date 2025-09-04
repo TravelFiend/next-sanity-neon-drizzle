@@ -68,8 +68,7 @@ type UserAddressSelect = z.infer<typeof userAddressSelectSchema>;
 // SESSION
 const sessionSchema = z.object({
   id: z.number(),
-  role: rolesZodEnum,
-  email: z.string()
+  role: rolesZodEnum
 });
 
 export {

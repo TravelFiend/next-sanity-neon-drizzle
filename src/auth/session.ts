@@ -5,6 +5,10 @@ import { sessionSchema } from '@/_zodSchemas/authZod';
 import { redis } from '@/redis/redis';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
+import { redirect } from 'next/navigation';
+import { db } from '@/_drizzle/db';
+import { usersTable } from '@/_drizzle/schemas';
+import { eq } from 'drizzle-orm';
 
 const SESSION_EXPIRATION = 60 * 60 * 24 * 7; // 7 days
 const COOKIE_SESSION_KEY = 'session-id';
@@ -38,6 +42,19 @@ const getSessionUser = cache(async () => {
   return getSessionUserById(sessionId);
 });
 
+const getUserFromDb = (id: number) => {
+  return db.query.usersTable.findFirst({
+    columns: {
+      id: true,
+      role: true,
+      email: true,
+      firstName: true,
+      lastName: true
+    },
+    where: eq(usersTable.id, id)
+  });
+};
+
 const removeSessionUser = async () => {
   const cookieStore = await cookies();
   const sessionId = cookieStore.get(COOKIE_SESSION_KEY)?.value;
@@ -49,4 +66,53 @@ const removeSessionUser = async () => {
   cookieStore.delete(COOKIE_SESSION_KEY);
 };
 
-export { createUserSession, getSessionUser, removeSessionUser };
+type FullUser = Exclude<
+  Awaited<ReturnType<typeof getUserFromDb>>,
+  undefined | null
+>;
+
+type User = Exclude<
+  Awaited<ReturnType<typeof getSessionUser>>,
+  undefined | null
+>;
+
+function _getCurrentUser(options: {
+  withFullUser: true;
+  redirectIfNotFound: true;
+}): Promise<FullUser>;
+function _getCurrentUser(options: {
+  withFullUser: true;
+  redirectIfNotFound: false;
+}): Promise<FullUser | null>;
+function _getCurrentUser(options: {
+  withFullUser: false;
+  redirectIfNotFound: true;
+}): Promise<User>;
+function _getCurrentUser(options: {
+  withFullUser: false;
+  redirectIfNotFound: false;
+}): Promise<User | null>;
+async function _getCurrentUser({
+  withFullUser = false,
+  redirectIfNotFound = false
+} = {}) {
+  const user = await getSessionUser();
+
+  if (!user) {
+    if (redirectIfNotFound) return redirect('/login');
+
+    return null;
+  }
+
+  if (withFullUser) {
+    const fullUser = await getUserFromDb(user.id);
+
+    if (!fullUser) throw new Error('User not found in database');
+
+    return fullUser;
+  }
+
+  return user;
+}
+
+export { createUserSession, _getCurrentUser, removeSessionUser };

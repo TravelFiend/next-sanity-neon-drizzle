@@ -50,8 +50,7 @@ const signup = async (
   try {
     const [user] = await db.insert(usersTable).values(newUser).returning({
       id: usersTable.id,
-      role: usersTable.role,
-      email: usersTable.email
+      role: usersTable.role
     });
 
     await createUserSession(user);
