@@ -36,11 +36,11 @@ const getSessionUserById = async (sessionId: string) => {
   return success ? user : null;
 };
 
-const getSessionUser = cache(async () => {
+const getSessionUser = async () => {
   const sessionId = (await cookies()).get(COOKIE_SESSION_KEY)?.value;
   if (!sessionId) return null;
   return getSessionUserById(sessionId);
-});
+};
 
 const getUserFromDb = (id: number) => {
   return db.query.usersTable.findFirst({
@@ -115,4 +115,6 @@ async function _getCurrentUser({
   return user;
 }
 
-export { createUserSession, _getCurrentUser, removeSessionUser };
+export const getCurrentUser = cache(_getCurrentUser);
+
+export { createUserSession, removeSessionUser };
