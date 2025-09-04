@@ -30,9 +30,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   }, [authState, mode, router]);
 
   const handleSwitch = () => {
-    return mode === 'signup'
-      ? redirect('/account/login')
-      : redirect('/account/signup');
+    return mode === 'signup' ? redirect('/login') : redirect('/signup');
   };
 
   return (

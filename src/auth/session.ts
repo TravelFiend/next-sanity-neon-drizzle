@@ -36,11 +36,11 @@ const getSessionUserById = async (sessionId: string) => {
   return success ? user : null;
 };
 
-const getSessionUser = async () => {
+const getSessionUser = cache(async () => {
   const sessionId = (await cookies()).get(COOKIE_SESSION_KEY)?.value;
   if (!sessionId) return null;
   return getSessionUserById(sessionId);
-};
+});
 
 const getUserFromDb = (id: number) => {
   return db.query.usersTable.findFirst({
@@ -100,15 +100,12 @@ async function _getCurrentUser({
 
   if (!user) {
     if (redirectIfNotFound) return redirect('/login');
-
     return null;
   }
 
   if (withFullUser) {
     const fullUser = await getUserFromDb(user.id);
-
     if (!fullUser) throw new Error('User not found in database');
-
     return fullUser;
   }
 
@@ -117,4 +114,4 @@ async function _getCurrentUser({
 
 export const getCurrentUser = cache(_getCurrentUser);
 
-export { createUserSession, removeSessionUser };
+export { createUserSession, getSessionUser, removeSessionUser };

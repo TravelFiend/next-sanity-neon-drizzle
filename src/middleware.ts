@@ -1,18 +1,17 @@
-import { type NextRequest, NextResponse } from 'next/server';
+// import { type NextRequest, NextResponse } from 'next/server';
+// import { getCurrentUser } from './auth/session';
 
-const middleware = (request: NextRequest) => {
-  const path = request.nextUrl.pathname;
-  if (path.startsWith('/admin') || path.startsWith('/dev-admin')) {
-    //TODO: Write auth code and check for admin status
-    return request.locals.isAdmin
-      ? NextResponse.next()
-      : NextResponse.redirect('/login');
-  }
-};
+// const loggedInUserRoute = ['/account'];
 
-// matcher is an alternative to conditional path logic
-// export const config = {
-//   matcher: ['/admin/:path*', '/admin', '/dev-admin/:path*/', '/dev-admin']
+// const middlewareAuth = async (request: NextRequest) => {
+//   if (loggedInUserRoute.includes(request.nextUrl.pathname)) {
+//     const user = await getCurrentUser({ withFullUser: true, redirectIfNotFound: true })
+//   }
 // };
 
-export default middleware;
+// // matcher is an alternative to conditional path logic
+// // export const config = {
+// //   matcher: ['/admin/:path*', '/admin', '/dev-admin/:path*/', '/dev-admin']
+// // };
+
+// export default middleware;
