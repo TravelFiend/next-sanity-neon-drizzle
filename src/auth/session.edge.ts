@@ -1,5 +1,6 @@
 'use server';
 
+//  Functions in this file CAN be used in middleware/api routes
 import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { sessionSchema } from '@/_zodSchemas/authZod';

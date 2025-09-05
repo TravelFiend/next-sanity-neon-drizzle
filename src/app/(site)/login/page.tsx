@@ -1,7 +1,15 @@
 import ContentWrapper from '@/components/common/ContentWrapper';
 import AuthForm from '@/components/account/AuthForm';
+import { getCurrentUser } from '@/auth/session.server';
+import { redirect } from 'next/navigation';
 
-export default function LogInPage() {
+export default async function LogInPage() {
+  const user = await getCurrentUser({
+    withFullUser: false,
+    redirectIfNotFound: false
+  });
+  if (user) redirect(`/account/${user.id}`);
+
   return (
     <ContentWrapper>
       <section className="mt-16 flex w-full flex-col justify-between sm:mt-32 sm:w-11/12 sm:flex-row xl:w-2/3">
