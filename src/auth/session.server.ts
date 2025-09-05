@@ -1,23 +1,21 @@
 'use server';
 
-import { z } from 'zod/v4';
-import { sessionSchema } from '@/_zodSchemas/authZod';
-import { redis } from '@/redis/redis';
 import { cookies } from 'next/headers';
-import { cache } from 'react';
-import { redirect } from 'next/navigation';
+import { redis } from '@/redis/redis';
+import { sessionSchema, UserSession } from '@/_zodSchemas/authZod';
 import { db } from '@/_drizzle/db';
-import { usersTable } from '@/_drizzle/schemas';
 import { eq } from 'drizzle-orm';
+import { getSessionUser } from './session.edge';
+import { usersTable } from '@/_drizzle/schemas';
+import { redirect } from 'next/navigation';
+import { cache } from 'react';
 
-const SESSION_EXPIRATION = 60 * 60 * 24 * 7; // 7 days
 const COOKIE_SESSION_KEY = 'session-id';
+const SESSION_EXPIRATION = 60 * 60 * 24 * 7;
 
-export type UserSession = z.infer<typeof sessionSchema>;
-
-const createUserSession = async (user: UserSession) => {
+export const createUserSession = async (user: UserSession) => {
   const sessionId = crypto.randomUUID();
-  redis.set(`session:${sessionId}`, sessionSchema.parse(user), {
+  await redis.set(`session:${sessionId}`, sessionSchema.parse(user), {
     ex: SESSION_EXPIRATION
   });
 
@@ -30,18 +28,6 @@ const createUserSession = async (user: UserSession) => {
   });
 };
 
-const getSessionUserById = async (sessionId: string) => {
-  const rawUser = await redis.get(`session:${sessionId}`);
-  const { success, data: user } = sessionSchema.safeParse(rawUser);
-  return success ? user : null;
-};
-
-const getSessionUser = cache(async () => {
-  const sessionId = (await cookies()).get(COOKIE_SESSION_KEY)?.value;
-  if (!sessionId) return null;
-  return getSessionUserById(sessionId);
-});
-
 const getUserFromDb = (id: number) => {
   return db.query.usersTable.findFirst({
     columns: {
@@ -53,17 +39,6 @@ const getUserFromDb = (id: number) => {
     },
     where: eq(usersTable.id, id)
   });
-};
-
-const removeSessionUser = async () => {
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get(COOKIE_SESSION_KEY)?.value;
-
-  if (!sessionId) return null;
-
-  await redis.del(`session:${sessionId}`);
-  // eslint-disable-next-line drizzle/enforce-delete-with-where
-  cookieStore.delete(COOKIE_SESSION_KEY);
 };
 
 type FullUser = Exclude<
@@ -113,5 +88,3 @@ async function _getCurrentUser({
 }
 
 export const getCurrentUser = cache(_getCurrentUser);
-
-export { createUserSession, getSessionUser, removeSessionUser };

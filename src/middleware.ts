@@ -1,17 +1,33 @@
-// import { type NextRequest, NextResponse } from 'next/server';
-// import { getCurrentUser } from './auth/session';
+import { type NextRequest, NextResponse } from 'next/server';
+import { getSessionUser } from './auth/session.edge';
 
-// const loggedInUserRoute = ['/account'];
+const protectedCustomerRoutes = ['/account'];
 
-// const middlewareAuth = async (request: NextRequest) => {
-//   if (loggedInUserRoute.includes(request.nextUrl.pathname)) {
-//     const user = await getCurrentUser({ withFullUser: true, redirectIfNotFound: true })
-//   }
-// };
+const middlewareAuth = async (request: NextRequest) => {
+  const pathArray = request.nextUrl.pathname.split('/');
 
-// // matcher is an alternative to conditional path logic
-// // export const config = {
-// //   matcher: ['/admin/:path*', '/admin', '/dev-admin/:path*/', '/dev-admin']
-// // };
+  if (protectedCustomerRoutes.includes(`/${pathArray[1]}`)) {
+    const user = await getSessionUser();
 
-// export default middleware;
+    const url = request.nextUrl.clone();
+    if (!user || !user.id) {
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
+    } else if (+pathArray[2] !== user.id) {
+      url.pathname = `/account/${user.id}`;
+      return NextResponse.redirect(url);
+    }
+  }
+};
+
+const middleware = async (request: NextRequest) => {
+  const response = (await middlewareAuth(request)) ?? NextResponse.next();
+  return response;
+};
+
+// matcher is an alternative to conditional path logic
+export const config = {
+  matcher: ['/account/:path*']
+};
+
+export default middleware;

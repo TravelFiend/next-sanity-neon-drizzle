@@ -1,5 +1,5 @@
 import { logout } from '@/_actions/auth/authActions';
-import { UserSession } from '@/auth/session';
+import { UserSession } from '@/auth/session.edge';
 
 type LogoutProps = {
   user: UserSession;

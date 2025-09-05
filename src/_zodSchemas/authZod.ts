@@ -71,6 +71,8 @@ const sessionSchema = z.object({
   role: rolesZodEnum
 });
 
+export type UserSession = z.infer<typeof sessionSchema>;
+
 export {
   signupZodSchema,
   loginZodSchema,

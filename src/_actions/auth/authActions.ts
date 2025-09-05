@@ -11,7 +11,8 @@ import {
   signupZodSchema
 } from '@/_zodSchemas/authZod';
 import zodValidate from '@/lib/utils/zodValidate';
-import { createUserSession, removeSessionUser } from '@/auth/session';
+import { removeSessionUser } from '@/auth/session.edge';
+import { createUserSession } from '@/auth/session.server';
 import { redirect } from 'next/navigation';
 
 type ActionState<T> =
