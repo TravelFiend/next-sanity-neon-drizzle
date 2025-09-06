@@ -22,7 +22,6 @@ if (process.env.NODE_ENV === 'production') {
   db = drizzleNeon<typeof schema>(sql, { schema }) as unknown as NodePgDatabase<
     typeof schema
   >;
-  console.warn('NODE_ENV:', process.env.NODE_ENV);
 } else {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
   db = drizzlePg<typeof schema>(pool, { schema });
