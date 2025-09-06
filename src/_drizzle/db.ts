@@ -1,14 +1,12 @@
+// src/_drizzle/db.ts
 import { config } from 'dotenv';
-import {
-  type NodePgDatabase,
-  drizzle as drizzlePg
-} from 'drizzle-orm/node-postgres';
-import {
-  type NeonHttpDatabase,
-  drizzle as drizzleNeon
-} from 'drizzle-orm/neon-http';
 import { Pool } from 'pg';
 import { neon } from '@neondatabase/serverless';
+import {
+  drizzle as drizzlePg,
+  type NodePgDatabase
+} from 'drizzle-orm/node-postgres';
+import { drizzle as drizzleNeon } from 'drizzle-orm/neon-http';
 import * as schema from './schemas';
 
 config({ path: '.env.local' });
@@ -17,18 +15,17 @@ if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL is not set in environment');
 }
 
-type PgDB = NodePgDatabase<typeof schema>;
-type NeonDB = NeonHttpDatabase<typeof schema>;
-export type DB = PgDB | NeonDB;
+let db: NodePgDatabase<typeof schema>;
 
-const createDb = (): DB => {
-  if (process.env.NODE_ENV === 'production') {
-    const sql = neon(process.env.DATABASE_URL!);
-    return drizzleNeon<typeof schema>(sql, { schema });
-  } else {
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
-    return drizzlePg<typeof schema>(pool, { schema });
-  }
-};
+if (process.env.NODE_ENV === 'production') {
+  const sql = neon(process.env.DATABASE_URL!);
+  db = drizzleNeon<typeof schema>(sql, { schema }) as unknown as NodePgDatabase<
+    typeof schema
+  >;
+} else {
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
+  db = drizzlePg<typeof schema>(pool, { schema });
+}
 
-export const db = createDb();
+export { db };
+export type DB = typeof db;
