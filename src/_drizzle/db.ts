@@ -19,11 +19,9 @@ if (!process.env.DATABASE_URL) {
 
 type PgDB = NodePgDatabase<typeof schema>;
 type NeonDB = NeonHttpDatabase<typeof schema>;
-
-// Union of both
 export type DB = PgDB | NeonDB;
 
-function createDb(): DB {
+const createDb = (): DB => {
   if (process.env.NODE_ENV === 'production') {
     const sql = neon(process.env.DATABASE_URL!);
     return drizzleNeon<typeof schema>(sql, { schema });
@@ -31,6 +29,6 @@ function createDb(): DB {
     const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
     return drizzlePg<typeof schema>(pool, { schema });
   }
-}
+};
 
 export const db = createDb();
