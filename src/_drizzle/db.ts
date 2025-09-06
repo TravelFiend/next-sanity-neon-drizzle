@@ -3,8 +3,8 @@ import { config } from 'dotenv';
 import { Pool } from 'pg';
 import { neon } from '@neondatabase/serverless';
 import {
-  drizzle as drizzlePg,
-  type NodePgDatabase
+  type NodePgDatabase,
+  drizzle as drizzlePg
 } from 'drizzle-orm/node-postgres';
 import { drizzle as drizzleNeon } from 'drizzle-orm/neon-http';
 import * as schema from './schemas';
@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === 'production') {
   db = drizzleNeon<typeof schema>(sql, { schema }) as unknown as NodePgDatabase<
     typeof schema
   >;
+  console.warn('NODE_ENV:', process.env.NODE_ENV);
 } else {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
   db = drizzlePg<typeof schema>(pool, { schema });
