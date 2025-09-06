@@ -96,6 +96,9 @@
     "storybook": "9.1.1",
     "tailwindcss": "4.1.11"
   },
+  "resolutions": {
+    "react-refractor": "2.1.7"
+  },
   "lint-staged": {
     "*.(json|js|jsx|ts|tsx|html|css|md)": [
       "prettier --write"
