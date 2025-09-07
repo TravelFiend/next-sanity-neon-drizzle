@@ -31,4 +31,4 @@ const removeSessionUser = async () => {
   cookieStore.delete(COOKIE_SESSION_KEY);
 };
 
-export { getSessionUser, removeSessionUser };
+export { getSessionUser, getSessionUserById, removeSessionUser };
