@@ -4,7 +4,11 @@ import Footer from '@/components/layout/Footer';
 import { getSiteSettings } from '@groq/queries/siteSettings';
 import { SanityLive } from '@/sanity/utils/live';
 
-const siteLayout = async ({ children }: { children: React.ReactNode }) => {
+export default async function siteLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   const siteSettingsData = await getSiteSettings();
 
   if (!siteSettingsData) {
@@ -28,7 +32,7 @@ const siteLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Suspense fallback={<div className="h-12 sm:h-16" />}>
-        {mainNav ? <MainHeader navData={mainNav} /> : null}
+        <MainHeader navData={mainNav} />
       </Suspense>
 
       <main>{children}</main>
@@ -36,6 +40,4 @@ const siteLayout = async ({ children }: { children: React.ReactNode }) => {
       {footer ? <Footer footerData={footer} /> : null}
     </>
   );
-};
-
-export default siteLayout;
+}

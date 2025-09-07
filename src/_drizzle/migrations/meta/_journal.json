@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1756647306696,
+      "tag": "0000_typical_joystick",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1756740212574,
+      "tag": "0001_lonely_rachel_grey",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1756740275447,
+      "tag": "0002_rare_genesis",
+      "breakpoints": true
+    }
+  ]
+}

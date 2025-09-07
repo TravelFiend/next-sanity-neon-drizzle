@@ -50,7 +50,11 @@ export const generateMetadata = async () => {
   };
 };
 
-const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+export default async function RootLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className="overflow-x-hidden">
       <body
@@ -60,6 +64,4 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}

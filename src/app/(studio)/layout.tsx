@@ -3,8 +3,10 @@ export const metadata = {
   description: 'We doin thangs, Next + Sanity'
 };
 
-const studioLayout = ({ children }: { children: React.ReactNode }) => {
+export default function studioLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
-};
-
-export default studioLayout;
+}

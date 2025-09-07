@@ -1,7 +1,5 @@
 import ContentWrapper from '@/components/common/ContentWrapper';
 
-const MusicMainPage = () => {
+export default function MusicMainPage() {
   return <ContentWrapper>Main Music Page</ContentWrapper>;
-};
-
-export default MusicMainPage;
+}

@@ -2,7 +2,7 @@
 
 import ContentWrapper from '@/components/common/ContentWrapper';
 
-const MainError = () => {
+export default function MainError() {
   return (
     <ContentWrapper>
       <h2>An error occurred.</h2>
@@ -12,6 +12,4 @@ const MainError = () => {
       </p>
     </ContentWrapper>
   );
-};
-
-export default MainError;
+}

@@ -5,12 +5,10 @@ export const metadata = {
   description: 'Learn about [COMPANY NAME HERE]'
 };
 
-const AboutUsPage = () => {
+export default function AboutUsPage() {
   return (
     <ContentWrapper>
       <p className="">About us page</p>
     </ContentWrapper>
   );
-};
-
-export default AboutUsPage;
+}

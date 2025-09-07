@@ -10,6 +10,7 @@ import type {
   NavTabsRes,
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
+import AccountIcon from '@/components/icons/AccountIcon';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
@@ -36,8 +37,6 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
       setAreLinksOpen(true);
     }
   };
-
-  if (!linkData) return null;
 
   const handleMainLinkClick = (evt: React.MouseEvent<HTMLElement>) => {
     const theKids = linkData?.filter(
@@ -91,20 +90,18 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
 
   return (
     <nav className="block h-full bg-cyan-600">
-      {linkData?.length ? (
-        <button
-          className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
-          onClick={handleBurgerClick}
-          aria-label="Open navigation menu"
-        >
-          {[...Array(3)].map((_, index) => (
-            <div
-              key={index}
-              className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
-            />
-          ))}
-        </button>
-      ) : null}
+      <button
+        className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
+        onClick={handleBurgerClick}
+        aria-label="Open navigation menu"
+      >
+        {[...Array(3)].map((_, index) => (
+          <div
+            key={index}
+            className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
+          />
+        ))}
+      </button>
 
       <ul
         className={conditionalClasses(
@@ -112,7 +109,27 @@ const Nav: React.FC<LinkDataProps> = ({ linkData }) => {
           areLinksOpen ? '-translate-x-0' : 'translate-x-full'
         )}
       >
+        <li className="m-3 flex h-5 items-center sm:hidden">
+          <button
+            type="button"
+            className="flex cursor-pointer items-center hover:text-secondary"
+            onClick={() => {}}
+          >
+            <AccountIcon className="h-7" />
+          </button>
+        </li>
+
         {mainLinks}
+
+        <li className="hidden h-20 px-3 sm:flex">
+          <button
+            type="button"
+            className="flex cursor-pointer items-center hover:text-secondary"
+            onClick={() => {}}
+          >
+            <AccountIcon className="h-8" />
+          </button>
+        </li>
       </ul>
 
       <MobileSecondLinks

@@ -94,8 +94,10 @@ describe('Nav component', () => {
     ).toHaveLength(0);
   });
 
-  it("Doesn't render if no linkData passed", () => {
+  it('Still renders if no linkData is passed', () => {
     render(<Nav linkData={undefined} />);
-    expect(screen.queryByRole('navigation')).toBeNull();
+
+    expect(screen.getByRole('navigation')).toBeInTheDocument();
+    expect(screen.getAllByTitle('Account Icon')).toHaveLength(2);
   });
 });
