@@ -29,7 +29,7 @@ export const createUserSession = async (user: UserSession) => {
   });
 };
 
-const getUserFromDb = (id: number) => {
+const getUserFromDb = (id: string) => {
   return db.query.usersTable.findFirst({
     columns: {
       id: true,

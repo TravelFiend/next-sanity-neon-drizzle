@@ -1,20 +1,21 @@
+// import { relations } from 'drizzle-orm';
 import {
   pgTable,
-  integer,
   serial,
   varchar,
   date,
   timestamp,
-  pgEnum
+  pgEnum,
+  uuid
 } from 'drizzle-orm/pg-core';
 
 // DRIZZLE USER
 export const rolesEnum = pgEnum('role', ['customer', 'artist', 'musician']);
 
 export const usersTable = pgTable('users', {
-  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  id: uuid('id').primaryKey().defaultRandom().unique(),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  password: varchar('password', { length: 255 }).notNull(),
+  password: varchar('password', { length: 255 }),
   firstName: varchar('first_name', { length: 255 }),
   lastName: varchar('last_name', { length: 255 }),
   birthday: date('birthday'),
@@ -26,12 +27,25 @@ export const usersTable = pgTable('users', {
 export type InsertUser = typeof usersTable.$inferInsert;
 export type SelectUser = typeof usersTable.$inferSelect;
 
+// DRIZZLE OAUTH
+// export const userRelations = relations(usersTable, ({ many }) => ({
+//   oAuthAccounts: many(userOAuthAccountsTable)
+// }));
+
+// export const oAuthProviders = ['google', 'facebook', 'discord'] as const;
+// export type OAuthProvider = (typeof oAuthProviders)[number];
+// export const oAuthProvidersEnum = pgEnum('oauth_providers', oAuthProviders);
+
+// export const userOAuthAccountsTable = pgTable('user_oauth_accounts', {
+//   userId: uuid()
+// })
+
 // DRIZZLE USER ADDRESS
 export const addressTypeEnum = pgEnum('address_type', ['shipping', 'billing']);
 
 export const userAddressesTable = pgTable('user_addresses', {
   id: serial('id').primaryKey(),
-  userId: integer('user_id')
+  userId: uuid('user_id')
     .references(() => usersTable.id)
     .notNull(),
   addressType: addressTypeEnum('address_type').notNull().default('shipping'),

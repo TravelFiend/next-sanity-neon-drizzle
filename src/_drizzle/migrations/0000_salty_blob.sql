@@ -2,7 +2,7 @@ CREATE TYPE "public"."address_type" AS ENUM('shipping', 'billing');--> statement
 CREATE TYPE "public"."role" AS ENUM('customer', 'artist', 'musician');--> statement-breakpoint
 CREATE TABLE "user_addresses" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user_id" integer NOT NULL,
+	"user_id" uuid NOT NULL,
 	"address_type" "address_type" DEFAULT 'shipping' NOT NULL,
 	"address_1" varchar(255) NOT NULL,
 	"address_2" varchar(255),
@@ -13,9 +13,9 @@ CREATE TABLE "user_addresses" (
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
-	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "users_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"email" varchar(255) NOT NULL,
-	"password" varchar(255) NOT NULL,
+	"password" varchar(255),
 	"first_name" varchar(255),
 	"last_name" varchar(255),
 	"birthday" date,

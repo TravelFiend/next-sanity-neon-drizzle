@@ -25,7 +25,7 @@ type ActionState<T> =
       success: true;
       data?: T;
       message?: string;
-      userId: number;
+      userId: string;
     };
 
 const signup = async (
@@ -41,7 +41,7 @@ const signup = async (
   if (!parsed.success) return parsed;
 
   const { email, password }: UserSignup = parsed.data;
-  const pwHash = await hash(password);
+  const pwHash = await hash(password!);
 
   const newUser: InsertUser = {
     email,
@@ -112,7 +112,7 @@ const login = async (
   }
 
   try {
-    const isVerified = await verify(existingUser.password, password);
+    const isVerified = await verify(existingUser.password!, password);
 
     if (isVerified) {
       await createUserSession(existingUser);

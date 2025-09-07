@@ -17,7 +17,7 @@ const middlewareAuth = async (request: NextRequest) => {
     if (!user || !user.id) {
       url.pathname = '/login';
       return NextResponse.redirect(url);
-    } else if (+pathArray[2] !== user.id) {
+    } else if (pathArray[2] !== user.id) {
       url.pathname = `/account/${user.id}`;
       return NextResponse.redirect(url);
     }
