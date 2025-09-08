@@ -69,15 +69,18 @@ const Carousel: React.FC<CarouselProps> = ({ cards, direction }) => {
             <Button
               className="rounded-full"
               onClick={() => emblaApi!.scrollPrev()}
-              label="Prev"
               ariaLabel="Previous slide"
-            />
+            >
+              Prev
+            </Button>
+
             <Button
               className="rounded-full"
               onClick={() => emblaApi!.scrollNext()}
-              label="Next"
               ariaLabel="Next slide"
-            />
+            >
+              Next
+            </Button>
           </div>
         </div>
       ) : (

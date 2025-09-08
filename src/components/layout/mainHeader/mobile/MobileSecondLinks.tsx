@@ -4,18 +4,12 @@ import { useState, Fragment, useEffect } from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import type {
-  SecondLevelLinksRes,
-  SingleSecondLevelLinkRes
-} from '@sanityTypes/derivedTypes';
+import type { SingleSecondLevelLinkRes } from '@sanityTypes/derivedTypes';
 import MobileThirdLinks from './MobileThirdLinks';
+import { BaseSubNavProps } from '../Nav';
 
-type MobileSecondLinksProps = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+type MobileSecondLinksProps = BaseSubNavProps & {
   setAreChildrenOpen: (areChildrenOpen: boolean) => void;
-  parentLink?: string;
-  currentChildren?: SecondLevelLinksRes;
 };
 
 const MobileSecondLinks: React.FC<MobileSecondLinksProps> = ({

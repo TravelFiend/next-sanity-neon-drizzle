@@ -4,18 +4,25 @@ import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import MobileSecondLinks from './mobile/MobileSecondLinks';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import DesktopSubNav from './desktop/DesktopSubNav';
 import type {
   NavTabsRes,
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
-import AccountIcon from '@/components/icons/AccountIcon';
 import { type User } from '@/auth/session.server';
+import AccountButton from './AccountButton';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
   user?: User | null;
+};
+
+export type BaseSubNavProps = {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  parentLink?: string;
+  currentChildren?: SecondLevelLinksRes;
 };
 
 const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
@@ -38,10 +45,6 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
     } else {
       setAreLinksOpen(true);
     }
-  };
-
-  const handleAccountIconClick = () => {
-    return user ? redirect(`/account/${user.id}`) : redirect('/signup');
   };
 
   const handleMainLinkClick = (evt: React.MouseEvent<HTMLElement>) => {
@@ -94,6 +97,13 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
     );
   });
 
+  const subNavProps: BaseSubNavProps = {
+    isOpen: areChildLinksOpen,
+    setIsOpen: setAreChildLinksOpen,
+    parentLink,
+    currentChildren
+  };
+
   return (
     <nav className="block h-full bg-cyan-600">
       <button
@@ -115,44 +125,18 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
           areLinksOpen ? '-translate-x-0' : 'translate-x-full'
         )}
       >
-        <li className="m-3 flex h-5 items-center sm:hidden">
-          <button
-            type="button"
-            className="flex cursor-pointer items-center hover:text-secondary"
-            onClick={handleAccountIconClick}
-          >
-            <AccountIcon className="h-7" />
-            <span>{user ? 'Account' : 'Signup/Login'}</span>
-          </button>
-        </li>
+        <AccountButton isMobile={true} user={user} />
 
         {mainLinks}
 
-        <li className="hidden h-20 px-3 sm:flex">
-          <button
-            type="button"
-            className="flex cursor-pointer items-center hover:text-secondary"
-            onClick={handleAccountIconClick}
-          >
-            <span>{user ? 'Account' : 'Signup/Login'}</span>
-            <AccountIcon className="h-8" />
-          </button>
-        </li>
+        <AccountButton isMobile={false} user={user} />
       </ul>
 
       <MobileSecondLinks
-        isOpen={areChildLinksOpen}
-        setIsOpen={setAreLinksOpen}
+        {...subNavProps}
         setAreChildrenOpen={setAreChildLinksOpen}
-        parentLink={parentLink}
-        currentChildren={currentChildren}
       />
-      <DesktopSubNav
-        isOpen={areChildLinksOpen}
-        setIsOpen={setAreChildLinksOpen}
-        parentLink={parentLink}
-        currentChildren={currentChildren}
-      />
+      <DesktopSubNav {...subNavProps} />
     </nav>
   );
 };
