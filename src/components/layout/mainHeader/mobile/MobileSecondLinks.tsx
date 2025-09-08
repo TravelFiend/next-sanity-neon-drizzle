@@ -12,8 +12,8 @@ import MobileThirdLinks from './MobileThirdLinks';
 
 type MobileSecondLinksProps = {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAreChildrenOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: (isOpen: boolean) => void;
+  setAreChildrenOpen: (areChildrenOpen: boolean) => void;
   parentLink?: string;
   currentChildren?: SecondLevelLinksRes;
 };

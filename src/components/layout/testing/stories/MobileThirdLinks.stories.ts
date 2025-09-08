@@ -1,4 +1,4 @@
-import MobileThirdLinks from '../../mainHeader/MobileThirdLinks';
+import MobileThirdLinks from '../../mainHeader/mobile/MobileThirdLinks';
 import { thirdLevelLinksMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 

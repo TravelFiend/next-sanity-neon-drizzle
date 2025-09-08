@@ -42,12 +42,12 @@ const getUserFromDb = (id: string) => {
   });
 };
 
-type FullUser = Exclude<
+export type FullUser = Exclude<
   Awaited<ReturnType<typeof getUserFromDb>>,
   undefined | null
 >;
 
-type User = Exclude<
+export type User = Exclude<
   Awaited<ReturnType<typeof getSessionUser>>,
   undefined | null
 >;

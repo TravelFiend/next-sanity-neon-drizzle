@@ -1,4 +1,4 @@
-import Nav from '../../mainHeader/Nav';
+import Nav from '../../mainHeader/GlobalNav';
 import { mainHeaderMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 

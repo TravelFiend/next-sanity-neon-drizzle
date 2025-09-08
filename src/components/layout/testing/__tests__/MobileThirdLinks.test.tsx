@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'bun:test';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import MobileThirdLinks from '../../mainHeader/MobileThirdLinks';
+import MobileThirdLinks from '../../mainHeader/mobile/MobileThirdLinks';
 import { thirdLevelLinksMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 
 const defaultProps = {

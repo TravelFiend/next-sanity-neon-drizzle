@@ -8,7 +8,7 @@ import type { SecondLevelLinksRes } from '@sanityTypes/derivedTypes';
 
 type DesktopSubNavProps = {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: (isOpen: boolean) => void;
   parentLink?: string;
   currentChildren?: SecondLevelLinksRes;
 };

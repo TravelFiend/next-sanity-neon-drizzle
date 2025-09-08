@@ -2,7 +2,7 @@ import { describe, it, expect } from 'bun:test';
 import { render, screen, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import user from '@testing-library/user-event';
-import Nav from '../../mainHeader/Nav';
+import GlobalNav from '../../mainHeader/GlobalNav';
 import { navTabsMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 import { resizeWindow } from '@/lib/utils/testingUtils';
 import { setupPathnameMock } from '@/components/__mocks__/next/mockNextNav';
@@ -11,7 +11,7 @@ const navTabs = navTabsMock;
 
 describe('Nav component', () => {
   it('Has no accessibility violations', async () => {
-    const { container } = render(<Nav linkData={navTabs} />);
+    const { container } = render(<GlobalNav linkData={navTabs} />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -19,7 +19,7 @@ describe('Nav component', () => {
   it('closes open menus when pathname changes', async () => {
     const { setPathname } = await setupPathnameMock();
 
-    const { rerender } = render(<Nav linkData={navTabs} />);
+    const { rerender } = render(<GlobalNav linkData={navTabs} />);
 
     const burger = screen.getByLabelText('Open navigation menu');
     await user.click(burger);
@@ -28,7 +28,7 @@ describe('Nav component', () => {
     expect(navList[0]).toHaveClass('-translate-x-0');
 
     setPathname('/art');
-    rerender(<Nav linkData={navTabs} />);
+    rerender(<GlobalNav linkData={navTabs} />);
 
     await waitFor(() => {
       expect(navList[0]).toHaveClass('translate-x-full');
@@ -36,7 +36,7 @@ describe('Nav component', () => {
   });
 
   it('Toggle main links on burger click', async () => {
-    render(<Nav linkData={navTabs} />);
+    render(<GlobalNav linkData={navTabs} />);
 
     const burger = screen.getByLabelText('Open navigation menu');
     const navList = screen.getAllByRole('list');
@@ -66,7 +66,7 @@ describe('Nav component', () => {
 
   it('triggers handleMainLinkClick correctly on button click', async () => {
     resizeWindow(375);
-    render(<Nav linkData={navTabs} />);
+    render(<GlobalNav linkData={navTabs} />);
 
     expect(
       screen.queryAllByRole('link', {
@@ -95,9 +95,11 @@ describe('Nav component', () => {
   });
 
   it('Still renders if no linkData is passed', () => {
-    render(<Nav linkData={undefined} />);
+    render(<GlobalNav linkData={undefined} />);
 
     expect(screen.getByRole('navigation')).toBeInTheDocument();
-    expect(screen.getAllByTitle('Account Icon')).toHaveLength(2);
+    expect(
+      screen.getAllByRole('button', { name: 'Account Icon' })
+    ).toHaveLength(2);
   });
 });

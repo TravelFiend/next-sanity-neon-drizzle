@@ -1,24 +1,28 @@
 'use client';
 
-import conditionalClasses from '@/lib/utils/conditionalClasses';
+// import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import MobileSecondLinks from './mobile/MobileSecondLinks';
+// import MobileSecondLinks from './MobileSecondLinks';
 import { redirect, usePathname } from 'next/navigation';
-import DesktopSubNav from './desktop/DesktopSubNav';
+// import DesktopSubNav from './DesktopSubNav';
 import type {
   NavTabsRes,
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
-import AccountIcon from '@/components/icons/AccountIcon';
+// import AccountIcon from '@/components/icons/AccountIcon';
 import { type User } from '@/auth/session.server';
+import useViewportWidth from '@/lib/hooks/useViewportWidth';
+import MobileNav from './mobile/MobileNav';
+import DesktopNav from './desktop/DesktopNav';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
   user?: User | null;
 };
 
-const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
+const GlobalNav: React.FC<LinkDataProps> = ({ linkData, user }) => {
+  const breakpoint = useViewportWidth();
   const [areLinksOpen, setAreLinksOpen] = useState(false);
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
   const [parentLink, setParentLink] = useState<string | undefined>(undefined);
@@ -31,14 +35,14 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
     setAreChildLinksOpen(false);
   }, [pathName]);
 
-  const handleBurgerClick = () => {
-    if (areLinksOpen) {
-      setAreLinksOpen(false);
-      setAreChildLinksOpen(false);
-    } else {
-      setAreLinksOpen(true);
-    }
-  };
+  // const handleBurgerClick = () => {
+  //   if (areLinksOpen) {
+  //     setAreLinksOpen(false);
+  //     setAreChildLinksOpen(false);
+  //   } else {
+  //     setAreLinksOpen(true);
+  //   }
+  // };
 
   const handleAccountIconClick = () => {
     return user ? redirect(`/account/${user.id}`) : redirect('/signup');
@@ -59,13 +63,13 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
   };
 
   const mainLinks = linkData?.map(({ _key, link, secondLevelLinks }) => {
-    if (secondLevelLinks) {
-      return (
-        <li
-          key={_key}
-          id={link?.internalLink?.linkText}
-          className="flex h-full w-full list-none"
-        >
+    return (
+      <li
+        key={_key}
+        id={link?.internalLink?.linkText}
+        className="flex h-full w-full list-none"
+      >
+        {secondLevelLinks ? (
           <button
             id={link?.internalLink?.linkText}
             className="w-full cursor-pointer items-center text-start hover:text-secondary sm:mr-1 sm:px-4"
@@ -74,29 +78,45 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
             <span>{link?.internalLink?.linkText}</span>
             <span className="sm:hidden">&rarr;</span>
           </button>
-        </li>
-      );
-    }
-
-    return (
-      <li
-        key={_key}
-        className="flex h-full cursor-pointer items-center hover:text-secondary sm:mr-1 sm:px-4"
-      >
-        <Link
-          href={`/${link?.internalLink?.slug?.current || ''}`}
-          className="w-full"
-        >
-          {' '}
-          {link?.internalLink?.linkText}
-        </Link>
+        ) : (
+          <Link
+            href={`/${link?.internalLink?.slug?.current || ''}`}
+            className="w-full"
+          >
+            {' '}
+            {link?.internalLink?.linkText}
+          </Link>
+        )}
       </li>
     );
   });
 
   return (
     <nav className="block h-full bg-cyan-600">
-      <button
+      {breakpoint === 'xs' ? (
+        <MobileNav
+          user={user}
+          areLinksOpen={areLinksOpen}
+          setAreLinksOpen={setAreLinksOpen}
+          areChildLinksOpen={areChildLinksOpen}
+          setAreChildLinksOpen={setAreChildLinksOpen}
+          parentLink={parentLink}
+          currentChildren={currentChildren}
+          mainLinks={mainLinks}
+          handleAccountIconClick={handleAccountIconClick}
+        />
+      ) : (
+        <DesktopNav
+          user={user}
+          areChildLinksOpen={areChildLinksOpen}
+          setAreChildLinksOpen={setAreChildLinksOpen}
+          parentLink={parentLink}
+          currentChildren={currentChildren}
+          mainLinks={mainLinks}
+          handleAccountIconClick={handleAccountIconClick}
+        />
+      )}
+      {/* <button
         className="group flex h-full cursor-pointer flex-col items-center justify-center px-5 sm:hidden"
         onClick={handleBurgerClick}
         aria-label="Open navigation menu"
@@ -107,9 +127,9 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
             className="my-0.5 h-1 w-9 rounded-2xl bg-primary-dark transition-all duration-100 group-hover:bg-highlight"
           />
         ))}
-      </button>
+      </button> */}
 
-      <ul
+      {/* <ul
         className={conditionalClasses(
           'absolute left-1/6 flex w-5/6 flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
           areLinksOpen ? '-translate-x-0' : 'translate-x-full'
@@ -138,9 +158,9 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
             <AccountIcon className="h-8" />
           </button>
         </li>
-      </ul>
+      </ul> */}
 
-      <MobileSecondLinks
+      {/* <MobileSecondLinks
         isOpen={areChildLinksOpen}
         setIsOpen={setAreLinksOpen}
         setAreChildrenOpen={setAreChildLinksOpen}
@@ -152,9 +172,9 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
         setIsOpen={setAreChildLinksOpen}
         parentLink={parentLink}
         currentChildren={currentChildren}
-      />
+      /> */}
     </nav>
   );
 };
 
-export default Nav;
+export default GlobalNav;
