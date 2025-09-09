@@ -3,7 +3,7 @@
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
-import { type InsertUser, OAuthProvider, usersTable } from '@/_drizzle/schemas';
+import { type InsertUser, usersTable } from '@/_drizzle/schemas';
 import {
   type UserLogin,
   type UserSignup,
@@ -145,8 +145,9 @@ const logout = async () => {
   redirect('/');
 };
 
-const oAuthLogin = async (provider: OAuthProvider) => {
-  redirect(new OAuthClient().createAuthUrl());
+const oAuthLogin = async () => {
+  const url = await new OAuthClient().createAuthUrl();
+  redirect(url);
 };
 
 // Unified auth action

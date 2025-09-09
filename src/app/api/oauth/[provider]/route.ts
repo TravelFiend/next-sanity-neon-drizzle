@@ -18,10 +18,10 @@ const GET = async (
   const { provider: rawProvider } = await params;
 
   const code = request.nextUrl.searchParams.get('code');
+  const state = request.nextUrl.searchParams.get('state');
   const provider = oAuthProvidersZodEnum.parse(rawProvider);
-  console.warn(provider);
 
-  if (typeof code !== 'string') {
+  if (typeof code !== 'string' || typeof state !== 'string') {
     redirect(
       `/login?oauthError=${encodeURIComponent(
         'Failed to connect. Please try again'
@@ -30,7 +30,7 @@ const GET = async (
   }
 
   try {
-    const oAuthUser = await new OAuthClient().fetchUser(code);
+    const oAuthUser = await new OAuthClient().fetchUser(code, state);
     const user = await connectUserToAccount(oAuthUser, provider);
     await createUserSession(user);
     redirect(`/account/${user.id}`);
