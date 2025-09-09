@@ -15,6 +15,13 @@
       "when": 1757259424612,
       "tag": "0001_fresh_maria_hill",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757401752959,
+      "tag": "0002_tiresome_ares",
+      "breakpoints": true
     }
   ]
 }
