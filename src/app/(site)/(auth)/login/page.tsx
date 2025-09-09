@@ -2,13 +2,20 @@ import ContentWrapper from '@/components/common/ContentWrapper';
 import AuthForm from '@/components/account/AuthForm';
 import { getCurrentUser } from '@/auth/session.server';
 import { redirect } from 'next/navigation';
+import OAuthButtons from '../../../../components/account/OAuthButtons';
 
-export default async function LogInPage() {
+export default async function LogInPage({
+  searchParams
+}: {
+  searchParams: Promise<{ oauthError?: string }>;
+}) {
   const user = await getCurrentUser({
     withFullUser: false,
     redirectIfNotFound: false
   });
   if (user) redirect(`/account/${user.id}`);
+
+  const { oauthError } = await searchParams;
 
   return (
     <ContentWrapper>
@@ -20,6 +27,10 @@ export default async function LogInPage() {
             Log in using your email/password, or if you prefer, log in with one
             of the following providers:
           </p>
+
+          <OAuthButtons />
+
+          {oauthError ? <p>{oauthError}</p> : null}
         </div>
 
         <div className="w-0.5 border border-slate-400" />

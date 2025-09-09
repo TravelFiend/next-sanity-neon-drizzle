@@ -3,7 +3,7 @@
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
-import { type InsertUser, usersTable } from '@/_drizzle/schemas';
+import { type InsertUser, OAuthProvider, usersTable } from '@/_drizzle/schemas';
 import {
   type UserLogin,
   type UserSignup,
@@ -14,6 +14,7 @@ import zodValidate from '@/lib/utils/zodValidate';
 import { removeSessionUser } from '@/auth/session.edge';
 import { createUserSession } from '@/auth/session.server';
 import { redirect } from 'next/navigation';
+import OAuthClient from '@/auth/oAuthBase';
 
 type ActionState<T> =
   | {
@@ -144,6 +145,10 @@ const logout = async () => {
   redirect('/');
 };
 
+const oAuthLogin = async (provider: OAuthProvider) => {
+  redirect(new OAuthClient().createAuthUrl());
+};
+
 // Unified auth action
 type AuthActionState = ActionState<UserSignup> | ActionState<UserLogin>;
 
@@ -170,4 +175,4 @@ const authAction = async (
   }
 };
 
-export { authAction, logout };
+export { authAction, logout, oAuthLogin };
