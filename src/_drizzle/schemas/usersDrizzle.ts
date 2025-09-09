@@ -18,6 +18,7 @@ export const usersTable = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   password: varchar('password', { length: 255 }),
+  userName: varchar('user_name', { length: 255 }),
   firstName: varchar('first_name', { length: 255 }),
   lastName: varchar('last_name', { length: 255 }),
   birthday: date('birthday'),
@@ -56,6 +57,16 @@ export const userOAuthAccountsTable = pgTable(
       .$onUpdate(() => new Date())
   },
   table => [primaryKey({ columns: [table.providerAccountId, table.provider] })]
+);
+
+export const userOAuthAccountRelations = relations(
+  userOAuthAccountsTable,
+  ({ one }) => ({
+    user: one(usersTable, {
+      fields: [userOAuthAccountsTable.userId],
+      references: [usersTable.id]
+    })
+  })
 );
 
 // DRIZZLE USER ADDRESS
