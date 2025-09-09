@@ -36,6 +36,7 @@
         "@eslint/js": "^9.33.0",
         "@happy-dom/global-registrator": "^18.0.1",
         "@next/eslint-plugin-next": "^15.5.0",
+        "@playwright/test": "^1.55.0",
         "@sanity/color-input": "^4.0.6",
         "@sanity/eslint-config-studio": "^5.0.2",
         "@sanity/vision": "4.6.1",
@@ -71,7 +72,6 @@
         "husky": "^9.1.7",
         "jest-axe": "^10.0.0",
         "lint-staged": "^16.1.5",
-        "playwright": "^1.55.0",
         "postcss": "^8.5.6",
         "prettier": "^3.6.2",
         "prettier-plugin-tailwindcss": "^0.6.14",
@@ -683,6 +683,8 @@
     "@phc/format": ["@phc/format@1.0.0", "", {}, "sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ=="],
 
     "@pkgjs/parseargs": ["@pkgjs/parseargs@0.11.0", "", {}, "sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg=="],
+
+    "@playwright/test": ["@playwright/test@1.55.0", "", { "dependencies": { "playwright": "1.55.0" }, "bin": { "playwright": "cli.js" } }, "sha512-04IXzPwHrW69XusN/SIdDdKZBzMfOT9UNT/YiJit/xpy2VuAoB8NHc8Aplb96zsWDddLnbkPL3TsmrS04ZU2xQ=="],
 
     "@portabletext/block-tools": ["@portabletext/block-tools@3.5.3", "", { "dependencies": { "@portabletext/sanity-bridge": "^1.1.8", "@portabletext/schema": "^1.2.0", "get-random-values-esm": "1.0.2", "lodash": "^4.17.21" }, "peerDependencies": { "@sanity/types": "^4.6.1", "@types/react": "^18.3 || ^19" } }, "sha512-4ffyzI8XhsH/DhDXBDw2UTlu/mJ6d5JdTPv3GFGvUKbdgtyX0zdwXJohnk90EYpPoTCMPpx++VfBYe+Qm5LOXQ=="],
 
