@@ -36,6 +36,13 @@
       "when": 1757431394251,
       "tag": "0004_demonic_groot",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1757490307654,
+      "tag": "0005_bored_slyde",
+      "breakpoints": true
     }
   ]
 }

@@ -5,7 +5,7 @@ import {
   usersTable
 } from '@/_drizzle/schemas';
 import { oAuthProvidersZodEnum } from '@/_zodSchemas/authZod';
-import OAuthClient from '@/auth/oAuthBase';
+import { getOAuthClient } from '@/auth/oAuth/oAuthBase';
 import { createUserSession } from '@/auth/session.server';
 import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
@@ -29,10 +29,13 @@ const GET = async (
     );
   }
 
+  const oAuthClient = getOAuthClient(provider);
+
   try {
-    const oAuthUser = await new OAuthClient().fetchUser(code, state);
+    const oAuthUser = await oAuthClient.fetchUser(code, state);
     const user = await connectUserToAccount(oAuthUser, provider);
     await createUserSession(user);
+
     redirect(`/account/${user.id}`);
   } catch (err) {
     console.error(err);
