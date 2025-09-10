@@ -2,6 +2,7 @@ import ContentWrapper from '@/components/common/ContentWrapper';
 import AuthForm from '@/components/account/AuthForm';
 import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/auth/session.server';
+import OAuthButtons from '../../../../components/account/OAuthButtons';
 
 export default async function SignUpPage() {
   const user = await getCurrentUser({
@@ -20,6 +21,8 @@ export default async function SignUpPage() {
             Sign up using your email/password, or if you prefer, sign up with
             one of the following providers:
           </p>
+
+          <OAuthButtons />
         </div>
 
         <div className="hidden w-0.5 border border-slate-400 md:block" />

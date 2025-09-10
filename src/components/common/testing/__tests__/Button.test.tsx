@@ -7,7 +7,9 @@ import user from '@testing-library/user-event';
 describe('Button', () => {
   it('Has no accessibility vilations', async () => {
     const { container } = render(
-      <Button label="Click Me" onClick={() => {}} ariaLabel="Click Me" />
+      <Button onClick={() => {}} ariaLabel="Click Me">
+        Click Me
+      </Button>
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -16,7 +18,9 @@ describe('Button', () => {
   it('Should render a clickable button and fire onClick when clicked', async () => {
     const handleClickMock = mock(() => {});
     render(
-      <Button label="Click Me" onClick={handleClickMock} ariaLabel="Click Me" />
+      <Button onClick={handleClickMock} ariaLabel="Click Me">
+        Click Me
+      </Button>
     );
 
     const theButton = screen.getByRole('button');
@@ -30,11 +34,12 @@ describe('Button', () => {
   it('Should render with classname passed as prop', () => {
     render(
       <Button
-        label="Click Me"
         onClick={() => {}}
         ariaLabel="Click Me"
         className="text-green-500"
-      />
+      >
+        Click Me
+      </Button>
     );
 
     expect(screen.getByRole('button')).toHaveClass('text-green-500');

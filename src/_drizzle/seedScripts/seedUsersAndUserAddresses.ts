@@ -10,6 +10,7 @@ const seedIt = async () => {
     usersTable: {
       columns: {
         email: funcs.email(),
+        userName: funcs.fullName(),
         firstName: funcs.firstName(),
         lastName: funcs.lastName(),
         birthday: funcs.date({ minDate: '1925-01-01', maxDate: '2015-12-31' }),

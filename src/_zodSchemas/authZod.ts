@@ -1,5 +1,6 @@
 import {
   addressTypeEnum,
+  oAuthProvidersEnum,
   rolesEnum,
   userAddressesTable,
   usersTable
@@ -9,6 +10,7 @@ import { z } from 'zod/v4';
 
 // ZOD USER
 const rolesZodEnum = z.enum(rolesEnum.enumValues);
+const oAuthProvidersZodEnum = z.enum(oAuthProvidersEnum.enumValues);
 
 const userInsertSchema = createInsertSchema(usersTable, {
   email: schema =>
@@ -71,11 +73,12 @@ const sessionSchema = z.object({
   role: rolesZodEnum
 });
 
-export type UserSession = z.infer<typeof sessionSchema>;
+type UserSession = z.infer<typeof sessionSchema>;
 
 export {
   signupZodSchema,
   loginZodSchema,
+  oAuthProvidersZodEnum,
   userSelectSchema,
   type UserSignup,
   type UserLogin,
@@ -84,5 +87,6 @@ export {
   userAddressSelectSchema,
   type UserAddressInsert,
   type UserAddressSelect,
+  type UserSession,
   sessionSchema
 };
