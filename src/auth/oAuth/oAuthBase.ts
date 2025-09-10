@@ -99,10 +99,6 @@ class OAuthClient<T> {
   }
 
   async createAuthUrl() {
-    if (!process.env.DISCORD_CLIENT_ID) {
-      console.error('no oAuth client id found in env');
-    }
-
     const state = await createState();
     const codeVerifier = await createCodeVerifier();
     const codeChallenge = await sha256Base64Url(codeVerifier);

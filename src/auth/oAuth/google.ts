@@ -12,20 +12,20 @@ const createGoogleOAuthClient = () => {
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     scopes: ['openid', 'email', 'profile'],
     urls: {
-      auth: 'https://discord.com/oauth2/authorize',
-      token: 'https://discord.com/api/oauth2/token',
-      user: 'https://discord.com/api/users/@me'
+      auth: 'https://accounts.google.com/o/oauth2/v2/auth',
+      token: 'https://oauth2.googleapis.com/token',
+      user: 'https://openidconnect.googleapis.com/v1/userinfo'
     },
     userInfo: {
       schema: z.object({
-        id: z.string(),
-        username: z.string(),
-        global_name: z.string().nullable(),
+        sub: z.string(),
+        name: z.string(),
+        given_name: z.string().nullable(),
         email: z.email()
       }),
       parser: user => ({
-        id: user.id,
-        name: user.global_name || user.username,
+        id: user.sub,
+        name: user.name ?? user.given_name,
         email: user.email
       })
     }
