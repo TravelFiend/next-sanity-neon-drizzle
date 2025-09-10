@@ -137,7 +137,7 @@ class OAuthClient<T extends object> {
     let res: Response;
 
     if (this.provider === 'facebook') {
-      // Facebook requires access_token as a query param
+      // Facebook's `/me` route requires access_token as a query param
       const url = new URL(this.urls.user);
       url.searchParams.set('access_token', accessToken);
 
