@@ -27,6 +27,13 @@ const OAuthButtons = () => {
       >
         Google
       </Button>
+      <Button
+        ariaLabel="Sign up with you Facebook account"
+        onClick={async () => oAuthLogin('facebook')}
+        className="w-full"
+      >
+        Facebook
+      </Button>
     </>
   );
 };

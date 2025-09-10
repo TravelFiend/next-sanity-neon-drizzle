@@ -25,7 +25,9 @@ const createGithubOAuthClient = () => {
       }),
       parser: user => ({
         id: user.id.toString(),
-        name: user.name ?? user.login,
+        username: user.login ?? user.name,
+        firstName: null,
+        lastName: null,
         email: user.email
       })
     }

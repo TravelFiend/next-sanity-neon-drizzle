@@ -21,11 +21,14 @@ const createGoogleOAuthClient = () => {
         sub: z.string(),
         name: z.string(),
         given_name: z.string().nullable(),
+        family_name: z.string().nullable(),
         email: z.email()
       }),
       parser: user => ({
         id: user.sub,
-        name: user.name ?? user.given_name,
+        username: user.name ?? user.email,
+        firstName: user.given_name ?? null,
+        lastName: user.family_name ?? null,
         email: user.email
       })
     }

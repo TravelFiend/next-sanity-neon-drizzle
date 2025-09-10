@@ -43,6 +43,13 @@
       "when": 1757490307654,
       "tag": "0005_bored_slyde",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1757502672611,
+      "tag": "0006_thankful_devos",
+      "breakpoints": true
     }
   ]
 }

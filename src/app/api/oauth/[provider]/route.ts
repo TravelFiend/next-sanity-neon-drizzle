@@ -33,6 +33,7 @@ const GET = async (
 
   try {
     const oAuthUser = await oAuthClient.fetchUser(code, state);
+
     const user = await connectUserToAccount(oAuthUser, provider);
     await createUserSession(user);
 
@@ -49,7 +50,19 @@ const GET = async (
 };
 
 const connectUserToAccount = (
-  { id, email, name }: { id: string; email: string; name: string },
+  {
+    id,
+    email,
+    username,
+    firstName,
+    lastName
+  }: {
+    id: string;
+    email: string;
+    username: string;
+    firstName: string | null;
+    lastName: string | null;
+  },
   provider: OAuthProvider
 ) => {
   return db.transaction(async trx => {
@@ -63,7 +76,9 @@ const connectUserToAccount = (
         .insert(usersTable)
         .values({
           email,
-          userName: name
+          username,
+          firstName: firstName ?? null,
+          lastName: lastName ?? null
         })
         .returning({
           id: usersTable.id,

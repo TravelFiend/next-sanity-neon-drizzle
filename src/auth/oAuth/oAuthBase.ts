@@ -5,6 +5,7 @@ import { z } from 'zod/v4';
 import createDiscordOAuthClient from './discord';
 import createGoogleOAuthClient from './google';
 import createGithubOAuthClient from './github';
+import createFacebookOAuthClient from './facebook';
 
 const STATE_COOKIE_KEY = 'oAuthState';
 const CODE_VERIFIER_COOKIE_KEY = 'oAuthCodeVerifier';
@@ -45,7 +46,7 @@ const getCodeVerifier = async () => {
   return codeVerifier;
 };
 
-class OAuthClient<T> {
+class OAuthClient<T extends object> {
   private readonly provider: OAuthProvider;
   private readonly clientId: string;
   private readonly clientSecret: string;
@@ -57,7 +58,13 @@ class OAuthClient<T> {
   };
   private readonly userInfo: {
     schema: z.ZodSchema<T>;
-    parser: (data: T) => { id: string; email: string; name: string };
+    parser: (data: T) => {
+      id: string;
+      email: string;
+      username: string;
+      firstName: string | null;
+      lastName: string | null;
+    };
   };
   private readonly tokenSchema = z.object({
     access_token: z.string(),
@@ -83,7 +90,13 @@ class OAuthClient<T> {
     };
     userInfo: {
       schema: z.ZodSchema<T>;
-      parser: (data: T) => { id: string; email: string; name: string };
+      parser: (data: T) => {
+        id: string;
+        email: string;
+        username: string;
+        firstName: string | null;
+        lastName: string | null;
+      };
     };
   }) {
     this.provider = provider;
@@ -121,19 +134,39 @@ class OAuthClient<T> {
 
     const { accessToken, tokenType } = await this.fetchToken(code);
 
-    const res = await fetch(this.urls.user, {
-      headers: {
-        Authorization: `${tokenType} ${accessToken}`
-      }
-    });
+    let res: Response;
+
+    if (this.provider === 'facebook') {
+      // Facebook requires access_token as a query param
+      const url = new URL(this.urls.user);
+      url.searchParams.set('access_token', accessToken);
+
+      res = await fetch(url.toString());
+    } else {
+      res = await fetch(this.urls.user, {
+        headers: {
+          Authorization: `${tokenType} ${accessToken}`
+        }
+      });
+    }
     const rawData = await res.json();
+
+    if ('error' in rawData) {
+      throw new Error(
+        `${this.provider} API error: ${rawData.error.message ?? 'Unknown error'}`
+      );
+    }
 
     const {
       data: user,
       success,
       error
     } = this.userInfo.schema.safeParse(rawData);
+
     if (!success) throw new InvalidUserError(error);
+    if (!('email' in user) || !user.email) {
+      throw new MissingEmailError();
+    }
 
     return this.userInfo.parser(user);
   }
@@ -178,8 +211,7 @@ const getOAuthClient = (provider: OAuthProvider) => {
     case 'github':
       return createGithubOAuthClient();
     case 'facebook':
-      return createDiscordOAuthClient();
-    // return createFacebookOAuthClient();
+      return createFacebookOAuthClient();
     case 'google':
       return createGoogleOAuthClient();
     default:
@@ -198,6 +230,14 @@ class InvalidUserError extends Error {
   constructor(zodError: z.ZodError) {
     super('Invalid User');
     this.cause = zodError;
+  }
+}
+
+class MissingEmailError extends Error {
+  constructor() {
+    super(
+      'Your Facebook account did not provide an email. Please allow email access to continue, or choose a different provider.'
+    );
   }
 }
 

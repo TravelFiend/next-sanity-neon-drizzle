@@ -25,7 +25,9 @@ const createDiscordOAuthClient = () => {
       }),
       parser: user => ({
         id: user.id,
-        name: user.global_name ?? user.username,
+        username: user.username ?? user.global_name,
+        firstName: null,
+        lastName: null,
         email: user.email
       })
     }
