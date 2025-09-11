@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach, mock } from 'bun:test';
 import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import MobileSecondLinks from '../../mainHeader/MobileSecondLinks';
+import MobileSecondLinks from '../../mainHeader/mobile/MobileSecondLinks';
 import { secondLevelLinksMock } from '@/components/layout/testing/__mocks__/mainHeaderMock';
 // import { resizeWindow } from '@/lib/utils/testingUtils';
 

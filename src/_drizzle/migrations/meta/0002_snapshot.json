@@ -1,6 +1,6 @@
 {
-  "id": "45b8095d-5bb2-4df4-a174-52be48c1fcad",
-  "prevId": "420427c0-de36-455b-80a9-f34302ab9263",
+  "id": "8ff6672b-7dd4-4f02-84dc-ec2895a63ab8",
+  "prevId": "37a58cfe-d143-490a-b92b-94aeba2a1883",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -16,7 +16,7 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -84,26 +84,83 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.user_oauth_accounts": {
+      "name": "user_oauth_accounts",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "oauth_providers",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "providerAccountId": {
+          "name": "providerAccountId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_oauth_accounts_userId_users_id_fk": {
+          "name": "user_oauth_accounts_userId_users_id_fk",
+          "tableFrom": "user_oauth_accounts",
+          "tableTo": "users",
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_oauth_accounts_providerAccountId_provider_pk": {
+          "name": "user_oauth_accounts_providerAccountId_provider_pk",
+          "columns": ["providerAccountId", "provider"]
+        }
+      },
+      "uniqueConstraints": {
+        "user_oauth_accounts_providerAccountId_unique": {
+          "name": "user_oauth_accounts_providerAccountId_unique",
+          "nullsNotDistinct": false,
+          "columns": ["providerAccountId"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.users": {
       "name": "users",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "users_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
+          "default": "gen_random_uuid()"
         },
         "email": {
           "name": "email",
@@ -115,7 +172,7 @@
           "name": "password",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "first_name": {
           "name": "first_name",
@@ -162,6 +219,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
+        "users_id_unique": {
+          "name": "users_id_unique",
+          "nullsNotDistinct": false,
+          "columns": ["id"]
+        },
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
@@ -178,6 +240,11 @@
       "name": "address_type",
       "schema": "public",
       "values": ["shipping", "billing"]
+    },
+    "public.oauth_providers": {
+      "name": "oauth_providers",
+      "schema": "public",
+      "values": ["google", "facebook", "discord"]
     },
     "public.role": {
       "name": "role",

@@ -1,0 +1,1 @@
+ALTER TYPE "public"."oauth_providers" ADD VALUE 'github';

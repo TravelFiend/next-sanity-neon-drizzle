@@ -3,15 +3,15 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 
 type ButtonProps = {
+  children: React.ReactNode;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  label: string;
   ariaLabel: string;
   className?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
+  children,
   onClick,
-  label,
   ariaLabel,
   className
 }) => {
@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       aria-label={ariaLabel}
     >
-      {label}
+      {children}
     </button>
   );
 };

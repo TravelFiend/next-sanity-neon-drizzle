@@ -1,1 +1,0 @@
-ALTER TABLE "users" ADD COLUMN "poop_dick" varchar(255);

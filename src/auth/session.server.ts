@@ -29,7 +29,7 @@ export const createUserSession = async (user: UserSession) => {
   });
 };
 
-const getUserFromDb = (id: number) => {
+const getUserFromDb = (id: string) => {
   return db.query.usersTable.findFirst({
     columns: {
       id: true,
@@ -42,12 +42,12 @@ const getUserFromDb = (id: number) => {
   });
 };
 
-type FullUser = Exclude<
+export type FullUser = Exclude<
   Awaited<ReturnType<typeof getUserFromDb>>,
   undefined | null
 >;
 
-type User = Exclude<
+export type User = Exclude<
   Awaited<ReturnType<typeof getSessionUser>>,
   undefined | null
 >;

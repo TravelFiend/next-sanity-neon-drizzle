@@ -2,7 +2,6 @@ import { seed } from 'drizzle-seed';
 import { db } from '../db';
 import { usersTable, userAddressesTable } from '../schemas';
 import { sql } from 'drizzle-orm';
-import { fixSequences } from './utils';
 
 const seedIt = async () => {
   await db.execute(sql`TRUNCATE TABLE users RESTART IDENTITY CASCADE`);
@@ -11,6 +10,7 @@ const seedIt = async () => {
     usersTable: {
       columns: {
         email: funcs.email(),
+        userName: funcs.fullName(),
         firstName: funcs.firstName(),
         lastName: funcs.lastName(),
         birthday: funcs.date({ minDate: '1925-01-01', maxDate: '2015-12-31' }),
@@ -60,8 +60,6 @@ const seedIt = async () => {
       }
     }
   }));
-
-  fixSequences();
 };
 
 seedIt();

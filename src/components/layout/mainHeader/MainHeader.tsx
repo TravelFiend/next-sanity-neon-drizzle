@@ -2,14 +2,19 @@ import Link from 'next/link';
 import Nav from './Nav';
 import cleanSVG from '@/lib/utils/sanitizeSVG';
 import type { MainNavRes } from '@sanityTypes/derivedTypes';
+import { getCurrentUser } from '@/auth/session.server';
 
 type MainHeaderProps = {
   navData: MainNavRes;
 };
 
-const MainHeader: React.FC<MainHeaderProps> = ({ navData }) => {
+const MainHeader: React.FC<MainHeaderProps> = async ({ navData }) => {
   if (!navData) return null;
 
+  const user = await getCurrentUser({
+    withFullUser: false,
+    redirectIfNotFound: false
+  });
   const { companyLogo, navTabs } = navData;
 
   return (
@@ -26,7 +31,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({ navData }) => {
         <span className="ml-6 block size-12 sm:size-16" aria-hidden="true" />
       )}
 
-      <Nav linkData={navTabs} />
+      <Nav linkData={navTabs} user={user} />
     </header>
   );
 };

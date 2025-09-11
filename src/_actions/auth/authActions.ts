@@ -3,7 +3,7 @@
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
-import { type InsertUser, usersTable } from '@/_drizzle/schemas';
+import { type InsertUser, OAuthProvider, usersTable } from '@/_drizzle/schemas';
 import {
   type UserLogin,
   type UserSignup,
@@ -14,6 +14,7 @@ import zodValidate from '@/lib/utils/zodValidate';
 import { removeSessionUser } from '@/auth/session.edge';
 import { createUserSession } from '@/auth/session.server';
 import { redirect } from 'next/navigation';
+import { getOAuthClient } from '@/auth/oAuth/oAuthBase';
 
 type ActionState<T> =
   | {
@@ -25,7 +26,7 @@ type ActionState<T> =
       success: true;
       data?: T;
       message?: string;
-      userId: number;
+      userId: string;
     };
 
 const signup = async (
@@ -41,7 +42,7 @@ const signup = async (
   if (!parsed.success) return parsed;
 
   const { email, password }: UserSignup = parsed.data;
-  const pwHash = await hash(password);
+  const pwHash = await hash(password!);
 
   const newUser: InsertUser = {
     email,
@@ -112,7 +113,7 @@ const login = async (
   }
 
   try {
-    const isVerified = await verify(existingUser.password, password);
+    const isVerified = await verify(existingUser.password!, password);
 
     if (isVerified) {
       await createUserSession(existingUser);
@@ -144,6 +145,13 @@ const logout = async () => {
   redirect('/');
 };
 
+const oAuthLogin = async (provider: OAuthProvider) => {
+  const oAuthClient = getOAuthClient(provider);
+
+  const url = await oAuthClient.createAuthUrl();
+  redirect(url);
+};
+
 // Unified auth action
 type AuthActionState = ActionState<UserSignup> | ActionState<UserLogin>;
 
@@ -170,4 +178,4 @@ const authAction = async (
   }
 };
 
-export { authAction, logout };
+export { authAction, logout, oAuthLogin };

@@ -1,6 +1,6 @@
 {
-  "id": "37a58cfe-d143-490a-b92b-94aeba2a1883",
-  "prevId": "bb6da965-952b-479e-ab2c-e2e2cd0494dc",
+  "id": "c7ee6db1-f585-4a66-9ba7-66974078ad55",
+  "prevId": "b5095e6e-660f-4cb4-8a07-77e96e6480c7",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -84,6 +84,73 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.user_oauth_accounts": {
+      "name": "user_oauth_accounts",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "oauth_providers",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "providerAccountId": {
+          "name": "providerAccountId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_oauth_accounts_userId_users_id_fk": {
+          "name": "user_oauth_accounts_userId_users_id_fk",
+          "tableFrom": "user_oauth_accounts",
+          "tableTo": "users",
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_oauth_accounts_providerAccountId_provider_pk": {
+          "name": "user_oauth_accounts_providerAccountId_provider_pk",
+          "columns": ["providerAccountId", "provider"]
+        }
+      },
+      "uniqueConstraints": {
+        "user_oauth_accounts_providerAccountId_unique": {
+          "name": "user_oauth_accounts_providerAccountId_unique",
+          "nullsNotDistinct": false,
+          "columns": ["providerAccountId"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.users": {
       "name": "users",
       "schema": "",
@@ -103,6 +170,12 @@
         },
         "password": {
           "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_name": {
+          "name": "user_name",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
@@ -152,11 +225,6 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "users_id_unique": {
-          "name": "users_id_unique",
-          "nullsNotDistinct": false,
-          "columns": ["id"]
-        },
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
@@ -173,6 +241,11 @@
       "name": "address_type",
       "schema": "public",
       "values": ["shipping", "billing"]
+    },
+    "public.oauth_providers": {
+      "name": "oauth_providers",
+      "schema": "public",
+      "values": ["google", "facebook", "discord"]
     },
     "public.role": {
       "name": "role",
