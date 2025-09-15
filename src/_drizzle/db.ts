@@ -6,7 +6,7 @@ import {
   type NodePgDatabase,
   drizzle as drizzlePg
 } from 'drizzle-orm/node-postgres';
-import { drizzle as drizzleNeon } from 'drizzle-orm/neon-http';
+import { drizzle as drizzleNeon } from 'drizzle-orm/neon-serverless';
 import * as schema from './schemas';
 
 config({ path: '.env.local' });
