@@ -60,7 +60,7 @@
     "@sanity/color-input": "^4.0.6",
     "@sanity/eslint-config-studio": "^5.0.2",
     "@sanity/vision": "4.6.1",
-    "@storybook/addon-a11y": "9.1.5",
+    "@storybook/addon-a11y": "9.1.6",
     "@storybook/addon-docs": "9.1.5",
     "@storybook/addon-onboarding": "9.1.5",
     "@storybook/nextjs-vite": "^9.1.2",
