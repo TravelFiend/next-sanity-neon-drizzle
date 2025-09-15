@@ -116,8 +116,6 @@ class OAuthClient<T extends object> {
     const codeVerifier = await createCodeVerifier();
     const codeChallenge = await sha256Base64Url(codeVerifier);
 
-    console.error({ REDIRECT_URI: this.redirectUrl.toString() });
-
     const url = new URL(this.urls.auth);
 
     url.searchParams.set('client_id', this.clientId);

@@ -21,10 +21,14 @@ let db: NodePgDatabase<typeof schema>;
 
 if (process.env.NODE_ENV === 'production') {
   const pool = new NeonPool({ connectionString: process.env.DATABASE_URL! });
-  db = drizzleNeon({ client: pool, schema });
+  db = drizzleNeon<typeof schema>({
+    client: pool,
+    schema,
+    casing: 'snake_case'
+  });
 } else {
   const pool = new PgPool({ connectionString: process.env.DATABASE_URL! });
-  db = drizzlePg<typeof schema>(pool, { schema });
+  db = drizzlePg<typeof schema>(pool, { schema, casing: 'snake_case' });
 }
 
 export { db };
