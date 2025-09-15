@@ -1,5 +1,5 @@
 {
-  "id": "bb6da965-952b-479e-ab2c-e2e2cd0494dc",
+  "id": "f7fc77f0-0364-4d61-ab48-01e3419687ff",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -28,14 +28,14 @@
           "notNull": true,
           "default": "'shipping'"
         },
-        "address_1": {
-          "name": "address_1",
+        "address1": {
+          "name": "address1",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
-        "address_2": {
-          "name": "address_2",
+        "address2": {
+          "name": "address2",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
@@ -84,6 +84,73 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.user_oauth_accounts": {
+      "name": "user_oauth_accounts",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "oauth_providers",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider_account_id": {
+          "name": "provider_account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_oauth_accounts_user_id_users_id_fk": {
+          "name": "user_oauth_accounts_user_id_users_id_fk",
+          "tableFrom": "user_oauth_accounts",
+          "tableTo": "users",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_oauth_accounts_provider_account_id_provider_pk": {
+          "name": "user_oauth_accounts_provider_account_id_provider_pk",
+          "columns": ["provider_account_id", "provider"]
+        }
+      },
+      "uniqueConstraints": {
+        "user_oauth_accounts_providerAccountId_unique": {
+          "name": "user_oauth_accounts_providerAccountId_unique",
+          "nullsNotDistinct": false,
+          "columns": ["provider_account_id"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.users": {
       "name": "users",
       "schema": "",
@@ -103,6 +170,12 @@
         },
         "password": {
           "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "username": {
+          "name": "username",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
@@ -168,6 +241,11 @@
       "name": "address_type",
       "schema": "public",
       "values": ["shipping", "billing"]
+    },
+    "public.oauth_providers": {
+      "name": "oauth_providers",
+      "schema": "public",
+      "values": ["google", "facebook", "discord", "github"]
     },
     "public.role": {
       "name": "role",
