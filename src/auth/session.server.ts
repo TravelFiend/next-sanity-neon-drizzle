@@ -10,23 +10,42 @@ import { getSessionUser } from './session.edge';
 import { usersTable } from '@/_drizzle/schemas';
 import { redirect } from 'next/navigation';
 import { cache } from 'react';
+import { NextResponse } from 'next/server';
+import getSessionCookieOptions from './oAuth/sessionCookieOptions';
 
 const COOKIE_SESSION_KEY = 'session-id';
 const SESSION_EXPIRATION = 60 * 60 * 24 * 7;
 
-export const createUserSession = async (user: UserSession) => {
+const createSession = async (user: UserSession) => {
   const sessionId = crypto.randomUUID();
   await redis.set(`session:${sessionId}`, sessionSchema.parse(user), {
     ex: SESSION_EXPIRATION
   });
 
-  (await cookies()).set(COOKIE_SESSION_KEY, sessionId, {
-    secure: true,
-    httpOnly: true,
-    sameSite: 'lax',
-    expires: Date.now() + SESSION_EXPIRATION * 1000,
-    path: '/'
-  });
+  return sessionId;
+};
+
+export const createUserSession = async (user: UserSession) => {
+  const sessionId = await createSession(user);
+  (await cookies()).set(
+    COOKIE_SESSION_KEY,
+    sessionId,
+    getSessionCookieOptions()
+  );
+};
+
+export const createUserSessionAndRedirect = async (
+  user: UserSession,
+  redirectTo: string
+) => {
+  const sessionId = await createSession(user);
+  const response = NextResponse.redirect(redirectTo);
+  response.cookies.set(
+    COOKIE_SESSION_KEY,
+    sessionId,
+    getSessionCookieOptions()
+  );
+  return response;
 };
 
 const getUserFromDb = (id: string) => {
