@@ -1,3 +1,4 @@
+/* eslint-disable drizzle/enforce-delete-with-where */
 import { OAuthProvider } from '@/_drizzle/schemas';
 import { randomHexString, sha256Base64Url } from '@/lib/utils/cryptoFunctions';
 import { cookies } from 'next/headers';
@@ -6,33 +7,21 @@ import createDiscordOAuthClient from './discord';
 import createGoogleOAuthClient from './google';
 import createGithubOAuthClient from './github';
 import createFacebookOAuthClient from './facebook';
+import getSessionCookieOptions from './sessionCookieOptions';
 
 const STATE_COOKIE_KEY = 'oAuthState';
 const CODE_VERIFIER_COOKIE_KEY = 'oAuthCodeVerifier';
 const COOKIE_EXPIRATION_SECONDS = 60 * 10; // 10 minutes
 
-const createState = async () => {
-  const state = randomHexString();
-  (await cookies()).set(STATE_COOKIE_KEY, state, {
-    secure: true,
-    httpOnly: true,
-    sameSite: 'lax',
-    expires: Date.now() + COOKIE_EXPIRATION_SECONDS * 1000
-  });
+const createEphemeralCookie = async (key: string): Promise<string> => {
+  const protectionKey = randomHexString();
+  (await cookies()).set(
+    key,
+    protectionKey,
+    getSessionCookieOptions(COOKIE_EXPIRATION_SECONDS)
+  );
 
-  return state;
-};
-
-const createCodeVerifier = async () => {
-  const codeVerifier = randomHexString();
-  (await cookies()).set(CODE_VERIFIER_COOKIE_KEY, codeVerifier, {
-    secure: true,
-    httpOnly: true,
-    sameSite: 'lax',
-    expires: Date.now() + COOKIE_EXPIRATION_SECONDS * 1000
-  });
-
-  return codeVerifier;
+  return protectionKey;
 };
 
 const validateState = async (state: string) => {
@@ -44,6 +33,12 @@ const getCodeVerifier = async () => {
   const codeVerifier = (await cookies()).get(CODE_VERIFIER_COOKIE_KEY)?.value;
   if (!codeVerifier) throw new InvalidCodeVerifierError();
   return codeVerifier;
+};
+
+const clearOAuthCookies = async () => {
+  const cookieStore = await cookies();
+  cookieStore.delete(STATE_COOKIE_KEY);
+  cookieStore.delete(CODE_VERIFIER_COOKIE_KEY);
 };
 
 class OAuthClient<T extends object> {
@@ -112,8 +107,8 @@ class OAuthClient<T extends object> {
   }
 
   async createAuthUrl() {
-    const state = await createState();
-    const codeVerifier = await createCodeVerifier();
+    const state = await createEphemeralCookie(STATE_COOKIE_KEY);
+    const codeVerifier = await createEphemeralCookie(CODE_VERIFIER_COOKIE_KEY);
     const codeChallenge = await sha256Base64Url(codeVerifier);
 
     const url = new URL(this.urls.auth);
@@ -129,46 +124,47 @@ class OAuthClient<T extends object> {
   }
 
   async fetchUser(code: string, state: string) {
-    const isValidState = await validateState(state);
-    if (!isValidState) throw new InvalidStateError();
+    try {
+      const isValidState = await validateState(state);
+      if (!isValidState) throw new InvalidStateError();
 
-    const { accessToken, tokenType } = await this.fetchToken(code);
+      const { accessToken, tokenType } = await this.fetchToken(code);
 
-    let res: Response;
+      let res: Response;
+      if (this.provider === 'facebook') {
+        // Facebook's `/me` route requires access_token as a query param
+        const url = new URL(this.urls.user);
+        url.searchParams.set('access_token', accessToken);
 
-    if (this.provider === 'facebook') {
-      // Facebook's `/me` route requires access_token as a query param
-      const url = new URL(this.urls.user);
-      url.searchParams.set('access_token', accessToken);
+        res = await fetch(url.toString());
+      } else {
+        res = await fetch(this.urls.user, {
+          headers: {
+            Authorization: `${tokenType} ${accessToken}`
+          }
+        });
+      }
 
-      res = await fetch(url.toString());
-    } else {
-      res = await fetch(this.urls.user, {
-        headers: {
-          Authorization: `${tokenType} ${accessToken}`
-        }
-      });
+      const rawData = await res.json();
+      if ('error' in rawData) {
+        throw new Error(
+          `${this.provider} API error: ${rawData.error.message ?? 'Unknown error'}`
+        );
+      }
+
+      const {
+        data: user,
+        success,
+        error
+      } = this.userInfo.schema.safeParse(rawData);
+
+      if (!success) throw new InvalidUserError(error);
+      if (!('email' in user) || !user.email) throw new MissingEmailError();
+
+      return this.userInfo.parser(user);
+    } finally {
+      await clearOAuthCookies();
     }
-    const rawData = await res.json();
-
-    if ('error' in rawData) {
-      throw new Error(
-        `${this.provider} API error: ${rawData.error.message ?? 'Unknown error'}`
-      );
-    }
-
-    const {
-      data: user,
-      success,
-      error
-    } = this.userInfo.schema.safeParse(rawData);
-
-    if (!success) throw new InvalidUserError(error);
-    if (!('email' in user) || !user.email) {
-      throw new MissingEmailError();
-    }
-
-    return this.userInfo.parser(user);
   }
 
   private async fetchToken(code: string) {
@@ -226,14 +222,14 @@ class InvalidTokenError extends Error {
   }
 }
 
-class InvalidUserError extends Error {
+export class InvalidUserError extends Error {
   constructor(zodError: z.ZodError) {
     super('Invalid User');
     this.cause = zodError;
   }
 }
 
-class MissingEmailError extends Error {
+export class MissingEmailError extends Error {
   constructor() {
     super(
       'Your Facebook account did not provide an email. Please allow email access to continue, or choose a different provider.'
@@ -241,7 +237,7 @@ class MissingEmailError extends Error {
   }
 }
 
-class InvalidStateError extends Error {
+export class InvalidStateError extends Error {
   constructor() {
     super('Invalid State');
   }
