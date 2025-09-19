@@ -82,12 +82,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           ))}
       </ul>
 
-      {/* General / login-wide errors */}
       <ul className="h-14">
         {authState?.message ? (
           <li className="text-sm text-success">{authState.message}</li>
         ) : null}
 
+        {/* General / login-wide errors */}
         {!authState?.success && authState?.errors
           ? Object.entries(authState.errors).map(([key, value]) => {
               return key !== 'email' && key !== 'password'
