@@ -1,4 +1,4 @@
-import { defineLive } from 'next-sanity';
+import { defineLive } from 'next-sanity/live';
 import client from '../client-config';
 
 // https://www.sanity.io/docs/developer-guides/live-content-guide
