@@ -1,9 +1,5 @@
 import { db } from '@/_drizzle/db';
-import {
-  OAuthProvider,
-  userOAuthAccountsTable,
-  usersTable
-} from '@/_drizzle/schemas';
+import { OAuthProvider, userOAuthAccounts, users } from '@/_drizzle/schemas';
 import { oAuthProvidersZodEnum } from '@/_zodSchemas/authZod';
 import {
   getOAuthClient,
@@ -123,14 +119,14 @@ const connectUserToAccount = (
   provider: OAuthProvider
 ) => {
   return db.transaction(async trx => {
-    let user = await trx.query.usersTable.findFirst({
-      where: eq(usersTable.email, email),
+    let user = await trx.query.users.findFirst({
+      where: eq(users.email, email),
       columns: { id: true, role: true }
     });
 
     if (!user) {
       const [newUser] = await trx
-        .insert(usersTable)
+        .insert(users)
         .values({
           email,
           username,
@@ -138,15 +134,15 @@ const connectUserToAccount = (
           lastName: lastName ?? null
         })
         .returning({
-          id: usersTable.id,
-          role: usersTable.role
+          id: users.id,
+          role: users.role
         });
 
       user = newUser;
     }
 
     await trx
-      .insert(userOAuthAccountsTable)
+      .insert(userOAuthAccounts)
       .values({
         provider,
         providerAccountId: id,

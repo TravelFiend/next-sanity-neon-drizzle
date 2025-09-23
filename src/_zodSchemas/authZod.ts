@@ -2,8 +2,8 @@ import {
   addressTypeEnum,
   oAuthProvidersEnum,
   rolesEnum,
-  userAddressesTable,
-  usersTable
+  addresses,
+  users
 } from '@/_drizzle/schemas';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod/v4';
@@ -12,7 +12,7 @@ import { z } from 'zod/v4';
 const rolesZodEnum = z.enum(rolesEnum.enumValues);
 const oAuthProvidersZodEnum = z.enum(oAuthProvidersEnum.enumValues);
 
-const userInsertSchema = createInsertSchema(usersTable, {
+const userInsertSchema = createInsertSchema(users, {
   email: schema =>
     schema.max(255).pipe(z.email({ error: 'Please provide a valid email' })),
   password: schema =>
@@ -40,7 +40,7 @@ const loginZodSchema = authBaseSchema.extend({
   password: z.string().min(1, { error: 'Please enter a password' })
 });
 
-const userSelectSchema = createSelectSchema(usersTable);
+const userSelectSchema = createSelectSchema(users);
 
 type UserSignup = z.infer<typeof signupZodSchema>;
 type UserLogin = z.infer<typeof loginZodSchema>;
@@ -50,7 +50,7 @@ type UserSelect = z.infer<typeof userSelectSchema>;
 // ZOD USER ADDRESS
 const addressTypeZodEnum = z.enum(addressTypeEnum.enumValues);
 
-const userAddressInsertSchema = createInsertSchema(userAddressesTable, {
+const userAddressInsertSchema = createInsertSchema(addresses, {
   addressType: addressTypeZodEnum,
   address1: schema => schema.min(1, 'Address is required'),
   city: schema => schema.min(1, 'City is required'),
@@ -62,7 +62,7 @@ const userAddressInsertSchema = createInsertSchema(userAddressesTable, {
     })
 });
 
-const userAddressSelectSchema = createSelectSchema(userAddressesTable);
+const userAddressSelectSchema = createSelectSchema(addresses);
 
 type UserAddressInsert = z.infer<typeof userAddressInsertSchema>;
 type UserAddressSelect = z.infer<typeof userAddressSelectSchema>;
