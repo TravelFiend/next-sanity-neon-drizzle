@@ -102,8 +102,8 @@ export const addressesRelations = relations(addresses, ({ many }) => ({
   userAddresses: many(usersToAddresses)
 }));
 
-export type InsertUserAddress = typeof addresses.$inferInsert;
-export type SelectUserAddresses = typeof addresses.$inferSelect;
+export type InsertAddress = typeof addresses.$inferInsert;
+export type SelectAddresses = typeof addresses.$inferSelect;
 
 // DRIZZLE USERS_TO_ADDRESSES
 export const addressTypeEnum = pgEnum('address_type', ['shipping', 'billing']);
@@ -122,6 +122,9 @@ export const usersToAddresses = pgTable(
   },
   t => [primaryKey({ columns: [t.userId, t.addressId, t.addressType] })]
 );
+
+export type InsertUsersToAddress = typeof usersToAddresses.$inferInsert;
+export type SelectUsersToAddresses = typeof usersToAddresses.$inferSelect;
 
 export const usersToAddressesRelations = relations(
   usersToAddresses,
