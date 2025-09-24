@@ -20,6 +20,7 @@
     "db:push": "bunx drizzle-kit push --config=src/_drizzle/drizzle.config.ts",
     "db:gen": "bunx drizzle-kit generate --config=src/_drizzle/drizzle.config.ts",
     "db:migrate": "bunx drizzle-kit migrate --config=src/_drizzle/drizzle.config.ts",
+    "db:seed": "bun run src/_drizzle/seedScripts/seedAll.ts",
     "db:studio": "bunx drizzle-kit studio --config=src/_drizzle/drizzle.config.ts"
   },
   "dependencies": {

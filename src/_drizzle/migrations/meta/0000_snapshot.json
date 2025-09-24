@@ -1,105 +1,9 @@
 {
-  "id": "dc92839b-ef19-41b4-a651-fe0085a745b7",
+  "id": "20936661-44e4-4a0c-99bc-ddb121bcd17c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.addresses": {
-      "name": "addresses",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "address1": {
-          "name": "address1",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "address2": {
-          "name": "address2",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "city": {
-          "name": "city",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "state": {
-          "name": "state",
-          "type": "varchar(2)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "zip_code": {
-          "name": "zip_code",
-          "type": "varchar(15)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "unique_full_address": {
-          "name": "unique_full_address",
-          "columns": [
-            {
-              "expression": "address1",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "COALESCE(\"address2\", '')",
-              "asc": true,
-              "isExpression": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "city",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "state",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "zip_code",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.user_oauth_accounts": {
       "name": "user_oauth_accounts",
       "schema": "",
@@ -250,6 +154,226 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.addresses": {
+      "name": "addresses",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "address1": {
+          "name": "address1",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address2": {
+          "name": "address2",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zip_code_id": {
+          "name": "zip_code_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "unique_full_address": {
+          "name": "unique_full_address",
+          "columns": [
+            {
+              "expression": "address1",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "COALESCE(\"address2\", '')",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "zip_code_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "addresses_zip_code_id_zip_codes_id_fk": {
+          "name": "addresses_zip_code_id_zip_codes_id_fk",
+          "tableFrom": "addresses",
+          "tableTo": "zip_codes",
+          "columnsFrom": ["zip_code_id"],
+          "columnsTo": ["id"],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cities": {
+      "name": "cities",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "state_id": {
+          "name": "state_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cities_state_id_states_id_fk": {
+          "name": "cities_state_id_states_id_fk",
+          "tableFrom": "cities",
+          "tableTo": "states",
+          "columnsFrom": ["state_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "unique_city_per_state": {
+          "name": "unique_city_per_state",
+          "nullsNotDistinct": false,
+          "columns": ["name", "state_id"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cities_to_zip_codes": {
+      "name": "cities_to_zip_codes",
+      "schema": "",
+      "columns": {
+        "city_id": {
+          "name": "city_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zip_code_id": {
+          "name": "zip_code_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cities_to_zip_codes_city_id_cities_id_fk": {
+          "name": "cities_to_zip_codes_city_id_cities_id_fk",
+          "tableFrom": "cities_to_zip_codes",
+          "tableTo": "cities",
+          "columnsFrom": ["city_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "cities_to_zip_codes_zip_code_id_zip_codes_id_fk": {
+          "name": "cities_to_zip_codes_zip_code_id_zip_codes_id_fk",
+          "tableFrom": "cities_to_zip_codes",
+          "tableTo": "zip_codes",
+          "columnsFrom": ["zip_code_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "cities_to_zip_codes_city_id_zip_code_id_pk": {
+          "name": "cities_to_zip_codes_city_id_zip_code_id_pk",
+          "columns": ["city_id", "zip_code_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.states": {
+      "name": "states",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "name": "code",
+          "type": "varchar(2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "states_name_unique": {
+          "name": "states_name_unique",
+          "nullsNotDistinct": false,
+          "columns": ["name"]
+        },
+        "states_code_unique": {
+          "name": "states_code_unique",
+          "nullsNotDistinct": false,
+          "columns": ["code"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.users_to_addresses": {
       "name": "users_to_addresses",
       "schema": "",
@@ -313,14 +437,40 @@
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
+    },
+    "public.zip_codes": {
+      "name": "zip_codes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "zip_code": {
+          "name": "zip_code",
+          "type": "varchar(15)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "zip_codes_zipCode_unique": {
+          "name": "zip_codes_zipCode_unique",
+          "nullsNotDistinct": false,
+          "columns": ["zip_code"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {
-    "public.address_type": {
-      "name": "address_type",
-      "schema": "public",
-      "values": ["shipping", "billing"]
-    },
     "public.oauth_providers": {
       "name": "oauth_providers",
       "schema": "public",
@@ -330,6 +480,11 @@
       "name": "role",
       "schema": "public",
       "values": ["customer", "artist", "musician"]
+    },
+    "public.address_type": {
+      "name": "address_type",
+      "schema": "public",
+      "values": ["shipping", "billing"]
     }
   },
   "schemas": {},

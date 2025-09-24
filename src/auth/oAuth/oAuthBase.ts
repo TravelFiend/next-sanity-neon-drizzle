@@ -1,5 +1,4 @@
 /* eslint-disable drizzle/enforce-delete-with-where */
-import { OAuthProvider } from '@/_drizzle/schemas';
 import { randomHexString, sha256Base64Url } from '@/lib/utils/cryptoFunctions';
 import { cookies } from 'next/headers';
 import { z } from 'zod/v4';
@@ -8,6 +7,7 @@ import createGoogleOAuthClient from './google';
 import createGithubOAuthClient from './github';
 import createFacebookOAuthClient from './facebook';
 import getSessionCookieOptions from './sessionCookieOptions';
+import type { OAuthProvider } from '@/_drizzle/schemas/usersDrizzle';
 
 const STATE_COOKIE_KEY = 'oAuthState';
 const CODE_VERIFIER_COOKIE_KEY = 'oAuthCodeVerifier';

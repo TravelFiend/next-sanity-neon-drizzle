@@ -3,7 +3,7 @@
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
-import { type InsertUser, OAuthProvider, users } from '@/_drizzle/schemas';
+import { users } from '@/_drizzle/schemas';
 import {
   type UserLogin,
   type UserSignup,
@@ -15,6 +15,10 @@ import { removeSessionUser } from '@/auth/session.edge';
 import { createUserSession } from '@/auth/session.server';
 import { redirect } from 'next/navigation';
 import { getOAuthClient } from '@/auth/oAuth/oAuthBase';
+import type {
+  InsertUser,
+  OAuthProvider
+} from '@/_drizzle/schemas/usersDrizzle';
 
 type ActionState<T> =
   | {
