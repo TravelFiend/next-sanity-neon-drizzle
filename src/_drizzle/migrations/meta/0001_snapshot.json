@@ -1,6 +1,6 @@
 {
-  "id": "20936661-44e4-4a0c-99bc-ddb121bcd17c",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "c11ac234-2708-4ea6-b5fc-118244d04db8",
+  "prevId": "20936661-44e4-4a0c-99bc-ddb121bcd17c",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -55,8 +55,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "user_oauth_accounts_provider_account_id_provider_pk": {
-          "name": "user_oauth_accounts_provider_account_id_provider_pk",
+        "user_oauth_accounts_pk": {
+          "name": "user_oauth_accounts_pk",
           "columns": ["provider_account_id", "provider"]
         }
       },
@@ -322,8 +322,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "cities_to_zip_codes_city_id_zip_code_id_pk": {
-          "name": "cities_to_zip_codes_city_id_zip_code_id_pk",
+        "cities_to_zip_codes_pk": {
+          "name": "cities_to_zip_codes_pk",
           "columns": ["city_id", "zip_code_id"]
         }
       },
@@ -428,8 +428,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "users_to_addresses_user_id_address_id_address_type_pk": {
-          "name": "users_to_addresses_user_id_address_id_address_type_pk",
+        "users_to_addresses_pk": {
+          "name": "users_to_addresses_pk",
           "columns": ["user_id", "address_id", "address_type"]
         }
       },

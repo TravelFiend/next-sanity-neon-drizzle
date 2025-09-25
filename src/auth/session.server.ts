@@ -7,7 +7,7 @@ import { sessionSchema, UserSession } from '@/_zodSchemas/authZod';
 import { db } from '@/_drizzle/db';
 import { eq } from 'drizzle-orm';
 import { getSessionUser } from './session.edge';
-import { usersTable } from '@/_drizzle/schemas';
+import { users } from '@/_drizzle/schemas';
 import { redirect } from 'next/navigation';
 import { cache } from 'react';
 import { NextResponse } from 'next/server';
@@ -49,7 +49,7 @@ export const createUserSessionAndRedirect = async (
 };
 
 const getUserFromDb = (id: string) => {
-  return db.query.usersTable.findFirst({
+  return db.query.users.findFirst({
     columns: {
       id: true,
       role: true,
@@ -57,7 +57,7 @@ const getUserFromDb = (id: string) => {
       firstName: true,
       lastName: true
     },
-    where: eq(usersTable.id, id)
+    where: eq(users.id, id)
   });
 };
 

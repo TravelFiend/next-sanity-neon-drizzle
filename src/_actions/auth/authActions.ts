@@ -3,7 +3,7 @@
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
-import { type InsertUser, OAuthProvider, usersTable } from '@/_drizzle/schemas';
+import { users } from '@/_drizzle/schemas';
 import {
   type UserLogin,
   type UserSignup,
@@ -15,6 +15,10 @@ import { removeSessionUser } from '@/auth/session.edge';
 import { createUserSession } from '@/auth/session.server';
 import { redirect } from 'next/navigation';
 import { getOAuthClient } from '@/auth/oAuth/oAuthBase';
+import type {
+  InsertUser,
+  OAuthProvider
+} from '@/_drizzle/schemas/usersDrizzle';
 
 type ActionState<T> =
   | {
@@ -37,8 +41,8 @@ const signup = async (
     email: formData.get('email'),
     password: formData.get('password')
   };
-  const parsed = zodValidate(raw, signupZodSchema);
 
+  const parsed = zodValidate(raw, signupZodSchema);
   if (!parsed.success) return parsed;
 
   const { email, password }: UserSignup = parsed.data;
@@ -50,9 +54,9 @@ const signup = async (
   };
 
   try {
-    const [user] = await db.insert(usersTable).values(newUser).returning({
-      id: usersTable.id,
-      role: usersTable.role
+    const [user] = await db.insert(users).values(newUser).returning({
+      id: users.id,
+      role: users.role
     });
 
     await createUserSession(user);
@@ -67,7 +71,7 @@ const signup = async (
       console.error('Insert failed:', err);
 
       const cause = err.cause as { constraint?: string };
-      if (cause.constraint === 'users_email_unique') {
+      if (cause?.constraint === 'users_email_unique') {
         return {
           success: false,
           errors: {
@@ -91,10 +95,11 @@ const login = async (
 
   const parsed = zodValidate(raw, loginZodSchema);
   if (!parsed.success) return parsed;
+
   const { email, password }: UserLogin = parsed.data;
 
-  const existingUser = await db.query.usersTable.findFirst({
-    where: eq(usersTable.email, email),
+  const existingUser = await db.query.users.findFirst({
+    where: eq(users.email, email),
     columns: {
       id: true,
       email: true,
@@ -107,7 +112,7 @@ const login = async (
     return {
       success: false,
       errors: {
-        login: ['blah blah blah']
+        login: ['Invalid email or password']
       }
     };
   }
@@ -164,12 +169,10 @@ const authAction = async (
   const mode = formData.get('mode') as AuthMode;
 
   switch (mode) {
-    case 'signup': {
+    case 'signup':
       return await signup(prevState, formData);
-    }
-    case 'login': {
+    case 'login':
       return await login(prevState, formData);
-    }
     default:
       return {
         success: false,

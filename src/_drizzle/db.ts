@@ -1,4 +1,3 @@
-// src/_drizzle/db.ts
 import { config } from 'dotenv';
 import { Pool as PgPool } from 'pg';
 import { neonConfig, Pool as NeonPool } from '@neondatabase/serverless';

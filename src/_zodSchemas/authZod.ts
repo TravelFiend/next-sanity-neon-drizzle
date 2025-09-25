@@ -1,18 +1,17 @@
-import {
-  addressTypeEnum,
-  oAuthProvidersEnum,
-  rolesEnum,
-  userAddressesTable,
-  usersTable
-} from '@/_drizzle/schemas';
+import { addresses, users } from '@/_drizzle/schemas';
+import { addressTypeEnum } from '@/_drizzle/schemas/addressesDrizzle';
+import { oAuthProvidersEnum, rolesEnum } from '@/_drizzle/schemas/usersDrizzle';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod/v4';
 
-// ZOD USER
+// --------------------
+// USER
+// --------------------
+
 const rolesZodEnum = z.enum(rolesEnum.enumValues);
 const oAuthProvidersZodEnum = z.enum(oAuthProvidersEnum.enumValues);
 
-const userInsertSchema = createInsertSchema(usersTable, {
+const userInsertSchema = createInsertSchema(users, {
   email: schema =>
     schema.max(255).pipe(z.email({ error: 'Please provide a valid email' })),
   password: schema =>
@@ -40,34 +39,49 @@ const loginZodSchema = authBaseSchema.extend({
   password: z.string().min(1, { error: 'Please enter a password' })
 });
 
-const userSelectSchema = createSelectSchema(usersTable);
+const userSelectSchema = createSelectSchema(users);
 
 type UserSignup = z.infer<typeof signupZodSchema>;
 type UserLogin = z.infer<typeof loginZodSchema>;
 // TODO: make a new type that only grabs necessary data from user
 type UserSelect = z.infer<typeof userSelectSchema>;
 
-// ZOD USER ADDRESS
+// --------------------
+// USER ADDRESS
+// --------------------
+
 const addressTypeZodEnum = z.enum(addressTypeEnum.enumValues);
 
-const userAddressInsertSchema = createInsertSchema(userAddressesTable, {
-  addressType: addressTypeZodEnum,
+// 1. DB-shaped schema (matches normalized `addresses` table)
+const userAddressInsertSchema = createInsertSchema(addresses, {
   address1: schema => schema.min(1, 'Address is required'),
-  city: schema => schema.min(1, 'City is required'),
-  state: schema =>
-    schema.length(2, { error: 'State must be exactly 2 characters' }),
-  zipCode: schema =>
-    schema.regex(/^\d{5}(-\d{4})?$/, {
-      error: 'Zip code must be in XXXXX or XXXXX-XXXX format'
-    })
+  address2: schema => schema.optional(),
+  zipCodeId: schema => schema.int().positive('Must select a valid zip code') // foreign key to zip_codes
 });
 
-const userAddressSelectSchema = createSelectSchema(userAddressesTable);
+const userAddressSelectSchema = createSelectSchema(addresses);
 
 type UserAddressInsert = z.infer<typeof userAddressInsertSchema>;
 type UserAddressSelect = z.infer<typeof userAddressSelectSchema>;
 
+// 2. Form schema (for customer-facing forms: city, state, zipCode strings)
+const userAddressFormSchema = z.object({
+  addressType: addressTypeZodEnum,
+  address1: z.string().min(1, 'Address is required'),
+  address2: z.string().optional(),
+  city: z.string().min(1, 'City is required'),
+  state: z.string().length(2, 'State must be exactly 2 characters'),
+  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, {
+    error: 'Zip code must be in XXXXX or XXXXX-XXXX format'
+  })
+});
+
+type UserAddressForm = z.infer<typeof userAddressFormSchema>;
+
+// --------------------
 // SESSION
+// --------------------
+
 const sessionSchema = z.object({
   id: z.string(),
   role: rolesZodEnum
@@ -76,6 +90,7 @@ const sessionSchema = z.object({
 type UserSession = z.infer<typeof sessionSchema>;
 
 export {
+  // user
   signupZodSchema,
   loginZodSchema,
   oAuthProvidersZodEnum,
@@ -83,10 +98,16 @@ export {
   type UserSignup,
   type UserLogin,
   type UserSelect,
-  userAddressInsertSchema,
+
+  // user address
+  userAddressInsertSchema, // DB-shaped
   userAddressSelectSchema,
   type UserAddressInsert,
   type UserAddressSelect,
+  userAddressFormSchema, // Frontend form
+  type UserAddressForm,
+
+  // session
   type UserSession,
   sessionSchema
 };
