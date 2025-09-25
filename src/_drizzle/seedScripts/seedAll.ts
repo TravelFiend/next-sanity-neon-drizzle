@@ -41,4 +41,4 @@ const seedAll = async () => {
   }
 };
 
-if (process.env.NODE_ENV === 'development') seedAll();
+if (process.env.DATABASE_URL?.includes('aws.neon.tech')) seedAll();
