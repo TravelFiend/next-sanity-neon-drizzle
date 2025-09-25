@@ -88,10 +88,6 @@ const sessionSchema = z.object({
 
 type UserSession = z.infer<typeof sessionSchema>;
 
-// --------------------
-// EXPORTS
-// --------------------
-
 export {
   // user
   signupZodSchema,

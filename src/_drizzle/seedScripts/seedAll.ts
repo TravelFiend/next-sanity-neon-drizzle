@@ -41,4 +41,4 @@ const seedAll = async () => {
   }
 };
 
-seedAll();
+if (process.env.NODE_ENV === 'development') seedAll();
