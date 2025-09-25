@@ -13,18 +13,18 @@ const oAuthProvidersZodEnum = z.enum(oAuthProvidersEnum.enumValues);
 
 const userInsertSchema = createInsertSchema(users, {
   email: schema =>
-    schema.max(255).pipe(z.email({ message: 'Please provide a valid email' })),
+    schema.max(255).pipe(z.email({ error: 'Please provide a valid email' })),
   password: schema =>
     schema
-      .min(8, { message: 'Must be at least 8 characters long' })
-      .regex(/[a-z]/, { message: 'Must contain at least one lowercase letter' })
-      .regex(/[A-Z]/, { message: 'Must contain at least one uppercase letter' })
-      .regex(/[0-9]/, { message: 'Must contain at least one number' })
+      .min(8, { error: 'Must be at least 8 characters long' })
+      .regex(/[a-z]/, { error: 'Must contain at least one lowercase letter' })
+      .regex(/[A-Z]/, { error: 'Must contain at least one uppercase letter' })
+      .regex(/[0-9]/, { error: 'Must contain at least one number' })
       .regex(/[^a-zA-Z0-9\s]/, {
-        message: 'Must contain at least one special character'
+        error: 'Must contain at least one special character'
       }),
-  firstName: schema => schema.min(1, { message: 'First name is required' }),
-  lastName: schema => schema.min(1, { message: 'Last name is required' }),
+  firstName: schema => schema.min(1, { error: 'First name is required' }),
+  lastName: schema => schema.min(1, { error: 'Last name is required' }),
   role: rolesZodEnum
 });
 
@@ -36,13 +36,14 @@ const authBaseSchema = userInsertSchema.pick({
 const signupZodSchema = authBaseSchema;
 
 const loginZodSchema = authBaseSchema.extend({
-  password: z.string().min(1, { message: 'Please enter a password' })
+  password: z.string().min(1, { error: 'Please enter a password' })
 });
 
 const userSelectSchema = createSelectSchema(users);
 
 type UserSignup = z.infer<typeof signupZodSchema>;
 type UserLogin = z.infer<typeof loginZodSchema>;
+// TODO: make a new type that only grabs necessary data from user
 type UserSelect = z.infer<typeof userSelectSchema>;
 
 // --------------------
@@ -71,7 +72,7 @@ const userAddressFormSchema = z.object({
   city: z.string().min(1, 'City is required'),
   state: z.string().length(2, 'State must be exactly 2 characters'),
   zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, {
-    message: 'Zip code must be in XXXXX or XXXXX-XXXX format'
+    error: 'Zip code must be in XXXXX or XXXXX-XXXX format'
   })
 });
 

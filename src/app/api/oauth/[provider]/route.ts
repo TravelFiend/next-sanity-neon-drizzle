@@ -1,6 +1,9 @@
 import { db } from '@/_drizzle/db';
-import { userOAuthAccounts, users } from '@/_drizzle/schemas';
-import type { OAuthProvider } from '@/_drizzle/schemas/usersDrizzle';
+import {
+  type OAuthProvider,
+  userOAuthAccounts,
+  users
+} from '@/_drizzle/schemas';
 import { oAuthProvidersZodEnum } from '@/_zodSchemas/authZod';
 import {
   getOAuthClient,
