@@ -57,7 +57,12 @@ export const userOAuthAccounts = pgTable(
       .defaultNow()
       .$onUpdate(() => new Date())
   },
-  table => [primaryKey({ columns: [table.providerAccountId, table.provider] })]
+  table => [
+    primaryKey({
+      name: 'user_oauth_accounts_pk',
+      columns: [table.providerAccountId, table.provider]
+    })
+  ]
 );
 
 export type InsertUserOAuth = typeof userOAuthAccounts.$inferInsert;

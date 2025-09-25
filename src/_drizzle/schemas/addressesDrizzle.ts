@@ -75,7 +75,12 @@ export const citiesToZipCodes = pgTable(
       .notNull()
       .references(() => zipCodes.id, { onDelete: 'cascade' })
   },
-  t => [primaryKey({ columns: [t.cityId, t.zipCodeId] })]
+  t => [
+    primaryKey({
+      name: 'cities_to_zip_codes_pk',
+      columns: [t.cityId, t.zipCodeId]
+    })
+  ]
 );
 
 export const citiesToZipCodesRelations = relations(
@@ -135,7 +140,12 @@ export const usersToAddresses = pgTable(
     addressType: addressTypeEnum().notNull().default('shipping'),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow()
   },
-  t => [primaryKey({ columns: [t.userId, t.addressId, t.addressType] })]
+  t => [
+    primaryKey({
+      name: 'users_to_addresses_pk',
+      columns: [t.userId, t.addressId, t.addressType]
+    })
+  ]
 );
 
 export type InsertUsersToAddress = typeof usersToAddresses.$inferInsert;
