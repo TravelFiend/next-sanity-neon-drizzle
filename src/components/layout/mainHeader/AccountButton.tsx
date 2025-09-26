@@ -1,16 +1,17 @@
+'use client';
+
 import { redirect } from 'next/navigation';
-import type { User } from '@/auth/session.server';
 import AccountIcon from '@/components/icons/AccountIcon';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 
 type AccountButtonProps = {
   isMobile: boolean;
-  user?: User | null;
+  user?: boolean;
 };
 
 const AccountButton: React.FC<AccountButtonProps> = ({ isMobile, user }) => {
   const handleAccountIconClick = () => {
-    return user ? redirect(`/account/${user.id}`) : redirect('/signup');
+    return user ? redirect('/account') : redirect('/signup');
   };
 
   return (

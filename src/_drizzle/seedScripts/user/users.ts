@@ -5,7 +5,6 @@ import { users } from '../../schemas';
 export const seedUsers = async () => {
   await seed(db, { users }, { seed: 1 }).refine(funcs => ({
     users: {
-      count: 10,
       columns: {
         firstName: funcs.firstName(),
         lastName: funcs.lastName(),

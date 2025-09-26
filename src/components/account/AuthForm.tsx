@@ -3,6 +3,9 @@
 import { type AuthMode, authAction } from '@/_actions/auth/authActions';
 import { redirect, useRouter } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
+import FormLabel from '../common/FormLabel';
+import FormInput from '../common/FormInput';
+import FormSubmitButton from '../common/FormSubmitButton';
 
 type AuthFormProps = {
   mode: AuthMode;
@@ -17,10 +20,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       let timeout;
 
       if (mode === 'signup') {
-        timeout = setTimeout(
-          () => router.push(`/account/${authState.userId}`),
-          2000
-        );
+        timeout = setTimeout(() => router.push('/account'), 2000);
       } else {
         timeout = setTimeout(() => router.push('/'), 2000);
       }
@@ -41,17 +41,14 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       <input type="hidden" name="mode" value={mode} />
 
       {/* Email */}
-      <label htmlFor="email" className="font-sans text-primary-light">
-        <span className="pr-2 text-error">*</span>Email:{' '}
-      </label>
-      <input
+      <FormLabel htmlFor="email" labelText="Email" />
+      <FormInput
         id="email"
+        name="email"
         type="email"
         placeholder="youremail@example.com"
-        className="rounded border p-2 text-primary-light"
-        name="email"
-        required
       />
+
       <ul className="h-5">
         {!authState?.success &&
           authState?.errors?.email?.map((err: string, idx: number) => (
@@ -62,16 +59,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       </ul>
 
       {/* Password */}
-      <label htmlFor="password" className="font-sans text-primary-light">
-        <span className="pr-2 text-error">*</span>Password:{' '}
-      </label>
-      <input
-        id="password"
-        type="password"
-        className="rounded border p-2 text-primary-light"
-        name="password"
-        required
-      />
+      <FormLabel htmlFor="password" labelText="Password" />
+      <FormInput id="password" name="password" type="password" />
+
       <ul className="h-5">
         {!authState?.success &&
           authState?.errors?.password?.map((err: string, idx: number) => (
@@ -102,12 +92,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       </ul>
 
       {/* Submit */}
-      <button
-        type="submit"
-        className="rounded-lg border border-accent-dark p-4 text-primary-light active:bg-secondary-dark active:text-white"
-      >
-        {isPending ? 'Submitting...' : 'Submit'}
-      </button>
+      <FormSubmitButton isPending={isPending} />
 
       {/* Switch link */}
       <button

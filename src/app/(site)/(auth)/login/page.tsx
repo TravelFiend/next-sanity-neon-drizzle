@@ -13,7 +13,7 @@ export default async function LogInPage({
     withFullUser: false,
     redirectIfNotFound: false
   });
-  if (user) redirect(`/account/${user.id}`);
+  if (user) redirect('/account');
 
   const { oauthError } = await searchParams;
 

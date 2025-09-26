@@ -67,7 +67,7 @@ const GET = async (
       );
     }
 
-    const redirectUrl = new URL(`/account/${user.id}`, request.url).toString();
+    const redirectUrl = new URL('/account', request.url).toString();
     return await createUserSessionAndRedirect(user, redirectUrl);
   } catch (err) {
     if (err instanceof InvalidStateError) {

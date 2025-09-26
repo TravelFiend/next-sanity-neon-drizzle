@@ -1,15 +1,15 @@
 import { logout } from '@/_actions/auth/authActions';
+import { getCurrentUser } from '@/auth/session.server';
 
-type AccountPageProps = {
-  params: Promise<{ userId: string }>;
-};
-
-export default async function AccountPage({ params }: AccountPageProps) {
-  const { userId } = await params;
+export default async function AccountPage() {
+  const user = await getCurrentUser({
+    withFullUser: false,
+    redirectIfNotFound: true
+  });
 
   return (
     <>
-      <p>{userId}</p>
+      <p>{user.id}</p>
 
       <form action={logout}>
         <button
