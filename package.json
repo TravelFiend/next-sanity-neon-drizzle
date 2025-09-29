@@ -62,7 +62,7 @@
     "@sanity/eslint-config-studio": "^5.0.2",
     "@sanity/vision": "4.9.0",
     "@storybook/addon-a11y": "9.1.7",
-    "@storybook/addon-docs": "9.1.7",
+    "@storybook/addon-docs": "9.1.8",
     "@storybook/addon-onboarding": "9.1.7",
     "@storybook/nextjs-vite": "9.1.7",
     "@tailwindcss/postcss": "^4.1.12",
