@@ -81,7 +81,7 @@
     "drizzle-kit": "^0.31.4",
     "drizzle-seed": "^0.3.1",
     "eslint": "9.36.0",
-    "eslint-config-next": "15.5.3",
+    "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-node": "^0.3.9",
