@@ -1,5 +1,4 @@
-import FormInput from '../common/FormInput';
-import FormLabel from '../common/FormLabel';
+import FormField from '../common/FormField';
 import FormSubmitButton from '../common/FormSubmitButton';
 
 // type ShippingFormProps = {
@@ -8,12 +7,27 @@ import FormSubmitButton from '../common/FormSubmitButton';
 
 const ShippingForm: React.FC = () => {
   return (
-    <form>
-      <FormLabel htmlFor="firstName" labelText="First Name" />
-      <FormInput id="firstName" name="firstName" placeholder="Johnny" />
+    <form className="flex w-full flex-col px-10">
+      <div className="mb-3 flex w-full justify-between">
+        <FormField
+          forIdName="firstName"
+          labelText="First Name"
+          twoPerRow={true}
+          placeholder="Johnny"
+        />
+        <FormField
+          forIdName="lastName"
+          labelText="Last Name"
+          twoPerRow={true}
+          placeholder="Smitherines"
+        />
+      </div>
 
-      <FormLabel htmlFor="lastName" labelText="Last Name" />
-      <FormInput id="lastName" name="lastName" placeholder="Johnny" />
+      <FormField
+        forIdName="email"
+        labelText="Email"
+        placeholder="youremail@example.com"
+      />
 
       <FormSubmitButton isPending={true} />
     </form>

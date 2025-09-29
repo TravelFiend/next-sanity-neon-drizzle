@@ -3,9 +3,8 @@
 import { type AuthMode, authAction } from '@/_actions/auth/authActions';
 import { redirect, useRouter } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
-import FormLabel from '../common/FormLabel';
-import FormInput from '../common/FormInput';
 import FormSubmitButton from '../common/FormSubmitButton';
+import FormField from '../common/FormField';
 
 type AuthFormProps = {
   mode: AuthMode;
@@ -41,11 +40,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       <input type="hidden" name="mode" value={mode} />
 
       {/* Email */}
-      <FormLabel htmlFor="email" labelText="Email" />
-      <FormInput
-        id="email"
-        name="email"
-        type="email"
+      <FormField
+        forIdName="email"
+        labelText="Email"
+        inputType="email"
+        twoPerRow={false}
         placeholder="youremail@example.com"
       />
 
@@ -59,8 +58,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       </ul>
 
       {/* Password */}
-      <FormLabel htmlFor="password" labelText="Password" />
-      <FormInput id="password" name="password" type="password" />
+      <FormField
+        forIdName="password"
+        labelText="Password"
+        inputType="password"
+        twoPerRow={false}
+        placeholder="youremail@example.com"
+      />
 
       <ul className="h-5">
         {!authState?.success &&

@@ -13,8 +13,8 @@ const CartIcon: React.FC<CartIconProps> = ({ className, fill = '#fff' }) => {
       fill={fill}
       stroke="currentColor"
       strokeWidth="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={className}
     >
       <title>Cart Icon</title>

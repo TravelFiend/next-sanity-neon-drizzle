@@ -19,8 +19,8 @@
     "db:drop": "drizzle-kit drop --config=src/_drizzle/drizzle.config.ts",
     "db:push": "bunx drizzle-kit push --config=src/_drizzle/drizzle.config.ts",
     "db:gen": "bunx drizzle-kit generate --config=src/_drizzle/drizzle.config.ts",
-    "db:migrate": "bunx drizzle-kit migrate --config=src/_drizzle/drizzle.config.ts",
-    "db:seed": "bun run src/_drizzle/seedScripts/seedAll.ts",
+    "db:migrate": "cross-env DB_MIGRATING=true bun run src/_drizzle/migrate.ts",
+    "db:seed": "cross-env DB_SEEDING=true bun run src/_drizzle/seedScripts/seedAll.ts",
     "db:studio": "bunx drizzle-kit studio --config=src/_drizzle/drizzle.config.ts"
   },
   "dependencies": {
