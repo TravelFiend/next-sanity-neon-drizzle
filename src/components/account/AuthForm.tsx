@@ -63,6 +63,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         labelText="Password"
         inputType="password"
         placeholder="youremail@example.com"
+        defaultValue={
+          mode === 'signup'
+            ? (authState?.data?.password ?? undefined)
+            : undefined
+        }
       />
 
       <ul className="h-5">
