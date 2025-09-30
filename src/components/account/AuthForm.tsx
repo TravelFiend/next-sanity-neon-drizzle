@@ -45,6 +45,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         labelText="Email"
         inputType="email"
         placeholder="youremail@example.com"
+        defaultValue={authState?.data?.email}
       />
 
       <ul className="h-5">

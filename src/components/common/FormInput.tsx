@@ -5,6 +5,7 @@ type FormInputProps = {
   name: string;
   type?: string;
   placeholder?: string;
+  defaultValue?: string;
   className?: string;
   required?: boolean;
 };
@@ -14,6 +15,7 @@ const FormInput: React.FC<FormInputProps> = ({
   name,
   type = 'text',
   placeholder,
+  defaultValue,
   className,
   required = true
 }) => {
@@ -23,11 +25,12 @@ const FormInput: React.FC<FormInputProps> = ({
       name={name}
       type={type}
       placeholder={placeholder}
-      required={required}
+      defaultValue={defaultValue}
       className={conditionalClasses(
         'rounded border p-2 text-primary-light',
         className
       )}
+      required={required}
     />
   );
 };

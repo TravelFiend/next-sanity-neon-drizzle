@@ -6,6 +6,7 @@ type FormFieldProps = {
   labelText: string;
   inputType?: string;
   placeholder?: string;
+  defaultValue?: string;
   inputClassName?: string;
   required?: boolean;
 };
@@ -15,6 +16,7 @@ const FormField: React.FC<FormFieldProps> = ({
   labelText,
   inputType,
   placeholder,
+  defaultValue,
   inputClassName,
   required = true
 }) => {
@@ -31,6 +33,7 @@ const FormField: React.FC<FormFieldProps> = ({
         id={forIdName}
         name={forIdName}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         className={inputClassName}
         required={required}
       />

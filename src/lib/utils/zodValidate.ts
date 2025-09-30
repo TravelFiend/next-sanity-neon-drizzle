@@ -10,6 +10,7 @@ type ErrorMap<T extends ZodType> = Partial<Record<keyof z.infer<T>, string[]>>;
 type ValidationErrorResult<T extends ZodType> = {
   success: false;
   errors: ErrorMap<T>;
+  data: Partial<z.infer<T>>;
 };
 
 type ValidationSuccessResult<T extends ZodType> = {
@@ -37,7 +38,8 @@ const zodValidate = <T extends ZodType>(
 
     return {
       success: false,
-      errors: errs
+      errors: errs,
+      data: rawData as Partial<z.infer<T>>
     };
   }
 

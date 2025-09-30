@@ -24,6 +24,7 @@ type ActionState<T> =
   | {
       success: false;
       errors: Record<string, string[]>;
+      data?: Partial<T>;
       message?: string;
     }
   | {
@@ -43,6 +44,7 @@ const signup = async (
   };
 
   const parsed = zodValidate(raw, signupZodSchema);
+
   if (!parsed.success) return parsed;
 
   const { email, password }: UserSignup = parsed.data;
