@@ -1,33 +1,40 @@
 import FormInput from './FormInput';
 import FormLabel from './FormLabel';
-import conditionalClasses from '@/lib/utils/conditionalClasses';
 
 type FormFieldProps = {
   forIdName: string;
   labelText: string;
   inputType?: string;
-  twoPerRow?: boolean;
   placeholder?: string;
+  inputClassName?: string;
+  required?: boolean;
 };
 
 const FormField: React.FC<FormFieldProps> = ({
   forIdName,
   labelText,
   inputType,
-  twoPerRow = false,
-  placeholder
+  placeholder,
+  inputClassName,
+  required = true
 }) => {
   return (
-    <div className={conditionalClasses('mb-3 flex', twoPerRow ? 'w-1/2' : '')}>
-      <FormLabel htmlFor={forIdName} labelText={labelText} className="mr-3" />
+    <>
+      <FormLabel
+        htmlFor={forIdName}
+        labelText={labelText}
+        className="mb-2"
+        required={required}
+      />
       <FormInput
         type={inputType}
         id={forIdName}
         name={forIdName}
         placeholder={placeholder}
-        className=""
+        className={inputClassName}
+        required={required}
       />
-    </div>
+    </>
   );
 };
 

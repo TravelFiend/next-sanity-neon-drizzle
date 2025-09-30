@@ -17,7 +17,7 @@ const FormLabel: React.FC<FormLabelProps> = ({
     <label
       htmlFor={htmlFor}
       className={conditionalClasses(
-        'flex items-center justify-center font-sans text-primary-light capitalize',
+        'flex items-center font-sans text-primary-light capitalize',
         className
       )}
     >

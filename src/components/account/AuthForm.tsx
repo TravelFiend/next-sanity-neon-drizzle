@@ -44,7 +44,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         forIdName="email"
         labelText="Email"
         inputType="email"
-        twoPerRow={false}
         placeholder="youremail@example.com"
       />
 
@@ -62,7 +61,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
         forIdName="password"
         labelText="Password"
         inputType="password"
-        twoPerRow={false}
         placeholder="youremail@example.com"
       />
 
