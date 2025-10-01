@@ -24,6 +24,7 @@ type ActionState<T> =
   | {
       success: false;
       errors: Record<string, string[]>;
+      data?: Partial<T>;
       message?: string;
     }
   | {
@@ -43,6 +44,7 @@ const signup = async (
   };
 
   const parsed = zodValidate(raw, signupZodSchema);
+
   if (!parsed.success) return parsed;
 
   const { email, password }: UserSignup = parsed.data;
@@ -89,11 +91,12 @@ const login = async (
   formData: FormData
 ): Promise<ActionState<UserLogin>> => {
   const raw = {
-    email: formData.get('email'),
-    password: formData.get('password')
+    email: formData.get('email')?.toString(),
+    password: formData.get('password')?.toString()
   };
 
   const parsed = zodValidate(raw, loginZodSchema);
+
   if (!parsed.success) return parsed;
 
   const { email, password }: UserLogin = parsed.data;
@@ -113,7 +116,8 @@ const login = async (
       success: false,
       errors: {
         login: ['Invalid email or password']
-      }
+      },
+      data: raw
     };
   }
 
@@ -137,7 +141,8 @@ const login = async (
         success: false,
         errors: {
           login: [err.message]
-        }
+        },
+        data: raw
       };
     }
 

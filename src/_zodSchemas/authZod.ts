@@ -1,5 +1,4 @@
 import { addresses, users } from '@/_drizzle/schemas';
-import { addressTypeEnum } from '@/_drizzle/schemas/addressesDrizzle';
 import { oAuthProvidersEnum, rolesEnum } from '@/_drizzle/schemas/usersDrizzle';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod/v4';
@@ -50,8 +49,6 @@ type UserSelect = z.infer<typeof userSelectSchema>;
 // USER ADDRESS
 // --------------------
 
-const addressTypeZodEnum = z.enum(addressTypeEnum.enumValues);
-
 // 1. DB-shaped schema (matches normalized `addresses` table)
 const userAddressInsertSchema = createInsertSchema(addresses, {
   address1: schema => schema.min(1, 'Address is required'),
@@ -66,7 +63,6 @@ type UserAddressSelect = z.infer<typeof userAddressSelectSchema>;
 
 // 2. Form schema (for customer-facing forms: city, state, zipCode strings)
 const userAddressFormSchema = z.object({
-  addressType: addressTypeZodEnum,
   address1: z.string().min(1, 'Address is required'),
   address2: z.string().optional(),
   city: z.string().min(1, 'City is required'),

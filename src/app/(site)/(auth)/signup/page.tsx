@@ -9,7 +9,7 @@ export default async function SignUpPage() {
     withFullUser: false,
     redirectIfNotFound: false
   });
-  if (user) redirect(`/account/${user.id}`);
+  if (user) redirect('/account');
 
   return (
     <ContentWrapper>

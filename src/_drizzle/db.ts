@@ -18,16 +18,24 @@ if (!process.env.DATABASE_URL) {
 
 let db: NodePgDatabase<typeof schema>;
 
+export const neonPool = new NeonPool({
+  max: process.env.DB_MIGRATING || process.env.DB_SEEDING ? 1 : undefined,
+  connectionString: process.env.DATABASE_URL!
+});
+
+export const pgPool = new PgPool({
+  max: process.env.DB_MIGRATING || process.env.DB_SEEDING ? 1 : undefined,
+  connectionString: process.env.DATABASE_URL!
+});
+
 if (process.env.NODE_ENV === 'production') {
-  const pool = new NeonPool({ connectionString: process.env.DATABASE_URL! });
   db = drizzleNeon<typeof schema>({
-    client: pool,
+    client: neonPool,
     schema,
     casing: 'snake_case'
   });
 } else {
-  const pool = new PgPool({ connectionString: process.env.DATABASE_URL! });
-  db = drizzlePg<typeof schema>(pool, { schema, casing: 'snake_case' });
+  db = drizzlePg<typeof schema>(pgPool, { schema, casing: 'snake_case' });
 }
 
 export { db };

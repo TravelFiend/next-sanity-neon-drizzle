@@ -1,13 +1,12 @@
 CREATE TYPE "public"."oauth_providers" AS ENUM('google', 'facebook', 'discord', 'github');--> statement-breakpoint
 CREATE TYPE "public"."role" AS ENUM('customer', 'artist', 'musician');--> statement-breakpoint
-CREATE TYPE "public"."address_type" AS ENUM('shipping', 'billing');--> statement-breakpoint
 CREATE TABLE "user_oauth_accounts" (
 	"user_id" uuid NOT NULL,
 	"provider" "oauth_providers" NOT NULL,
 	"provider_account_id" text NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "user_oauth_accounts_provider_account_id_provider_pk" PRIMARY KEY("provider_account_id","provider")
+	CONSTRAINT "user_oauth_accounts_pk" PRIMARY KEY("provider_account_id","provider")
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
@@ -43,7 +42,7 @@ CREATE TABLE "cities" (
 CREATE TABLE "cities_to_zip_codes" (
 	"city_id" integer NOT NULL,
 	"zip_code_id" integer NOT NULL,
-	CONSTRAINT "cities_to_zip_codes_city_id_zip_code_id_pk" PRIMARY KEY("city_id","zip_code_id")
+	CONSTRAINT "cities_to_zip_codes_pk" PRIMARY KEY("city_id","zip_code_id")
 );
 --> statement-breakpoint
 CREATE TABLE "states" (
@@ -57,9 +56,8 @@ CREATE TABLE "states" (
 CREATE TABLE "users_to_addresses" (
 	"user_id" uuid NOT NULL,
 	"address_id" integer NOT NULL,
-	"address_type" "address_type" DEFAULT 'shipping' NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "users_to_addresses_user_id_address_id_address_type_pk" PRIMARY KEY("user_id","address_id","address_type")
+	CONSTRAINT "users_to_addresses_pk" PRIMARY KEY("user_id","address_id")
 );
 --> statement-breakpoint
 CREATE TABLE "zip_codes" (

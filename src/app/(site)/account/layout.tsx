@@ -2,28 +2,24 @@ import Link from 'next/link';
 import ContentWrapper from '@/components/common/ContentWrapper';
 
 type AccountPageLayoutProps = {
-  params: Promise<{ userId: string }>;
   children: React.ReactNode;
 };
 
 export default async function AccountPageLayout({
-  params,
   children
 }: AccountPageLayoutProps) {
-  const { userId } = await params;
-
   return (
     <ContentWrapper>
       <section className="my-16 flex h-5/6 w-full">
         <ul className="w-1/4 p-10">
           <li>
-            <Link href={`/account/${userId}`}>Profile</Link>
+            <Link href={'/account'}>Profile</Link>
           </li>
           <li>
-            <Link href={`/account/${userId}/orders`}>Orders</Link>
+            <Link href={'/account/orders'}>Orders</Link>
           </li>
           <li>
-            <Link href={`/account/${userId}/settings`}>Account Settings</Link>
+            <Link href={'/account/settings'}>Account Settings</Link>
           </li>
         </ul>
 

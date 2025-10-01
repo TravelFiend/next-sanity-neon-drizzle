@@ -7,7 +7,7 @@
 // import Logout from './Logout';
 
 // type AuthContainerProps = {
-//   onClose: () => void;
+//   onClose: React.Dispatch<React.SetStateAction<void>>
 // };
 
 // const AuthContainer: React.FC<AuthContainerProps> = ({ onClose }) => {

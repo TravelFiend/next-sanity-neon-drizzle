@@ -1,5 +1,5 @@
 {
-  "id": "20936661-44e4-4a0c-99bc-ddb121bcd17c",
+  "id": "98d6979f-0467-4b41-aff9-e7537718413e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -55,8 +55,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "user_oauth_accounts_provider_account_id_provider_pk": {
-          "name": "user_oauth_accounts_provider_account_id_provider_pk",
+        "user_oauth_accounts_pk": {
+          "name": "user_oauth_accounts_pk",
           "columns": ["provider_account_id", "provider"]
         }
       },
@@ -322,8 +322,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "cities_to_zip_codes_city_id_zip_code_id_pk": {
-          "name": "cities_to_zip_codes_city_id_zip_code_id_pk",
+        "cities_to_zip_codes_pk": {
+          "name": "cities_to_zip_codes_pk",
           "columns": ["city_id", "zip_code_id"]
         }
       },
@@ -390,14 +390,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "address_type": {
-          "name": "address_type",
-          "type": "address_type",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'shipping'"
-        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
@@ -428,9 +420,9 @@
         }
       },
       "compositePrimaryKeys": {
-        "users_to_addresses_user_id_address_id_address_type_pk": {
-          "name": "users_to_addresses_user_id_address_id_address_type_pk",
-          "columns": ["user_id", "address_id", "address_type"]
+        "users_to_addresses_pk": {
+          "name": "users_to_addresses_pk",
+          "columns": ["user_id", "address_id"]
         }
       },
       "uniqueConstraints": {},
@@ -480,11 +472,6 @@
       "name": "role",
       "schema": "public",
       "values": ["customer", "artist", "musician"]
-    },
-    "public.address_type": {
-      "name": "address_type",
-      "schema": "public",
-      "values": ["shipping", "billing"]
     }
   },
   "schemas": {},

@@ -4,7 +4,6 @@ import {
   serial,
   varchar,
   timestamp,
-  pgEnum,
   uuid,
   primaryKey,
   integer,
@@ -126,8 +125,6 @@ export type InsertAddress = typeof addresses.$inferInsert;
 export type SelectAddresses = typeof addresses.$inferSelect;
 
 // DRIZZLE USERS_TO_ADDRESSES
-export const addressTypeEnum = pgEnum('address_type', ['shipping', 'billing']);
-
 export const usersToAddresses = pgTable(
   'users_to_addresses',
   {
@@ -137,13 +134,12 @@ export const usersToAddresses = pgTable(
     addressId: integer()
       .notNull()
       .references(() => addresses.id, { onDelete: 'cascade' }),
-    addressType: addressTypeEnum().notNull().default('shipping'),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow()
   },
   t => [
     primaryKey({
       name: 'users_to_addresses_pk',
-      columns: [t.userId, t.addressId, t.addressType]
+      columns: [t.userId, t.addressId]
     })
   ]
 );
