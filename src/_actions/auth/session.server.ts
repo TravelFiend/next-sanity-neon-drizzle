@@ -3,7 +3,7 @@
 //  Functions in this file will cause edge runtime errors if used in middleware/api routes
 import { cookies } from 'next/headers';
 import { redis } from '@/redis/redis';
-import { sessionSchema, UserSession } from '@/_zodSchemas/authZod';
+import { sessionSchema, UserSession } from '@/_zodSchemas/userZod';
 import { db } from '@/_drizzle/db';
 import { eq } from 'drizzle-orm';
 import { getSessionUser } from './session.edge';
@@ -11,7 +11,7 @@ import { users } from '@/_drizzle/schemas';
 import { redirect } from 'next/navigation';
 import { cache } from 'react';
 import { NextResponse } from 'next/server';
-import getSessionCookieOptions from './oAuth/sessionCookieOptions';
+import getSessionCookieOptions from '../../auth/oAuth/sessionCookieOptions';
 
 const COOKIE_SESSION_KEY = 'session-id';
 const SESSION_EXPIRATION = 60 * 60 * 24 * 7;

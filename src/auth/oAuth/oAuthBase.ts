@@ -8,6 +8,7 @@ import createGithubOAuthClient from './github';
 import createFacebookOAuthClient from './facebook';
 import getSessionCookieOptions from './sessionCookieOptions';
 import type { OAuthProvider } from '@/_drizzle/schemas';
+import createUSPSOAuthClient from './usps';
 
 const STATE_COOKIE_KEY = 'oAuthState';
 const CODE_VERIFIER_COOKIE_KEY = 'oAuthCodeVerifier';
@@ -42,14 +43,14 @@ const clearOAuthCookies = async () => {
 };
 
 class OAuthClient<T extends object> {
-  private readonly provider: OAuthProvider;
+  private readonly provider: OAuthProvider | 'usps';
   private readonly clientId: string;
   private readonly clientSecret: string;
   private readonly scopes: string[];
   private readonly urls: {
     auth: string;
     token: string;
-    user: string;
+    user?: string;
   };
   private readonly userInfo: {
     schema: z.ZodSchema<T>;
@@ -63,7 +64,11 @@ class OAuthClient<T extends object> {
   };
   private readonly tokenSchema = z.object({
     access_token: z.string(),
-    token_type: z.string()
+    token_type: z.string(),
+    expires_in: z.number().optional(),
+    refresh_token: z.string().optional(),
+    scope: z.string().optional(),
+    id_token: z.string().optional()
   });
 
   constructor({
@@ -74,14 +79,14 @@ class OAuthClient<T extends object> {
     urls,
     userInfo
   }: {
-    provider: OAuthProvider;
+    provider: OAuthProvider | 'usps';
     clientId: string;
     clientSecret: string;
     scopes: string[];
     urls: {
       auth: string;
       token: string;
-      user: string;
+      user?: string;
     };
     userInfo: {
       schema: z.ZodSchema<T>;
@@ -133,12 +138,12 @@ class OAuthClient<T extends object> {
       let res: Response;
       if (this.provider === 'facebook') {
         // Facebook's `/me` route requires access_token as a query param
-        const url = new URL(this.urls.user);
+        const url = new URL(this.urls.user!);
         url.searchParams.set('access_token', accessToken);
 
         res = await fetch(url.toString());
       } else {
-        res = await fetch(this.urls.user, {
+        res = await fetch(this.urls.user!, {
           headers: {
             Authorization: `${tokenType} ${accessToken}`
           }
@@ -200,7 +205,7 @@ class OAuthClient<T extends object> {
   }
 }
 
-const getOAuthClient = (provider: OAuthProvider) => {
+const getOAuthClient = (provider: OAuthProvider | 'usps') => {
   switch (provider) {
     case 'discord':
       return createDiscordOAuthClient();
@@ -210,6 +215,8 @@ const getOAuthClient = (provider: OAuthProvider) => {
       return createFacebookOAuthClient();
     case 'google':
       return createGoogleOAuthClient();
+    case 'usps':
+      return createUSPSOAuthClient();
     default:
       throw new Error(`Invalid provider: ${provider satisfies never}`);
   }

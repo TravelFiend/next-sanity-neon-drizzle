@@ -1,5 +1,5 @@
 import { logout } from '@/_actions/auth/authActions';
-import { getCurrentUser } from '@/auth/session.server';
+import { getCurrentUser } from '@/_actions/auth/session.server';
 
 export default async function AccountPage() {
   const user = await getCurrentUser({

@@ -10,7 +10,7 @@ import type {
   NavTabsRes,
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
-import { type User } from '@/auth/session.server';
+import { type User } from '@/_actions/auth/session.server';
 import AccountButton from './AccountButton';
 import CartButton from './CartButton';
 

@@ -3,8 +3,8 @@
 import { type AuthMode, authAction } from '@/_actions/auth/authActions';
 import { redirect, useRouter } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
-import FormSubmitButton from '../common/FormSubmitButton';
-import FormField from '../common/FormField';
+import SubmitButton from '../form/SubmitButton';
+import InputWLabel from '../form/InputWLabel';
 
 type AuthFormProps = {
   mode: AuthMode;
@@ -40,7 +40,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       <input type="hidden" name="mode" value={mode} />
 
       {/* Email */}
-      <FormField
+      <InputWLabel
         forIdName="email"
         labelText="Email"
         inputType="email"
@@ -58,7 +58,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       </ul>
 
       {/* Password */}
-      <FormField
+      <InputWLabel
         forIdName="password"
         labelText="Password"
         inputType="password"
@@ -100,7 +100,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
       </ul>
 
       {/* Submit */}
-      <FormSubmitButton isPending={isPending} />
+      <SubmitButton isPending={isPending} />
 
       {/* Switch link */}
       <button

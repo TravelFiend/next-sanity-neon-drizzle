@@ -1,6 +1,6 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 
-type FormInputProps = {
+type InputProps = {
   id: string;
   name: string;
   type?: string;
@@ -10,7 +10,7 @@ type FormInputProps = {
   required?: boolean;
 };
 
-const FormInput: React.FC<FormInputProps> = ({
+const Input: React.FC<InputProps> = ({
   id,
   name,
   type = 'text',
@@ -27,7 +27,7 @@ const FormInput: React.FC<FormInputProps> = ({
       placeholder={placeholder}
       defaultValue={defaultValue}
       className={conditionalClasses(
-        'rounded border p-2 text-primary-light',
+        'rounded border bg-secondary p-2 text-primary-light placeholder:text-secondary-dark focus:outline-2 focus:outline-tertiary',
         className
       )}
       required={required}
@@ -35,4 +35,4 @@ const FormInput: React.FC<FormInputProps> = ({
   );
 };
 
-export default FormInput;
+export default Input;

@@ -4,14 +4,14 @@ import {
   userOAuthAccounts,
   users
 } from '@/_drizzle/schemas';
-import { oAuthProvidersZodEnum } from '@/_zodSchemas/authZod';
+import { oAuthProvidersZodEnum } from '@/_zodSchemas/userZod';
 import {
   getOAuthClient,
   InvalidStateError,
   InvalidUserError,
   MissingEmailError
 } from '@/auth/oAuth/oAuthBase';
-import { createUserSessionAndRedirect } from '@/auth/session.server';
+import { createUserSessionAndRedirect } from '@/_actions/auth/session.server';
 import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 

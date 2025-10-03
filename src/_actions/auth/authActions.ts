@@ -9,10 +9,10 @@ import {
   type UserSignup,
   loginZodSchema,
   signupZodSchema
-} from '@/_zodSchemas/authZod';
+} from '@/_zodSchemas/userZod';
 import zodValidate from '@/lib/utils/zodValidate';
-import { removeSessionUser } from '@/auth/session.edge';
-import { createUserSession } from '@/auth/session.server';
+import { removeSessionUser } from '@/_actions/auth/session.edge';
+import { createUserSession } from '@/_actions/auth/session.server';
 import { redirect } from 'next/navigation';
 import { getOAuthClient } from '@/auth/oAuth/oAuthBase';
 import type {

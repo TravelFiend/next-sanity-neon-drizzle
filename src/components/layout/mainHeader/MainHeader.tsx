@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import cleanSVG from '@/lib/utils/sanitizeSVG';
 import type { MainNavRes } from '@sanityTypes/derivedTypes';
-import { getCurrentUser } from '@/auth/session.server';
+import { getCurrentUser } from '@/_actions/auth/session.server';
 import Nav from './Nav';
 
 type MainHeaderProps = {

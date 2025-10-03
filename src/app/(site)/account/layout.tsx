@@ -12,13 +12,16 @@ export default async function AccountPageLayout({
     <ContentWrapper>
       <section className="my-16 flex h-5/6 w-full">
         <ul className="w-1/4 p-10">
-          <li>
+          <li className="my-4">
             <Link href={'/account'}>Profile</Link>
           </li>
-          <li>
+          <li className="my-4">
+            <Link href={'/account/addresses'}>Saved Addresses</Link>
+          </li>
+          <li className="my-4">
             <Link href={'/account/orders'}>Orders</Link>
           </li>
-          <li>
+          <li className="my-4">
             <Link href={'/account/settings'}>Account Settings</Link>
           </li>
         </ul>

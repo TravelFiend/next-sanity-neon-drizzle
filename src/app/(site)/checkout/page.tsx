@@ -1,11 +1,9 @@
-import ShippingForm from '@/components/checkout/ShippingForm';
+import AddressForm from '@/components/addresses/AddressForm';
 
-// type CheckoutPageProps = {
-
-// }
-
-const CheckoutPage: React.FC = () => {
-  return <ShippingForm />;
+type CheckoutPageProps = {
+  isOpen: boolean;
 };
 
-export default CheckoutPage;
+export default function CheckoutPage({ isOpen = false }: CheckoutPageProps) {
+  return <AddressForm />;
+}

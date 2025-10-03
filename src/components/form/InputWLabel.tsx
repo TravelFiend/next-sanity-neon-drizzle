@@ -1,7 +1,7 @@
-import FormInput from './FormInput';
-import FormLabel from './FormLabel';
+import Input from './Input';
+import Label from './Label';
 
-type FormFieldProps = {
+type InputWLabelProps = {
   forIdName: string;
   labelText: string;
   inputType?: string;
@@ -11,7 +11,7 @@ type FormFieldProps = {
   required?: boolean;
 };
 
-const FormField: React.FC<FormFieldProps> = ({
+const InputWLabel: React.FC<InputWLabelProps> = ({
   forIdName,
   labelText,
   inputType,
@@ -22,13 +22,13 @@ const FormField: React.FC<FormFieldProps> = ({
 }) => {
   return (
     <>
-      <FormLabel
+      <Label
         htmlFor={forIdName}
         labelText={labelText}
         className="mb-2"
         required={required}
       />
-      <FormInput
+      <Input
         type={inputType}
         id={forIdName}
         name={forIdName}
@@ -41,4 +41,4 @@ const FormField: React.FC<FormFieldProps> = ({
   );
 };
 
-export default FormField;
+export default InputWLabel;

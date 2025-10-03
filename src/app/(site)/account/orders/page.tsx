@@ -1,4 +1,4 @@
-import { getCurrentUser } from '@/auth/session.server';
+import { getCurrentUser } from '@/_actions/auth/session.server';
 
 export default async function OrdersPage() {
   const user = await getCurrentUser({
