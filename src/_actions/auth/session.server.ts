@@ -3,7 +3,7 @@
 //  Functions in this file will cause edge runtime errors if used in middleware/api routes
 import { cookies } from 'next/headers';
 import { redis } from '@/redis/redis';
-import { sessionSchema, UserSession } from '@/_zodSchemas/userZod';
+import { type UserSession, sessionSchema } from '@/_zodSchemas/oAuthZod';
 import { db } from '@/_drizzle/db';
 import { eq } from 'drizzle-orm';
 import { getSessionUser } from './session.edge';

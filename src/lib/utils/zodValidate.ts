@@ -1,4 +1,4 @@
-import { type ZodType, z } from 'zod/v4';
+import { type ZodType, z } from 'zod';
 
 type TreeifyError = {
   errors?: string[];

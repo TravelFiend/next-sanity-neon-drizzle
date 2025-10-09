@@ -1,14 +1,14 @@
 /* eslint-disable drizzle/enforce-delete-with-where */
 import { randomHexString, sha256Base64Url } from '@/lib/utils/cryptoFunctions';
 import { cookies } from 'next/headers';
-import { z } from 'zod/v4';
+import { z } from 'zod';
 import createDiscordOAuthClient from './discord';
 import createGoogleOAuthClient from './google';
 import createGithubOAuthClient from './github';
 import createFacebookOAuthClient from './facebook';
 import getSessionCookieOptions from './sessionCookieOptions';
 import type { OAuthProvider } from '@/_drizzle/schemas';
-import createUSPSOAuthClient from './usps';
+import { tokenSchema } from '@/_zodSchemas/oAuthZod';
 
 const STATE_COOKIE_KEY = 'oAuthState';
 const CODE_VERIFIER_COOKIE_KEY = 'oAuthCodeVerifier';
@@ -43,7 +43,7 @@ const clearOAuthCookies = async () => {
 };
 
 class OAuthClient<T extends object> {
-  private readonly provider: OAuthProvider | 'usps';
+  private readonly provider: OAuthProvider;
   private readonly clientId: string;
   private readonly clientSecret: string;
   private readonly scopes: string[];
@@ -62,14 +62,7 @@ class OAuthClient<T extends object> {
       lastName: string | null;
     };
   };
-  private readonly tokenSchema = z.object({
-    access_token: z.string(),
-    token_type: z.string(),
-    expires_in: z.number().optional(),
-    refresh_token: z.string().optional(),
-    scope: z.string().optional(),
-    id_token: z.string().optional()
-  });
+  private readonly tokenSchema = tokenSchema;
 
   constructor({
     provider,
@@ -79,7 +72,7 @@ class OAuthClient<T extends object> {
     urls,
     userInfo
   }: {
-    provider: OAuthProvider | 'usps';
+    provider: OAuthProvider;
     clientId: string;
     clientSecret: string;
     scopes: string[];
@@ -205,7 +198,7 @@ class OAuthClient<T extends object> {
   }
 }
 
-const getOAuthClient = (provider: OAuthProvider | 'usps') => {
+const getOAuthClient = (provider: OAuthProvider) => {
   switch (provider) {
     case 'discord':
       return createDiscordOAuthClient();
@@ -215,8 +208,6 @@ const getOAuthClient = (provider: OAuthProvider | 'usps') => {
       return createFacebookOAuthClient();
     case 'google':
       return createGoogleOAuthClient();
-    case 'usps':
-      return createUSPSOAuthClient();
     default:
       throw new Error(`Invalid provider: ${provider satisfies never}`);
   }

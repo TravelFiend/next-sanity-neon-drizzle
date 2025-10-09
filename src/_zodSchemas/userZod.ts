@@ -1,14 +1,10 @@
-import { addresses, users } from '@/_drizzle/schemas';
+import { users } from '@/_drizzle/schemas';
 import { oAuthProvidersEnum, rolesEnum } from '@/_drizzle/schemas/usersDrizzle';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { z } from 'zod/v4';
+import { z } from 'zod';
 
-// --------------------
-// USER
-// --------------------
-
-const rolesZodEnum = z.enum(rolesEnum.enumValues);
 const oAuthProvidersZodEnum = z.enum(oAuthProvidersEnum.enumValues);
+const rolesZodEnum = z.enum(rolesEnum.enumValues);
 
 const userInsertSchema = createInsertSchema(users, {
   email: schema =>
@@ -45,65 +41,13 @@ type UserLogin = z.infer<typeof loginZodSchema>;
 // TODO: make a new type that only grabs necessary data from user
 type UserSelect = z.infer<typeof userSelectSchema>;
 
-// --------------------
-// USER ADDRESS
-// --------------------
-
-// 1. DB-shaped schema (matches normalized `addresses` table)
-const userAddressInsertSchema = createInsertSchema(addresses, {
-  address1: schema => schema.min(1, 'Address is required'),
-  address2: schema => schema.optional(),
-  zipCodeId: schema => schema.int().positive('Must select a valid zip code') // foreign key to zip_codes
-});
-
-const userAddressSelectSchema = createSelectSchema(addresses);
-
-type UserAddressInsert = z.infer<typeof userAddressInsertSchema>;
-type UserAddressSelect = z.infer<typeof userAddressSelectSchema>;
-
-// 2. Form schema (for customer-facing forms: city, state, zipCode strings)
-const userAddressFormSchema = z.object({
-  address1: z.string().min(1, 'Address is required'),
-  address2: z.string().optional(),
-  city: z.string().min(1, 'City is required'),
-  state: z.string().length(2, 'State must be exactly 2 characters'),
-  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, {
-    error: 'Zip code must be in XXXXX or XXXXX-XXXX format'
-  })
-});
-
-type UserAddressForm = z.infer<typeof userAddressFormSchema>;
-
-// --------------------
-// SESSION
-// --------------------
-
-const sessionSchema = z.object({
-  id: z.string(),
-  role: rolesZodEnum
-});
-
-type UserSession = z.infer<typeof sessionSchema>;
-
 export {
-  // user
   signupZodSchema,
   loginZodSchema,
   oAuthProvidersZodEnum,
   userSelectSchema,
+  rolesZodEnum,
   type UserSignup,
   type UserLogin,
-  type UserSelect,
-
-  // user address
-  userAddressInsertSchema, // DB-shaped
-  userAddressSelectSchema,
-  type UserAddressInsert,
-  type UserAddressSelect,
-  userAddressFormSchema, // Frontend form
-  type UserAddressForm,
-
-  // session
-  type UserSession,
-  sessionSchema
+  type UserSelect
 };

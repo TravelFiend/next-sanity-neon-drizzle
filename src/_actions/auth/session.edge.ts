@@ -3,7 +3,7 @@
 //  Functions in this file CAN be used in middleware/api routes
 import { cache } from 'react';
 import { cookies } from 'next/headers';
-import { sessionSchema } from '@/_zodSchemas/userZod';
+import { sessionSchema } from '@/_zodSchemas/oAuthZod';
 import { redis } from '@/redis/redis';
 
 const COOKIE_SESSION_KEY = 'session-id';
