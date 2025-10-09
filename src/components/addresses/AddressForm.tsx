@@ -1,11 +1,20 @@
+import { useActionState } from 'react';
+import addAddress from '@/_actions/address/addressActions';
 import InputWLabel from '../form/InputWLabel';
 import SelectWLabel from '../form/SelectWLabel';
 import SubmitButton from '../form/SubmitButton';
 import states from '@/lib/constants/states';
 
 const AddressForm: React.FC = () => {
+  const [addressState, addressAction, isPending] = useActionState(
+    addAddress,
+    null
+  );
+
+  console.warn({ addressState });
+
   return (
-    <form className="flex flex-col px-10">
+    <form className="flex flex-col px-10" action={addressAction}>
       <InputWLabel
         forIdName="email"
         labelText="Email"
@@ -33,14 +42,14 @@ const AddressForm: React.FC = () => {
       </div>
 
       <InputWLabel
-        forIdName="address1"
+        forIdName="streetAddress"
         labelText="Street Address"
         placeholder="123 Fairytale Ln."
         inputClassName="mb-3"
       />
 
       <InputWLabel
-        forIdName="address2"
+        forIdName="secondaryAddress"
         labelText="Address 2 (Apt/Suite/Unit)"
         placeholder="Apt. 321"
         inputClassName="mb-3"
@@ -61,7 +70,7 @@ const AddressForm: React.FC = () => {
         </div>
         <div className="w-full">
           <InputWLabel
-            forIdName="zipCode"
+            forIdName="ZIPCode"
             labelText="Zip Code"
             placeholder="98765"
             inputClassName="w-full"
@@ -69,7 +78,7 @@ const AddressForm: React.FC = () => {
         </div>
       </div>
 
-      <SubmitButton isPending={true} className="w-5/12" />
+      <SubmitButton isPending={isPending} className="w-5/12" />
     </form>
   );
 };

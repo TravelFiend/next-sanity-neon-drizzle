@@ -20,7 +20,7 @@ import type {
   OAuthProvider
 } from '@/_drizzle/schemas/usersDrizzle';
 
-type ActionState<T> =
+export type ActionState<T> =
   | {
       success: false;
       errors: Record<string, string[]>;

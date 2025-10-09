@@ -16,11 +16,11 @@ type AddressSelect = z.infer<typeof addressSelectSchema>;
 
 // 2. Form schema (for customer-facing forms: city, state, zipCode strings)
 const addressFormSchema = z.object({
-  address1: z.string().min(1, 'Address is required'),
-  address2: z.string().optional(),
+  streetAddress: z.string().min(1, 'Address is required'),
+  secondaryAddress: z.string().optional(),
   city: z.string().min(1, 'City is required'),
   state: z.string().length(2, 'State must be exactly 2 characters'),
-  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, {
+  ZIPCode: z.string().regex(/^\d{5}(-\d{4})?$/, {
     error: 'Zip code must be in XXXXX or XXXXX-XXXX format'
   })
 });
