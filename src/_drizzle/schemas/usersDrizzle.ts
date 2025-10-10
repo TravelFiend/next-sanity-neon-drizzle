@@ -36,7 +36,7 @@ type SelectUser = typeof usersTable.$inferSelect;
 // DRIZZLE OAUTH
 const userRelations = relations(usersTable, ({ many }) => ({
   oAuthAccounts: many(userOAuthAccountsTable),
-  userAddresses: many(usersToAddressesTable)
+  addresses: many(usersToAddressesTable)
 }));
 
 const oAuthProviders = ['google', 'facebook', 'discord', 'github'] as const;

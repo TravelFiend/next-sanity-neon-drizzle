@@ -11,6 +11,7 @@ import {
   unique
 } from 'drizzle-orm/pg-core';
 import { usersTable } from './usersDrizzle';
+import { recipientsTable } from './recipientsDrizzle';
 
 // STATES
 const statesTable = pgTable('states', {
@@ -60,7 +61,8 @@ type InsertZipCodes = typeof zipCodesTable.$inferInsert;
 type SelectZipCodes = typeof zipCodesTable.$inferSelect;
 
 const zipCodeRelations = relations(zipCodesTable, ({ many }) => ({
-  cities: many(citiesToZipCodesTable)
+  cities: many(citiesToZipCodesTable),
+  addresses: many(addressesTable)
 }));
 
 // CITIES TO ZIP_CODES
@@ -82,7 +84,7 @@ const citiesToZipCodesTable = pgTable(
   ]
 );
 
-export const citiesToZipCodesRelations = relations(
+const citiesToZipCodesRelations = relations(
   citiesToZipCodesTable,
   ({ one }) => ({
     city: one(citiesTable, {
@@ -97,7 +99,7 @@ export const citiesToZipCodesRelations = relations(
 );
 
 // ADDRESSES
-export const addressesTable = pgTable(
+const addressesTable = pgTable(
   'addresses',
   {
     id: serial().primaryKey(),
@@ -106,26 +108,38 @@ export const addressesTable = pgTable(
     zipCodeId: integer()
       .notNull()
       .references(() => zipCodesTable.id, { onDelete: 'restrict' }),
+    recipientId: integer()
+      .notNull()
+      .references(() => recipientsTable.id, { onDelete: 'restrict' }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow()
   },
   t => [
     uniqueIndex('unique_full_address').on(
       t.address1,
       sql`COALESCE(${t.address2}, '')`,
-      t.zipCodeId
+      t.zipCodeId,
+      t.recipientId
     )
   ]
 );
 
-export const addressesRelations = relations(addressesTable, ({ many }) => ({
-  userAddresses: many(usersToAddressesTable)
+const addressesRelations = relations(addressesTable, ({ many, one }) => ({
+  userAddresses: many(usersToAddressesTable),
+  recipient: one(recipientsTable, {
+    fields: [addressesTable.recipientId],
+    references: [recipientsTable.id]
+  }),
+  zipCode: one(zipCodesTable, {
+    fields: [addressesTable.zipCodeId],
+    references: [zipCodesTable.id]
+  })
 }));
 
-export type InsertAddress = typeof addressesTable.$inferInsert;
-export type SelectAddresses = typeof addressesTable.$inferSelect;
+type InsertAddress = typeof addressesTable.$inferInsert;
+type SelectAddress = typeof addressesTable.$inferSelect;
 
 // DRIZZLE USERS_TO_ADDRESSES
-export const usersToAddressesTable = pgTable(
+const usersToAddressesTable = pgTable(
   'users_to_addresses',
   {
     userId: uuid()
@@ -166,11 +180,15 @@ export {
   statesTable,
   citiesTable,
   zipCodesTable,
+  addressesTable,
   citiesToZipCodesTable,
+  usersToAddressesTable,
   // relations
   statesRelations,
   citiesRelations,
   zipCodeRelations,
+  addressesRelations,
+  citiesToZipCodesRelations,
   usersToAddressesRelations,
   // types
   type InsertStates,
@@ -179,6 +197,8 @@ export {
   type SelectCities,
   type InsertZipCodes,
   type SelectZipCodes,
+  type InsertAddress,
+  type SelectAddress,
   type InsertUsersToAddress,
   type SelectUsersToAddress
 };
