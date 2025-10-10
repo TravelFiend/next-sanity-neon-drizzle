@@ -3,7 +3,7 @@
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
-import { users } from '@/_drizzle/schemas';
+import { usersTable } from '@/_drizzle/schemas';
 import {
   type UserLogin,
   type UserSignup,
@@ -56,9 +56,9 @@ const signup = async (
   };
 
   try {
-    const [user] = await db.insert(users).values(newUser).returning({
-      id: users.id,
-      role: users.role
+    const [user] = await db.insert(usersTable).values(newUser).returning({
+      id: usersTable.id,
+      role: usersTable.role
     });
 
     await createUserSession(user);
@@ -101,8 +101,8 @@ const login = async (
 
   const { email, password }: UserLogin = parsed.data;
 
-  const existingUser = await db.query.users.findFirst({
-    where: eq(users.email, email),
+  const existingUser = await db.query.usersTable.findFirst({
+    where: eq(usersTable.email, email),
     columns: {
       id: true,
       email: true,

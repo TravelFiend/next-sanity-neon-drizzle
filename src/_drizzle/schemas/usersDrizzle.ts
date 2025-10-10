@@ -9,12 +9,12 @@ import {
   text,
   primaryKey
 } from 'drizzle-orm/pg-core';
-import { usersToAddresses } from './addressesDrizzle';
+import { usersToAddressesTable } from './addressesDrizzle';
 
 // DRIZZLE USERS
-export const rolesEnum = pgEnum('role', ['customer', 'artist', 'musician']);
+const rolesEnum = pgEnum('role', ['customer', 'artist', 'musician']);
 
-export const users = pgTable('users', {
+const usersTable = pgTable('users', {
   id: uuid().primaryKey().defaultRandom(),
   email: varchar({ length: 255 }).notNull().unique(),
   password: varchar({ length: 255 }),
@@ -30,25 +30,25 @@ export const users = pgTable('users', {
     .$onUpdate(() => new Date())
 });
 
-export type InsertUser = typeof users.$inferInsert;
-export type SelectUser = typeof users.$inferSelect;
+type InsertUser = typeof usersTable.$inferInsert;
+type SelectUser = typeof usersTable.$inferSelect;
 
 // DRIZZLE OAUTH
-export const userRelations = relations(users, ({ many }) => ({
-  oAuthAccounts: many(userOAuthAccounts),
-  userAddresses: many(usersToAddresses)
+const userRelations = relations(usersTable, ({ many }) => ({
+  oAuthAccounts: many(userOAuthAccountsTable),
+  userAddresses: many(usersToAddressesTable)
 }));
 
 const oAuthProviders = ['google', 'facebook', 'discord', 'github'] as const;
-export type OAuthProvider = (typeof oAuthProviders)[number];
-export const oAuthProvidersEnum = pgEnum('oauth_providers', oAuthProviders);
+type OAuthProvider = (typeof oAuthProviders)[number];
+const oAuthProvidersEnum = pgEnum('oauth_providers', oAuthProviders);
 
-export const userOAuthAccounts = pgTable(
+const userOAuthAccountsTable = pgTable(
   'user_oauth_accounts',
   {
     userId: uuid()
       .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
+      .references(() => usersTable.id, { onDelete: 'cascade' }),
     provider: oAuthProvidersEnum().notNull(),
     providerAccountId: text().notNull(),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
@@ -65,15 +65,34 @@ export const userOAuthAccounts = pgTable(
   ]
 );
 
-export type InsertUserOAuth = typeof userOAuthAccounts.$inferInsert;
-export type SelectUserOAuth = typeof userOAuthAccounts.$inferSelect;
+type InsertUserOAuth = typeof userOAuthAccountsTable.$inferInsert;
+type SelectUserOAuth = typeof userOAuthAccountsTable.$inferSelect;
 
-export const userOAuthAccountRelations = relations(
-  userOAuthAccounts,
+const userOAuthAccountRelations = relations(
+  userOAuthAccountsTable,
   ({ one }) => ({
-    user: one(users, {
-      fields: [userOAuthAccounts.userId],
-      references: [users.id]
+    user: one(usersTable, {
+      fields: [userOAuthAccountsTable.userId],
+      references: [usersTable.id]
     })
   })
 );
+
+export {
+  // enums
+  rolesEnum,
+  oAuthProvidersEnum,
+  // tables
+  usersTable,
+  userOAuthAccountsTable,
+  usersToAddressesTable,
+  // relations
+  userRelations,
+  userOAuthAccountRelations,
+  // types
+  type InsertUser,
+  type SelectUser,
+  type OAuthProvider,
+  type InsertUserOAuth,
+  type SelectUserOAuth
+};

@@ -1,4 +1,4 @@
-import { users } from '@/_drizzle/schemas';
+import { usersTable } from '@/_drizzle/schemas';
 import { oAuthProvidersEnum, rolesEnum } from '@/_drizzle/schemas/usersDrizzle';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
@@ -6,7 +6,7 @@ import { z } from 'zod';
 const oAuthProvidersZodEnum = z.enum(oAuthProvidersEnum.enumValues);
 const rolesZodEnum = z.enum(rolesEnum.enumValues);
 
-const userInsertSchema = createInsertSchema(users, {
+const userInsertSchema = createInsertSchema(usersTable, {
   email: schema =>
     schema.max(255).pipe(z.email({ error: 'Please provide a valid email' })),
   password: schema =>
@@ -34,7 +34,7 @@ const loginZodSchema = authBaseSchema.extend({
   password: z.string().min(1, { error: 'Please enter a password' })
 });
 
-const userSelectSchema = createSelectSchema(users);
+const userSelectSchema = createSelectSchema(usersTable);
 
 type UserSignup = z.infer<typeof signupZodSchema>;
 type UserLogin = z.infer<typeof loginZodSchema>;
@@ -42,11 +42,11 @@ type UserLogin = z.infer<typeof loginZodSchema>;
 type UserSelect = z.infer<typeof userSelectSchema>;
 
 export {
+  rolesZodEnum,
+  oAuthProvidersZodEnum,
   signupZodSchema,
   loginZodSchema,
-  oAuthProvidersZodEnum,
   userSelectSchema,
-  rolesZodEnum,
   type UserSignup,
   type UserLogin,
   type UserSelect

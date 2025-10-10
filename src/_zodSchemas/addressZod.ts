@@ -1,15 +1,15 @@
-import { addresses } from '@/_drizzle/schemas';
+import { addressesTable } from '@/_drizzle/schemas';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
-// 1. DB-shaped schema (matches normalized `addresses` table)
-const addressInsertSchema = createInsertSchema(addresses, {
+// 1. DB-shaped schema (matches normalized `addressesTable` table)
+const addressInsertSchema = createInsertSchema(addressesTable, {
   address1: schema => schema.min(1, 'Address is required'),
   address2: schema => schema.optional(),
   zipCodeId: schema => schema.int().positive('Must select a valid zip code') // foreign key to zip_codes
 });
 
-const addressSelectSchema = createSelectSchema(addresses);
+const addressSelectSchema = createSelectSchema(addressesTable);
 
 type AddressInsert = z.infer<typeof addressInsertSchema>;
 type AddressSelect = z.infer<typeof addressSelectSchema>;

@@ -10,69 +10,69 @@ import {
   uniqueIndex,
   unique
 } from 'drizzle-orm/pg-core';
-import { users } from './usersDrizzle';
+import { usersTable } from './usersDrizzle';
 
 // STATES
-export const states = pgTable('states', {
+const statesTable = pgTable('states', {
   id: serial().primaryKey(),
   name: varchar({ length: 255 }).notNull().unique(),
   code: varchar({ length: 2 }).notNull().unique()
 });
 
-export type InsertStates = typeof states.$inferInsert;
-export type SelectStates = typeof states.$inferSelect;
+type InsertStates = typeof statesTable.$inferInsert;
+type SelectStates = typeof statesTable.$inferSelect;
 
-export const statesRelations = relations(states, ({ many }) => ({
-  cities: many(cities)
+const statesRelations = relations(statesTable, ({ many }) => ({
+  cities: many(citiesTable)
 }));
 
 // CITIES
-export const cities = pgTable(
+const citiesTable = pgTable(
   'cities',
   {
     id: serial().primaryKey(),
     name: varchar({ length: 255 }).notNull(),
     stateId: integer()
       .notNull()
-      .references(() => states.id)
+      .references(() => statesTable.id)
   },
   t => [unique('unique_city_per_state').on(t.name, t.stateId)]
 );
 
-export type InsertCities = typeof cities.$inferInsert;
-export type SelectCities = typeof cities.$inferSelect;
+type InsertCities = typeof citiesTable.$inferInsert;
+type SelectCities = typeof citiesTable.$inferSelect;
 
-export const citiesRelations = relations(cities, ({ one, many }) => ({
-  state: one(states, {
-    fields: [cities.stateId],
-    references: [states.id]
+const citiesRelations = relations(citiesTable, ({ one, many }) => ({
+  state: one(statesTable, {
+    fields: [citiesTable.stateId],
+    references: [statesTable.id]
   }),
-  cities: many(citiesToZipCodes)
+  cities: many(citiesToZipCodesTable)
 }));
 
 // ZIP CODES
-export const zipCodes = pgTable('zip_codes', {
+const zipCodesTable = pgTable('zip_codes', {
   id: serial().primaryKey(),
   zipCode: varchar({ length: 15 }).notNull().unique()
 });
 
-export type InsertZipCodes = typeof zipCodes.$inferInsert;
-export type SelectZipCodes = typeof zipCodes.$inferSelect;
+type InsertZipCodes = typeof zipCodesTable.$inferInsert;
+type SelectZipCodes = typeof zipCodesTable.$inferSelect;
 
-export const zipCodeRelations = relations(zipCodes, ({ many }) => ({
-  cities: many(citiesToZipCodes)
+const zipCodeRelations = relations(zipCodesTable, ({ many }) => ({
+  cities: many(citiesToZipCodesTable)
 }));
 
 // CITIES TO ZIP_CODES
-export const citiesToZipCodes = pgTable(
+const citiesToZipCodesTable = pgTable(
   'cities_to_zip_codes',
   {
     cityId: integer()
       .notNull()
-      .references(() => cities.id, { onDelete: 'cascade' }),
+      .references(() => citiesTable.id, { onDelete: 'cascade' }),
     zipCodeId: integer()
       .notNull()
-      .references(() => zipCodes.id, { onDelete: 'cascade' })
+      .references(() => zipCodesTable.id, { onDelete: 'cascade' })
   },
   t => [
     primaryKey({
@@ -83,21 +83,21 @@ export const citiesToZipCodes = pgTable(
 );
 
 export const citiesToZipCodesRelations = relations(
-  citiesToZipCodes,
+  citiesToZipCodesTable,
   ({ one }) => ({
-    city: one(cities, {
-      fields: [citiesToZipCodes.cityId],
-      references: [cities.id]
+    city: one(citiesTable, {
+      fields: [citiesToZipCodesTable.cityId],
+      references: [citiesTable.id]
     }),
-    zipCode: one(zipCodes, {
-      fields: [citiesToZipCodes.zipCodeId],
-      references: [zipCodes.id]
+    zipCode: one(zipCodesTable, {
+      fields: [citiesToZipCodesTable.zipCodeId],
+      references: [zipCodesTable.id]
     })
   })
 );
 
 // ADDRESSES
-export const addresses = pgTable(
+export const addressesTable = pgTable(
   'addresses',
   {
     id: serial().primaryKey(),
@@ -105,7 +105,7 @@ export const addresses = pgTable(
     address2: varchar({ length: 255 }),
     zipCodeId: integer()
       .notNull()
-      .references(() => zipCodes.id, { onDelete: 'restrict' }),
+      .references(() => zipCodesTable.id, { onDelete: 'restrict' }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow()
   },
   t => [
@@ -117,23 +117,23 @@ export const addresses = pgTable(
   ]
 );
 
-export const addressesRelations = relations(addresses, ({ many }) => ({
-  userAddresses: many(usersToAddresses)
+export const addressesRelations = relations(addressesTable, ({ many }) => ({
+  userAddresses: many(usersToAddressesTable)
 }));
 
-export type InsertAddress = typeof addresses.$inferInsert;
-export type SelectAddresses = typeof addresses.$inferSelect;
+export type InsertAddress = typeof addressesTable.$inferInsert;
+export type SelectAddresses = typeof addressesTable.$inferSelect;
 
 // DRIZZLE USERS_TO_ADDRESSES
-export const usersToAddresses = pgTable(
+export const usersToAddressesTable = pgTable(
   'users_to_addresses',
   {
     userId: uuid()
       .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
+      .references(() => usersTable.id, { onDelete: 'cascade' }),
     addressId: integer()
       .notNull()
-      .references(() => addresses.id, { onDelete: 'cascade' }),
+      .references(() => addressesTable.id, { onDelete: 'cascade' }),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow()
   },
   t => [
@@ -144,19 +144,41 @@ export const usersToAddresses = pgTable(
   ]
 );
 
-export type InsertUsersToAddress = typeof usersToAddresses.$inferInsert;
-export type SelectUsersToAddresses = typeof usersToAddresses.$inferSelect;
+type InsertUsersToAddress = typeof usersToAddressesTable.$inferInsert;
+type SelectUsersToAddress = typeof usersToAddressesTable.$inferSelect;
 
-export const usersToAddressesRelations = relations(
-  usersToAddresses,
+const usersToAddressesRelations = relations(
+  usersToAddressesTable,
   ({ one }) => ({
-    address: one(addresses, {
-      fields: [usersToAddresses.addressId],
-      references: [addresses.id]
+    address: one(addressesTable, {
+      fields: [usersToAddressesTable.addressId],
+      references: [addressesTable.id]
     }),
-    user: one(users, {
-      fields: [usersToAddresses.userId],
-      references: [users.id]
+    user: one(usersTable, {
+      fields: [usersToAddressesTable.userId],
+      references: [usersTable.id]
     })
   })
 );
+
+export {
+  // tables
+  statesTable,
+  citiesTable,
+  zipCodesTable,
+  citiesToZipCodesTable,
+  // relations
+  statesRelations,
+  citiesRelations,
+  zipCodeRelations,
+  usersToAddressesRelations,
+  // types
+  type InsertStates,
+  type SelectStates,
+  type InsertCities,
+  type SelectCities,
+  type InsertZipCodes,
+  type SelectZipCodes,
+  type InsertUsersToAddress,
+  type SelectUsersToAddress
+};
