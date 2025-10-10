@@ -1,26 +1,30 @@
 import { db } from '../../db';
 import { seed } from 'drizzle-seed';
-import { zipCodes, citiesToZipCodes, cities } from '../../schemas';
+import {
+  zipCodesTable,
+  citiesToZipCodesTable,
+  citiesTable
+} from '../../schemas';
 
 export const seedZipCodes = async () => {
-  const allCities = await db.select().from(cities);
+  const allCities = await db.select().from(citiesTable);
 
-  await seed(db, { zipCodes }, { seed: 1 }).refine(funcs => ({
-    zipCodes: {
+  await seed(db, { zipCodesTable }, { seed: 1 }).refine(funcs => ({
+    zipCodesTable: {
       count: 50,
       columns: { zipCode: funcs.postcode() }
     }
   }));
 
-  const allZipCodes = await db.select().from(zipCodes);
+  const allZipCodes = await db.select().from(zipCodesTable);
 
   const cityZipPairs = allZipCodes.map((zip, i) => ({
     cityId: allCities[i % allCities.length].id,
     zipCodeId: zip.id
   }));
 
-  await seed(db, { citiesToZipCodes }, { seed: 1 }).refine(funcs => ({
-    citiesToZipCodes: {
+  await seed(db, { citiesToZipCodesTable }, { seed: 1 }).refine(funcs => ({
+    citiesToZipCodesTable: {
       count: cityZipPairs.length,
       columns: {
         cityId: funcs.valuesFromArray({

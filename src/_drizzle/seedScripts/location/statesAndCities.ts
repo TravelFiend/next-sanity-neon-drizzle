@@ -1,12 +1,8 @@
 import { db } from '../../db';
 import { seed } from 'drizzle-seed';
-import { states, cities } from '../../schemas';
-import { sql } from 'drizzle-orm';
+import { statesTable, citiesTable } from '../../schemas';
 
 export const seedStatesAndCities = async () => {
-  await db.execute(sql`TRUNCATE TABLE cities RESTART IDENTITY CASCADE`);
-  await db.execute(sql`TRUNCATE TABLE states RESTART IDENTITY CASCADE`);
-
   const stateSeedData = [
     { code: 'CA', name: 'California' },
     { code: 'NY', name: 'New York' },
@@ -23,11 +19,11 @@ export const seedStatesAndCities = async () => {
     { code: 'CO', name: 'Colorado' }
   ];
 
-  await db.insert(states).values(stateSeedData);
-  const allStates = await db.select().from(states);
+  await db.insert(statesTable).values(stateSeedData);
+  const allStates = await db.select().from(statesTable);
 
-  await seed(db, { cities }, { seed: 1 }).refine(funcs => ({
-    cities: {
+  await seed(db, { citiesTable }, { seed: 1 }).refine(funcs => ({
+    citiesTable: {
       count: 50,
       columns: {
         name: funcs.city(),

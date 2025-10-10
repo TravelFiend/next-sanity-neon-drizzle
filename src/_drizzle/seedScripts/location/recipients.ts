@@ -1,0 +1,20 @@
+import { seed } from 'drizzle-seed';
+import { db } from '@/_drizzle/db';
+import { recipientsTable } from '@/_drizzle/schemas/recipientsDrizzle';
+
+export const seedRecipients = async () => {
+  await seed(db, { recipientsTable }, { seed: 1 }).refine(funcs => ({
+    recipientsTable: {
+      count: 20,
+      columns: {
+        firstName: funcs.firstName(),
+        lastName: funcs.lastName(),
+        email: funcs.email(),
+        phoneNumber: funcs.phoneNumber()
+      }
+    }
+  }));
+
+  // eslint-disable-next-line no-console
+  console.log('✅ Recipients seeded!!');
+};

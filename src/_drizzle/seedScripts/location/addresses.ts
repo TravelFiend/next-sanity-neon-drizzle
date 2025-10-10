@@ -1,12 +1,14 @@
-import { db } from '../../db';
 import { seed } from 'drizzle-seed';
-import { addresses, zipCodes } from '../../schemas';
+import { db } from '../../db';
+import { addressesTable, zipCodesTable } from '../../schemas';
+import { recipientsTable } from '@/_drizzle/schemas/recipientsDrizzle';
 
 export const seedAddresses = async () => {
-  const allZipCodes = await db.select().from(zipCodes);
+  const allZipCodes = await db.select().from(zipCodesTable);
+  const allRecipients = await db.select().from(recipientsTable);
 
-  await seed(db, { addresses }, { seed: 1 }).refine(funcs => ({
-    addresses: {
+  await seed(db, { addressesTable }, { seed: 1 }).refine(funcs => ({
+    addressesTable: {
       count: 20,
       columns: {
         address1: funcs.streetAddress(),
@@ -15,6 +17,9 @@ export const seedAddresses = async () => {
         }),
         zipCodeId: funcs.valuesFromArray({
           values: allZipCodes.map(zip => zip.id)
+        }),
+        recipientId: funcs.valuesFromArray({
+          values: allRecipients.map(recipient => recipient.id)
         }),
         createdAt: funcs.timestamp()
       }
