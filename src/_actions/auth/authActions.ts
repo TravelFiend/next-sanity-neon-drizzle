@@ -31,7 +31,7 @@ export type ActionState<T> =
       success: true;
       data?: T;
       message?: string;
-      userId: string;
+      userId?: string;
     };
 
 const signup = async (

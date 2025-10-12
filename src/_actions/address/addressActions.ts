@@ -40,7 +40,10 @@ const addAddress = async (
 
   if (!parsed.success) return parsed;
 
-  return parsed.data;
+  return {
+    success: true,
+    data: parsed.data
+  };
 };
 
 export default addAddress;
