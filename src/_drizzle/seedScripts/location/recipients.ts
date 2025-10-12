@@ -10,7 +10,9 @@ export const seedRecipients = async () => {
         firstName: funcs.firstName(),
         lastName: funcs.lastName(),
         email: funcs.email(),
-        phoneNumber: funcs.phoneNumber()
+        phoneNumber: funcs.phoneNumber({
+          template: '+1 (###) ###-####'
+        })
       }
     }
   }));

@@ -7,8 +7,8 @@ import { usersTable } from '@/_drizzle/schemas';
 import {
   type UserLogin,
   type UserSignup,
-  loginZodSchema,
-  signupZodSchema
+  loginFormSchema,
+  signupFormSchema
 } from '@/_zodSchemas/userZod';
 import zodValidate from '@/lib/utils/zodValidate';
 import { removeSessionUser } from '@/_actions/auth/session.edge';
@@ -43,7 +43,7 @@ const signup = async (
     password: formData.get('password')
   };
 
-  const parsed = zodValidate(raw, signupZodSchema);
+  const parsed = zodValidate(raw, signupFormSchema);
 
   if (!parsed.success) return parsed;
 
@@ -95,7 +95,7 @@ const login = async (
     password: formData.get('password')?.toString()
   };
 
-  const parsed = zodValidate(raw, loginZodSchema);
+  const parsed = zodValidate(raw, loginFormSchema);
 
   if (!parsed.success) return parsed;
 

@@ -28,24 +28,25 @@ const authBaseSchema = userInsertSchema.pick({
   password: true
 });
 
-const signupZodSchema = authBaseSchema;
+const signupFormSchema = authBaseSchema;
 
-const loginZodSchema = authBaseSchema.extend({
+const loginFormSchema = authBaseSchema.extend({
   password: z.string().min(1, { error: 'Please enter a password' })
 });
 
 const userSelectSchema = createSelectSchema(usersTable);
 
-type UserSignup = z.infer<typeof signupZodSchema>;
-type UserLogin = z.infer<typeof loginZodSchema>;
+type UserSignup = z.infer<typeof signupFormSchema>;
+type UserLogin = z.infer<typeof loginFormSchema>;
 // TODO: make a new type that only grabs necessary data from user
 type UserSelect = z.infer<typeof userSelectSchema>;
 
 export {
   rolesZodEnum,
   oAuthProvidersZodEnum,
-  signupZodSchema,
-  loginZodSchema,
+  signupFormSchema,
+  loginFormSchema,
+  userInsertSchema,
   userSelectSchema,
   type UserSignup,
   type UserLogin,

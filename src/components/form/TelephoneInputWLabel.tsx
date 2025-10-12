@@ -1,10 +1,9 @@
-import Input from './Input';
 import Label from './Label';
+import TelephoneInput from './TelephoneInput';
 
-type InputWLabelProps = {
+type TelephoneInputWLabelProps = {
   forIdName: string;
   labelText: string;
-  inputType?: string;
   placeholder?: string;
   defaultValue?: string;
   inputClassName?: string;
@@ -12,10 +11,9 @@ type InputWLabelProps = {
   required?: boolean;
 };
 
-const InputWLabel: React.FC<InputWLabelProps> = ({
+const TelephoneInputWLabel: React.FC<TelephoneInputWLabelProps> = ({
   forIdName,
   labelText,
-  inputType,
   placeholder,
   defaultValue,
   inputClassName,
@@ -30,8 +28,7 @@ const InputWLabel: React.FC<InputWLabelProps> = ({
         className="mb-2"
         required={required}
       />
-      <Input
-        type={inputType}
+      <TelephoneInput
         id={forIdName}
         name={forIdName}
         placeholder={placeholder}
@@ -44,4 +41,4 @@ const InputWLabel: React.FC<InputWLabelProps> = ({
   );
 };
 
-export default InputWLabel;
+export default TelephoneInputWLabel;

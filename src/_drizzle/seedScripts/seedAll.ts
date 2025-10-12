@@ -8,7 +8,6 @@ import { seedUserOAuthAccounts } from './user/userOAuthAccounts';
 import { seedUsers } from './user/users';
 import { seedUsersToAddresses } from './user/usersToAddresses';
 import { seedRecipients } from './location/recipients';
-import { seedCitiesToZipCodes } from './location/citiesToZipCodes';
 
 const truncateAll = async () => {
   // truncate in order respecting foreign key dependencies
@@ -35,15 +34,20 @@ const seedAll = async () => {
     await seedRecipients();
     await seedUsers();
     await seedAddresses();
-    await seedCitiesToZipCodes();
     await seedUsersToAddresses();
     await seedUserOAuthAccounts();
 
     console.log('🎉 All seeding complete!');
+    process.exit(0);
   } catch (err) {
     console.error(err);
     process.exit(1);
   }
 };
 
-if (process.env.DATABASE_URL?.includes('aws.neon.tech')) seedAll();
+if (
+  !process.env.DATABASE_URL?.includes('aws.neon.tech') &&
+  process.env.DB_SEEDING === 'true'
+) {
+  seedAll();
+}

@@ -24,11 +24,27 @@ CREATE TABLE "users" (
 	CONSTRAINT "users_username_unique" UNIQUE("username")
 );
 --> statement-breakpoint
+CREATE TABLE "users_to_addresses" (
+	"user_id" uuid NOT NULL,
+	"address_id" integer NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "users_to_addresses_pk" PRIMARY KEY("user_id","address_id")
+);
+--> statement-breakpoint
+CREATE TABLE "recipients" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"first_name" varchar(255) NOT NULL,
+	"last_name" varchar(255) NOT NULL,
+	"email" varchar(255) NOT NULL,
+	"phone_number" varchar(20) NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "addresses" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"address1" varchar(255) NOT NULL,
 	"address2" varchar(255),
 	"zip_code_id" integer NOT NULL,
+	"recipient_id" integer NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
@@ -53,13 +69,6 @@ CREATE TABLE "states" (
 	CONSTRAINT "states_code_unique" UNIQUE("code")
 );
 --> statement-breakpoint
-CREATE TABLE "users_to_addresses" (
-	"user_id" uuid NOT NULL,
-	"address_id" integer NOT NULL,
-	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "users_to_addresses_pk" PRIMARY KEY("user_id","address_id")
-);
---> statement-breakpoint
 CREATE TABLE "zip_codes" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"zip_code" varchar(15) NOT NULL,
@@ -67,10 +76,12 @@ CREATE TABLE "zip_codes" (
 );
 --> statement-breakpoint
 ALTER TABLE "user_oauth_accounts" ADD CONSTRAINT "user_oauth_accounts_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "users_to_addresses" ADD CONSTRAINT "users_to_addresses_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "users_to_addresses" ADD CONSTRAINT "users_to_addresses_address_id_addresses_id_fk" FOREIGN KEY ("address_id") REFERENCES "public"."addresses"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "addresses" ADD CONSTRAINT "addresses_zip_code_id_zip_codes_id_fk" FOREIGN KEY ("zip_code_id") REFERENCES "public"."zip_codes"("id") ON DELETE restrict ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "addresses" ADD CONSTRAINT "addresses_recipient_id_recipients_id_fk" FOREIGN KEY ("recipient_id") REFERENCES "public"."recipients"("id") ON DELETE restrict ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "cities" ADD CONSTRAINT "cities_state_id_states_id_fk" FOREIGN KEY ("state_id") REFERENCES "public"."states"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "cities_to_zip_codes" ADD CONSTRAINT "cities_to_zip_codes_city_id_cities_id_fk" FOREIGN KEY ("city_id") REFERENCES "public"."cities"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "cities_to_zip_codes" ADD CONSTRAINT "cities_to_zip_codes_zip_code_id_zip_codes_id_fk" FOREIGN KEY ("zip_code_id") REFERENCES "public"."zip_codes"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "users_to_addresses" ADD CONSTRAINT "users_to_addresses_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "users_to_addresses" ADD CONSTRAINT "users_to_addresses_address_id_addresses_id_fk" FOREIGN KEY ("address_id") REFERENCES "public"."addresses"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-CREATE UNIQUE INDEX "unique_full_address" ON "addresses" USING btree ("address1",COALESCE("address2", ''),"zip_code_id");
+CREATE UNIQUE INDEX "unique_recipient_contact" ON "recipients" USING btree ("first_name","last_name","email");--> statement-breakpoint
+CREATE UNIQUE INDEX "unique_full_address" ON "addresses" USING btree ("address1",COALESCE("address2", ''),"zip_code_id","recipient_id");

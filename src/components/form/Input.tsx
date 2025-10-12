@@ -7,8 +7,12 @@ type InputProps = {
   placeholder?: string;
   defaultValue?: string;
   className?: string;
+  pattern?: string;
   required?: boolean;
 };
+
+export const INPUT_STYLE =
+  'rounded border bg-secondary p-2 text-primary-light placeholder:text-secondary-dark focus:outline-2 focus:outline-tertiary';
 
 const Input: React.FC<InputProps> = ({
   id,
@@ -26,10 +30,7 @@ const Input: React.FC<InputProps> = ({
       type={type}
       placeholder={placeholder}
       defaultValue={defaultValue}
-      className={conditionalClasses(
-        'rounded border bg-secondary p-2 text-primary-light placeholder:text-secondary-dark focus:outline-2 focus:outline-tertiary',
-        className
-      )}
+      className={conditionalClasses(INPUT_STYLE, className)}
       required={required}
     />
   );
