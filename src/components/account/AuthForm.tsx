@@ -39,7 +39,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
     >
       <input type="hidden" name="mode" value={mode} />
 
-      {/* Email */}
       <InputWLabel
         forIdName="email"
         labelText="Email"
@@ -57,7 +56,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           ))}
       </ul>
 
-      {/* Password */}
       <InputWLabel
         forIdName="password"
         labelText="Password"
@@ -99,10 +97,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
           : null}
       </ul>
 
-      {/* Submit */}
       <SubmitButton isPending={isPending} />
 
-      {/* Switch link */}
       <button
         type="button"
         className="cursor-pointer text-primary-light underline"

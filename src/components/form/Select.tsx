@@ -15,8 +15,9 @@ const Select: React.FC<SelectProps> = ({
       name={idName}
       className="rounded border bg-secondary p-[9.5px] text-primary-light placeholder:text-secondary-dark focus:outline-2 focus:outline-tertiary"
       required={required}
+      defaultValue=""
     >
-      <option selected disabled className="text-secondary-dark">
+      <option disabled className="text-secondary-dark" value="">
         Choose one
       </option>
       {options.map(option => (

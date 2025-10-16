@@ -1,5 +1,6 @@
 'use server';
 
+import 'server-only';
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
@@ -19,20 +20,7 @@ import type {
   InsertUser,
   OAuthProvider
 } from '@/_drizzle/schemas/usersDrizzle';
-
-export type ActionState<T> =
-  | {
-      success: false;
-      errors: Record<string, string[]>;
-      data?: Partial<T>;
-      message?: string;
-    }
-  | {
-      success: true;
-      data?: T;
-      message?: string;
-      userId?: string;
-    };
+import type { ActionState } from '@/types/actions';
 
 const signup = async (
   prevState: unknown,

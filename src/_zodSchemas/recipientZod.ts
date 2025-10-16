@@ -16,4 +16,6 @@ const recipientInsertSchema = userInsertSchema
       .max(20, 'Phone number must be 20 characters or less')
   });
 
-export { recipientInsertSchema };
+type Recipient = z.infer<typeof recipientInsertSchema>;
+
+export { type Recipient, recipientInsertSchema };
