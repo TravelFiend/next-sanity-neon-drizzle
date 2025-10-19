@@ -2,7 +2,7 @@ import { db } from '@/_drizzle/db';
 import {
   type OAuthProvider,
   userOAuthAccountsTable,
-  users
+  usersTable
 } from '@/_drizzle/schemas';
 import { oAuthProvidersZodEnum } from '@/_zodSchemas/userZod';
 import {
@@ -123,14 +123,14 @@ const connectUserToAccount = (
   provider: OAuthProvider
 ) => {
   return db.transaction(async trx => {
-    let user = await trx.query.users.findFirst({
-      where: eq(users.email, email),
+    let user = await trx.query.usersTable.findFirst({
+      where: eq(usersTable.email, email),
       columns: { id: true, role: true }
     });
 
     if (!user) {
       const [newUser] = await trx
-        .insert(users)
+        .insert(usersTable)
         .values({
           email,
           username,
@@ -138,8 +138,8 @@ const connectUserToAccount = (
           lastName: lastName ?? null
         })
         .returning({
-          id: users.id,
-          role: users.role
+          id: usersTable.id,
+          role: usersTable.role
         });
 
       user = newUser;
