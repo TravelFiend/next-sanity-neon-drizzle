@@ -1,7 +1,7 @@
 import { db } from '@/_drizzle/db';
 import {
   type OAuthProvider,
-  userOAuthAccounts,
+  userOAuthAccountsTable,
   users
 } from '@/_drizzle/schemas';
 import { oAuthProvidersZodEnum } from '@/_zodSchemas/userZod';
@@ -146,7 +146,7 @@ const connectUserToAccount = (
     }
 
     await trx
-      .insert(userOAuthAccounts)
+      .insert(userOAuthAccountsTable)
       .values({
         provider,
         providerAccountId: id,
