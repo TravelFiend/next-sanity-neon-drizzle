@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint --fix src/**/*.{ts,tsx,js,jsx}",
     "format": "prettier --write src/**/*.{ts,tsx,js,jsx}",
+    "test": "bun test",
     "test:lint": "next lint",
     "test:prettier": "prettier --check ./src",
     "prepare": "husky",

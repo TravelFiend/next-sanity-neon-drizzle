@@ -1,21 +1,24 @@
 'use client';
 
+import type { AddressActionState } from '@/_actions/address/addressActions';
 import type { VerifiedAddress } from '@/types/address';
 
 type VerifiedAddressSelectorProps = {
-  addressData: VerifiedAddress;
+  addressData: Extract<AddressActionState, { fromAPI: true }> & {
+    data: VerifiedAddress;
+  };
 };
 
 const VerifiedAddressSelector: React.FC<VerifiedAddressSelectorProps> = ({
   addressData
 }) => {
   const { streetAddress, secondaryAddress, city, state, ZIPCode, ZIPPlus4 } =
-    addressData.address;
+    addressData.data.address;
 
   const verifiedAddress = `${streetAddress}, ${secondaryAddress}, ${city}, ${state} ${ZIPCode}${ZIPPlus4 ? `-${ZIPPlus4}` : ''}`;
 
   return (
-    <div>
+    <div className="h-full w-full">
       <button onClick={() => console.warn('MAKE THIS POPULATE THE FORM!')}>
         {verifiedAddress}
       </button>

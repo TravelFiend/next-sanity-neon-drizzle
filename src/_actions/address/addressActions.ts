@@ -14,7 +14,7 @@ import type {
   VerifiedAddress
 } from '@/types/address';
 
-type AddressActionState =
+export type AddressActionState =
   | ActionState<AddressForm>
   | (ActionState<VerifiedAddress> & { fromAPI: true });
 
@@ -102,8 +102,8 @@ const addAddress = async (
 
     return {
       success: true,
-      data: verifiedAddress,
-      fromAPI: true
+      fromAPI: true,
+      data: verifiedAddress
     };
   } catch (err) {
     return {
@@ -118,3 +118,45 @@ const addAddress = async (
 };
 
 export default addAddress;
+
+// const it = {
+//   city: 'Rock River',
+//   state: 'OH',
+//   zipCode: '44111',
+//   address1: '19319 Riverwood Ave',
+//   address2: '',
+//   firstName: 'Mike',
+//   lastName: 'Grace',
+//   email: 'you@me.com',
+//   phoneNumber: '+1 (440) 829-5501',
+//   firm: '',
+//   address: {
+//     streetAddress: '19319 RIVERWOOD AVE',
+//     streetAddressAbbreviation: '19319 RIVERWOOD AVE',
+//     secondaryAddress: '',
+//     cityAbbreviation: 'ROCKY RIVER',
+//     city: 'ROCKY RIVER',
+//     state: 'OH',
+//     ZIPCode: '44116',
+//     ZIPPlus4: '2734',
+//     urbanization: ''
+//   },
+//   additionalInfo: {
+//     deliveryPoint: '19',
+//     carrierRoute: 'C008',
+//     DPVConfirmation: 'Y',
+//     DPVCMRA: 'N',
+//     business: 'N',
+//     centralDeliveryPoint:'',
+//     vacant:'N'
+//   },
+//   'corrections': [
+//     {'code':'','text':''}
+//   ],
+//   matches:[
+//     {
+//       code: '31',
+//       text: 'Single Response - exact match'
+//     }
+//   ]
+// }

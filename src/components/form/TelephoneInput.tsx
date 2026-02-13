@@ -10,8 +10,8 @@ type TelephoneInputProps = {
   placeholder?: string;
   defaultValue?: string;
   className?: string;
-  required?: boolean;
   pattern?: string;
+  required?: boolean;
 };
 
 const TelephoneInput: React.FC<TelephoneInputProps> = ({
@@ -20,8 +20,8 @@ const TelephoneInput: React.FC<TelephoneInputProps> = ({
   placeholder = '+1 (123) 555-4321',
   defaultValue = '',
   className,
-  required = true,
-  pattern = '\\+1 \\([0-9]{3}\\) [0-9]{3}-[0-9]{4}'
+  pattern = '\\+1 \\([0-9]{3}\\) [0-9]{3}-[0-9]{4}',
+  required = true
 }) => {
   const [value, setValue] = useState(`+1 ${defaultValue}`);
   const inputRef = useRef<HTMLInputElement>(null);

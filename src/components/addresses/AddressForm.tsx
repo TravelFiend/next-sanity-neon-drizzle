@@ -1,7 +1,9 @@
 'use client';
 
 import { useActionState } from 'react';
-import addAddress from '@/_actions/address/addressActions';
+import addAddress, {
+  AddressActionState
+} from '@/_actions/address/addressActions';
 import InputWLabel from '../form/InputWLabel';
 import SelectWLabel from '../form/SelectWLabel';
 import SubmitButton from '../form/SubmitButton';
@@ -11,7 +13,7 @@ import VerifiedAddressSelector from './VerifiedAddressSelector';
 import type { AddressForm as AddressFormType } from '@/_zodSchemas/frontend/addressForm';
 import type { VerifiedAddress } from '@/types/address';
 
-const AddressForm: React.FC = () => {
+const AddressForm = () => {
   const [addressState, addressAction, isPending] = useActionState(
     addAddress,
     null
@@ -26,9 +28,21 @@ const AddressForm: React.FC = () => {
   };
 
   const isVerifiedAddress = (
-    data: unknown
-  ): data is VerifiedAddress & { fromAPI: true } => {
-    return !!data && typeof data === 'object' && 'fromAPI' in data;
+    state: unknown
+  ): state is Extract<AddressActionState, { fromAPI: true }> & {
+    data: VerifiedAddress;
+  } => {
+    if (typeof state !== 'object' || !state) return false;
+
+    const stateRecord = state as Record<string, unknown>;
+    const hasData = typeof stateRecord.data === 'object' && !!stateRecord.data;
+
+    if (!!stateRecord.success && !!stateRecord.fromAPI && hasData) {
+      const dataObj = stateRecord.data as Record<string, unknown>;
+      return 'address' in dataObj;
+    }
+
+    return false;
   };
 
   return (
@@ -131,12 +145,11 @@ const AddressForm: React.FC = () => {
               ))
             : null}
         </ul>
-
         <SubmitButton isPending={isPending} className="w-5/12" />
       </form>
 
-      {addressState?.success && isVerifiedAddress(addressState.data) && (
-        <VerifiedAddressSelector addressData={addressState.data} />
+      {addressState?.success && isVerifiedAddress(addressState) && (
+        <VerifiedAddressSelector addressData={addressState} />
       )}
     </>
   );
