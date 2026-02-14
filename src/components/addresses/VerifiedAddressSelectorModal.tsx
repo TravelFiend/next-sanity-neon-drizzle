@@ -1,12 +1,11 @@
+import { AddressActionState } from '@/_actions/address/addressActions';
 import ModalWrapper from '../common/ModalWrapper';
 import VerifiedAddressSelector from './VerifiedAddressSelector';
 import type { VerifiedAddress } from '@/types/address';
 
 type VerifiedAddressSelectorModalProps = {
   onClose: () => void;
-  addressData: {
-    success: true;
-    fromAPI: true;
+  addressData: Extract<AddressActionState, { fromAPI: true }> & {
     data: VerifiedAddress;
   };
 };
