@@ -38,8 +38,12 @@ const AddressForm = () => {
     const hasData = typeof stateRecord.data === 'object' && !!stateRecord.data;
 
     if (!!stateRecord.success && !!stateRecord.fromAPI && hasData) {
-      const dataObj = stateRecord.data as Record<string, unknown>;
-      return 'address' in dataObj;
+      const dataObj = stateRecord.data as Record<string, object>;
+      return (
+        typeof dataObj.uspsResponse === 'object' &&
+        'uspsResponse' in dataObj &&
+        dataObj.uspsResponse !== null
+      );
     }
 
     return false;

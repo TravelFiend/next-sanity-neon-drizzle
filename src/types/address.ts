@@ -1,5 +1,13 @@
 import { Recipient } from '@/_zodSchemas/recipientZod';
 
+type InputAddress = {
+  streetAddress: string;
+  secondaryAddress: string;
+  city: string;
+  state: string;
+  ZIPCode: string;
+};
+
 type USPSAddressSuccessResponse = {
   firm: string;
   address: {
@@ -41,9 +49,14 @@ type USPSAddressErrorResponse = {
   };
 };
 
-type VerifiedAddress = USPSAddressSuccessResponse & Recipient;
+type VerifiedAddress = {
+  formUser: Recipient;
+  formAddress: InputAddress;
+  uspsResponse: USPSAddressSuccessResponse;
+};
 
 export type {
+  InputAddress,
   USPSAddressSuccessResponse,
   USPSAddressErrorResponse,
   VerifiedAddress

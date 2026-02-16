@@ -13,7 +13,7 @@ const VerifiedAddressSelector: React.FC<VerifiedAddressSelectorProps> = ({
   addressData
 }) => {
   const { streetAddress, secondaryAddress, city, state, ZIPCode, ZIPPlus4 } =
-    addressData.data.address;
+    addressData.data.uspsResponse.address;
 
   const verifiedAddress = `${streetAddress}, ${secondaryAddress}, ${city}, ${state} ${ZIPCode}${ZIPPlus4 ? `-${ZIPPlus4}` : ''}`;
 

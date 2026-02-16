@@ -14,7 +14,7 @@ import type {
   VerifiedAddress
 } from '@/types/address';
 
-type AddressActionState =
+export type AddressActionState =
   | ActionState<AddressForm>
   | (ActionState<VerifiedAddress> & { fromAPI: true });
 
@@ -56,13 +56,22 @@ const addAddress = async (
       };
     }
 
-    const params = new URLSearchParams({
+    const formUser = {
+      firstName: addressFormData.firstName,
+      lastName: addressFormData.lastName,
+      email: addressFormData.email,
+      phoneNumber: addressFormData.phoneNumber
+    };
+
+    const formAddress = {
       streetAddress: addressFormData.address1,
       secondaryAddress: addressFormData.address2 ?? '',
       city: addressFormData.city,
       state: addressFormData.state,
       ZIPCode: addressFormData.zipCode
-    });
+    };
+
+    const params = new URLSearchParams({ ...formAddress });
 
     const addressRes = await fetch(`${USPS_ADDRESS_URL}?${params.toString()}`, {
       method: 'GET',
@@ -96,8 +105,9 @@ const addAddress = async (
     }
 
     const verifiedAddress: VerifiedAddress = {
-      ...addressFormData,
-      ...addressJSON
+      formUser: { ...formUser },
+      formAddress: { ...formAddress },
+      uspsResponse: { ...addressJSON }
     };
 
     return {
@@ -117,4 +127,4 @@ const addAddress = async (
   }
 };
 
-export { addAddress as default, type AddressActionState };
+export default addAddress;
