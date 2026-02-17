@@ -1,7 +1,7 @@
 'use client';
 
 import AddressForm from './AddressForm';
-import React, { useActionState } from 'react';
+import React, { useActionState, useEffect, useState } from 'react';
 import ModalWrapper from '../common/ModalWrapper';
 import addAddress from '@/_actions/address/addressActions';
 import { isVerifiedAddress } from '@/types/address';
@@ -12,15 +12,27 @@ type AddressFormModalProps = {
 };
 
 const AddressFormModal = ({ onClose }: AddressFormModalProps) => {
+  const [showSelector, setShowSelector] = useState<boolean>(false);
   const [addressState, addressAction, isPending] = useActionState(
     addAddress,
     null
   );
 
+  useEffect(() => {
+    if (addressState?.success && isVerifiedAddress(addressState)) {
+      setShowSelector(true);
+    }
+  }, [addressState]);
+
   return (
-    <ModalWrapper onClose={onClose}>
-      {addressState?.success && isVerifiedAddress(addressState) ? (
-        <VerifiedAddressSelector addressData={addressState} />
+    <ModalWrapper onClose={showSelector ? undefined : onClose}>
+      {addressState?.success &&
+      isVerifiedAddress(addressState) &&
+      showSelector ? (
+        <VerifiedAddressSelector
+          addressData={addressState}
+          onClose={() => setShowSelector(false)}
+        />
       ) : (
         <AddressForm
           externalState={addressState}

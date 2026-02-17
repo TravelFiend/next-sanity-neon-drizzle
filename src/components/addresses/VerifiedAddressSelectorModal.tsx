@@ -16,7 +16,7 @@ const VerifiedAddressSelectorModal = ({
 }: VerifiedAddressSelectorModalProps) => {
   return (
     <ModalWrapper onClose={onClose}>
-      <VerifiedAddressSelector addressData={addressData} />
+      <VerifiedAddressSelector addressData={addressData} onClose={onClose} />
     </ModalWrapper>
   );
 };

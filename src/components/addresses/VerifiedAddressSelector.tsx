@@ -8,10 +8,12 @@ type VerifiedAddressSelectorProps = {
   addressData: Extract<AddressActionState, { fromAPI: true }> & {
     data: VerifiedAddress;
   };
+  onClose: () => void;
 };
 
 const VerifiedAddressSelector = ({
-  addressData
+  addressData,
+  onClose
 }: VerifiedAddressSelectorProps) => {
   const {
     streetAddress: inputStreet,
@@ -35,11 +37,19 @@ const VerifiedAddressSelector = ({
 
   return (
     <div className="flex h-full w-full flex-col items-start">
-      <p className="text-2xl underline">Select preferred address:</p>
+      <div className="flex w-full justify-between">
+        <p className="text-2xl underline">Select preferred address:</p>
+        <button
+          className="cursor-pointer hover:text-secondary-light"
+          onClick={onClose}
+        >
+          X
+        </button>
+      </div>
       <p className="py-4">
         Submitted Address &#40;
         <span className="text-secondary-light">continue editing</span>
-        &#41;:{' '}
+        &#41;:
       </p>
       <Button
         onClick={() => console.warn('MAKE THIS POPULATE THE FORM!')}

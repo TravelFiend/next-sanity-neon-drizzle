@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 
 type ModalWrapperProps = {
   children: React.ReactNode;
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 const ModalWrapper = ({ children, onClose }: ModalWrapperProps) => {
