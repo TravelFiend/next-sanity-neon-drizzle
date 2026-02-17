@@ -9,15 +9,29 @@ import SelectWLabel from '../form/SelectWLabel';
 import SubmitButton from '../form/SubmitButton';
 import states from '@/lib/constants/states';
 import TelephoneInputWLabel from '../form/TelephoneInputWLabel';
-import VerifiedAddressSelector from './VerifiedAddressSelector';
+// import VerifiedAddressSelector from './VerifiedAddressSelector';
 import type { AddressForm as AddressFormType } from '@/_zodSchemas/frontend/addressForm';
-import type { VerifiedAddress } from '@/types/address';
+// import type { VerifiedAddress } from '@/types/address';
 
-const AddressForm = () => {
-  const [addressState, addressAction, isPending] = useActionState(
+type AddressFormProps = {
+  externalState?: AddressActionState | null;
+  externalAction?: (formData: FormData) => void;
+  externalIsPending?: boolean;
+};
+
+const AddressForm = ({
+  externalState,
+  externalAction,
+  externalIsPending
+}: AddressFormProps) => {
+  const [internalState, internalAction, internalIsPending] = useActionState(
     addAddress,
     null
   );
+
+  const addressState = externalState ?? internalState;
+  const addressAction = externalAction ?? internalAction;
+  const isPending = externalIsPending ?? internalIsPending;
 
   const getDefault = (key: keyof AddressFormType) => {
     if (!addressState?.success) {
@@ -25,28 +39,6 @@ const AddressForm = () => {
       return formData?.[key] ?? undefined;
     }
     return undefined;
-  };
-
-  const isVerifiedAddress = (
-    state: unknown
-  ): state is Extract<AddressActionState, { fromAPI: true }> & {
-    data: VerifiedAddress;
-  } => {
-    if (typeof state !== 'object' || !state) return false;
-
-    const stateRecord = state as Record<string, unknown>;
-    const hasData = typeof stateRecord.data === 'object' && !!stateRecord.data;
-
-    if (!!stateRecord.success && !!stateRecord.fromAPI && hasData) {
-      const dataObj = stateRecord.data as Record<string, object>;
-      return (
-        typeof dataObj.uspsResponse === 'object' &&
-        'uspsResponse' in dataObj &&
-        dataObj.uspsResponse !== null
-      );
-    }
-
-    return false;
   };
 
   return (
@@ -152,9 +144,9 @@ const AddressForm = () => {
         <SubmitButton isPending={isPending} className="w-5/12" />
       </form>
 
-      {addressState?.success && isVerifiedAddress(addressState) && (
+      {/* {addressState?.success && isVerifiedAddress(addressState) && (
         <VerifiedAddressSelector addressData={addressState} />
-      )}
+      )} */}
     </>
   );
 };

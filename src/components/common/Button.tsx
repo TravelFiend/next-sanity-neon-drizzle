@@ -18,7 +18,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={conditionalClasses(
-        'rounded-lg bg-primary-dark p-2 shadow-md hover:bg-gray-200',
+        'cursor-pointer rounded-lg bg-primary-dark p-2 shadow-md hover:bg-gray-200',
         className
       )}
       type="button"
