@@ -5,5 +5,5 @@ type CheckoutPageProps = {
 };
 
 export default function CheckoutPage({ isOpen = false }: CheckoutPageProps) {
-  return <AddressForm />;
+  return <AddressForm isEmbedded={true} />;
 }

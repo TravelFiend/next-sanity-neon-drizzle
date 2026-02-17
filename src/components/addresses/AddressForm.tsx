@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import addAddress, {
   AddressActionState
 } from '@/_actions/address/addressActions';
@@ -9,21 +10,24 @@ import SelectWLabel from '../form/SelectWLabel';
 import SubmitButton from '../form/SubmitButton';
 import states from '@/lib/constants/states';
 import TelephoneInputWLabel from '../form/TelephoneInputWLabel';
-// import VerifiedAddressSelector from './VerifiedAddressSelector';
 import type { AddressForm as AddressFormType } from '@/_zodSchemas/frontend/addressForm';
-// import type { VerifiedAddress } from '@/types/address';
+import VerifiedAddressSelectorModal from './VerifiedAddressSelectorModal';
+import { isVerifiedAddress } from '@/types/address';
 
 type AddressFormProps = {
   externalState?: AddressActionState | null;
   externalAction?: (formData: FormData) => void;
   externalIsPending?: boolean;
+  isEmbedded?: boolean;
 };
 
 const AddressForm = ({
   externalState,
   externalAction,
-  externalIsPending
+  externalIsPending,
+  isEmbedded = false
 }: AddressFormProps) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [internalState, internalAction, internalIsPending] = useActionState(
     addAddress,
     null
@@ -32,6 +36,18 @@ const AddressForm = ({
   const addressState = externalState ?? internalState;
   const addressAction = externalAction ?? internalAction;
   const isPending = externalIsPending ?? internalIsPending;
+
+  useEffect(() => {
+    if (
+      isEmbedded &&
+      addressState &&
+      addressState.success &&
+      isVerifiedAddress(addressState) &&
+      !isModalOpen
+    ) {
+      setIsModalOpen(true);
+    }
+  }, [addressState, isEmbedded]);
 
   const getDefault = (key: keyof AddressFormType) => {
     if (!addressState?.success) {
@@ -144,9 +160,12 @@ const AddressForm = ({
         <SubmitButton isPending={isPending} className="w-5/12" />
       </form>
 
-      {/* {addressState?.success && isVerifiedAddress(addressState) && (
-        <VerifiedAddressSelector addressData={addressState} />
-      )} */}
+      {isEmbedded && isModalOpen && isVerifiedAddress(addressState) ? (
+        <VerifiedAddressSelectorModal
+          onClose={() => setIsModalOpen(false)}
+          addressData={addressState}
+        />
+      ) : null}
     </>
   );
 };

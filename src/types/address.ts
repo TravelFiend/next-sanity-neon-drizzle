@@ -1,3 +1,4 @@
+import { AddressActionState } from '@/_actions/address/addressActions';
 import { Recipient } from '@/_zodSchemas/recipientZod';
 
 type InputAddress = {
@@ -55,9 +56,33 @@ type VerifiedAddress = {
   uspsResponse: USPSAddressSuccessResponse;
 };
 
-export type {
-  InputAddress,
-  USPSAddressSuccessResponse,
-  USPSAddressErrorResponse,
-  VerifiedAddress
+// typeguard
+const isVerifiedAddress = (
+  state: unknown
+): state is Extract<AddressActionState, { fromAPI: true }> & {
+  data: VerifiedAddress;
+} => {
+  if (typeof state !== 'object' || !state) return false;
+
+  const stateRecord = state as Record<string, unknown>;
+  const hasData = typeof stateRecord.data === 'object' && !!stateRecord.data;
+
+  if (!!stateRecord.success && !!stateRecord.fromAPI && hasData) {
+    const dataObj = stateRecord.data as Record<string, object>;
+    return (
+      typeof dataObj.uspsResponse === 'object' &&
+      'uspsResponse' in dataObj &&
+      dataObj.uspsResponse !== null
+    );
+  }
+
+  return false;
+};
+
+export {
+  type InputAddress,
+  type USPSAddressSuccessResponse,
+  type USPSAddressErrorResponse,
+  type VerifiedAddress,
+  isVerifiedAddress
 };

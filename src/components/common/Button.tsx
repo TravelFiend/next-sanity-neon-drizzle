@@ -4,7 +4,7 @@ import conditionalClasses from '@/lib/utils/conditionalClasses';
 
 type ButtonProps = {
   children: React.ReactNode;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick: () => void;
   ariaLabel: string;
   className?: string;
 };
