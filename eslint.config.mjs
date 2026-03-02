@@ -1,41 +1,58 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from 'eslint-plugin-storybook';
-import { fixupConfigRules } from '@eslint/compat';
+import { defineConfig } from 'eslint/config';
 import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import storybook from 'eslint-plugin-storybook';
 import pluginJest from 'eslint-plugin-jest';
 import drizzle from 'eslint-plugin-drizzle';
-import { FlatCompat } from '@eslint/eslintrc';
+import nextPlugin from '@next/eslint-plugin-next';
+import reactPlugin from 'eslint-plugin-react';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import studio from '@sanity/eslint-config-studio';
+import importPlugin from 'eslint-plugin-import';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
-
-const eslintConfig = [
+export default defineConfig([
   {
     ignores: [
-      '**/node_modules',
-      '**/dist',
-      '**/coverage',
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/coverage/**',
       '**/.env*',
-      '**/.sanity',
+      '**/.sanity/**',
       '**/README.md',
-      '**/src/sanity/types/generatedTypes.ts'
+      '**/src/sanity/types/generatedTypes.ts',
+      '.next/**',
+      'out/**',
+      'build/**'
     ]
   },
   ...studio,
-  ...compat.extends(
-    'next/core-web-vitals',
-    'next/typescript',
-    'plugin:jsx-a11y/recommended'
-  ),
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    plugins: {
+      '@next/next': nextPlugin
+    },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+      '@next/next/no-html-link-for-pages': 'error',
+      '@next/next/no-img-element': 'warn',
+      '@next/next/no-page-custom-font': 'warn',
+      '@next/next/no-sync-scripts': 'error',
+      '@next/next/no-title-in-document-head': 'error'
+    }
+  },
+  reactPlugin.configs.flat.recommended,
+  reactPlugin.configs.flat['jsx-runtime'],
+  {
+    plugins: {
+      'jsx-a11y': jsxA11y
+    },
+    rules: {
+      ...jsxA11y.configs.recommended.rules,
+      'react/prop-types': 'off'
+    }
+  },
   {
     files: ['**/*.test.{js,jsx,ts,tsx}'],
     plugins: { jest: pluginJest },
@@ -57,39 +74,34 @@ const eslintConfig = [
       ...drizzle.configs.recommended.rules
     }
   },
-  ...fixupConfigRules(
-    compat.extends(
-      'prettier'
-    )
-  ),
   {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      import: importPlugin
+    },
     settings: {
       'import/resolver': {
-        node: { paths: ['src'], extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-        alias: {
-          map: [
-            ['@', './src'],
-            ['@groq', './src/lib/actions/groqQueries'],
-            ['@sanityTypes', './src/sanity/types'],
-            ['@mocks', './src/components/__mocks__']
-          ],
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+          bun: true
+        },
+        node: {
+          paths: ['src'],
           extensions: ['.js', '.jsx', '.ts', '.tsx']
         }
       }
     },
     rules: {
+      'import/no-anonymous-default-export': 'error',
+      'import/order': ['error', { groups: ['builtin'] }],
+      'import/no-unresolved': 'error',
       'arrow-parens': ['error', 'as-needed'],
       'comma-dangle': ['error', 'never'],
       'consistent-return': 0,
       'consistent-this': ['error', 'that'],
       'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
-      'id-length': ['error', {
-        min: 2,
-        exceptions: ['S', 'e', '_', 't', 'i']
-      }],
-      'import/no-anonymous-default-export': 'error',
-      'import/order': ['error', { groups: ['builtin'] }],
-      'import/no-unresolved': 'error',
+      'id-length': ['error', { min: 2, exceptions: ['S', 'e', '_', 't', 'i'] }],
       'lines-around-comment': 0,
       'multiline-ternary': 'off',
       'no-alert': 'error',
@@ -99,17 +111,10 @@ const eslintConfig = [
       'no-unexpected-multiline': 'error',
       'no-unused-vars': 'error',
       'prefer-const': ['error', { destructuring: 'all' }],
-      'quotes': ['error', 'single', { avoidEscape: true }],
-      'semi': ['error', 'always'],
-      'space-before-blocks': ['error', 'always'],
-      '@next/next/no-html-link-for-pages': 'error',
-      '@next/next/no-img-element': 'warn',
-      '@next/next/no-page-custom-font': 'warn',
-      '@next/next/no-sync-scripts': 'error',
-      '@next/next/no-title-in-document-head': 'error'
+      quotes: ['error', 'single', { avoidEscape: true }],
+      semi: ['error', 'always'],
+      'space-before-blocks': ['error', 'always']
     }
   },
   ...storybook.configs['flat/recommended']
-];
-
-export default eslintConfig;
+]);

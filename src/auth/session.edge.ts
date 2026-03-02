@@ -1,6 +1,6 @@
 'use server';
 
-//  Functions in this file CAN be used in middleware/api routes
+//  Functions in this file CAN be used in proxy/api routes
 import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { sessionSchema } from '@/_zodSchemas/authZod';

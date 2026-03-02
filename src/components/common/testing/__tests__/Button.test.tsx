@@ -7,7 +7,12 @@ import user from '@testing-library/user-event';
 describe('Button', () => {
   it('Has no accessibility vilations', async () => {
     const { container } = render(
-      <Button onClick={() => {}} ariaLabel="Click Me">
+      <Button
+        onClick={() => {
+          /* noop */
+        }}
+        ariaLabel="Click Me"
+      >
         Click Me
       </Button>
     );
@@ -16,7 +21,9 @@ describe('Button', () => {
   });
 
   it('Should render a clickable button and fire onClick when clicked', async () => {
-    const handleClickMock = mock(() => {});
+    const handleClickMock = mock(() => {
+      /* noop */
+    });
     render(
       <Button onClick={handleClickMock} ariaLabel="Click Me">
         Click Me
@@ -34,7 +41,9 @@ describe('Button', () => {
   it('Should render with classname passed as prop', () => {
     render(
       <Button
-        onClick={() => {}}
+        onClick={() => {
+          /* noop */
+        }}
         ariaLabel="Click Me"
         className="text-green-500"
       >

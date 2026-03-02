@@ -6,9 +6,15 @@ import { cardsMock } from '../__mocks__/carouselMock';
 import user from '@testing-library/user-event';
 
 const mockEmblaApi = {
-  scrollPrev: () => {},
-  scrollNext: () => {},
-  reInit: () => {}
+  scrollPrev: () => {
+    /* noop */
+  },
+  scrollNext: () => {
+    /* noop */
+  },
+  reInit: () => {
+    /* noop */
+  }
 };
 
 // Mock useEmblaCarousel hook
@@ -19,8 +25,12 @@ mock.module('embla-carousel-react', () => ({
 }));
 
 beforeEach(() => {
-  mockEmblaApi.scrollPrev = mock(() => {});
-  mockEmblaApi.scrollNext = mock(() => {});
+  mockEmblaApi.scrollPrev = mock(() => {
+    /* noop */
+  });
+  mockEmblaApi.scrollNext = mock(() => {
+    /* noop */
+  });
 });
 
 describe('Carousel component', () => {
