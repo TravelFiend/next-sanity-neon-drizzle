@@ -1,15 +1,18 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
-import type { BasicLink, SecondLevelLinks } from '@sanityTypes/generatedTypes';
+import type {
+  BasicLink,
+  SecondLevelLinks as SecondLevelLinksType
+} from '@sanityTypes/generatedTypes';
 
 const nestedLinksPreview = (
-  nestedLinks?: SecondLevelLinks[] | BasicLink[]
+  nestedLinks?: SecondLevelLinksType[] | BasicLink[]
 ): string => {
   if (!nestedLinks || nestedLinks.length === 0) return '';
 
   const allChildren = nestedLinks.map(link => {
     const isSecondLevel = 'secondLevelLink' in link;
     const data = isSecondLevel
-      ? (link as SecondLevelLinks).secondLevelLink
+      ? (link as SecondLevelLinksType).secondLevelLink
       : (link as BasicLink);
 
     const internalText = data?.internalLink?.linkText;
@@ -63,7 +66,7 @@ const SecondLevelLinks = defineType({
 });
 
 const isUniqueWithinArray = (
-  links: SecondLevelLinks[] | undefined
+  links: SecondLevelLinksType[] | undefined
 ): boolean => {
   if (!links) return true;
 
@@ -95,7 +98,7 @@ const NavTab = defineType({
       validation: Rule =>
         Rule.custom((secondLevelLinks: unknown) => {
           return isUniqueWithinArray(
-            secondLevelLinks as SecondLevelLinks[] | undefined
+            secondLevelLinks as SecondLevelLinksType[] | undefined
           )
             ? true
             : 'Second-level link slugs must be unique within the tab.';
@@ -113,7 +116,9 @@ const NavTab = defineType({
       const internalLinkText = selection.internalLinkText as string | undefined;
       const externalLinkText = selection.externalLinkText as string | undefined;
       const externalLinkURL = selection.externalLinkURL as string | undefined;
-      const childLinks = selection.childLinks as SecondLevelLinks[] | undefined;
+      const childLinks = selection.childLinks as
+        | SecondLevelLinksType[]
+        | undefined;
 
       const displayTitle =
         internalLinkText || externalLinkText || externalLinkURL || 'Untitled';

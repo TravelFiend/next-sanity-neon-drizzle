@@ -8,7 +8,7 @@ type ContentBlocksProps = {
   contentBlocks: HomepageContentBlocksRes;
 };
 
-const ContentBlocks: React.FC<ContentBlocksProps> = ({ contentBlocks }) => {
+const ContentBlocks = ({ contentBlocks }: ContentBlocksProps) => {
   return (
     <>
       {contentBlocks?.map((block, idx) => {

@@ -6,7 +6,7 @@ type FooterProps = {
   footerData: FooterRes;
 };
 
-const Footer: React.FC<FooterProps> = ({ footerData }) => {
+const Footer = ({ footerData }: FooterProps) => {
   if (!footerData) return null;
 
   const { copyrightText, siteLinks, legalLinks, socialLinks } = footerData;

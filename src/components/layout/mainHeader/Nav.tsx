@@ -2,7 +2,7 @@
 
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, MouseEvent } from 'react';
 import MobileSecondLinks from './mobile/MobileSecondLinks';
 import { usePathname } from 'next/navigation';
 import DesktopSubNav from './desktop/DesktopSubNav';
@@ -26,7 +26,7 @@ export type BaseSubNavProps = {
   currentChildren?: SecondLevelLinksRes;
 };
 
-const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
+const Nav = ({ linkData, user }: LinkDataProps) => {
   const [areLinksOpen, setAreLinksOpen] = useState(false);
   const [areChildLinksOpen, setAreChildLinksOpen] = useState(false);
   const [parentLink, setParentLink] = useState<string | undefined>(undefined);
@@ -35,6 +35,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
   const pathName = usePathname();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAreLinksOpen(false);
     setAreChildLinksOpen(false);
   }, [pathName]);
@@ -48,7 +49,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
     }
   };
 
-  const handleMainLinkClick = (evt: React.MouseEvent<HTMLElement>) => {
+  const handleMainLinkClick = (evt: MouseEvent<HTMLElement>) => {
     const theKids = linkData?.filter(
       singleLinkData =>
         singleLinkData?.link?.internalLink?.linkText === evt.currentTarget.id
@@ -123,7 +124,7 @@ const Nav: React.FC<LinkDataProps> = ({ linkData, user }) => {
       <ul
         className={conditionalClasses(
           'absolute left-1/6 flex w-5/6 flex-col justify-center bg-lime-900 transition-transform sm:static sm:left-0 sm:h-full sm:w-full sm:translate-x-0 sm:flex-row sm:items-center',
-          areLinksOpen ? '-translate-x-0' : 'translate-x-full'
+          areLinksOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
         <AccountButton isMobile={true} user={!!user} />

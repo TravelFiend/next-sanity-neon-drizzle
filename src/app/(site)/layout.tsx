@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import MainHeader from '@/components/layout/mainHeader/MainHeader';
 import Footer from '@/components/layout/Footer';
 import { getSiteSettings } from '@groq/queries/siteSettings';
@@ -7,7 +7,7 @@ import { SanityLive } from '@/sanity/utils/live';
 export default async function siteLayout({
   children
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const siteSettingsData = await getSiteSettings();
 

@@ -6,7 +6,7 @@ type CTAButtonProps = {
   linkData: HeroBlockRes['ctaButton'];
 };
 
-const CTAButton: React.FC<CTAButtonProps> = ({ linkData }) => {
+const CTAButton = ({ linkData }: CTAButtonProps) => {
   if (!linkData) return null;
   const { link, isDark } = linkData;
 

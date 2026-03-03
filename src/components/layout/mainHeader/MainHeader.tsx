@@ -8,7 +8,7 @@ type MainHeaderProps = {
   navData: MainNavRes;
 };
 
-const MainHeader: React.FC<MainHeaderProps> = async ({ navData }) => {
+const MainHeader = async ({ navData }: MainHeaderProps) => {
   if (!navData) return null;
 
   const user = await getCurrentUser({

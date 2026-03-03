@@ -7,7 +7,7 @@ type TextSectionProps = {
   } & TextBlockRes;
 };
 
-const TextSection: React.FC<TextSectionProps> = ({ textData }) => {
+const TextSection = ({ textData }: TextSectionProps) => {
   const { title, subtitle, body, alignment } = textData;
 
   return (

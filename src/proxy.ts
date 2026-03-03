@@ -10,7 +10,7 @@ const SESSION_EXPIRATION = 60 * 60 * 24 * 7;
 
 const protectedCustomerRoutes = ['/account'];
 
-const middlewareAuth = async (request: NextRequest) => {
+const proxyAuth = async (request: NextRequest) => {
   const pathArray = request.nextUrl.pathname.split('/');
 
   if (protectedCustomerRoutes.includes(`/${pathArray[1]}`)) {
@@ -24,8 +24,8 @@ const middlewareAuth = async (request: NextRequest) => {
   }
 };
 
-const middleware = async (request: NextRequest) => {
-  const response = (await middlewareAuth(request)) ?? NextResponse.next();
+const proxy = async (request: NextRequest) => {
+  const response = (await proxyAuth(request)) ?? NextResponse.next();
 
   const sessionId = request.cookies.get(COOKIE_SESSION_KEY)?.value;
   if (sessionId) {
@@ -57,4 +57,4 @@ export const config = {
   ]
 };
 
-export default middleware;
+export default proxy;

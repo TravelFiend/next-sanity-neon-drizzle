@@ -3,7 +3,7 @@ import {
   PatchEvent,
   set,
   type StringInputProps,
-  StringSchemaType
+  type StringSchemaType
 } from 'sanity';
 
 const colorMap = {

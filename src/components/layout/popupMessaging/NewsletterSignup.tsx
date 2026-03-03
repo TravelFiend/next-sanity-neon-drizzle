@@ -10,7 +10,7 @@
 //   onClose: React.Dispatch<React.SetStateAction<void>>
 // };
 
-// const AuthContainer: React.FC<AuthContainerProps> = ({ onClose }) => {
+// const AuthContainer = ({ onClose }: AuthContainerProps) => {
 //   const [mounted, setMounted] = useState(false);
 //   const [isSignUp, setIsSignUp] = useState<boolean>(true);
 

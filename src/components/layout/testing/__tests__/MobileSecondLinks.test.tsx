@@ -22,8 +22,12 @@ const getProps = (
 });
 
 beforeEach(() => {
-  setIsOpenMock = mock(() => {});
-  setAreChildrenOpenMock = mock(() => {});
+  setIsOpenMock = mock(() => {
+    /* noop */
+  });
+  setAreChildrenOpenMock = mock(() => {
+    /* noop */
+  });
 });
 
 afterEach(() => {

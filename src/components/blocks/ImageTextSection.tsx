@@ -7,7 +7,7 @@ type ImageTextBlockProps = {
   imageTextData: ImageTextBlockRes;
 };
 
-const ImageTextBlock: React.FC<ImageTextBlockProps> = ({ imageTextData }) => {
+const ImageTextBlock = ({ imageTextData }: ImageTextBlockProps) => {
   if (!imageTextData) return null;
 
   const { image, imageAlignment, text } = imageTextData;
