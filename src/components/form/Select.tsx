@@ -4,11 +4,7 @@ type SelectProps = {
   required: boolean;
 };
 
-const Select: React.FC<SelectProps> = ({
-  idName,
-  options,
-  required = true
-}) => {
+const Select = ({ idName, options, required = true }: SelectProps) => {
   return (
     <select
       id={idName}

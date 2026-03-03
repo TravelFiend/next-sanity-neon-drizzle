@@ -3,7 +3,7 @@ type CartIconProps = {
   fill?: string;
 };
 
-const CartIcon: React.FC<CartIconProps> = ({ className, fill = '#fff' }) => {
+const CartIcon = ({ className, fill = '#fff' }: CartIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

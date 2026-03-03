@@ -7,12 +7,12 @@ type FormLabelProps = {
   required?: boolean;
 };
 
-const FormLabel: React.FC<FormLabelProps> = ({
+const FormLabel = ({
   htmlFor,
   labelText,
   className,
   required = true
-}) => {
+}: FormLabelProps) => {
   return (
     <label
       htmlFor={htmlFor}

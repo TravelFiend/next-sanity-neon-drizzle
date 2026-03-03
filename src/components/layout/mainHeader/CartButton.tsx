@@ -8,7 +8,7 @@ type CartButtonProps = {
   isMobile: boolean;
 };
 
-const CartButton: React.FC<CartButtonProps> = ({ isMobile }) => {
+const CartButton = ({ isMobile }: CartButtonProps) => {
   return (
     <li>
       <button

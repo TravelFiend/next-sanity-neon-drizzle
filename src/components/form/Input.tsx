@@ -14,7 +14,7 @@ type InputProps = {
 export const INPUT_STYLE =
   'rounded border bg-secondary p-2 text-primary-light placeholder:text-secondary-dark focus:outline-2 focus:outline-tertiary';
 
-const Input: React.FC<InputProps> = ({
+const Input = ({
   id,
   name,
   type = 'text',
@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({
   defaultValue,
   className,
   required = true
-}) => {
+}: InputProps) => {
   return (
     <input
       id={id}

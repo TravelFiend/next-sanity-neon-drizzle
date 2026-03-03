@@ -1,6 +1,13 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import {
+  useState,
+  useRef,
+  useEffect,
+  type ChangeEvent,
+  type ClipboardEvent,
+  type KeyboardEvent
+} from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import { INPUT_STYLE } from './Input';
 
@@ -14,7 +21,7 @@ type TelephoneInputProps = {
   required?: boolean;
 };
 
-const TelephoneInput: React.FC<TelephoneInputProps> = ({
+const TelephoneInput = ({
   id,
   name,
   placeholder = '+1 (123) 555-4321',
@@ -22,7 +29,7 @@ const TelephoneInput: React.FC<TelephoneInputProps> = ({
   className,
   pattern = '\\+1 \\([0-9]{3}\\) [0-9]{3}-[0-9]{4}',
   required = true
-}) => {
+}: TelephoneInputProps) => {
   const [value, setValue] = useState(`+1 ${defaultValue}`);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -56,7 +63,7 @@ const TelephoneInput: React.FC<TelephoneInputProps> = ({
     return formatted;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
 
     if (!inputValue.startsWith('+1 ')) {
@@ -87,7 +94,7 @@ const TelephoneInput: React.FC<TelephoneInputProps> = ({
     }, 0);
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const pastedText = e.clipboardData.getData('text');
     const digits = pastedText.replace(/[^\d]/g, '').slice(0, 10);
@@ -95,7 +102,7 @@ const TelephoneInput: React.FC<TelephoneInputProps> = ({
     setValue(formattedValue);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (inputRef.current) {
       const caretPos = inputRef.current.selectionStart || 0;
       const selectionEnd = inputRef.current.selectionEnd || 0;

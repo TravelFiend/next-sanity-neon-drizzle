@@ -12,7 +12,7 @@ type InputWLabelProps = {
   required?: boolean;
 };
 
-const InputWLabel: React.FC<InputWLabelProps> = ({
+const InputWLabel = ({
   forIdName,
   labelText,
   inputType,
@@ -21,7 +21,7 @@ const InputWLabel: React.FC<InputWLabelProps> = ({
   inputClassName,
   inputPattern,
   required = true
-}) => {
+}: InputWLabelProps) => {
   return (
     <>
       <Label

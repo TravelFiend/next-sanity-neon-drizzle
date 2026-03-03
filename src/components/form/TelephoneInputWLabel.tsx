@@ -11,7 +11,7 @@ type TelephoneInputWLabelProps = {
   required?: boolean;
 };
 
-const TelephoneInputWLabel: React.FC<TelephoneInputWLabelProps> = ({
+const TelephoneInputWLabel = ({
   forIdName,
   labelText,
   placeholder,
@@ -19,7 +19,7 @@ const TelephoneInputWLabel: React.FC<TelephoneInputWLabelProps> = ({
   inputClassName,
   inputPattern,
   required = true
-}) => {
+}: TelephoneInputWLabelProps) => {
   return (
     <>
       <Label

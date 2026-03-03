@@ -8,12 +8,12 @@ type SelectWLabelProps = {
   required?: boolean;
 };
 
-const SelectWLabel: React.FC<SelectWLabelProps> = ({
+const SelectWLabel = ({
   forIdName,
   labelText,
   options,
   required = true
-}) => {
+}: SelectWLabelProps) => {
   return (
     <>
       <Label

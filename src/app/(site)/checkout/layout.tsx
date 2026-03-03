@@ -1,8 +1,8 @@
 import ContentWrapper from '@/components/common/ContentWrapper';
-import React from 'react';
+import { ReactNode } from 'react';
 
 type CheckoutPageLayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export default function CheckoutPageLayout({

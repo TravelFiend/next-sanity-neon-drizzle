@@ -1,9 +1,10 @@
 'use client';
 
 import { createPortal } from 'react-dom';
+import type { ReactNode } from 'react';
 
 type ModalWrapperProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   onClose?: () => void;
 };
 

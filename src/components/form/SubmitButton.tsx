@@ -5,10 +5,7 @@ type SubmitButtonProps = {
   className?: string;
 };
 
-const SubmitButton: React.FC<SubmitButtonProps> = ({
-  isPending,
-  className
-}) => {
+const SubmitButton = ({ isPending, className }: SubmitButtonProps) => {
   return (
     <button
       type="submit"

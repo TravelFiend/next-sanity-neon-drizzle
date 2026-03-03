@@ -2,12 +2,12 @@
 
 // import { login, signup } from '@/_actions/auth/authActions';
 // import { getSessionUser, UserSession } from '@/auth/session';
-// import { useActionState, useEffect, useState } from 'react';
+// import { useActionState, useEffect, useState, type Dispatch, type SetStateAction  } from 'react';
 // import { createPortal } from 'react-dom';
 // import Logout from './Logout';
 
 // type AuthContainerProps = {
-//   onClose: React.Dispatch<React.SetStateAction<void>>
+//   onClose: Dispatch<SetStateAction<void>>
 // };
 
 // const AuthContainer = ({ onClose }: AuthContainerProps) => {

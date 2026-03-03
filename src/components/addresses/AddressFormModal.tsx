@@ -1,7 +1,7 @@
 'use client';
 
 import AddressForm from './AddressForm';
-import React, { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import ModalWrapper from '../common/ModalWrapper';
 import addAddress from '@/_actions/address/addressActions';
 import { isVerifiedAddress } from '@/types/address';
@@ -20,6 +20,7 @@ const AddressFormModal = ({ onClose }: AddressFormModalProps) => {
 
   useEffect(() => {
     if (addressState?.success && isVerifiedAddress(addressState)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowSelector(true);
     }
   }, [addressState]);
