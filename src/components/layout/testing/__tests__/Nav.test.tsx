@@ -25,7 +25,7 @@ describe('Nav component', () => {
     await user.click(burger);
 
     const navList = screen.getAllByRole('list');
-    expect(navList[0]).toHaveClass('-translate-x-0');
+    expect(navList[0]).toHaveClass('translate-x-0');
 
     setPathname('/art');
     rerender(<Nav linkData={navTabs} />);
@@ -46,7 +46,7 @@ describe('Nav component', () => {
 
     await user.click(burger);
 
-    expect(navList[0]).toHaveClass('-translate-x-0');
+    expect(navList[0]).toHaveClass('translate-x-0');
     expect(navList[1]).toHaveClass('translate-x-full');
 
     const mainLinkButton = screen.getByRole('button', { name: /music/i });
