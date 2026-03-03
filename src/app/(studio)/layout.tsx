@@ -1,12 +1,10 @@
+import type { ReactNode } from 'react';
+
 export const metadata = {
   title: 'E-Commerce-ism',
   description: 'We doin thangs, Next + Sanity'
 };
 
-export default function studioLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+export default function studioLayout({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }

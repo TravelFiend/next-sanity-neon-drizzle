@@ -11,13 +11,13 @@ type MobileThirdLinksProps = {
   isOpen: boolean;
 };
 
-const MobileThirdLinks: React.FC<MobileThirdLinksProps> = ({
+const MobileThirdLinks = ({
   thirdLevelLinks,
   parentLink,
   childSlug,
   childText,
   isOpen
-}) => {
+}: MobileThirdLinksProps) => {
   return (
     <ul
       className={conditionalClasses(

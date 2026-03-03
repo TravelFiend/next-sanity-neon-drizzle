@@ -1,9 +1,10 @@
+import type { ReactNode } from 'react';
 import Link from 'next/link';
 import ContentWrapper from '@/components/common/ContentWrapper';
 
 type AccountPageLayoutProps = {
   params: Promise<{ userId: string }>;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export default async function AccountPageLayout({

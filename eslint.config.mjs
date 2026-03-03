@@ -1,56 +1,33 @@
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import nextVitals from 'eslint-config-next/core-web-vitals';
 import storybook from 'eslint-plugin-storybook';
 import pluginJest from 'eslint-plugin-jest';
 import drizzle from 'eslint-plugin-drizzle';
-import nextPlugin from '@next/eslint-plugin-next';
-import reactPlugin from 'eslint-plugin-react';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
 import studio from '@sanity/eslint-config-studio';
 import importPlugin from 'eslint-plugin-import';
 
-export default defineConfig([
+const eslintConfig = defineConfig([
   {
-    ignores: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/coverage/**',
-      '**/.env*',
-      '**/.sanity/**',
-      '**/README.md',
-      '**/src/sanity/types/generatedTypes.ts',
-      '.next/**',
-      'out/**',
-      'build/**'
-    ]
+    files: ['src/sanity/**/*.{js,jsx,ts,tsx}'],
+    ...studio[0]
   },
-  ...studio,
   js.configs.recommended,
-  ...tseslint.configs.recommended,
   {
-    plugins: {
-      '@next/next': nextPlugin
-    },
+    files: ['**/*.{ts,tsx}'],
+    ...tseslint.configs.recommended[0],
     rules: {
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs['core-web-vitals'].rules,
-      '@next/next/no-html-link-for-pages': 'error',
-      '@next/next/no-img-element': 'warn',
-      '@next/next/no-page-custom-font': 'warn',
-      '@next/next/no-sync-scripts': 'error',
-      '@next/next/no-title-in-document-head': 'error'
+      'no-redeclare': 'off',
+      '@typescript-eslint/no-redeclare': ['error']
     }
   },
-  reactPlugin.configs.flat.recommended,
-  reactPlugin.configs.flat['jsx-runtime'],
+  ...nextVitals,
   {
-    plugins: {
-      'jsx-a11y': jsxA11y
-    },
+    files: ['**/*.{ts,tsx}'],
+    plugins: { drizzle },
     rules: {
-      ...jsxA11y.configs.recommended.rules,
-      'react/prop-types': 'off'
+      ...drizzle.configs.recommended.rules
     }
   },
   {
@@ -68,17 +45,8 @@ export default defineConfig([
     }
   },
   {
-    files: ['**/*.{ts,tsx}'],
-    plugins: { drizzle },
-    rules: {
-      ...drizzle.configs.recommended.rules
-    }
-  },
-  {
     files: ['**/*.{js,jsx,ts,tsx}'],
-    plugins: {
-      import: importPlugin
-    },
+    plugins: { import: importPlugin },
     settings: {
       'import/resolver': {
         typescript: {
@@ -93,6 +61,11 @@ export default defineConfig([
       }
     },
     rules: {
+      '@next/next/no-html-link-for-pages': 'error',
+      '@next/next/no-img-element': 'warn',
+      '@next/next/no-page-custom-font': 'warn',
+      '@next/next/no-sync-scripts': 'error',
+      '@next/next/no-title-in-document-head': 'error',
       'import/no-anonymous-default-export': 'error',
       'import/order': ['error', { groups: ['builtin'] }],
       'import/no-unresolved': 'error',
@@ -109,12 +82,27 @@ export default defineConfig([
       'no-implicit-coercion': 0,
       'no-new': 'error',
       'no-unexpected-multiline': 'error',
-      'no-unused-vars': 'error',
+      'no-unused-vars': 'off',
       'prefer-const': ['error', { destructuring: 'all' }],
       quotes: ['error', 'single', { avoidEscape: true }],
       semi: ['error', 'always'],
       'space-before-blocks': ['error', 'always']
     }
   },
-  ...storybook.configs['flat/recommended']
+  ...storybook.configs['flat/recommended'],
+  globalIgnores([
+    '**/node_modules/**',
+    '**/dist/**',
+    '**/coverage/**',
+    '**/.env*',
+    '**/.sanity/**',
+    '**/README.md',
+    '**/src/sanity/types/generatedTypes.ts',
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts'
+  ])
 ]);
+
+export default eslintConfig;

@@ -4,14 +4,14 @@ import { Fragment, useEffect } from 'react';
 import Link from 'next/link';
 import useHoverState from '@/lib/hooks/useHoverState';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import { BaseSubNavProps } from '../Nav';
+import type { BaseSubNavProps } from '../Nav';
 
-const DesktopSubNav: React.FC<BaseSubNavProps> = ({
+const DesktopSubNav = ({
   isOpen,
   setIsOpen,
   parentLink,
   currentChildren
-}) => {
+}: BaseSubNavProps) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverState();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const DesktopSubNav: React.FC<BaseSubNavProps> = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={conditionalClasses(
-        'absolute top-16 left-1/2 hidden h-72 w-11/12 -translate-x-1/2 flex-col flex-wrap bg-green-400 break-words transition-opacity sm:flex',
+        'wrap-break-words absolute top-16 left-1/2 hidden h-72 w-11/12 -translate-x-1/2 flex-col flex-wrap bg-green-400 transition-opacity sm:flex',
         isOpen ? 'opacity-100' : 'opacity-0'
       )}
     >

@@ -11,11 +11,11 @@ const colorMap = {
   black: '#000000'
 };
 
-const ColorPreviewRadio: React.FC<StringInputProps> = ({
+const ColorPreviewRadio = ({
   value,
   onChange,
   schemaType
-}) => {
+}: StringInputProps) => {
   const list = schemaType.options?.list ?? [];
 
   return (

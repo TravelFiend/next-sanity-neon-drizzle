@@ -8,7 +8,7 @@ type AccountButtonProps = {
   user?: User | null;
 };
 
-const AccountButton: React.FC<AccountButtonProps> = ({ isMobile, user }) => {
+const AccountButton = ({ isMobile, user }: AccountButtonProps) => {
   const handleAccountIconClick = () => {
     return user ? redirect(`/account/${user.id}`) : redirect('/signup');
   };

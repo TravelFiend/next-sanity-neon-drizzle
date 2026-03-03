@@ -13,7 +13,7 @@ type CarouselProps = {
   direction?: CarouselBlockRes['direction'];
 };
 
-const Carousel: React.FC<CarouselProps> = ({ cards, direction }) => {
+const Carousel = ({ cards, direction }: CarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     active: true,

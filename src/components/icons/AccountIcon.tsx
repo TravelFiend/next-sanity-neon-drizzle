@@ -3,10 +3,7 @@ type AccountIconProps = {
   fill?: string;
 };
 
-const AccountIcon: React.FC<AccountIconProps> = ({
-  className,
-  fill = '#fff'
-}) => {
+const AccountIcon = ({ className, fill = '#fff' }: AccountIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

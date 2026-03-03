@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import './globals.css';
 import { Rubik, EB_Garamond, Martian_Mono } from 'next/font/google';
 import { getSitewideMetaData } from '@groq/queries/siteSettings';
@@ -53,7 +54,7 @@ export const generateMetadata = async () => {
 export default async function RootLayout({
   children
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en" className="overflow-x-hidden">

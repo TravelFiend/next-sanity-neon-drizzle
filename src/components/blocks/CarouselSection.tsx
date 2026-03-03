@@ -5,7 +5,7 @@ type CarouselSectionProps = {
   carouselData: CarouselBlockRes;
 };
 
-const CarouselSection: React.FC<CarouselSectionProps> = ({ carouselData }) => {
+const CarouselSection = ({ carouselData }: CarouselSectionProps) => {
   const { images, direction } = carouselData;
 
   return (
