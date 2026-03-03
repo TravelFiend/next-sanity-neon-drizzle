@@ -12,19 +12,20 @@ type MobileSecondLinksProps = BaseSubNavProps & {
   setAreChildrenOpen: (areChildrenOpen: boolean) => void;
 };
 
-const MobileSecondLinks: React.FC<MobileSecondLinksProps> = ({
+const MobileSecondLinks = ({
   isOpen,
   setIsOpen,
   setAreChildrenOpen,
   parentLink,
   currentChildren
-}) => {
+}: MobileSecondLinksProps) => {
   const [expandedChild, setExpandedChild] =
     useState<SingleSecondLevelLinkRes | null>(null);
 
   const pathName = usePathname();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setExpandedChild(null);
   }, [pathName]);
 
@@ -47,7 +48,7 @@ const MobileSecondLinks: React.FC<MobileSecondLinksProps> = ({
     <ul
       className={conditionalClasses(
         'absolute left-1/6 flex w-5/6 flex-col bg-red-700 transition-transform sm:hidden',
-        isOpen ? '-translate-x-0' : 'translate-x-full'
+        isOpen ? 'translate-x-0' : 'translate-x-full'
       )}
     >
       <li className="cursor-pointer">

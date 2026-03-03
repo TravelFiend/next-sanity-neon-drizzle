@@ -18,7 +18,7 @@ type HeroSectionProps = {
 };
 // TODO: implement Sanity text shadow and text shadow color selections on FE
 
-const HeroSection: React.FC<HeroSectionProps> = ({ heroData, index }) => {
+const HeroSection = ({ heroData, index }: HeroSectionProps) => {
   if (!heroData) return null;
 
   const {

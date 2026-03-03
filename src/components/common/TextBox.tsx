@@ -10,13 +10,13 @@ type TextBoxProps = {
   className?: string;
 };
 
-const TextBox: React.FC<TextBoxProps> = ({
+const TextBox = ({
   title,
   subtitle,
   body,
   alignment,
   className
-}) => {
+}: TextBoxProps) => {
   return (
     <div
       className={conditionalClasses(

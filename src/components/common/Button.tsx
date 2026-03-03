@@ -1,20 +1,16 @@
 'use client';
 
 import conditionalClasses from '@/lib/utils/conditionalClasses';
+import type { ReactNode, MouseEvent } from 'react';
 
 type ButtonProps = {
-  children: React.ReactNode;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  children: ReactNode;
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   ariaLabel: string;
   className?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  onClick,
-  ariaLabel,
-  className
-}) => {
+const Button = ({ children, onClick, ariaLabel, className }: ButtonProps) => {
   return (
     <button
       className={conditionalClasses(

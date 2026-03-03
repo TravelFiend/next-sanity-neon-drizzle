@@ -16,7 +16,7 @@ type CloudinaryImgProps = {
   sizes?: string;
 };
 
-const CloudinaryImg: React.FC<CloudinaryImgProps> = ({
+const CloudinaryImg = ({
   src,
   alt,
   className = '',
@@ -24,7 +24,7 @@ const CloudinaryImg: React.FC<CloudinaryImgProps> = ({
   height,
   width,
   sizes = ''
-}) => {
+}: CloudinaryImgProps) => {
   if (!src || !alt) return null;
 
   return (

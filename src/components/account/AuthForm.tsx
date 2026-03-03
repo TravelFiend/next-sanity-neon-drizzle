@@ -8,7 +8,7 @@ type AuthFormProps = {
   mode: AuthMode;
 };
 
-const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
+const AuthForm = ({ mode }: AuthFormProps) => {
   const router = useRouter();
   const [authState, authActionFn, isPending] = useActionState(authAction, null);
 
@@ -34,10 +34,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode }) => {
   };
 
   return (
-    <form
-      className="mx-6 flex min-w-[340px] flex-col gap-4"
-      action={authActionFn}
-    >
+    <form className="mx-6 flex min-w-85 flex-col gap-4" action={authActionFn}>
       <input type="hidden" name="mode" value={mode} />
 
       {/* Email */}

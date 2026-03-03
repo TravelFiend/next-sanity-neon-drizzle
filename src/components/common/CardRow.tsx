@@ -6,7 +6,7 @@ type CardRowProps = {
   cards: CarouselBlockRes['images'];
 };
 
-const CardRow: React.FC<CardRowProps> = ({ cards }) => {
+const CardRow = ({ cards }: CardRowProps) => {
   if (!cards || !Array.isArray(cards) || !cards.length) {
     throw new Error('Invalid cards data provided to CardRow component');
   }
