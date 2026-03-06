@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import cleanSVG from '@/lib/utils/sanitizeSVG';
 import type { FooterRes, BasicLinkRes } from '@sanityTypes/derivedTypes';
 
 type FooterProps = {
@@ -57,7 +58,7 @@ const Footer = ({ footerData }: FooterProps) => {
                 >
                   <div
                     className="size-10 sm:size-15"
-                    dangerouslySetInnerHTML={{ __html: icon }}
+                    dangerouslySetInnerHTML={{ __html: cleanSVG(icon) }}
                   />
                 </a>
               </li>

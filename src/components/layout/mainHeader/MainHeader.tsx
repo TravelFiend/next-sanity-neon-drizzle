@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import cleanSVG from '@/lib/utils/sanitizeSVG';
 import type { MainNavRes } from '@sanityTypes/derivedTypes';
 import { getCurrentUser } from '@/_actions/auth/session.server';
 import Nav from './Nav';
@@ -22,7 +23,7 @@ const MainHeader = async ({ navData }: MainHeaderProps) => {
         <Link href="/">
           <div
             className="ml-6 flex size-12 items-center sm:size-16"
-            dangerouslySetInnerHTML={{ __html: companyLogo }}
+            dangerouslySetInnerHTML={{ __html: cleanSVG(companyLogo) }}
             aria-label="Company logo: Link to home page"
           />
         </Link>

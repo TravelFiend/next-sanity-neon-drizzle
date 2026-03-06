@@ -17,7 +17,8 @@ const nextConfig: NextConfig = {
   },
   serverExternalPackages: [
     'argon2',
-    'pg'
+    'pg',
+    'jsdom'
   ],
   transpilePackages: [
     '@sanity/ui',
