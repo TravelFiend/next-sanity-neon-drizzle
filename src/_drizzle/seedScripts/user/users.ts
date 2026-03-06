@@ -1,11 +1,10 @@
 import { db } from '../../db';
 import { seed } from 'drizzle-seed';
-import { users } from '../../schemas';
+import { usersTable } from '../../schemas';
 
 export const seedUsers = async () => {
-  await seed(db, { users }, { seed: 1 }).refine(funcs => ({
-    users: {
-      count: 10,
+  await seed(db, { usersTable }, { seed: 1 }).refine(funcs => ({
+    usersTable: {
       columns: {
         firstName: funcs.firstName(),
         lastName: funcs.lastName(),

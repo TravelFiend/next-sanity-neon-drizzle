@@ -1,7 +1,7 @@
 import ContentWrapper from '@/components/common/ContentWrapper';
 import AuthForm from '@/components/account/AuthForm';
 import { redirect } from 'next/navigation';
-import { getCurrentUser } from '@/auth/session.server';
+import { getCurrentUser } from '@/_actions/auth/session.server';
 import OAuthButtons from '../../../../components/account/OAuthButtons';
 
 export default async function SignUpPage() {
@@ -9,7 +9,7 @@ export default async function SignUpPage() {
     withFullUser: false,
     redirectIfNotFound: false
   });
-  if (user) redirect(`/account/${user.id}`);
+  if (user) redirect('/account');
 
   return (
     <ContentWrapper>

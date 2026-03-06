@@ -1,6 +1,6 @@
 import ContentWrapper from '@/components/common/ContentWrapper';
 import AuthForm from '@/components/account/AuthForm';
-import { getCurrentUser } from '@/auth/session.server';
+import { getCurrentUser } from '@/_actions/auth/session.server';
 import { redirect } from 'next/navigation';
 import OAuthButtons from '../../../../components/account/OAuthButtons';
 
@@ -13,7 +13,7 @@ export default async function LogInPage({
     withFullUser: false,
     redirectIfNotFound: false
   });
-  if (user) redirect(`/account/${user.id}`);
+  if (user) redirect('/account');
 
   const { oauthError } = await searchParams;
 

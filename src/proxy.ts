@@ -1,5 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { getSessionUser, getSessionUserById } from './auth/session.edge';
+import {
+  getSessionUser,
+  getSessionUserById
+} from './_actions/auth/session.edge';
 import { redis } from './redis/redis';
 
 const COOKIE_SESSION_KEY = 'session-id';
@@ -16,9 +19,6 @@ const proxyAuth = async (request: NextRequest) => {
     const url = request.nextUrl.clone();
     if (!user || !user.id) {
       url.pathname = '/login';
-      return NextResponse.redirect(url);
-    } else if (pathArray[2] !== user.id) {
-      url.pathname = `/account/${user.id}`;
       return NextResponse.redirect(url);
     }
   }

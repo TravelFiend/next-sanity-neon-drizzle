@@ -1,37 +1,26 @@
 'use server';
 
+import 'server-only';
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
 import { db } from '@/_drizzle/db';
-import { users } from '@/_drizzle/schemas';
+import { usersTable } from '@/_drizzle/schemas';
 import {
   type UserLogin,
   type UserSignup,
-  loginZodSchema,
-  signupZodSchema
-} from '@/_zodSchemas/authZod';
+  loginFormSchema,
+  signupFormSchema
+} from '@/_zodSchemas/userZod';
 import zodValidate from '@/lib/utils/zodValidate';
-import { removeSessionUser } from '@/auth/session.edge';
-import { createUserSession } from '@/auth/session.server';
+import { removeSessionUser } from '@/_actions/auth/session.edge';
+import { createUserSession } from '@/_actions/auth/session.server';
 import { redirect } from 'next/navigation';
 import { getOAuthClient } from '@/auth/oAuth/oAuthBase';
 import type {
   InsertUser,
   OAuthProvider
 } from '@/_drizzle/schemas/usersDrizzle';
-
-type ActionState<T> =
-  | {
-      success: false;
-      errors: Record<string, string[]>;
-      message?: string;
-    }
-  | {
-      success: true;
-      data?: T;
-      message?: string;
-      userId: string;
-    };
+import type { ActionState } from '@/types/actions';
 
 const signup = async (
   prevState: unknown,
@@ -42,7 +31,8 @@ const signup = async (
     password: formData.get('password')
   };
 
-  const parsed = zodValidate(raw, signupZodSchema);
+  const parsed = zodValidate(raw, signupFormSchema);
+
   if (!parsed.success) return parsed;
 
   const { email, password }: UserSignup = parsed.data;
@@ -54,9 +44,9 @@ const signup = async (
   };
 
   try {
-    const [user] = await db.insert(users).values(newUser).returning({
-      id: users.id,
-      role: users.role
+    const [user] = await db.insert(usersTable).values(newUser).returning({
+      id: usersTable.id,
+      role: usersTable.role
     });
 
     await createUserSession(user);
@@ -89,17 +79,18 @@ const login = async (
   formData: FormData
 ): Promise<ActionState<UserLogin>> => {
   const raw = {
-    email: formData.get('email'),
-    password: formData.get('password')
+    email: formData.get('email')?.toString(),
+    password: formData.get('password')?.toString()
   };
 
-  const parsed = zodValidate(raw, loginZodSchema);
+  const parsed = zodValidate(raw, loginFormSchema);
+
   if (!parsed.success) return parsed;
 
   const { email, password }: UserLogin = parsed.data;
 
-  const existingUser = await db.query.users.findFirst({
-    where: eq(users.email, email),
+  const existingUser = await db.query.usersTable.findFirst({
+    where: eq(usersTable.email, email),
     columns: {
       id: true,
       email: true,
@@ -113,7 +104,8 @@ const login = async (
       success: false,
       errors: {
         login: ['Invalid email or password']
-      }
+      },
+      data: raw
     };
   }
 
@@ -137,7 +129,8 @@ const login = async (
         success: false,
         errors: {
           login: [err.message]
-        }
+        },
+        data: raw
       };
     }
 

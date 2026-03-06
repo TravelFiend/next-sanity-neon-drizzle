@@ -1,17 +1,17 @@
 import { db } from '@/_drizzle/db';
 import {
   type OAuthProvider,
-  userOAuthAccounts,
-  users
+  userOAuthAccountsTable,
+  usersTable
 } from '@/_drizzle/schemas';
-import { oAuthProvidersZodEnum } from '@/_zodSchemas/authZod';
+import { oAuthProvidersZodEnum } from '@/_zodSchemas/userZod';
 import {
   getOAuthClient,
   InvalidStateError,
   InvalidUserError,
   MissingEmailError
 } from '@/auth/oAuth/oAuthBase';
-import { createUserSessionAndRedirect } from '@/auth/session.server';
+import { createUserSessionAndRedirect } from '@/_actions/auth/session.server';
 import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -67,7 +67,7 @@ const GET = async (
       );
     }
 
-    const redirectUrl = new URL(`/account/${user.id}`, request.url).toString();
+    const redirectUrl = new URL('/account', request.url).toString();
     return await createUserSessionAndRedirect(user, redirectUrl);
   } catch (err) {
     if (err instanceof InvalidStateError) {
@@ -123,14 +123,14 @@ const connectUserToAccount = (
   provider: OAuthProvider
 ) => {
   return db.transaction(async trx => {
-    let user = await trx.query.users.findFirst({
-      where: eq(users.email, email),
+    let user = await trx.query.usersTable.findFirst({
+      where: eq(usersTable.email, email),
       columns: { id: true, role: true }
     });
 
     if (!user) {
       const [newUser] = await trx
-        .insert(users)
+        .insert(usersTable)
         .values({
           email,
           username,
@@ -138,15 +138,15 @@ const connectUserToAccount = (
           lastName: lastName ?? null
         })
         .returning({
-          id: users.id,
-          role: users.role
+          id: usersTable.id,
+          role: usersTable.role
         });
 
       user = newUser;
     }
 
     await trx
-      .insert(userOAuthAccounts)
+      .insert(userOAuthAccountsTable)
       .values({
         provider,
         providerAccountId: id,

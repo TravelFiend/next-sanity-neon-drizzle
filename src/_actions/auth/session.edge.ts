@@ -3,7 +3,7 @@
 //  Functions in this file CAN be used in proxy/api routes
 import { cache } from 'react';
 import { cookies } from 'next/headers';
-import { sessionSchema } from '@/_zodSchemas/authZod';
+import { sessionSchema } from '@/_zodSchemas/oAuthZod';
 import { redis } from '@/redis/redis';
 
 const COOKIE_SESSION_KEY = 'session-id';

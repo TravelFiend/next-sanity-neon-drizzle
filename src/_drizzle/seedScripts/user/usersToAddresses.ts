@@ -1,44 +1,23 @@
 import { db } from '../../db';
 import { seed } from 'drizzle-seed';
-import { users, addresses, usersToAddresses } from '../../schemas';
+import {
+  usersTable,
+  addressesTable,
+  usersToAddressesTable
+} from '../../schemas';
 
 export const seedUsersToAddresses = async () => {
-  const allUsers = await db.select().from(users);
-  const allAddresses = await db.select().from(addresses);
+  const allUsers = await db.select().from(usersTable);
+  const allAddresses = await db.select().from(addressesTable);
 
-  const userAddressPairs: {
-    userId: string;
-    addressId: number;
-    addressType: 'shipping' | 'billing';
-  }[] = [];
-
-  allUsers.forEach((user, i) => {
-    const shipping = allAddresses[i % allAddresses.length];
-    const billing = allAddresses[(i + 1) % allAddresses.length];
-    userAddressPairs.push({
-      userId: user.id,
-      addressId: shipping.id,
-      addressType: 'shipping'
-    });
-    userAddressPairs.push({
-      userId: user.id,
-      addressId: billing.id,
-      addressType: 'billing'
-    });
-  });
-
-  await seed(db, { usersToAddresses }, { seed: 1 }).refine(funcs => ({
-    usersToAddresses: {
-      count: userAddressPairs.length,
+  await seed(db, { usersToAddressesTable }, { seed: 1 }).refine(funcs => ({
+    usersToAddressesTable: {
       columns: {
         userId: funcs.valuesFromArray({
-          values: userAddressPairs.map(user => user.userId)
+          values: allUsers.map(user => user.id)
         }),
         addressId: funcs.valuesFromArray({
-          values: userAddressPairs.map(user => user.addressId)
-        }),
-        addressType: funcs.valuesFromArray({
-          values: userAddressPairs.map(user => user.addressType)
+          values: allAddresses.map(address => address.id)
         }),
         createdAt: funcs.timestamp()
       }

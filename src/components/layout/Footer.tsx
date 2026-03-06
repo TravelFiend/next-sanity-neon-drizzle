@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import type { FooterRes, BasicLinkRes } from '@sanityTypes/derivedTypes';
 import cleanSVG from '@/lib/utils/sanitizeSVG';
+import type { FooterRes, BasicLinkRes } from '@sanityTypes/derivedTypes';
 
 type FooterProps = {
   footerData: FooterRes;

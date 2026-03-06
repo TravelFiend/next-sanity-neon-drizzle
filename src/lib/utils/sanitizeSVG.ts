@@ -1,11 +1,7 @@
-import { JSDOM } from 'jsdom';
-import DOMPurify from 'dompurify';
-
-const window = new JSDOM('').window;
-const purify = DOMPurify(window);
+import DOMPurify from 'isomorphic-dompurify';
 
 const cleanSVG = (dirtySVG: string): string => {
-  return purify.sanitize(dirtySVG, {
+  return DOMPurify.sanitize(dirtySVG, {
     USE_PROFILES: { svg: true, svgFilters: true }
   });
 };

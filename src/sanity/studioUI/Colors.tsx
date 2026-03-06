@@ -1,5 +1,10 @@
 import { Stack, Card, Text, Flex } from '@sanity/ui';
-import { PatchEvent, set, type StringInputProps } from 'sanity';
+import {
+  PatchEvent,
+  set,
+  type StringInputProps,
+  type StringSchemaType
+} from 'sanity';
 
 const colorMap = {
   white: '#FFFFFF',
@@ -15,7 +20,7 @@ const ColorPreviewRadio = ({
   value,
   onChange,
   schemaType
-}: StringInputProps) => {
+}: StringInputProps<StringSchemaType>) => {
   const list = schemaType.options?.list ?? [];
 
   return (

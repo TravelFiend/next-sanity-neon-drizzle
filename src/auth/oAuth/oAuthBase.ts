@@ -1,13 +1,14 @@
 /* eslint-disable drizzle/enforce-delete-with-where */
 import { randomHexString, sha256Base64Url } from '@/lib/utils/cryptoFunctions';
 import { cookies } from 'next/headers';
-import { z } from 'zod/v4';
+import { z } from 'zod';
 import createDiscordOAuthClient from './discord';
 import createGoogleOAuthClient from './google';
 import createGithubOAuthClient from './github';
 import createFacebookOAuthClient from './facebook';
 import getSessionCookieOptions from './sessionCookieOptions';
 import type { OAuthProvider } from '@/_drizzle/schemas';
+import { tokenSchema } from '@/_zodSchemas/oAuthZod';
 
 const STATE_COOKIE_KEY = 'oAuthState';
 const CODE_VERIFIER_COOKIE_KEY = 'oAuthCodeVerifier';
@@ -49,7 +50,7 @@ class OAuthClient<T extends object> {
   private readonly urls: {
     auth: string;
     token: string;
-    user: string;
+    user?: string;
   };
   private readonly userInfo: {
     schema: z.ZodSchema<T>;
@@ -61,10 +62,7 @@ class OAuthClient<T extends object> {
       lastName: string | null;
     };
   };
-  private readonly tokenSchema = z.object({
-    access_token: z.string(),
-    token_type: z.string()
-  });
+  private readonly tokenSchema = tokenSchema;
 
   constructor({
     provider,
@@ -81,7 +79,7 @@ class OAuthClient<T extends object> {
     urls: {
       auth: string;
       token: string;
-      user: string;
+      user?: string;
     };
     userInfo: {
       schema: z.ZodSchema<T>;
@@ -133,12 +131,12 @@ class OAuthClient<T extends object> {
       let res: Response;
       if (this.provider === 'facebook') {
         // Facebook's `/me` route requires access_token as a query param
-        const url = new URL(this.urls.user);
+        const url = new URL(this.urls.user!);
         url.searchParams.set('access_token', accessToken);
 
         res = await fetch(url.toString());
       } else {
-        res = await fetch(this.urls.user, {
+        res = await fetch(this.urls.user!, {
           headers: {
             Authorization: `${tokenType} ${accessToken}`
           }

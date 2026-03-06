@@ -10,8 +10,9 @@ import type {
   NavTabsRes,
   SecondLevelLinksRes
 } from '@sanityTypes/derivedTypes';
-import { type User } from '@/auth/session.server';
+import { type User } from '@/_actions/auth/session.server';
 import AccountButton from './AccountButton';
+import CartButton from './CartButton';
 
 type LinkDataProps = {
   linkData?: NavTabsRes;
@@ -126,11 +127,13 @@ const Nav = ({ linkData, user }: LinkDataProps) => {
           areLinksOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <AccountButton isMobile={true} user={user} />
+        <AccountButton isMobile={true} user={!!user} />
+        <CartButton isMobile={true} />
 
         {mainLinks}
 
-        <AccountButton isMobile={false} user={user} />
+        <AccountButton isMobile={false} user={!!user} />
+        <CartButton isMobile={false} />
       </ul>
 
       <MobileSecondLinks
