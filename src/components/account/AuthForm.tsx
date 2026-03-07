@@ -5,6 +5,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
 import SubmitButton from '../form/SubmitButton';
 import InputWLabel from '../form/InputWLabel';
+import FormErrors from '../form/FormErrors';
 
 type AuthFormProps = {
   mode: AuthMode;
@@ -75,24 +76,15 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           ))}
       </ul>
 
-      <ul className="h-14">
-        {authState?.message ? (
-          <li className="text-sm text-success">{authState.message}</li>
-        ) : null}
-
-        {/* General / login-wide errors */}
-        {!authState?.success && authState?.errors
-          ? Object.entries(authState.errors).map(([key, value]) => {
-              return key !== 'email' && key !== 'password'
-                ? value.map((err, idx) => (
-                    <li key={`${key}-${idx}`} className="text-sm text-error">
-                      {err}
-                    </li>
-                  ))
-                : null;
-            })
-          : null}
-      </ul>
+      {!authState || !authState.success ? (
+        <FormErrors
+          success={false}
+          errors={authState?.errors}
+          message={authState?.message}
+          className="h-14"
+          keysToHide={['email', 'password']}
+        />
+      ) : null}
 
       <SubmitButton isPending={isPending} />
 

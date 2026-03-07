@@ -52,7 +52,7 @@ const VerifiedAddressSelector = ({
         &#41;:
       </p>
       <Button
-        onClick={() => console.warn('MAKE THIS POPULATE THE FORM!')}
+        onClick={onClose}
         ariaLabel="select submitted address"
         className="bg-gray-100 text-primary-dark"
       >

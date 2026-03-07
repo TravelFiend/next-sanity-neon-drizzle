@@ -13,6 +13,7 @@ import TelephoneInputWLabel from '../form/TelephoneInputWLabel';
 import type { AddressForm as AddressFormType } from '@/_zodSchemas/frontend/addressForm';
 import VerifiedAddressSelectorModal from './VerifiedAddressSelectorModal';
 import { isVerifiedAddress } from '@/types/address';
+import FormErrors from '../form/FormErrors';
 
 type AddressFormProps = {
   externalState?: AddressActionState | null;
@@ -148,15 +149,15 @@ const AddressForm = ({
           </div>
         </div>
 
-        <ul className="h-8">
-          {addressState && !addressState.success && addressState.errors
-            ? addressState.errors.generic.map(err => (
-                <li key={err} className="text-sm text-error">
-                  {err}
-                </li>
-              ))
-            : null}
-        </ul>
+        {!addressState || !addressState.success ? (
+          <FormErrors
+            success={false}
+            errors={addressState?.errors}
+            message={addressState?.message}
+            className="h-8"
+          />
+        ) : null}
+
         <SubmitButton isPending={isPending} className="w-5/12" />
       </form>
 
