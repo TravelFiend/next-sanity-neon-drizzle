@@ -11,7 +11,7 @@ export const seedZipCodes = async () => {
     zipCodesTable: {
       count: 40,
       columns: {
-        zipCode: funcs.valuesFromArray({
+        ZIPCode: funcs.valuesFromArray({
           values: Array.from({ length: 40 }, (_, i) => {
             const float = 0.6180339887 * i;
             const fractionalPart = float - Math.floor(float);

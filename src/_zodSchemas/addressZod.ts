@@ -3,11 +3,11 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
 const addressInsertSchema = createInsertSchema(addressesTable, {
-  address1: schema =>
+  streetAddress: schema =>
     schema
       .min(1, 'Address is required')
       .max(255, 'Address cannot exceed 255 characters'),
-  address2: schema =>
+  secondaryAddress: schema =>
     schema.max(255, 'Address cannot exceed 255 characters').optional(),
   zipCodeId: schema => schema.int().positive('Must select a valid zip code'),
   recipientId: schema => schema.int().positive('Must select a valid recipient')

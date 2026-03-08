@@ -291,14 +291,14 @@
           "primaryKey": true,
           "notNull": true
         },
-        "address1": {
-          "name": "address1",
+        "streetAddress": {
+          "name": "streetAddress",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
-        "address2": {
-          "name": "address2",
+        "secondaryAddress": {
+          "name": "secondaryAddress",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
@@ -328,13 +328,13 @@
           "name": "unique_full_address",
           "columns": [
             {
-              "expression": "address1",
+              "expression": "streetAddress",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
             },
             {
-              "expression": "COALESCE(\"address2\", '')",
+              "expression": "COALESCE(\"secondaryAddress\", '')",
               "asc": true,
               "isExpression": true,
               "nulls": "last"

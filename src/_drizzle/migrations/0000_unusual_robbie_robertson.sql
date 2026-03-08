@@ -41,8 +41,8 @@ CREATE TABLE "recipients" (
 --> statement-breakpoint
 CREATE TABLE "addresses" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"address1" varchar(255) NOT NULL,
-	"address2" varchar(255),
+	"streetAddress" varchar(255) NOT NULL,
+	"secondaryAddress" varchar(255),
 	"zip_code_id" integer NOT NULL,
 	"recipient_id" integer NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL
@@ -84,4 +84,4 @@ ALTER TABLE "cities" ADD CONSTRAINT "cities_state_id_states_id_fk" FOREIGN KEY (
 ALTER TABLE "cities_to_zip_codes" ADD CONSTRAINT "cities_to_zip_codes_city_id_cities_id_fk" FOREIGN KEY ("city_id") REFERENCES "public"."cities"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "cities_to_zip_codes" ADD CONSTRAINT "cities_to_zip_codes_zip_code_id_zip_codes_id_fk" FOREIGN KEY ("zip_code_id") REFERENCES "public"."zip_codes"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE UNIQUE INDEX "unique_recipient_contact" ON "recipients" USING btree ("first_name","last_name","email");--> statement-breakpoint
-CREATE UNIQUE INDEX "unique_full_address" ON "addresses" USING btree ("address1",COALESCE("address2", ''),"zip_code_id","recipient_id");
+CREATE UNIQUE INDEX "unique_full_address" ON "addresses" USING btree ("streetAddress",COALESCE("secondaryAddress", ''),"zip_code_id","recipient_id");

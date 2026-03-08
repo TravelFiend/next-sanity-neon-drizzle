@@ -34,11 +34,11 @@ const addAddress = async (
     lastName: formData.get('lastName'),
     email: formData.get('email'),
     phoneNumber: formData.get('phoneNumber'),
-    address1: formData.get('address1'),
-    address2: formData.get('address2'),
+    streetAddress: formData.get('streetAddress'),
+    secondaryAddress: formData.get('secondaryAddress'),
     city: formData.get('city'),
     state: formData.get('state'),
-    zipCode: formData.get('zipCode')
+    ZIPCode: formData.get('ZIPCode')
   };
 
   const parsed = zodValidate(raw, addressFormSchema);
@@ -65,11 +65,11 @@ const addAddress = async (
     };
 
     const formAddress = {
-      streetAddress: addressFormData.address1,
-      secondaryAddress: addressFormData.address2 ?? '',
+      streetAddress: addressFormData.streetAddress,
+      secondaryAddress: addressFormData.secondaryAddress ?? '',
       city: addressFormData.city,
       state: addressFormData.state,
-      ZIPCode: addressFormData.zipCode
+      ZIPCode: addressFormData.ZIPCode
     };
 
     const params = new URLSearchParams({ ...formAddress });

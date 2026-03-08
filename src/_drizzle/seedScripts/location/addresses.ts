@@ -11,8 +11,8 @@ export const seedAddresses = async () => {
     addressesTable: {
       count: 20,
       columns: {
-        address1: funcs.streetAddress(),
-        address2: funcs.valuesFromArray({
+        streetAddress: funcs.streetAddress(),
+        secondaryAddress: funcs.valuesFromArray({
           values: ['', 'Apt. 2', 'Unit B', 'Suite 100']
         }),
         zipCodeId: funcs.valuesFromArray({

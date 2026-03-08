@@ -54,7 +54,7 @@ const citiesRelations = relations(citiesTable, ({ one, many }) => ({
 // ZIP CODES
 const zipCodesTable = pgTable('zip_codes', {
   id: serial().primaryKey(),
-  zipCode: varchar({ length: 15 }).notNull().unique()
+  ZIPCode: varchar({ length: 15 }).notNull().unique()
 });
 
 type InsertZipCodes = typeof zipCodesTable.$inferInsert;
@@ -91,7 +91,7 @@ const citiesToZipCodesRelations = relations(
       fields: [citiesToZipCodesTable.cityId],
       references: [citiesTable.id]
     }),
-    zipCode: one(zipCodesTable, {
+    ZIPCode: one(zipCodesTable, {
       fields: [citiesToZipCodesTable.zipCodeId],
       references: [zipCodesTable.id]
     })
@@ -103,8 +103,8 @@ const addressesTable = pgTable(
   'addresses',
   {
     id: serial().primaryKey(),
-    address1: varchar({ length: 255 }).notNull(),
-    address2: varchar({ length: 255 }),
+    streetAddress: varchar({ length: 255 }).notNull(),
+    secondaryAddress: varchar({ length: 255 }),
     zipCodeId: integer()
       .notNull()
       .references(() => zipCodesTable.id, { onDelete: 'restrict' }),
@@ -115,8 +115,8 @@ const addressesTable = pgTable(
   },
   t => [
     uniqueIndex('unique_full_address').on(
-      t.address1,
-      sql`COALESCE(${t.address2}, '')`,
+      t.streetAddress,
+      sql`COALESCE(${t.secondaryAddress}, '')`,
       t.zipCodeId,
       t.recipientId
     )
@@ -129,7 +129,7 @@ const addressesRelations = relations(addressesTable, ({ many, one }) => ({
     fields: [addressesTable.recipientId],
     references: [recipientsTable.id]
   }),
-  zipCode: one(zipCodesTable, {
+  ZIPCode: one(zipCodesTable, {
     fields: [addressesTable.zipCodeId],
     references: [zipCodesTable.id]
   })

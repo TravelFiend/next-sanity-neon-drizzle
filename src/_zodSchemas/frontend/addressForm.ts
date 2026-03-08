@@ -14,13 +14,13 @@ const addressFormSchema = z
         'City may only contain letters, spaces, hyphens, or apostrophes'
       ),
     state: z.string().length(2, 'State must be a valid US state abbreviation'),
-    zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, {
+    ZIPCode: z.string().regex(/^\d{5}(-\d{4})?$/, {
       error: 'Zip code must be in XXXXX or XXXXX-XXXX format'
     })
   })
   .extend({
-    address1: addressInsertSchema.shape.address1,
-    address2: addressInsertSchema.shape.address2,
+    streetAddress: addressInsertSchema.shape.streetAddress,
+    secondaryAddress: addressInsertSchema.shape.secondaryAddress,
     firstName: userInsertSchema.shape.firstName,
     lastName: userInsertSchema.shape.firstName,
     email: userInsertSchema.shape.email,

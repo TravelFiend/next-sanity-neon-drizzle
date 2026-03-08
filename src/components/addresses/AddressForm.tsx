@@ -51,9 +51,8 @@ const AddressForm = ({
   }, [addressState, isEmbedded]);
 
   const getDefault = (key: keyof AddressFormType) => {
-    if (!addressState?.success) {
-      const formData = addressState?.data as Partial<AddressFormType>;
-      return formData?.[key] ?? undefined;
+    if (!addressState?.success && !isVerifiedAddress(addressState)) {
+      return (addressState?.data as Partial<AddressFormType>)[key] ?? undefined;
     }
     return undefined;
   };
@@ -105,20 +104,20 @@ const AddressForm = ({
         </div>
 
         <InputWLabel
-          forIdName="address1"
+          forIdName="streetAddress"
           labelText="Street Address"
           placeholder="123 Fairytale Ln."
           inputClassName="mb-3"
-          defaultValue={getDefault('address1')}
+          defaultValue={getDefault('streetAddress')}
         />
 
         <InputWLabel
-          forIdName="address2"
+          forIdName="secondaryAddress"
           labelText="Address 2 (Apt/Suite/Unit)"
           placeholder="Apt. 321"
           inputClassName="mb-3"
           required={false}
-          defaultValue={getDefault('address2')}
+          defaultValue={getDefault('secondaryAddress')}
         />
 
         <div className="mb-8 flex w-full gap-6">
@@ -140,11 +139,11 @@ const AddressForm = ({
           </div>
           <div className="w-full">
             <InputWLabel
-              forIdName="zipCode"
+              forIdName="ZIPCode"
               labelText="Zip Code"
               placeholder="98765"
               inputClassName="w-full"
-              defaultValue={getDefault('zipCode')}
+              defaultValue={getDefault('ZIPCode')}
             />
           </div>
         </div>
