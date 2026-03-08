@@ -51,10 +51,17 @@ const AddressForm = ({
   }, [addressState, isEmbedded]);
 
   const getDefault = (key: keyof AddressFormType) => {
-    if (!addressState?.success && !isVerifiedAddress(addressState)) {
-      return (addressState?.data as Partial<AddressFormType>)[key] ?? undefined;
+    if (!addressState) return undefined;
+
+    if (addressState.success && isVerifiedAddress(addressState)) {
+      const { formUser, formAddress } = addressState.data;
+      const originalInput = { ...formUser, ...formAddress };
+      return originalInput[key] ?? undefined;
     }
-    return undefined;
+
+    if (!addressState.success && addressState.data) {
+      return (addressState.data as Partial<AddressFormType>)[key] ?? undefined;
+    }
   };
 
   return (
@@ -140,7 +147,7 @@ const AddressForm = ({
           <div className="w-full">
             <InputWLabel
               forIdName="ZIPCode"
-              labelText="Zip Code"
+              labelText="ZIP Code"
               placeholder="98765"
               inputClassName="w-full"
               defaultValue={getDefault('ZIPCode')}
