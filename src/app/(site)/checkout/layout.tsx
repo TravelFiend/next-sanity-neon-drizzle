@@ -8,5 +8,5 @@ type CheckoutPageLayoutProps = {
 export default function CheckoutPageLayout({
   children
 }: CheckoutPageLayoutProps) {
-  return <ContentWrapper>{children}</ContentWrapper>;
+  return <ContentWrapper justify="center">{children}</ContentWrapper>;
 }

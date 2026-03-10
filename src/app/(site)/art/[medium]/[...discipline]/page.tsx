@@ -6,5 +6,5 @@ export default async function DisciplinePage({
   params: Promise<{ discipline: string }>;
 }) {
   const { discipline } = await params;
-  return <ContentWrapper>{discipline}</ContentWrapper>;
+  return <ContentWrapper justify="start">{discipline}</ContentWrapper>;
 }

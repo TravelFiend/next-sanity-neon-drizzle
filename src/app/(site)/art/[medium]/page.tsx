@@ -6,5 +6,5 @@ export default async function ArtMediumPage({
   params: Promise<{ medium: string }>;
 }) {
   const { medium } = await params;
-  return <ContentWrapper>{medium}</ContentWrapper>;
+  return <ContentWrapper justify="start">{medium}</ContentWrapper>;
 }
