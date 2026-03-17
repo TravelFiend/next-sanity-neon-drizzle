@@ -18,13 +18,16 @@ if (!process.env.DATABASE_URL) {
 
 let db: NodePgDatabase<typeof schema>;
 
+const isMigrating = process.env.DB_MIGRATING === 'true';
+const isSeeding = process.env.DB_SEEDING === 'true';
+
 export const neonPool = new NeonPool({
-  max: process.env.DB_MIGRATING || process.env.DB_SEEDING ? 1 : undefined,
+  max: isMigrating || isSeeding ? 1 : undefined,
   connectionString: process.env.DATABASE_URL!
 });
 
 export const pgPool = new PgPool({
-  max: process.env.DB_MIGRATING || process.env.DB_SEEDING ? 1 : undefined,
+  max: isMigrating || isSeeding ? 1 : undefined,
   connectionString: process.env.DATABASE_URL!
 });
 
@@ -39,4 +42,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export { db };
-// export type DB = typeof db;
+export type DB = typeof db;

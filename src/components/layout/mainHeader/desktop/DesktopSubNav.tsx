@@ -37,7 +37,7 @@ const DesktopSubNav = ({
       onMouseLeave={handleMouseLeave}
       className={conditionalClasses(
         'wrap-break-words absolute top-16 left-1/2 hidden h-72 w-11/12 -translate-x-1/2 flex-col flex-wrap bg-green-400 transition-opacity sm:flex',
-        isOpen ? 'opacity-100' : 'opacity-0'
+        isOpen ? 'block' : 'hidden'
       )}
     >
       {currentChildren.map(
