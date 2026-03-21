@@ -27,12 +27,10 @@ const TurnstileModal = ({ setToken }: TurnstileModalProps) => {
 
   const handleSuccess = async (token: string) => {
     setIsOpen(false);
-
     if (!token) {
       widgetRef.current?.reset();
       return console.error('no token retrieved from turnstile');
     }
-
     setToken(token);
   };
 
@@ -48,6 +46,10 @@ const TurnstileModal = ({ setToken }: TurnstileModalProps) => {
         isOpen ? 'flex' : 'hidden'
       )}
     >
+      <div className="absolute top-60 pb-20 text-3xl sm:text-5xl">
+        <p>Verifying you&apos;re human...</p>
+      </div>
+
       <Turnstile
         className="scale-120"
         siteKey={sitekey}
@@ -59,7 +61,10 @@ const TurnstileModal = ({ setToken }: TurnstileModalProps) => {
         }}
         options={{
           theme: 'light',
-          appearance: 'always',
+          appearance:
+            process.env.NODE_ENV === 'production'
+              ? 'interaction-only'
+              : 'always',
           retryInterval: 5000
         }}
         onUnsupported={handleUnsupported}
