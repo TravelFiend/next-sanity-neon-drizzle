@@ -14,7 +14,6 @@ type AuthFormProps = {
 const AuthForm = ({ mode }: AuthFormProps) => {
   const router = useRouter();
   const [authState, authActionFn, isPending] = useActionState(authAction, null);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [isTurnstileVerified, setIsTurnstileVerified] =
     useState<boolean>(false);
 
@@ -31,25 +30,6 @@ const AuthForm = ({ mode }: AuthFormProps) => {
       return () => clearTimeout(timeout);
     }
   }, [authState, mode, router]);
-
-  useEffect(() => {
-    if (turnstileToken) {
-      (async () => {
-        const res = await fetch('/api/verifyTurnstile', {
-          method: 'POST',
-          body: JSON.stringify({ token: turnstileToken }),
-          headers: {
-            'content-type': 'application/json'
-          }
-        });
-
-        const data = await res.json();
-        if (data.success) {
-          setIsTurnstileVerified(true);
-        }
-      })();
-    }
-  }, [turnstileToken]);
 
   const handleSwitch = () => {
     return mode === 'signup' ? redirect('/login') : redirect('/signup');
@@ -134,7 +114,7 @@ const AuthForm = ({ mode }: AuthFormProps) => {
         </button>
       </form>
 
-      <TurnstileModal setToken={setTurnstileToken} />
+      <TurnstileModal setVerified={setIsTurnstileVerified} />
     </>
   );
 };

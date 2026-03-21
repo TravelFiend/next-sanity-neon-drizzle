@@ -6,17 +6,19 @@ import { useRef } from 'react';
 import { useState } from 'react';
 
 type TurnstileModalProps = {
-  setToken: (token: string) => void;
+  setVerified: (isVerified: boolean) => void;
 };
 
-const TurnstileModal = ({ setToken }: TurnstileModalProps) => {
+// TODO: add production domain to cloudflare turnstile hostnames when we have it live
+
+const TurnstileModal = ({ setVerified }: TurnstileModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const widgetRef = useRef<TurnstileInstance | null>(null);
 
   const sitekey =
     process.env.NODE_ENV === 'production'
       ? process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
-      : process.env.NEXT_PUBLIC_TURNSTILE_TEST_SITE_KEY_FAIL;
+      : process.env.NEXT_PUBLIC_TURNSTILE_TEST_SITE_KEY_PASS;
 
   const handleUnsupported = () => {
     // eslint-disable-next-line no-alert
@@ -31,7 +33,16 @@ const TurnstileModal = ({ setToken }: TurnstileModalProps) => {
       widgetRef.current?.reset();
       return console.error('no token retrieved from turnstile');
     }
-    setToken(token);
+    const res = await fetch('/api/verifyTurnstile', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+
+    const data = await res.json();
+    data.success ? setVerified(true) : widgetRef.current?.reset();
   };
 
   if (!sitekey) {
