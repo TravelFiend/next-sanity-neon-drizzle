@@ -6,7 +6,7 @@ import zodValidate from '@/lib/utils/zodValidate';
 import {
   type AddressForm,
   addressFormSchema
-} from '@/_zodSchemas/frontend/addressForm';
+} from '@/lib/zod/frontend/addressForm';
 import type { ActionState } from '@/types/actions';
 import type {
   USPSAddressErrorResponse,

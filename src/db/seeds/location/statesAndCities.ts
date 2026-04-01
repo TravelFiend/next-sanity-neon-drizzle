@@ -1,6 +1,6 @@
 import { db } from '../../db';
 import { seed } from 'drizzle-seed';
-import { statesTable, citiesTable } from '../../schemas';
+import { statesTable, citiesTable } from '../../../db/schemas';
 
 export const seedStatesAndCities = async () => {
   const stateSeedData = [

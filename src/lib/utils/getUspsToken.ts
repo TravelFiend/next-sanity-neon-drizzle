@@ -1,6 +1,6 @@
 import 'server-only';
 import { redis } from '@/redis/redis';
-import { tokenSchema, type TokenResponse } from '@/_zodSchemas/oAuthZod';
+import { tokenSchema, type TokenResponse } from '@/lib/zod/oAuthZod';
 
 type GrantType = 'client_credentials' | 'refresh_token';
 

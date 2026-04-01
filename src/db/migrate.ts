@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import config from './drizzle.config';
+import config from '../../drizzle.config';
 import { db, neonPool, pgPool } from './db';
 
 (async () => {

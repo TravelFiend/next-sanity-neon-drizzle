@@ -4,7 +4,7 @@ import {
   usersTable,
   addressesTable,
   usersToAddressesTable
-} from '../../schemas';
+} from '../../../db/schemas';
 
 export const seedUsersToAddresses = async () => {
   const allUsers = await db.select().from(usersTable);

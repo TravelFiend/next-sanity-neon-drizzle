@@ -3,7 +3,7 @@ import {
   type SelectUser,
   userOAuthAccountsTable,
   usersTable
-} from '../../schemas';
+} from '../../../db/schemas';
 import { v4 as uuid } from 'uuid';
 
 export const seedUserOAuthAccounts = async () => {

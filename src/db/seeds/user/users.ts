@@ -1,6 +1,6 @@
-import { db } from '../../db';
 import { seed } from 'drizzle-seed';
-import { usersTable } from '../../schemas';
+import { db } from '../../db';
+import { usersTable } from '../../../db/schemas';
 
 export const seedUsers = async () => {
   await seed(db, { usersTable }, { seed: 1 }).refine(funcs => ({

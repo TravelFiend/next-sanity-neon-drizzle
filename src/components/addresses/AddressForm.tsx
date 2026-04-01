@@ -10,7 +10,7 @@ import SelectWLabel from '../form/SelectWLabel';
 import SubmitButton from '../form/SubmitButton';
 import states from '@/lib/constants/states';
 import TelephoneInputWLabel from '../form/TelephoneInputWLabel';
-import type { AddressForm as AddressFormType } from '@/_zodSchemas/frontend/addressForm';
+import type { AddressForm as AddressFormType } from '@/lib/zod/frontend/addressForm';
 import VerifiedAddressSelectorModal from './VerifiedAddressSelectorModal';
 import { isVerifiedAddress } from '@/types/address';
 import FormErrors from '../form/FormErrors';
@@ -83,7 +83,7 @@ const AddressForm = ({
               labelText="Last Name"
               placeholder="Smitherines"
               inputClassName="w-full"
-              defaultValue={getDefault('lastName')}
+              defaultValue={'lastName'}
             />
           </div>
         </div>
@@ -157,7 +157,6 @@ const AddressForm = ({
 
         {!addressState || !addressState.success ? (
           <FormErrors
-            success={false}
             errors={addressState?.errors}
             message={addressState?.message}
             className="h-8"

@@ -4,7 +4,7 @@ import {
   citiesTable,
   zipCodesTable,
   citiesToZipCodesTable
-} from '../../schemas';
+} from '../../../db/schemas';
 
 export const seedZipCodes = async () => {
   await seed(db, { zipCodesTable }, { seed: 1 }).refine(funcs => ({

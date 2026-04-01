@@ -1,7 +1,7 @@
 import { seed } from 'drizzle-seed';
 import { db } from '../../db';
-import { addressesTable, zipCodesTable } from '../../schemas';
-import { recipientsTable } from '@/_drizzle/schemas/recipientsDrizzle';
+import { addressesTable, zipCodesTable } from '../../../db/schemas';
+import { recipientsTable } from '@/db/schemas/recipientsDrizzle';
 
 export const seedAddresses = async () => {
   const allZipCodes = await db.select().from(zipCodesTable);

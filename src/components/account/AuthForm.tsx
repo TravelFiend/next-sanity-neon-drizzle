@@ -82,7 +82,6 @@ const AuthForm = ({ mode }: AuthFormProps) => {
 
         {!authState || !authState.success ? (
           <FormErrors
-            success={false}
             errors={authState?.errors}
             message={authState?.message}
             className="h-14"

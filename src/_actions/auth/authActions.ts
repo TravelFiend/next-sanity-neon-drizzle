@@ -3,23 +3,20 @@
 import 'server-only';
 import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
-import { db } from '@/_drizzle/db';
-import { usersTable } from '@/_drizzle/schemas';
+import { db } from '@/db/db';
+import { usersTable } from '@/db/schemas';
 import {
   type UserLogin,
   type UserSignup,
   loginFormSchema,
   signupFormSchema
-} from '@/_zodSchemas/userZod';
+} from '@/lib/zod/userZod';
 import zodValidate from '@/lib/utils/zodValidate';
 import { removeSessionUser } from '@/_actions/auth/session.edge';
 import { createUserSession } from '@/_actions/auth/session.server';
 import { redirect } from 'next/navigation';
 import { getOAuthClient } from '@/auth/oAuth/oAuthBase';
-import type {
-  InsertUser,
-  OAuthProvider
-} from '@/_drizzle/schemas/usersDrizzle';
+import type { InsertUser, OAuthProvider } from '@/db/schemas/usersDrizzle';
 import type { ActionState } from '@/types/actions';
 
 const signup = async (

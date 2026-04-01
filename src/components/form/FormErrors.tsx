@@ -1,5 +1,4 @@
 type FormErrorsProps = {
-  success: boolean;
   errors?: Record<string, string[]>;
   message?: string;
   className?: string;
@@ -7,7 +6,6 @@ type FormErrorsProps = {
 };
 
 const FormErrors = ({
-  success = true,
   errors = {},
   message,
   className,
@@ -15,7 +13,7 @@ const FormErrors = ({
 }: FormErrorsProps) => {
   const hasErrors = Object.keys(errors).length > 0;
 
-  if (success || (!hasErrors && !message)) return null;
+  if (!hasErrors && !message) return null;
 
   return (
     <ul className={className}>

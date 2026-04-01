@@ -1,5 +1,5 @@
 import { AddressActionState } from '@/_actions/address/addressActions';
-import { Recipient } from '@/_zodSchemas/recipientZod';
+import { Recipient } from '@/lib/zod/recipientZod';
 
 type InputAddress = {
   streetAddress: string;
