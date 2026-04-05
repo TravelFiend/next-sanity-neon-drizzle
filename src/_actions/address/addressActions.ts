@@ -6,7 +6,7 @@ import zodValidate from '@/lib/utils/zodValidate';
 import {
   type AddressForm,
   addressFormSchema
-} from '@/lib/zod/frontend/addressForm';
+} from '@/lib/zod/frontend/addressFormZod';
 import type { ActionState } from '@/types/actions';
 import type {
   USPSAddressErrorResponse,
@@ -30,9 +30,9 @@ const addAddress = async (
   formData: FormData
 ): Promise<AddressActionState> => {
   const raw = {
-    firstName: formData.get('firstName'),
-    lastName: formData.get('lastName'),
-    email: formData.get('email'),
+    recipientFirstName: formData.get('firstName'),
+    recipientLastName: formData.get('lastName'),
+    recipientEmail: formData.get('email'),
     phoneNumber: formData.get('phoneNumber'),
     streetAddress: formData.get('streetAddress'),
     secondaryAddress: formData.get('secondaryAddress'),
@@ -57,14 +57,14 @@ const addAddress = async (
       };
     }
 
-    const formUser = {
-      firstName: addressFormData.firstName,
-      lastName: addressFormData.lastName,
-      email: addressFormData.email,
+    const recipientData = {
+      recipientFirstName: addressFormData.recipientFirstName,
+      recipientLastName: addressFormData.recipientLastName,
+      recipientEmail: addressFormData.recipientEmail,
       phoneNumber: addressFormData.phoneNumber
     };
 
-    const formAddress = {
+    const addressData = {
       streetAddress: addressFormData.streetAddress,
       secondaryAddress: addressFormData.secondaryAddress ?? '',
       city: addressFormData.city,
@@ -72,7 +72,7 @@ const addAddress = async (
       ZIPCode: addressFormData.ZIPCode
     };
 
-    const params = new URLSearchParams({ ...formAddress });
+    const params = new URLSearchParams({ ...addressData });
 
     const addressRes = await fetch(`${USPS_ADDRESS_URL}?${params.toString()}`, {
       method: 'GET',
@@ -106,8 +106,8 @@ const addAddress = async (
     }
 
     const verifiedAddress: VerifiedAddress = {
-      formUser: { ...formUser },
-      formAddress: { ...formAddress },
+      recipientData: { ...recipientData },
+      addressData: { ...addressData },
       uspsResponse: { ...addressJSON }
     };
 

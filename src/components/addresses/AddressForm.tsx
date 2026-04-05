@@ -10,7 +10,7 @@ import SelectWLabel from '../form/SelectWLabel';
 import SubmitButton from '../form/SubmitButton';
 import states from '@/lib/constants/states';
 import TelephoneInputWLabel from '../form/TelephoneInputWLabel';
-import type { AddressForm as AddressFormType } from '@/lib/zod/frontend/addressForm';
+import type { AddressForm as AddressFormType } from '@/lib/zod/frontend/addressFormZod';
 import VerifiedAddressSelectorModal from './VerifiedAddressSelectorModal';
 import { isVerifiedAddress } from '@/types/address';
 import FormErrors from '../form/FormErrors';
@@ -54,13 +54,18 @@ const AddressForm = ({
     if (!addressState) return undefined;
 
     if (addressState.success && isVerifiedAddress(addressState)) {
-      const { formUser, formAddress } = addressState.data;
-      const originalInput = { ...formUser, ...formAddress };
-      return originalInput[key] ?? undefined;
+      const { recipientData, addressData } = addressState.data;
+      const originalInput: Partial<AddressFormType> = {
+        ...recipientData,
+        ...addressData
+      };
+      const val = originalInput[key];
+      return val !== undefined ? String(val) : undefined;
     }
 
     if (!addressState.success && addressState.data) {
-      return (addressState.data as Partial<AddressFormType>)[key] ?? undefined;
+      const val = (addressState.data as Partial<AddressFormType>)[key];
+      return val !== undefined ? String(val) : undefined;
     }
   };
 
@@ -74,7 +79,7 @@ const AddressForm = ({
               labelText="First Name"
               placeholder="Johnny"
               inputClassName="w-full"
-              defaultValue={getDefault('firstName')}
+              defaultValue={getDefault('recipientFirstName')}
             />
           </div>
           <div className="w-full">
@@ -83,7 +88,7 @@ const AddressForm = ({
               labelText="Last Name"
               placeholder="Smitherines"
               inputClassName="w-full"
-              defaultValue={'lastName'}
+              defaultValue={getDefault('recipientLastName')}
             />
           </div>
         </div>
@@ -96,7 +101,7 @@ const AddressForm = ({
               placeholder="youremail@example.com"
               inputClassName="w-full"
               inputType="email"
-              defaultValue={getDefault('email')}
+              defaultValue={getDefault('recipientEmail')}
             />
           </div>
           <div className="w-full">

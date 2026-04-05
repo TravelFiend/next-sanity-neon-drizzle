@@ -1,5 +1,5 @@
 import { usersTable } from '@/db/schemas';
-import { oAuthProvidersEnum, rolesEnum } from '@/db/schemas/usersDrizzle';
+import { oAuthProvidersEnum, rolesEnum } from '@/db/schemas/tables/usersTables';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 

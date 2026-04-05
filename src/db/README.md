@@ -24,7 +24,7 @@ Because we like things to be safe, we usually go with the second strategy:
         3. apply new migration to the database_
 
 To reset everything locally (dev only!)
--  delete the entire `migrations/` folder + drop the `__drizzle_migrations` tracking table in your DB (then re-generate and migrate).
+-  delete the entire `src/db/migrations/` folder + drop the `__drizzle_migrations` tracking table in your DB (then re-generate and migrate).
 - For production/Neon → avoid manual drops; use branches + push / migrations carefully, or rely on Neon's restore features.
 
 ### Seeding

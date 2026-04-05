@@ -7,6 +7,7 @@ type InputWLabelProps = {
   inputType?: string;
   placeholder?: string;
   defaultValue?: string;
+  labelClassName?: string;
   inputClassName?: string;
   inputPattern?: string;
   required?: boolean;
@@ -18,6 +19,7 @@ const InputWLabel = ({
   inputType,
   placeholder,
   defaultValue,
+  labelClassName,
   inputClassName,
   inputPattern,
   required = true
@@ -27,7 +29,7 @@ const InputWLabel = ({
       <Label
         htmlFor={forIdName}
         labelText={labelText}
-        className="mb-2"
+        className={labelClassName}
         required={required}
       />
       <Input

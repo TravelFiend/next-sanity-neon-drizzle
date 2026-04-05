@@ -49,15 +49,6 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           defaultValue={authState?.data?.email}
         />
 
-        <ul className="h-5">
-          {!authState?.success &&
-            authState?.errors?.email?.map((err: string, idx: number) => (
-              <li key={`email-${idx}`} className="text-sm text-error">
-                {err}
-              </li>
-            ))}
-        </ul>
-
         <InputWLabel
           forIdName="password"
           labelText="Password"
@@ -70,24 +61,14 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           }
         />
 
-        <ul className="h-5">
-          {!authState?.success &&
-            authState?.errors?.password?.map((err: string, idx: number) => (
-              <li key={`password-${idx}`} className="text-sm text-error">
-                {idx === 0 ? 'Password: ' : ''}
-                {err}
-              </li>
-            ))}
-        </ul>
-
-        {!authState || !authState.success ? (
-          <FormErrors
-            errors={authState?.errors}
-            message={authState?.message}
-            className="h-14"
-            keysToHide={['email', 'password']}
-          />
-        ) : null}
+        <div className="h-20">
+          {!authState || !authState.success ? (
+            <FormErrors
+              errors={authState?.errors}
+              message={authState?.message}
+            />
+          ) : null}
+        </div>
 
         <SubmitButton
           isPending={isPending}

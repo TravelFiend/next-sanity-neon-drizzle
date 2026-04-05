@@ -22,7 +22,7 @@ const VerifiedAddressSelector = ({
     state: inputState,
     ZIPCode: inputZIP
     // ZIPPlus4: inputZIP4
-  } = addressData.data.formAddress;
+  } = addressData.data.addressData;
   const {
     streetAddress: verifiedStreet,
     secondaryAddress: verifiedUnit,

@@ -1,8 +1,8 @@
 'use client';
 
-import { redirect } from 'next/navigation';
 import AccountIcon from '@/components/icons/AccountIcon';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
+import Link from 'next/link';
 
 type AccountButtonProps = {
   isMobile: boolean;
@@ -10,15 +10,10 @@ type AccountButtonProps = {
 };
 
 const AccountButton = ({ isMobile, user }: AccountButtonProps) => {
-  const handleAccountIconClick = () => {
-    return user ? redirect('/account') : redirect('/signup');
-  };
-
   return (
     <li>
-      <button
-        aria-label={user ? 'Link to account page' : 'Link to signup/login'}
-        onClick={handleAccountIconClick}
+      <Link
+        href={user ? '/account' : '/signup'}
         className={conditionalClasses(
           'flex cursor-pointer items-center hover:text-secondary',
           isMobile
@@ -28,7 +23,7 @@ const AccountButton = ({ isMobile, user }: AccountButtonProps) => {
       >
         <AccountIcon className="h-7" />
         <span>{user ? 'Account' : 'Signup/Login'}</span>
-      </button>
+      </Link>
     </li>
   );
 };

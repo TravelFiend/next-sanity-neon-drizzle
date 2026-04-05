@@ -4,6 +4,7 @@ import TelephoneInput from './TelephoneInput';
 type TelephoneInputWLabelProps = {
   forIdName: string;
   labelText: string;
+  labelClassName?: string;
   placeholder?: string;
   defaultValue?: string;
   inputClassName?: string;
@@ -14,6 +15,7 @@ type TelephoneInputWLabelProps = {
 const TelephoneInputWLabel = ({
   forIdName,
   labelText,
+  labelClassName,
   placeholder,
   defaultValue,
   inputClassName,
@@ -25,7 +27,7 @@ const TelephoneInputWLabel = ({
       <Label
         htmlFor={forIdName}
         labelText={labelText}
-        className="mb-2"
+        className={labelClassName}
         required={required}
       />
       <TelephoneInput

@@ -1,13 +1,9 @@
 import { db } from '../../db';
-import {
-  type SelectUser,
-  userOAuthAccountsTable,
-  usersTable
-} from '../../../db/schemas';
+import { type User, userOAuthAccountsTable, usersTable } from '../../schemas';
 import { v4 as uuid } from 'uuid';
 
 export const seedUserOAuthAccounts = async () => {
-  const allUsers: SelectUser[] = await db.select().from(usersTable);
+  const allUsers: User[] = await db.select().from(usersTable);
 
   const rows = [];
 
@@ -27,6 +23,6 @@ export const seedUserOAuthAccounts = async () => {
   }
 
   await db.insert(userOAuthAccountsTable).values(rows);
-  // eslint-disable-next-line no-console
+
   console.log('✅ User OAuth accounts seeded!');
 };
