@@ -10,7 +10,7 @@ type SetDefaultButtonProps = {
 const SetDefaultButton = ({ addressId }: SetDefaultButtonProps) => {
   const [isPending, startTransition] = useTransition();
 
-  const handleAction = () => {
+  const handleSetDefault = () => {
     startTransition(async () => {
       const result = await updateDefaultAddress(addressId);
       if (!result.success) {
@@ -24,7 +24,7 @@ const SetDefaultButton = ({ addressId }: SetDefaultButtonProps) => {
       type="button"
       disabled={isPending}
       className="mr-4 text-accent-light underline disabled:opacity-50"
-      onClick={handleAction}
+      onClick={handleSetDefault}
     >
       {isPending ? 'Updating...' : 'Set as default'}
     </button>

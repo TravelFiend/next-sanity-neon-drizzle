@@ -1,27 +1,21 @@
 import { getUserAddresses } from '@/db/_getters/addressGetters';
 import AddAddressButton from '@/components/addresses/AddAddressButton';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
-import SetDefaultButton from '@/components/form/SetDefaultButton';
+import SetDefaultButton from '@/components/common/SetDefaultButton';
+import DeleteButton from '@/components/common/DeleteButton';
 
 // type AddressesPageProps = {};
 
 export default async function AddressesPage() {
   const addresses = await getUserAddresses();
 
-  const sortedAddresses = [...(addresses || [])].sort((first, second) => {
-    if (first.isDefault === second.isDefault) {
-      return second.id - first.id;
-    }
-    return first.isDefault ? -1 : 1;
-  });
-
   // TODO: add functionality for address update, delete
 
   return (
     <>
-      {sortedAddresses && sortedAddresses.length > 0 ? (
+      {addresses && addresses.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {sortedAddresses.map(address => (
+          {addresses.map(address => (
             <div
               key={address.id}
               className={conditionalClasses(
@@ -51,15 +45,15 @@ export default async function AddressesPage() {
                 {!address.isDefault && (
                   <SetDefaultButton addressId={address.id} />
                 )}
+
                 <button
                   type="button"
                   className="mr-4 text-accent-light underline"
                 >
                   Edit
                 </button>
-                <button type="button" className="mr-4 text-error underline">
-                  Delete
-                </button>
+
+                <DeleteButton addressId={address.id} />
               </div>
             </div>
           ))}

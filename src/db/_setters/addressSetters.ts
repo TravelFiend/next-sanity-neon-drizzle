@@ -89,4 +89,8 @@ const setDefaultAddress = async (addressId: number, userId: string) => {
   });
 };
 
-export { setAddress, setDefaultAddress };
+const removeAddress = async (addressId: number) => {
+  await db.delete(addressesTable).where(eq(addressesTable.id, addressId));
+};
+
+export { setAddress, setDefaultAddress, removeAddress };

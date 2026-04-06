@@ -13,9 +13,10 @@ import type {
   USPSAddressSuccessResponse,
   VerifiedAddress
 } from '@/types/address';
-import { setDefaultAddress } from '@/db/_setters/addressSetters';
+import { removeAddress, setDefaultAddress } from '@/db/_setters/addressSetters';
 import { setAddress } from '@/db/_setters/addressSetters';
 import { getSessionUser } from '../auth/session.edge';
+import { revalidatePath } from 'next/cache';
 
 export type AddressActionState =
   | ActionState<AddressForm>
@@ -161,8 +162,14 @@ const updateDefaultAddress = async (addressId: number) => {
   }
 
   await setDefaultAddress(addressId, user.id);
-
+  revalidatePath('/addresses');
   return { success: true, message: 'Default address set successfully' };
 };
 
-export { verifyAddress, addAddress, updateDefaultAddress };
+const deleteAddress = async (addressId: number) => {
+  await removeAddress(addressId);
+  revalidatePath('/addresses');
+  return { success: true, message: 'Address deleted successfully' };
+};
+
+export { verifyAddress, addAddress, updateDefaultAddress, deleteAddress };
