@@ -1,8 +1,12 @@
 'use client';
 
-import type { AddressActionState } from '@/_actions/address/addressActions';
+import {
+  addAddress,
+  type AddressActionState
+} from '@/_actions/address/addressActions';
 import type { VerifiedAddress } from '@/types/address';
 import Button from '../common/Button';
+import { AddressForm } from '@/lib/zod/frontend/addressFormZod';
 
 type VerifiedAddressSelectorProps = {
   addressData: Extract<AddressActionState, { fromAPI: true }> & {
@@ -15,6 +19,27 @@ const VerifiedAddressSelector = ({
   addressData,
   onClose
 }: VerifiedAddressSelectorProps) => {
+  const handleAddAddress = async () => {
+    const { recipientData } = addressData.data;
+
+    const { streetAddress, secondaryAddress, city, state, ZIPCode } =
+      addressData.data.uspsResponse.address;
+
+    const finalData: AddressForm = {
+      ...recipientData,
+      streetAddress,
+      secondaryAddress: secondaryAddress ?? '',
+      city,
+      state,
+      ZIPCode,
+      addressLabel: addressData.data.addressData.addressLabel,
+      isDefault: addressData.data.addressData.isDefault
+    };
+
+    await addAddress(finalData);
+    onClose();
+  };
+
   const {
     streetAddress: inputStreet,
     secondaryAddress: inputUnit,
@@ -63,7 +88,7 @@ const VerifiedAddressSelector = ({
         <span className="text-secondary-light">submit address</span>&#41;:{' '}
       </p>
       <Button
-        onClick={() => console.warn('MAKE THIS POPULATE THE FORM!')}
+        onClick={handleAddAddress}
         ariaLabel="select suggested address"
         className="bg-gray-100 text-primary-dark"
       >

@@ -2,8 +2,9 @@
 'use client';
 
 import { useActionState, useEffect, useState } from 'react';
-import addAddress, {
-  AddressActionState
+import {
+  verifyAddress,
+  type AddressActionState
 } from '@/_actions/address/addressActions';
 import InputWLabel from '../form/InputWLabel';
 import SelectWLabel from '../form/SelectWLabel';
@@ -30,7 +31,7 @@ const AddressForm = ({
 }: AddressFormProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [internalState, internalAction, internalIsPending] = useActionState(
-    addAddress,
+    verifyAddress,
     null
   );
 
@@ -75,7 +76,7 @@ const AddressForm = ({
         <div className="mb-3 flex w-full gap-6">
           <div className="w-full">
             <InputWLabel
-              forIdName="firstName"
+              forIdName="recipientFirstName"
               labelText="First Name"
               placeholder="Johnny"
               inputClassName="w-full"
@@ -84,7 +85,7 @@ const AddressForm = ({
           </div>
           <div className="w-full">
             <InputWLabel
-              forIdName="lastName"
+              forIdName="recipientLastName"
               labelText="Last Name"
               placeholder="Smitherines"
               inputClassName="w-full"
@@ -96,7 +97,7 @@ const AddressForm = ({
         <div className="mb-3 flex w-full gap-6">
           <div className="w-full">
             <InputWLabel
-              forIdName="email"
+              forIdName="recipientEmail"
               labelText="Email"
               placeholder="youremail@example.com"
               inputClassName="w-full"
@@ -132,7 +133,7 @@ const AddressForm = ({
           defaultValue={getDefault('secondaryAddress')}
         />
 
-        <div className="mb-8 flex w-full gap-6">
+        <div className="mb-3 flex w-full gap-6">
           <div className="w-full">
             <InputWLabel
               forIdName="city"
@@ -156,6 +157,45 @@ const AddressForm = ({
               placeholder="98765"
               inputClassName="w-full"
               defaultValue={getDefault('ZIPCode')}
+            />
+          </div>
+        </div>
+
+        <div className="mb-8 flex w-full gap-6">
+          <div className="flex w-full flex-col items-start">
+            <div className="flex flex-row-reverse">
+              <InputWLabel
+                inputType="radio"
+                forIdName="label-home"
+                name="addressLabel"
+                inputValue="Home"
+                inputClassName="mr-3"
+                labelText="Home"
+                defaultChecked={getDefault('addressLabel') === 'Home'}
+                required={false}
+              />
+            </div>
+            <div className="flex flex-row-reverse">
+              <InputWLabel
+                inputType="radio"
+                forIdName="label-work"
+                name="addressLabel"
+                inputValue="Work"
+                inputClassName="mr-3"
+                labelText="Work"
+                defaultChecked={getDefault('addressLabel') === 'Work'}
+                required={false}
+              />
+            </div>
+          </div>
+
+          <div className="flex w-full flex-row-reverse justify-end">
+            <InputWLabel
+              inputType="checkbox"
+              forIdName="isDefault"
+              labelText="Use as default?"
+              required={false}
+              inputClassName="mr-3"
             />
           </div>
         </div>

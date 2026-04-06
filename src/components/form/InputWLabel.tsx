@@ -3,25 +3,31 @@ import Label from './Label';
 
 type InputWLabelProps = {
   forIdName: string;
-  labelText: string;
-  inputType?: string;
+  name?: string; // Optional: defaults to forIdName
   placeholder?: string;
   defaultValue?: string;
+  defaultChecked?: boolean; // Added for radios/checkboxes
+  labelText: string;
   labelClassName?: string;
   inputClassName?: string;
   inputPattern?: string;
+  inputValue?: string;
+  inputType?: string;
   required?: boolean;
 };
 
 const InputWLabel = ({
   forIdName,
-  labelText,
-  inputType,
+  name,
   placeholder,
   defaultValue,
+  defaultChecked,
+  labelText,
   labelClassName,
   inputClassName,
   inputPattern,
+  inputValue,
+  inputType = 'text',
   required = true
 }: InputWLabelProps) => {
   return (
@@ -31,13 +37,16 @@ const InputWLabel = ({
         labelText={labelText}
         className={labelClassName}
         required={required}
+        inputType={inputType}
       />
       <Input
         type={inputType}
         id={forIdName}
-        name={forIdName}
+        name={name ?? forIdName}
+        value={inputValue}
         placeholder={placeholder}
         defaultValue={defaultValue}
+        defaultChecked={defaultChecked}
         className={inputClassName}
         pattern={inputPattern}
         required={required}

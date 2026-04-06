@@ -8,7 +8,13 @@ type AddressRecipient = Pick<
 
 type AddressLocation = Pick<
   AddressInsert,
-  'streetAddress' | 'secondaryAddress' | 'city' | 'state' | 'ZIPCode'
+  | 'streetAddress'
+  | 'secondaryAddress'
+  | 'city'
+  | 'state'
+  | 'ZIPCode'
+  | 'addressLabel'
+  | 'isDefault'
 >;
 
 type USPSAddressSuccessResponse = {
@@ -53,6 +59,7 @@ type USPSAddressErrorResponse = {
 };
 
 type VerifiedAddress = {
+  // userId: string;
   recipientData: AddressRecipient;
   addressData: AddressLocation;
   uspsResponse: USPSAddressSuccessResponse;

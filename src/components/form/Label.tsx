@@ -3,6 +3,7 @@ import conditionalClasses from '@/lib/utils/conditionalClasses';
 type FormLabelProps = {
   htmlFor: string;
   labelText: string;
+  inputType?: string;
   className?: string;
   required?: boolean;
 };
@@ -10,6 +11,7 @@ type FormLabelProps = {
 const FormLabel = ({
   htmlFor,
   labelText,
+  inputType,
   className,
   required = true
 }: FormLabelProps) => {
@@ -22,7 +24,8 @@ const FormLabel = ({
       )}
     >
       {required && <span className="pr-2 text-error">*</span>}
-      {labelText}:{' '}
+      {labelText}
+      {inputType === 'radio' ? '' : ': '}
     </label>
   );
 };

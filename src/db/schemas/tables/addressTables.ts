@@ -34,8 +34,7 @@ const addressesTable = pgTable(
       t.recipientFirstName,
       t.recipientLastName,
       t.streetAddress,
-      t.ZIPCode,
-      t.phoneNumber
+      t.ZIPCode
     ),
     index('address_user_id_idx').on(t.userId),
     index('address_zip_code_idx').on(t.ZIPCode),

@@ -3,7 +3,7 @@
 import AddressForm from './AddressForm';
 import { useActionState, useEffect, useState } from 'react';
 import ModalWrapper from '../common/ModalWrapper';
-import addAddress from '@/_actions/address/addressActions';
+import { verifyAddress } from '@/_actions/address/addressActions';
 import { isVerifiedAddress } from '@/types/address';
 import VerifiedAddressSelector from './VerifiedAddressSelector';
 
@@ -14,7 +14,7 @@ type AddressFormModalProps = {
 const AddressFormModal = ({ onClose }: AddressFormModalProps) => {
   const [showSelector, setShowSelector] = useState<boolean>(false);
   const [addressState, addressAction, isPending] = useActionState(
-    addAddress,
+    verifyAddress,
     null
   );
 

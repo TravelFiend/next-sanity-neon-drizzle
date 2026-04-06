@@ -13,6 +13,8 @@ import type {
   USPSAddressSuccessResponse,
   VerifiedAddress
 } from '@/types/address';
+import setAddress from '@/db/_setters/addressSetter';
+import { getSessionUser } from '../auth/session.edge';
 
 export type AddressActionState =
   | ActionState<AddressForm>
@@ -25,20 +27,16 @@ if (process.env.NODE_ENV === 'development') {
   USPS_ADDRESS_URL = 'https://apis.usps.com/addresses/v3/address';
 }
 
-const addAddress = async (
+const verifyAddress = async (
   prevState: unknown,
   formData: FormData
 ): Promise<AddressActionState> => {
+  const data = Object.fromEntries(formData.entries());
+
   const raw = {
-    recipientFirstName: formData.get('firstName'),
-    recipientLastName: formData.get('lastName'),
-    recipientEmail: formData.get('email'),
-    phoneNumber: formData.get('phoneNumber'),
-    streetAddress: formData.get('streetAddress'),
-    secondaryAddress: formData.get('secondaryAddress'),
-    city: formData.get('city'),
-    state: formData.get('state'),
-    ZIPCode: formData.get('ZIPCode')
+    ...data,
+    isDefault: formData.has('isDefault'),
+    addressLabel: data.addressLabel ?? null
   };
 
   const parsed = zodValidate(raw, addressFormSchema);
@@ -128,4 +126,23 @@ const addAddress = async (
   }
 };
 
-export default addAddress;
+const addAddress = async (formData: AddressForm) => {
+  const user = await getSessionUser();
+
+  if (!user) {
+    return {
+      success: false,
+      message: 'You must be logged in to add an address'
+    };
+  }
+
+  const addressData = {
+    ...formData,
+    userId: user.id,
+    addressLabel: formData.addressLabel ?? 'home'
+  };
+
+  await setAddress(addressData);
+};
+
+export { verifyAddress, addAddress };

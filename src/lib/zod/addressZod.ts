@@ -12,7 +12,10 @@ const addressInsertSchema = createInsertSchema(addressesTable, {
       .min(1, 'Address is required')
       .max(255, 'Address cannot exceed 255 characters'),
   secondaryAddress: schema =>
-    schema.max(255, 'Address cannot exceed 255 characters').optional(),
+    schema
+      .max(255, 'Address cannot exceed 255 characters')
+      .transform(val => (val === '' ? null : val)) // Convert empty string to null for DB
+      .optional(),
   city: schema =>
     schema
       .min(1, 'City is required')
@@ -21,10 +24,16 @@ const addressInsertSchema = createInsertSchema(addressesTable, {
         error: 'City may only contain letters, spaces, hyphens, or apostrophes'
       }),
   state: schema =>
-    schema.length(2, { error: 'State must be a valid US state abbreviation' }),
+    schema
+      .length(2, { error: 'State must be a 2-letter abbreviation' })
+      .transform(val => val.toUpperCase()),
   ZIPCode: z.string().regex(/^\d{5}(-\d{4})?$/, {
     error: 'Zip code must be in XXXXX or XXXXX-XXXX format'
-  })
+  }),
+  phoneNumber: z
+    .string()
+    .optional()
+    .transform(val => (val === '' ? null : val))
 });
 
 const addressSelectSchema = createSelectSchema(addressesTable);
