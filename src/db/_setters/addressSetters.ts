@@ -73,4 +73,20 @@ const setAddress = async (
   }
 };
 
-export default setAddress;
+const setDefaultAddress = async (addressId: number, userId: string) => {
+  await db.transaction(async trx => {
+    await trx
+      .update(addressesTable)
+      .set({ isDefault: false })
+      .where(eq(addressesTable.userId, userId));
+
+    await trx
+      .update(addressesTable)
+      .set({
+        isDefault: true
+      })
+      .where(eq(addressesTable.id, addressId));
+  });
+};
+
+export { setAddress, setDefaultAddress };

@@ -13,7 +13,8 @@ import type {
   USPSAddressSuccessResponse,
   VerifiedAddress
 } from '@/types/address';
-import setAddress from '@/db/_setters/addressSetter';
+import { setDefaultAddress } from '@/db/_setters/addressSetters';
+import { setAddress } from '@/db/_setters/addressSetters';
 import { getSessionUser } from '../auth/session.edge';
 
 export type AddressActionState =
@@ -149,4 +150,19 @@ const addAddress = async (formData: AddressForm) => {
   await setAddress(addressData);
 };
 
-export { verifyAddress, addAddress };
+const updateDefaultAddress = async (addressId: number) => {
+  const user = await getSessionUser();
+
+  if (!user || !user.id) {
+    return {
+      success: false,
+      message: 'You must be logged in to set a default address'
+    };
+  }
+
+  await setDefaultAddress(addressId, user.id);
+
+  return { success: true, message: 'Default address set successfully' };
+};
+
+export { verifyAddress, addAddress, updateDefaultAddress };
