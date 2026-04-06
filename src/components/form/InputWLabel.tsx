@@ -3,10 +3,10 @@ import Label from './Label';
 
 type InputWLabelProps = {
   forIdName: string;
-  name?: string; // Optional: defaults to forIdName
+  name?: string;
   placeholder?: string;
   defaultValue?: string;
-  defaultChecked?: boolean; // Added for radios/checkboxes
+  defaultChecked?: boolean;
   labelText: string;
   labelClassName?: string;
   inputClassName?: string;

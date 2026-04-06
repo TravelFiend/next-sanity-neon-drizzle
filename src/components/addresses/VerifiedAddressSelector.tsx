@@ -13,11 +13,13 @@ type VerifiedAddressSelectorProps = {
     data: VerifiedAddress;
   };
   onClose: () => void;
+  onCloseAll?: () => void;
 };
 
 const VerifiedAddressSelector = ({
   addressData,
-  onClose
+  onClose,
+  onCloseAll
 }: VerifiedAddressSelectorProps) => {
   const handleAddAddress = async () => {
     const { recipientData } = addressData.data;
@@ -37,7 +39,12 @@ const VerifiedAddressSelector = ({
     };
 
     await addAddress(finalData);
-    onClose();
+
+    if (onCloseAll) {
+      onCloseAll();
+    } else {
+      onClose();
+    }
   };
 
   const {

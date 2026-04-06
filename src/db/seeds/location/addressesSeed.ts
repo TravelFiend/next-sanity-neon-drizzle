@@ -31,7 +31,7 @@ export const seedAddresses = async () => {
           })
         }),
         addressLabel: funcs.valuesFromArray({
-          values: ['work', 'home']
+          values: ['work', 'business']
         }),
         isDefault: funcs.boolean(),
         createdAt: funcs.default({ defaultValue: new Date() }),

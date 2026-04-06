@@ -51,8 +51,8 @@ const AddressForm = ({
     }
   }, [addressState, isEmbedded]);
 
-  const getDefault = (key: keyof AddressFormType) => {
-    if (!addressState) return undefined;
+  const getDefault = (key: keyof AddressFormType, fallback?: string) => {
+    if (!addressState) return fallback;
 
     if (addressState.success && isVerifiedAddress(addressState)) {
       const { recipientData, addressData } = addressState.data;
@@ -61,12 +61,12 @@ const AddressForm = ({
         ...addressData
       };
       const val = originalInput[key];
-      return val !== undefined ? String(val) : undefined;
+      return val !== undefined ? String(val) : fallback;
     }
 
     if (!addressState.success && addressState.data) {
       const val = (addressState.data as Partial<AddressFormType>)[key];
-      return val !== undefined ? String(val) : undefined;
+      return val !== undefined ? String(val) : fallback;
     }
   };
 
@@ -168,22 +168,24 @@ const AddressForm = ({
                 inputType="radio"
                 forIdName="label-home"
                 name="addressLabel"
-                inputValue="Home"
+                inputValue="home"
                 inputClassName="mr-3"
-                labelText="Home"
-                defaultChecked={getDefault('addressLabel') === 'Home'}
+                labelText="Home Address"
+                defaultChecked={getDefault('addressLabel', 'home') === 'home'}
                 required={false}
               />
             </div>
             <div className="flex flex-row-reverse">
               <InputWLabel
                 inputType="radio"
-                forIdName="label-work"
+                forIdName="label-business"
                 name="addressLabel"
-                inputValue="Work"
+                inputValue="business"
                 inputClassName="mr-3"
-                labelText="Work"
-                defaultChecked={getDefault('addressLabel') === 'Work'}
+                labelText="Business Address"
+                defaultChecked={
+                  getDefault('addressLabel', 'home') === 'business'
+                }
                 required={false}
               />
             </div>
@@ -193,9 +195,10 @@ const AddressForm = ({
             <InputWLabel
               inputType="checkbox"
               forIdName="isDefault"
-              labelText="Use as default?"
+              labelText="Use as default address?"
               required={false}
               inputClassName="mr-3"
+              defaultChecked={!!getDefault('isDefault')}
             />
           </div>
         </div>

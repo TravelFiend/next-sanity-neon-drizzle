@@ -35,7 +35,7 @@ const verifyAddress = async (
 
   const raw = {
     ...data,
-    isDefault: formData.has('isDefault'),
+    isDefault: !!formData.get('isDefault'),
     addressLabel: data.addressLabel ?? null
   };
 
@@ -105,7 +105,10 @@ const verifyAddress = async (
 
     const verifiedAddress: VerifiedAddress = {
       recipientData: { ...recipientData },
-      addressData: { ...addressData },
+      addressData: {
+        ...addressData,
+        isDefault: addressFormData.isDefault ?? false
+      },
       uspsResponse: { ...addressJSON }
     };
 
@@ -129,7 +132,7 @@ const verifyAddress = async (
 const addAddress = async (formData: AddressForm) => {
   const user = await getSessionUser();
 
-  if (!user) {
+  if (!user || !user.id) {
     return {
       success: false,
       message: 'You must be logged in to add an address'
@@ -139,6 +142,7 @@ const addAddress = async (formData: AddressForm) => {
   const addressData = {
     ...formData,
     userId: user.id,
+    isDefault: !!formData.isDefault,
     addressLabel: formData.addressLabel ?? 'home'
   };
 

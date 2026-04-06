@@ -2,6 +2,7 @@ import type { AddressForm } from '@/lib/zod/frontend/addressFormZod';
 import { DbTransaction } from '@/types/db';
 import { addressesTable } from '../schemas';
 import { db } from '../db';
+import { and, eq } from 'drizzle-orm';
 
 const setAddress = async (
   addressData: AddressForm,
@@ -22,6 +23,29 @@ const setAddress = async (
       phoneNumber,
       isDefault
     } = addressData;
+
+    if (userId) {
+      const existingAddress = await trx.query.addressesTable.findFirst({
+        where: and(
+          eq(addressesTable.userId, userId),
+          eq(addressesTable.recipientFirstName, recipientFirstName),
+          eq(addressesTable.recipientLastName, recipientLastName),
+          eq(addressesTable.streetAddress, streetAddress),
+          eq(addressesTable.ZIPCode, ZIPCode)
+        )
+      });
+
+      if (existingAddress) {
+        return existingAddress;
+      }
+
+      if (isDefault) {
+        await trx
+          .update(addressesTable)
+          .set({ isDefault: false })
+          .where(eq(addressesTable.userId, userId));
+      }
+    }
 
     await trx.insert(addressesTable).values({
       userId,

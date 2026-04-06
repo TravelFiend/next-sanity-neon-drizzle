@@ -25,6 +25,11 @@ const AddressFormModal = ({ onClose }: AddressFormModalProps) => {
     }
   }, [addressState]);
 
+  const handleCloseAll = () => {
+    onClose();
+    setShowSelector(false);
+  };
+
   return (
     <ModalWrapper onClose={showSelector ? undefined : onClose}>
       {addressState?.success &&
@@ -33,6 +38,7 @@ const AddressFormModal = ({ onClose }: AddressFormModalProps) => {
         <VerifiedAddressSelector
           addressData={addressState}
           onClose={() => setShowSelector(false)}
+          onCloseAll={handleCloseAll}
         />
       ) : (
         <AddressForm
