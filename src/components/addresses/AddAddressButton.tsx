@@ -2,18 +2,27 @@
 
 import { useState } from 'react';
 import AddressFormModal from './AddressFormModal';
+import conditionalClasses from '@/lib/utils/conditionalClasses';
 
-const AddAddressButton = () => {
+type AddAddressButtonProps = {
+  buttonText: string;
+  className?: string;
+};
+
+const AddAddressButton = ({ buttonText, className }: AddAddressButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return (
     <>
       <button
         type="button"
-        className="cursor-pointer text-accent underline underline-offset-4 transition-colors hover:text-accent/80"
+        className={conditionalClasses(
+          'cursor-pointer text-accent underline underline-offset-4 transition-colors hover:text-accent/80',
+          className
+        )}
         onClick={() => setIsModalOpen(true)}
       >
-        Add a new address.
+        {buttonText}
       </button>
       {isModalOpen ? (
         <AddressFormModal onClose={() => setIsModalOpen(false)} />

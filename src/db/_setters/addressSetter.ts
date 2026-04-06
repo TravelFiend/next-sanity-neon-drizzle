@@ -1,3 +1,4 @@
+import 'server-only';
 import type { AddressForm } from '@/lib/zod/frontend/addressFormZod';
 import { DbTransaction } from '@/types/db';
 import { addressesTable } from '../schemas';
