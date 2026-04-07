@@ -2,17 +2,19 @@
 'use client';
 
 import { useActionState, useEffect, useState } from 'react';
-import addAddress, {
-  AddressActionState
+import {
+  verifyAddress,
+  type AddressActionState
 } from '@/_actions/address/addressActions';
 import InputWLabel from '../form/InputWLabel';
 import SelectWLabel from '../form/SelectWLabel';
 import SubmitButton from '../form/SubmitButton';
 import states from '@/lib/constants/states';
 import TelephoneInputWLabel from '../form/TelephoneInputWLabel';
-import type { AddressForm as AddressFormType } from '@/_zodSchemas/frontend/addressForm';
+import type { AddressForm as AddressFormType } from '@/lib/zod/frontend/addressFormZod';
 import VerifiedAddressSelectorModal from './VerifiedAddressSelectorModal';
 import { isVerifiedAddress } from '@/types/address';
+import FormErrors from '../form/FormErrors';
 
 type AddressFormProps = {
   externalState?: AddressActionState | null;
@@ -29,7 +31,7 @@ const AddressForm = ({
 }: AddressFormProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [internalState, internalAction, internalIsPending] = useActionState(
-    addAddress,
+    verifyAddress,
     null
   );
 
@@ -49,12 +51,23 @@ const AddressForm = ({
     }
   }, [addressState, isEmbedded]);
 
-  const getDefault = (key: keyof AddressFormType) => {
-    if (!addressState?.success) {
-      const formData = addressState?.data as Partial<AddressFormType>;
-      return formData?.[key] ?? undefined;
+  const getDefault = (key: keyof AddressFormType, fallback?: string) => {
+    if (!addressState) return fallback;
+
+    if (addressState.success && isVerifiedAddress(addressState)) {
+      const { recipientData, addressData } = addressState.data;
+      const originalInput: Partial<AddressFormType> = {
+        ...recipientData,
+        ...addressData
+      };
+      const val = originalInput[key];
+      return val !== undefined ? String(val) : fallback;
     }
-    return undefined;
+
+    if (!addressState.success && addressState.data) {
+      const val = (addressState.data as Partial<AddressFormType>)[key];
+      return val !== undefined ? String(val) : fallback;
+    }
   };
 
   return (
@@ -63,20 +76,20 @@ const AddressForm = ({
         <div className="mb-3 flex w-full gap-6">
           <div className="w-full">
             <InputWLabel
-              forIdName="firstName"
+              forIdName="recipientFirstName"
               labelText="First Name"
               placeholder="Johnny"
               inputClassName="w-full"
-              defaultValue={getDefault('firstName')}
+              defaultValue={getDefault('recipientFirstName')}
             />
           </div>
           <div className="w-full">
             <InputWLabel
-              forIdName="lastName"
+              forIdName="recipientLastName"
               labelText="Last Name"
               placeholder="Smitherines"
               inputClassName="w-full"
-              defaultValue={getDefault('lastName')}
+              defaultValue={getDefault('recipientLastName')}
             />
           </div>
         </div>
@@ -84,12 +97,12 @@ const AddressForm = ({
         <div className="mb-3 flex w-full gap-6">
           <div className="w-full">
             <InputWLabel
-              forIdName="email"
+              forIdName="recipientEmail"
               labelText="Email"
               placeholder="youremail@example.com"
               inputClassName="w-full"
               inputType="email"
-              defaultValue={getDefault('email')}
+              defaultValue={getDefault('recipientEmail')}
             />
           </div>
           <div className="w-full">
@@ -104,23 +117,23 @@ const AddressForm = ({
         </div>
 
         <InputWLabel
-          forIdName="address1"
+          forIdName="streetAddress"
           labelText="Street Address"
           placeholder="123 Fairytale Ln."
           inputClassName="mb-3"
-          defaultValue={getDefault('address1')}
+          defaultValue={getDefault('streetAddress')}
         />
 
         <InputWLabel
-          forIdName="address2"
+          forIdName="secondaryAddress"
           labelText="Address 2 (Apt/Suite/Unit)"
           placeholder="Apt. 321"
           inputClassName="mb-3"
           required={false}
-          defaultValue={getDefault('address2')}
+          defaultValue={getDefault('secondaryAddress')}
         />
 
-        <div className="mb-8 flex w-full gap-6">
+        <div className="mb-3 flex w-full gap-6">
           <div className="w-full">
             <InputWLabel
               forIdName="city"
@@ -139,24 +152,65 @@ const AddressForm = ({
           </div>
           <div className="w-full">
             <InputWLabel
-              forIdName="zipCode"
-              labelText="Zip Code"
+              forIdName="ZIPCode"
+              labelText="ZIP Code"
               placeholder="98765"
               inputClassName="w-full"
-              defaultValue={getDefault('zipCode')}
+              defaultValue={getDefault('ZIPCode')}
             />
           </div>
         </div>
 
-        <ul className="h-8">
-          {addressState && !addressState.success && addressState.errors
-            ? addressState.errors.generic.map(err => (
-                <li key={err} className="text-sm text-error">
-                  {err}
-                </li>
-              ))
-            : null}
-        </ul>
+        <div className="mb-8 flex w-full gap-6">
+          <div className="flex w-full flex-col items-start">
+            <div className="flex flex-row-reverse">
+              <InputWLabel
+                inputType="radio"
+                forIdName="label-home"
+                name="addressLabel"
+                inputValue="home"
+                inputClassName="mr-3"
+                labelText="Home Address"
+                defaultChecked={getDefault('addressLabel', 'home') === 'home'}
+                required={false}
+              />
+            </div>
+            <div className="flex flex-row-reverse">
+              <InputWLabel
+                inputType="radio"
+                forIdName="label-business"
+                name="addressLabel"
+                inputValue="business"
+                inputClassName="mr-3"
+                labelText="Business Address"
+                defaultChecked={
+                  getDefault('addressLabel', 'home') === 'business'
+                }
+                required={false}
+              />
+            </div>
+          </div>
+
+          <div className="flex w-full flex-row-reverse justify-end">
+            <InputWLabel
+              inputType="checkbox"
+              forIdName="isDefault"
+              labelText="Use as default address?"
+              required={false}
+              inputClassName="mr-3"
+              defaultChecked={!!getDefault('isDefault')}
+            />
+          </div>
+        </div>
+
+        {!addressState || !addressState.success ? (
+          <FormErrors
+            errors={addressState?.errors}
+            message={addressState?.message}
+            className="h-8"
+          />
+        ) : null}
+
         <SubmitButton isPending={isPending} className="w-5/12" />
       </form>
 

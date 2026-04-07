@@ -8,9 +8,16 @@ type ButtonProps = {
   onClick: () => void;
   ariaLabel: string;
   className?: string;
+  disabled?: boolean;
 };
 
-const Button = ({ children, onClick, ariaLabel, className }: ButtonProps) => {
+const Button = ({
+  children,
+  onClick,
+  ariaLabel,
+  className,
+  disabled = false
+}: ButtonProps) => {
   return (
     <button
       className={conditionalClasses(
@@ -20,6 +27,7 @@ const Button = ({ children, onClick, ariaLabel, className }: ButtonProps) => {
       type="button"
       onClick={onClick}
       aria-label={ariaLabel}
+      disabled={disabled}
     >
       {children}
     </button>

@@ -1,16 +1,15 @@
 'use server';
 
 import 'server-only';
-import { eq } from 'drizzle-orm';
 import { hash, verify } from 'argon2';
-import { db } from '@/_drizzle/db';
-import { usersTable } from '@/_drizzle/schemas';
+import { db } from '@/db/db';
+import { usersTable } from '@/db/schemas';
 import {
   type UserLogin,
   type UserSignup,
   loginFormSchema,
   signupFormSchema
-} from '@/_zodSchemas/userZod';
+} from '@/lib/zod/userZod';
 import zodValidate from '@/lib/utils/zodValidate';
 import { removeSessionUser } from '@/_actions/auth/session.edge';
 import { createUserSession } from '@/_actions/auth/session.server';
@@ -19,8 +18,10 @@ import { getOAuthClient } from '@/auth/oAuth/oAuthBase';
 import type {
   InsertUser,
   OAuthProvider
-} from '@/_drizzle/schemas/usersDrizzle';
+} from '@/db/schemas/tables/usersTables';
 import type { ActionState } from '@/types/actions';
+import { getUserByEmail } from '@/db/_getters/userGetters';
+import { sessionSchema } from '@/lib/zod/oAuthZod';
 
 const signup = async (
   prevState: unknown,
@@ -89,8 +90,8 @@ const login = async (
 
   const { email, password }: UserLogin = parsed.data;
 
-  const existingUser = await db.query.usersTable.findFirst({
-    where: eq(usersTable.email, email),
+  const existingUser = await getUserByEmail({
+    email,
     columns: {
       id: true,
       email: true,
@@ -109,11 +110,37 @@ const login = async (
     };
   }
 
+  if (!existingUser.password) {
+    return {
+      success: false,
+      errors: {
+        login: [
+          'No password set for this user.',
+          'This usually means you signed up using one of the social login options.',
+          'Please try logging in with that method.'
+        ]
+      },
+      data: raw
+    };
+  }
+
+  const sessionParsed = sessionSchema.safeParse(existingUser);
+
+  if (!sessionParsed.success) {
+    return {
+      success: false,
+      errors: {
+        sessionIdentifiers: ['User record is missing session identifiers']
+      },
+      data: raw
+    };
+  }
+
   try {
     const isVerified = await verify(existingUser.password!, password);
 
     if (isVerified) {
-      await createUserSession(existingUser);
+      await createUserSession(sessionParsed.data);
 
       return {
         success: true,
@@ -121,7 +148,13 @@ const login = async (
         userId: existingUser.id
       };
     } else {
-      throw new Error('Incorrect email and/or password');
+      return {
+        success: false,
+        errors: {
+          login: ['Incorrect email and/or password']
+        },
+        data: raw
+      };
     }
   } catch (err) {
     if (err instanceof Error) {

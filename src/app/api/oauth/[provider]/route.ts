@@ -1,10 +1,10 @@
-import { db } from '@/_drizzle/db';
+import { db } from '@/db/db';
 import {
   type OAuthProvider,
   userOAuthAccountsTable,
   usersTable
-} from '@/_drizzle/schemas';
-import { oAuthProvidersZodEnum } from '@/_zodSchemas/userZod';
+} from '@/db/schemas';
+import { oAuthProvidersZodEnum } from '@/lib/zod/userZod';
 import {
   getOAuthClient,
   InvalidStateError,

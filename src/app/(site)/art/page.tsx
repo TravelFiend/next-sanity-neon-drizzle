@@ -1,5 +1,5 @@
 import ContentWrapper from '@/components/common/ContentWrapper';
 
 export default function ArtMainPage() {
-  return <ContentWrapper>Main Art Page</ContentWrapper>;
+  return <ContentWrapper justify="start">Main Art Page</ContentWrapper>;
 }

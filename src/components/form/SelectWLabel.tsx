@@ -4,6 +4,7 @@ import Label from './Label';
 type SelectWLabelProps = {
   forIdName: string;
   labelText: string;
+  labelClassName?: string;
   options: { label: string; value: string }[];
   required?: boolean;
 };
@@ -11,6 +12,7 @@ type SelectWLabelProps = {
 const SelectWLabel = ({
   forIdName,
   labelText,
+  labelClassName,
   options,
   required = true
 }: SelectWLabelProps) => {
@@ -19,7 +21,7 @@ const SelectWLabel = ({
       <Label
         htmlFor={forIdName}
         labelText={labelText}
-        className="mb-2"
+        className={labelClassName}
         required={required}
       />
       <Select idName={forIdName} options={options} required={required} />

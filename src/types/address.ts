@@ -1,13 +1,21 @@
-import { AddressActionState } from '@/_actions/address/addressActions';
-import { Recipient } from '@/_zodSchemas/recipientZod';
+import type { AddressActionState } from '@/_actions/address/addressActions';
+import type { AddressInsert } from '@/lib/zod/addressZod';
 
-type InputAddress = {
-  streetAddress: string;
-  secondaryAddress: string;
-  city: string;
-  state: string;
-  ZIPCode: string;
-};
+type AddressRecipient = Pick<
+  AddressInsert,
+  'recipientFirstName' | 'recipientLastName' | 'recipientEmail' | 'phoneNumber'
+>;
+
+type AddressLocation = Pick<
+  AddressInsert,
+  | 'streetAddress'
+  | 'secondaryAddress'
+  | 'city'
+  | 'state'
+  | 'ZIPCode'
+  | 'addressLabel'
+  | 'isDefault'
+>;
 
 type USPSAddressSuccessResponse = {
   firm: string;
@@ -51,8 +59,9 @@ type USPSAddressErrorResponse = {
 };
 
 type VerifiedAddress = {
-  formUser: Recipient;
-  formAddress: InputAddress;
+  // userId: string;
+  recipientData: AddressRecipient;
+  addressData: AddressLocation;
   uspsResponse: USPSAddressSuccessResponse;
 };
 
@@ -80,7 +89,8 @@ const isVerifiedAddress = (
 };
 
 export {
-  type InputAddress,
+  type AddressRecipient,
+  type AddressLocation,
   type USPSAddressSuccessResponse,
   type USPSAddressErrorResponse,
   type VerifiedAddress,

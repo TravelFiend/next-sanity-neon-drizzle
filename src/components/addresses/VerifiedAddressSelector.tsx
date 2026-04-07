@@ -1,20 +1,59 @@
 'use client';
 
-import type { AddressActionState } from '@/_actions/address/addressActions';
+import {
+  addAddress,
+  type AddressActionState
+} from '@/_actions/address/addressActions';
 import type { VerifiedAddress } from '@/types/address';
 import Button from '../common/Button';
+import { AddressForm } from '@/lib/zod/frontend/addressFormZod';
+import { useTransition } from 'react';
 
 type VerifiedAddressSelectorProps = {
   addressData: Extract<AddressActionState, { fromAPI: true }> & {
     data: VerifiedAddress;
   };
   onClose: () => void;
+  onCloseAll?: () => void;
 };
 
 const VerifiedAddressSelector = ({
   addressData,
-  onClose
+  onClose,
+  onCloseAll
 }: VerifiedAddressSelectorProps) => {
+  const [isPending, startTransition] = useTransition();
+  const handleAddAddress = () => {
+    const { recipientData } = addressData.data;
+
+    const { streetAddress, secondaryAddress, city, state, ZIPCode } =
+      addressData.data.uspsResponse.address;
+
+    const finalData: AddressForm = {
+      ...recipientData,
+      streetAddress,
+      secondaryAddress: secondaryAddress ?? '',
+      city,
+      state,
+      ZIPCode,
+      addressLabel: addressData.data.addressData.addressLabel,
+      isDefault: addressData.data.addressData.isDefault
+    };
+
+    startTransition(async () => {
+      const result = await addAddress(finalData);
+      if (!result.success) {
+        console.error('There was a problem adding the address to the databse');
+      }
+
+      if (onCloseAll) {
+        onCloseAll();
+      } else {
+        onClose();
+      }
+    });
+  };
+
   const {
     streetAddress: inputStreet,
     secondaryAddress: inputUnit,
@@ -22,7 +61,7 @@ const VerifiedAddressSelector = ({
     state: inputState,
     ZIPCode: inputZIP
     // ZIPPlus4: inputZIP4
-  } = addressData.data.formAddress;
+  } = addressData.data.addressData;
   const {
     streetAddress: verifiedStreet,
     secondaryAddress: verifiedUnit,
@@ -52,7 +91,7 @@ const VerifiedAddressSelector = ({
         &#41;:
       </p>
       <Button
-        onClick={() => console.warn('MAKE THIS POPULATE THE FORM!')}
+        onClick={onClose}
         ariaLabel="select submitted address"
         className="bg-gray-100 text-primary-dark"
       >
@@ -63,11 +102,12 @@ const VerifiedAddressSelector = ({
         <span className="text-secondary-light">submit address</span>&#41;:{' '}
       </p>
       <Button
-        onClick={() => console.warn('MAKE THIS POPULATE THE FORM!')}
+        onClick={handleAddAddress}
         ariaLabel="select suggested address"
-        className="bg-gray-100 text-primary-dark"
+        className="bg-gray-100 text-start text-primary-dark"
+        disabled={isPending}
       >
-        {suggestedAddress}
+        {isPending ? 'Adding address...' : suggestedAddress}
       </Button>
     </div>
   );

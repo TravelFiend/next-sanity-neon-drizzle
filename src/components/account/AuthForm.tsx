@@ -5,6 +5,7 @@ import { redirect, useRouter } from 'next/navigation';
 import { useActionState, useEffect, useState } from 'react';
 import SubmitButton from '../form/SubmitButton';
 import InputWLabel from '../form/InputWLabel';
+import FormErrors from '../form/FormErrors';
 import TurnstileModal from '../form/TurnstileModal';
 
 type AuthFormProps = {
@@ -48,15 +49,6 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           defaultValue={authState?.data?.email}
         />
 
-        <ul className="h-5">
-          {!authState?.success &&
-            authState?.errors?.email?.map((err: string, idx: number) => (
-              <li key={`email-${idx}`} className="text-sm text-error">
-                {err}
-              </li>
-            ))}
-        </ul>
-
         <InputWLabel
           forIdName="password"
           labelText="Password"
@@ -69,34 +61,14 @@ const AuthForm = ({ mode }: AuthFormProps) => {
           }
         />
 
-        <ul className="h-5">
-          {!authState?.success &&
-            authState?.errors?.password?.map((err: string, idx: number) => (
-              <li key={`password-${idx}`} className="text-sm text-error">
-                {idx === 0 ? 'Password: ' : ''}
-                {err}
-              </li>
-            ))}
-        </ul>
-
-        <ul className="h-14">
-          {authState?.message ? (
-            <li className="text-sm text-success">{authState.message}</li>
+        <div className="h-20">
+          {!authState || !authState.success ? (
+            <FormErrors
+              errors={authState?.errors}
+              message={authState?.message}
+            />
           ) : null}
-
-          {/* General / login-wide errors */}
-          {!authState?.success && authState?.errors
-            ? Object.entries(authState.errors).map(([key, value]) => {
-                return key !== 'email' && key !== 'password'
-                  ? value.map((err, idx) => (
-                      <li key={`${key}-${idx}`} className="text-sm text-error">
-                        {err}
-                      </li>
-                    ))
-                  : null;
-              })
-            : null}
-        </ul>
+        </div>
 
         <SubmitButton
           isPending={isPending}

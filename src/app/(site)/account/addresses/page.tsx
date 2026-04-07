@@ -1,18 +1,69 @@
+import { getUserAddresses } from '@/db/_getters/addressGetters';
 import AddAddressButton from '@/components/addresses/AddAddressButton';
+import conditionalClasses from '@/lib/utils/conditionalClasses';
+import SetDefaultButton from '@/components/common/SetDefaultButton';
+import DeleteButton from '@/components/common/DeleteButton';
 
 // type AddressesPageProps = {};
 
-export default function AddressesPage() {
-  const addresses = null;
+export default async function AddressesPage() {
+  const addresses = await getUserAddresses();
+
+  // TODO: add functionality for address update
+
   return (
     <>
-      {addresses ? (
-        <div className="grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
+      {addresses && addresses.length > 0 ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {addresses.map(address => (
+            <div
+              key={address.id}
+              className={conditionalClasses(
+                'flex w-full flex-col justify-between rounded-md border p-4',
+                address.isDefault ? 'border-secondary' : 'border-gray-200'
+              )}
+            >
+              <div className="mb-2">
+                {address.isDefault && (
+                  <p className="mb-2 text-accent-light italic">
+                    default address
+                  </p>
+                )}
+                <p className="font-semibold">
+                  Name: {address.recipientFirstName} {address.recipientLastName}
+                </p>
+                <p>Address type: {address.addressLabel}</p>
+                <p>Address: {address.streetAddress}</p>
+                <p>{address.secondaryAddress}</p>
+                <p>
+                  {address.city}, {address.state} {address.ZIPCode}
+                </p>
+                <p>Phone: {address.phoneNumber}</p>
+              </div>
+
+              <div className="flex justify-end">
+                {!address.isDefault && (
+                  <SetDefaultButton addressId={address.id} />
+                )}
+
+                <button
+                  type="button"
+                  className="mr-4 text-accent-light underline"
+                >
+                  Edit
+                </button>
+
+                <DeleteButton addressId={address.id} />
+              </div>
+            </div>
+          ))}
+          <AddAddressButton buttonText="+ Add address" />
+        </div>
       ) : (
         <p>
           No Addresses currently saved.{' '}
           <span>
-            <AddAddressButton />
+            <AddAddressButton buttonText="Add a new address." />
           </span>
         </p>
       )}

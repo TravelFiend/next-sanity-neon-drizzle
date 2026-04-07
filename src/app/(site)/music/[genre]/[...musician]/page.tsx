@@ -6,5 +6,5 @@ export default async function MusicianPage({
   params: Promise<{ musician: string }>;
 }) {
   const { musician } = await params;
-  return <ContentWrapper>{musician}</ContentWrapper>;
+  return <ContentWrapper justify="start">{musician}</ContentWrapper>;
 }
