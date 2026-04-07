@@ -149,6 +149,7 @@ const addAddress = async (formData: AddressForm) => {
   };
 
   await setAddress(addressData);
+  return { success: true, message: 'Address successfully added to db' };
 };
 
 const updateDefaultAddress = async (addressId: number) => {

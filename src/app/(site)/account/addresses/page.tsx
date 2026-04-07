@@ -9,7 +9,7 @@ import DeleteButton from '@/components/common/DeleteButton';
 export default async function AddressesPage() {
   const addresses = await getUserAddresses();
 
-  // TODO: add functionality for address update, delete
+  // TODO: add functionality for address update
 
   return (
     <>

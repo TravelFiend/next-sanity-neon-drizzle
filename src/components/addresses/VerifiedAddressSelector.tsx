@@ -7,6 +7,7 @@ import {
 import type { VerifiedAddress } from '@/types/address';
 import Button from '../common/Button';
 import { AddressForm } from '@/lib/zod/frontend/addressFormZod';
+import { useTransition } from 'react';
 
 type VerifiedAddressSelectorProps = {
   addressData: Extract<AddressActionState, { fromAPI: true }> & {
@@ -21,7 +22,8 @@ const VerifiedAddressSelector = ({
   onClose,
   onCloseAll
 }: VerifiedAddressSelectorProps) => {
-  const handleAddAddress = async () => {
+  const [isPending, startTransition] = useTransition();
+  const handleAddAddress = () => {
     const { recipientData } = addressData.data;
 
     const { streetAddress, secondaryAddress, city, state, ZIPCode } =
@@ -38,13 +40,18 @@ const VerifiedAddressSelector = ({
       isDefault: addressData.data.addressData.isDefault
     };
 
-    await addAddress(finalData);
+    startTransition(async () => {
+      const result = await addAddress(finalData);
+      if (!result.success) {
+        console.error('There was a problem adding the address to the databse');
+      }
 
-    if (onCloseAll) {
-      onCloseAll();
-    } else {
-      onClose();
-    }
+      if (onCloseAll) {
+        onCloseAll();
+      } else {
+        onClose();
+      }
+    });
   };
 
   const {
@@ -97,9 +104,10 @@ const VerifiedAddressSelector = ({
       <Button
         onClick={handleAddAddress}
         ariaLabel="select suggested address"
-        className="bg-gray-100 text-primary-dark"
+        className="bg-gray-100 text-start text-primary-dark"
+        disabled={isPending}
       >
-        {suggestedAddress}
+        {isPending ? 'Adding address...' : suggestedAddress}
       </Button>
     </div>
   );
