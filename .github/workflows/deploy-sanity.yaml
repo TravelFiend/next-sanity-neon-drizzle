@@ -22,7 +22,7 @@ jobs:
       - uses: ./.github/actions/setup-sanity
 
       - name: Deploy Sanity Schema
-        run: bun run sanity schema deploy
+        run: npx sanity schema deploy
 
       - name: Deploy Sanity Studio
-        run: bun run sanity deploy --yes
+        run: npx sanity deploy --yes
