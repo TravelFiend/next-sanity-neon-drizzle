@@ -9,9 +9,7 @@ import client from '../client-config';
   use `client.fetch(`[QUERY]`)` */
 const token = process.env.SANITY_API_READ_TOKEN;
 if (!token) {
-  console.warn(
-    'Warning: SANITY_API_READ_TOKEN is missing. Live preview or authenticated queries might fail.'
-  );
+  throw new Error('Missing SANITY_API_READ_TOKEN');
 }
 
 export const { sanityFetch, SanityLive } = defineLive({
