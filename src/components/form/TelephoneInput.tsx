@@ -3,7 +3,6 @@
 import {
   useState,
   useRef,
-  useEffect,
   type ChangeEvent,
   type ClipboardEvent,
   type KeyboardEvent
@@ -21,6 +20,32 @@ type TelephoneInputProps = {
   required?: boolean;
 };
 
+const formatPhoneNumber = (input: string): string => {
+  let digits = input.replace(/[^\d]/g, '');
+
+  if (digits.startsWith('1')) {
+    digits = digits.slice(1);
+  }
+
+  digits = digits.slice(0, 10);
+  let formatted = '+1 ';
+
+  if (digits.length > 0) {
+    formatted += `(${digits.slice(0, 3)}`;
+  }
+  if (digits.length > 3) {
+    formatted += ')';
+  }
+  if (digits.length > 3) {
+    formatted += ` ${digits.slice(3, 6)}`;
+  }
+  if (digits.length > 6) {
+    formatted += `-${digits.slice(6, 10)}`;
+  }
+
+  return formatted;
+};
+
 const TelephoneInput = ({
   id,
   name,
@@ -30,38 +55,16 @@ const TelephoneInput = ({
   pattern = '\\+1 \\([0-9]{3}\\) [0-9]{3}-[0-9]{4}',
   required = true
 }: TelephoneInputProps) => {
-  const [value, setValue] = useState(`+1 ${defaultValue}`);
+  const [value, setValue] = useState(() =>
+    formatPhoneNumber(`+1 ${defaultValue}`)
+  );
+  const [prevDefaultValue, setPrevDefaultValue] = useState(defaultValue);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  if (defaultValue !== prevDefaultValue) {
+    setPrevDefaultValue(defaultValue);
     setValue(formatPhoneNumber(`+1 ${defaultValue}`));
-  }, [defaultValue]);
-
-  const formatPhoneNumber = (input: string): string => {
-    let digits = input.replace(/[^\d]/g, '');
-
-    if (digits.startsWith('1')) {
-      digits = digits.slice(1);
-    }
-
-    digits = digits.slice(0, 10);
-    let formatted = '+1 ';
-
-    if (digits.length > 0) {
-      formatted += `(${digits.slice(0, 3)}`;
-    }
-    if (digits.length > 3) {
-      formatted += ')';
-    }
-    if (digits.length > 3) {
-      formatted += ` ${digits.slice(3, 6)}`;
-    }
-    if (digits.length > 6) {
-      formatted += `-${digits.slice(6, 10)}`;
-    }
-
-    return formatted;
-  };
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;

@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useState } from 'react';
 import addAddress, {
   AddressActionState
 } from '@/_actions/address/addressActions';
@@ -37,17 +36,20 @@ const AddressForm = ({
   const addressAction = externalAction ?? internalAction;
   const isPending = externalIsPending ?? internalIsPending;
 
-  useEffect(() => {
+  const [prevAddressState, setPrevAddressState] =
+    useState<AddressActionState | null>(null);
+
+  if (addressState !== prevAddressState) {
+    setPrevAddressState(addressState);
     if (
       isEmbedded &&
       addressState &&
       addressState.success &&
-      isVerifiedAddress(addressState) &&
-      !isModalOpen
+      isVerifiedAddress(addressState)
     ) {
       setIsModalOpen(true);
     }
-  }, [addressState, isEmbedded]);
+  }
 
   const getDefault = (key: keyof AddressFormType) => {
     if (!addressState?.success) {
