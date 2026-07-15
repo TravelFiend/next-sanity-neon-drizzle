@@ -117,8 +117,7 @@ const NavTab = defineType({
       const externalLinkText = selection.externalLinkText as string | undefined;
       const externalLinkURL = selection.externalLinkURL as string | undefined;
       const childLinks = selection.childLinks as
-        | SecondLevelLinksType[]
-        | undefined;
+        SecondLevelLinksType[] | undefined;
 
       const displayTitle =
         internalLinkText || externalLinkText || externalLinkURL || 'Untitled';
