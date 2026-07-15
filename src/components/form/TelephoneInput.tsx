@@ -5,7 +5,8 @@ import {
   useRef,
   type ChangeEvent,
   type ClipboardEvent,
-  type KeyboardEvent
+  type KeyboardEvent,
+  type FocusEvent
 } from 'react';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import { INPUT_STYLE } from './Input';
@@ -33,7 +34,7 @@ const formatPhoneNumber = (input: string): string => {
   if (digits.length > 0) {
     formatted += `(${digits.slice(0, 3)}`;
   }
-  if (digits.length > 3) {
+  if (digits.length > 2) {
     formatted += ')';
   }
   if (digits.length > 3) {
@@ -106,17 +107,76 @@ const TelephoneInput = ({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (inputRef.current) {
-      const caretPos = inputRef.current.selectionStart || 0;
-      const selectionEnd = inputRef.current.selectionEnd || 0;
-      if (
-        (e.key === 'Backspace' || e.key === 'Delete') &&
-        caretPos <= 3 &&
-        selectionEnd <= 3
-      ) {
-        e.preventDefault();
+    if (!inputRef.current) return;
+
+    const caretPos = inputRef.current.selectionStart || 0;
+    const selectionEnd = inputRef.current.selectionEnd || 0;
+
+    if (
+      (e.key === 'Backspace' || e.key === 'Delete') &&
+      caretPos <= 3 &&
+      selectionEnd <= 3
+    ) {
+      e.preventDefault();
+      return;
+    }
+
+    if (caretPos === selectionEnd) {
+      if (e.key === 'Backspace') {
+        const charBefore = value[caretPos - 1];
+        if (charBefore && !/\d/.test(charBefore)) {
+          let idx = caretPos - 1;
+          while (idx >= 3 && !/\d/.test(value[idx])) {
+            idx--;
+          }
+          if (idx >= 3) {
+            e.preventDefault();
+            const newValue = value.slice(0, idx) + value.slice(idx + 1);
+            const formatted = formatPhoneNumber(newValue);
+            setValue(formatted);
+            setTimeout(() => {
+              if (inputRef.current) {
+                inputRef.current.setSelectionRange(idx, idx);
+              }
+            }, 0);
+          }
+        }
+      } else if (e.key === 'Delete') {
+        const charAt = value[caretPos];
+        if (charAt && !/\d/.test(charAt)) {
+          let idx = caretPos;
+          while (idx < value.length && !/\d/.test(value[idx])) {
+            idx++;
+          }
+          if (idx < value.length) {
+            e.preventDefault();
+            const newValue = value.slice(0, idx) + value.slice(idx + 1);
+            const formatted = formatPhoneNumber(newValue);
+            setValue(formatted);
+            setTimeout(() => {
+              if (inputRef.current) {
+                inputRef.current.setSelectionRange(caretPos, caretPos);
+              }
+            }, 0);
+          }
+        }
       }
     }
+  };
+
+  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setTimeout(() => {
+      if (inputRef.current) {
+        const isSelectionAll =
+          inputRef.current.selectionStart === 0 &&
+          inputRef.current.selectionEnd === val.length;
+
+        if (isSelectionAll || val === '+1 ') {
+          inputRef.current.setSelectionRange(val.length, val.length);
+        }
+      }
+    }, 0);
   };
 
   return (
@@ -130,6 +190,7 @@ const TelephoneInput = ({
       onChange={handleChange}
       onPaste={handlePaste}
       onKeyDown={handleKeyDown}
+      onFocus={handleFocus}
       className={conditionalClasses(INPUT_STYLE, className)}
       required={required}
       pattern={pattern}
