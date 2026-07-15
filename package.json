@@ -12,7 +12,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix src --ext .ts,.tsx,.js,.jsx",
-    "format": "prettier --write src/**/*.{ts,tsx,js,jsx}",
+    "format": "prettier --write src/**/*.{ts,tsx}",
     "test:lint": "bunx eslint src --cache --cache-location .eslintcache",
     "test:prettier": "prettier --check ./src",
     "prepare": "husky",
