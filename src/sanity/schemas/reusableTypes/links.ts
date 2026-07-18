@@ -4,7 +4,7 @@ import {
   type ValidationContext,
   type ObjectRule
 } from 'sanity';
-import { LinkIcon } from '@sanity/icons';
+import { LinkIcon } from '@sanity/icons/Link';
 import LinkWithIconPreview from '../../studioUI/LinkWithIconPreview';
 
 const linkFields = [
@@ -30,7 +30,8 @@ const internalLinkFields = [
         return parent?.linkText ?? '';
       },
       maxLength: 96,
-      isUnique: (slug, context) => context.defaultIsUnique(slug, context)
+      isUnique: (slug, context) => context.defaultIsUnique(slug, context),
+      disableArrayWarning: true
     },
     validation: Rule => Rule.required()
   })

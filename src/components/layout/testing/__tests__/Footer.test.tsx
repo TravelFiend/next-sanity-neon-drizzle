@@ -46,7 +46,7 @@ describe('Footer component', () => {
 
     let socialLink: HTMLElement | null = screen.getByLabelText(/instagram/i);
     expect(socialLink).toBeInTheDocument();
-    expect(socialLink.innerHTML).toContain('<svg');
+    expect(socialLink.innerHTML).toContain('<g');
 
     const noSocialLinks = {
       ...footerMock,

@@ -1,5 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
-import { ImageIcon, TextIcon, PanelLeftIcon } from '@sanity/icons';
+import { ImageIcon } from '@sanity/icons/Image';
+import { TextIcon } from '@sanity/icons/Text';
+import { PanelLeftIcon } from '@sanity/icons/PanelLeft';
 
 const ContentBlocks = defineType({
   name: 'contentBlocks',
