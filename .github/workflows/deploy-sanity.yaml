@@ -17,12 +17,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - uses: ./.github/actions/setup-sanity
 
       - name: Deploy Sanity Schema
-        run: bunx sanity schema deploy --non-interactive
+        run: npx sanity schema deploy
 
       - name: Deploy Sanity Studio
-        run: bun run sanity deploy --non-interactive
+        run: bun run sanity deploy --yes

@@ -9,6 +9,7 @@ import studio from '@sanity/eslint-config-studio';
 import importPlugin from 'eslint-plugin-import';
 
 const eslintConfig = defineConfig([
+  ...nextVitals,
   {
     files: ['src/sanity/**/*.{js,jsx,ts,tsx}'],
     ...studio[0]
@@ -115,7 +116,14 @@ const eslintConfig = defineConfig([
     'out/**',
     'build/**',
     'next-env.d.ts'
-  ])
+  ]),
+  {
+    settings: {
+      react: {
+        version: '19.0'
+      }
+    }
+  }
 ]);
 
 export default eslintConfig;

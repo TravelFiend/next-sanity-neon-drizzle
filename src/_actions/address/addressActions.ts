@@ -19,8 +19,7 @@ import { getSessionUser } from '../auth/session.edge';
 import { revalidatePath } from 'next/cache';
 
 export type AddressActionState =
-  | ActionState<AddressForm>
-  | (ActionState<VerifiedAddress> & { fromAPI: true });
+  ActionState<AddressForm> | (ActionState<VerifiedAddress> & { fromAPI: true });
 
 let USPS_ADDRESS_URL;
 if (process.env.NODE_ENV === 'development') {
