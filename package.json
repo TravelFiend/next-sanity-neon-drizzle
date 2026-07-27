@@ -49,7 +49,7 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "sanity": "^6.5.0",
-    "sanity-plugin-cloudinary": "2.0.14",
+    "sanity-plugin-cloudinary": "2.0.16",
     "server-only": "^0.0.1",
     "styled-components": "^6.4.3",
     "tailwind-merge": "^3.6.0",
