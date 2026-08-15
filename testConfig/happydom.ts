@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GlobalRegistrator } from '@happy-dom/global-registrator';
-import * as matchers from '@testing-library/jest-dom/matchers';
-import { expect as bunExpect } from 'bun:test';
-import { toHaveNoViolations } from 'jest-axe';
 
 GlobalRegistrator.register();
+
+const matchers = await import('@testing-library/jest-dom/matchers');
+const { expect: bunExpect } = await import('bun:test');
+const { toHaveNoViolations } = await import('jest-axe');
 
 // Extend Bun's expect with jest-dom and jest-axe matchers
 bunExpect.extend({
