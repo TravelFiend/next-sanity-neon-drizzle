@@ -14,7 +14,8 @@ const HOMEPAGE_QUERY = defineQuery(`*[_type == "homepage"][0]{
 const getHomepage = async () => {
   try {
     const { data } = await sanityFetch({
-      query: HOMEPAGE_QUERY
+      query: HOMEPAGE_QUERY,
+      stega: false
     });
 
     return data;
