@@ -1,7 +1,7 @@
 import 'server-only';
 import { eq } from 'drizzle-orm';
-import { db } from '../db';
-import { usersTable, type User } from '../schemas';
+import { db } from '../../db';
+import { usersTable, type User } from '../../schemas';
 import type { DbTransaction } from '@/types/db';
 
 type GetUserOptions = {

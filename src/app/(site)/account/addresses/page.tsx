@@ -1,4 +1,4 @@
-import { getUserAddresses } from '@/db/_getters/addressGetters';
+import { getUserAddresses } from '@/db/DAL/_getters/addressGetters';
 import AddAddressButton from '@/components/addresses/AddAddressButton';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import SetDefaultButton from '@/components/common/SetDefaultButton';

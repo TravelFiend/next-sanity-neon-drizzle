@@ -1,8 +1,8 @@
 import 'server-only';
 import type { AddressForm } from '@/lib/zod/frontend/addressFormZod';
 import { DbTransaction } from '@/types/db';
-import { addressesTable } from '../schemas';
-import { db } from '../db';
+import { addressesTable } from '../../schemas';
+import { db } from '../../db';
 import { and, eq } from 'drizzle-orm';
 
 const setAddress = async (
@@ -69,7 +69,9 @@ const setAddress = async (
       ? await insertAddress(externalTrx)
       : await db.transaction(async trx => await insertAddress(trx));
   } catch (err) {
-    throw new Error(`Error setting address: ${err}`);
+    throw new Error('Error setting address:', {
+      cause: err
+    });
   }
 };
 

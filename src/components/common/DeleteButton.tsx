@@ -23,7 +23,7 @@ const DeleteButton = ({ addressId }: DeleteButtonProps) => {
     <button
       type="button"
       disabled={isPending}
-      className="mr-4 text-accent-light underline disabled:opacity-50"
+      className="mr-4 cursor-pointer text-accent-light underline disabled:opacity-50"
       onClick={handleDelete}
     >
       {isPending ? 'Deleting...' : 'Delete'}

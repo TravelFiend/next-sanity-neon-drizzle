@@ -1,7 +1,7 @@
 'use server';
 
 import 'server-only';
-import getValidUspsToken from '@/lib/utils/getUspsToken';
+import { AddressValidationClient } from '@googlemaps/addressvalidation';
 import zodValidate from '@/lib/utils/zodValidate';
 import {
   type AddressForm,
@@ -9,24 +9,23 @@ import {
 } from '@/lib/zod/frontend/addressFormZod';
 import type { ActionState } from '@/types/actions';
 import type {
-  USPSAddressErrorResponse,
-  USPSAddressSuccessResponse,
+  GoogleAddressValidatorResponse,
   VerifiedAddress
 } from '@/types/address';
-import { removeAddress, setDefaultAddress } from '@/db/_setters/addressSetters';
-import { setAddress } from '@/db/_setters/addressSetters';
+import {
+  setAddress,
+  removeAddress,
+  setDefaultAddress
+} from '@/db/DAL/_setters/addressSetters';
 import { getSessionUser } from '../auth/session.edge';
 import { revalidatePath } from 'next/cache';
 
+const validator = new AddressValidationClient({
+  apiKey: process.env.GOOGLE_MAPS_API_KEY
+});
+
 export type AddressActionState =
   ActionState<AddressForm> | (ActionState<VerifiedAddress> & { fromAPI: true });
-
-let USPS_ADDRESS_URL;
-if (process.env.NODE_ENV === 'development') {
-  USPS_ADDRESS_URL = 'https://apis-tem.usps.com/addresses/v3/address';
-} else {
-  USPS_ADDRESS_URL = 'https://apis.usps.com/addresses/v3/address';
-}
 
 const verifyAddress = async (
   prevState: unknown,
@@ -46,16 +45,6 @@ const verifyAddress = async (
   if (!success) return parsed;
 
   try {
-    const accessToken = await getValidUspsToken();
-    if (!accessToken) {
-      return {
-        success: false,
-        errors: {
-          accessToken: ['Access token was not retrieved.  Please try again.']
-        }
-      };
-    }
-
     const recipientData = {
       recipientFirstName: addressFormData.recipientFirstName,
       recipientLastName: addressFormData.recipientLastName,
@@ -71,18 +60,18 @@ const verifyAddress = async (
       ZIPCode: addressFormData.ZIPCode
     };
 
-    const params = new URLSearchParams({ ...addressData });
-
-    const addressRes = await fetch(`${USPS_ADDRESS_URL}?${params.toString()}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
+    const addressRes = await validator.validateAddress({
+      address: {
+        regionCode: 'US',
+        locality: addressData.city,
+        administrativeArea: addressData.state,
+        postalCode: addressData.ZIPCode,
+        addressLines: [addressData.streetAddress, addressData.secondaryAddress]
+      },
+      enableUspsCass: true
     });
-    const addressJSON: USPSAddressSuccessResponse | USPSAddressErrorResponse =
-      await addressRes.json();
 
-    if (!addressJSON) {
+    if (!addressRes) {
       return {
         success: false,
         errors: {
@@ -94,14 +83,9 @@ const verifyAddress = async (
       };
     }
 
-    if ('error' in addressJSON) {
-      return {
-        success: false,
-        errors: {
-          generic: [addressJSON.error.message]
-        },
-        data: parsed.data
-      };
+    let addressJSON: GoogleAddressValidatorResponse;
+    if (addressRes) {
+      addressJSON = addressRes[0].result;
     }
 
     const verifiedAddress: VerifiedAddress = {
@@ -110,7 +94,7 @@ const verifyAddress = async (
         ...addressData,
         isDefault: addressFormData.isDefault ?? false
       },
-      uspsResponse: { ...addressJSON }
+      addressResponse: { ...addressJSON }
     };
 
     return {

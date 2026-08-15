@@ -20,7 +20,7 @@ import type {
   OAuthProvider
 } from '@/db/schemas/tables/usersTables';
 import type { ActionState } from '@/types/actions';
-import { getUserByEmail } from '@/db/_getters/userGetters';
+import { getUserByEmail } from '@/db/DAL/_getters/userGetters';
 import { sessionSchema } from '@/lib/zod/oAuthZod';
 
 const signup = async (
