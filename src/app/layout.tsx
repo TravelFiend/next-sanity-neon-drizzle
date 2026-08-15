@@ -32,7 +32,7 @@ export const generateMetadata = async () => {
   const metadata = await getSitewideMetaData();
   if (!metadata)
     return {
-      title: 'Neon Drizzle',
+      title: 'GiGpIg',
       description: 'Abracadabra and to all a good night',
       keywords: ['SEOKeyword', 'SEOKeyword1', 'SEOKeyword2'],
       generator: 'Next.js'

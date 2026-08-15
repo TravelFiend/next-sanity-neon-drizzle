@@ -62,11 +62,10 @@ const VerifiedAddressSelector = ({
   let zipCodeSuffix: AddressEntry = { confirmed: false, entry: '' };
 
   for (let i = 0; i < addressComponents.length; i++) {
-    const component = addressComponents[i];
-    const confirmed = component.confirmationLevel === 'CONFIRMED';
-    const entry = component.componentName?.text ?? '';
+    const confirmed = addressComponents[i].confirmationLevel === 'CONFIRMED';
+    const entry = addressComponents[i].componentName?.text ?? '';
 
-    switch (component.componentType) {
+    switch (addressComponents[i].componentType) {
       case 'street_number':
         streetNumber = { confirmed, entry };
         break;
