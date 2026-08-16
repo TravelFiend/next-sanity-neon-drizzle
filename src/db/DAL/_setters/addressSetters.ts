@@ -75,6 +75,73 @@ const setAddress = async (
   }
 };
 
+const modifyAddress = async (
+  addressId: number,
+  addressData: AddressForm,
+  externalTrx?: DbTransaction
+) => {
+  const updateAddressRecord = async (trx: DbTransaction) => {
+    const {
+      userId,
+      recipientFirstName,
+      recipientLastName,
+      recipientEmail,
+      addressLabel,
+      streetAddress,
+      secondaryAddress,
+      city,
+      state,
+      ZIPCode,
+      phoneNumber,
+      isDefault
+    } = addressData;
+
+    if (userId && isDefault) {
+      await trx
+        .update(addressesTable)
+        .set({ isDefault: false })
+        .where(eq(addressesTable.userId, userId));
+    }
+
+    const [updatedAddress] = await trx
+      .update(addressesTable)
+      .set({
+        recipientFirstName,
+        recipientLastName,
+        recipientEmail,
+        addressLabel: addressLabel?.toLowerCase() ?? 'home',
+        streetAddress,
+        secondaryAddress: secondaryAddress || null,
+        city,
+        state: state.toUpperCase(),
+        ZIPCode,
+        phoneNumber: phoneNumber || null,
+        isDefault: isDefault ?? false
+      })
+      .where(
+        userId
+          ? and(
+              eq(addressesTable.id, addressId),
+              eq(addressesTable.userId, userId)
+            )
+          : eq(addressesTable.id, addressId)
+      )
+      .returning();
+
+    return updatedAddress;
+  };
+
+  try {
+    return externalTrx
+      ? await updateAddressRecord(externalTrx)
+      : await db.transaction(async trx => await updateAddressRecord(trx));
+  } catch (err) {
+    throw new Error('Error updating address:', {
+      cause: err
+    });
+  }
+};
+
 const setDefaultAddress = async (addressId: number, userId: string) => {
   await db.transaction(async trx => {
     await trx
@@ -95,4 +162,4 @@ const removeAddress = async (addressId: number) => {
   await db.delete(addressesTable).where(eq(addressesTable.id, addressId));
 };
 
-export { setAddress, setDefaultAddress, removeAddress };
+export { setAddress, modifyAddress, setDefaultAddress, removeAddress };

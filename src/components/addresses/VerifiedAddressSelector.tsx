@@ -3,6 +3,7 @@
 import { useTransition } from 'react';
 import {
   addAddress,
+  updateAddress,
   type AddressActionState
 } from '@/_actions/address/addressActions';
 import Button from '../common/Button';
@@ -100,7 +101,6 @@ const VerifiedAddressSelector = ({
 
   const { recipientData, addressData: inputData } = addressData.data;
 
-  // Assemble full street address
   const streetCombined = [streetNumber.entry, route.entry]
     .filter(Boolean)
     .join(' ');
@@ -174,9 +174,14 @@ const VerifiedAddressSelector = ({
     };
 
     startTransition(async () => {
-      const result = await addAddress(finalData);
+      const result = inputData.id
+        ? await updateAddress(inputData.id, finalData)
+        : await addAddress(finalData);
+
       if (!result.success) {
-        console.error('There was a problem adding the address to the database');
+        console.error(
+          `There was a problem ${inputData.id ? 'updating the address in' : 'adding the address to'} the database`
+        );
       }
 
       if (onCloseAll) {
@@ -231,7 +236,11 @@ const VerifiedAddressSelector = ({
         disabled={isPending}
       >
         {isPending ? (
-          'Adding address...'
+          inputData.id ? (
+            'Updating address...'
+          ) : (
+            'Adding address...'
+          )
         ) : (
           <span>
             <span className={!isStreetConfirmed ? 'text-error' : ''}>

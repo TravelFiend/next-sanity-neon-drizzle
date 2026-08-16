@@ -9,6 +9,7 @@ type AddressRecipient = Pick<
 
 type AddressLocation = Pick<
   AddressInsert,
+  | 'id'
   | 'streetAddress'
   | 'secondaryAddress'
   | 'city'

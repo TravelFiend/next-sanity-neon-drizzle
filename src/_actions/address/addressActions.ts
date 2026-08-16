@@ -14,6 +14,7 @@ import type {
 } from '@/types/address';
 import {
   setAddress,
+  modifyAddress,
   removeAddress,
   setDefaultAddress
 } from '@/db/DAL/_setters/addressSetters';
@@ -35,6 +36,7 @@ const verifyAddress = async (
 
   const raw = {
     ...data,
+    id: data.id ? Number(data.id) : undefined,
     isDefault: !!formData.get('isDefault'),
     addressLabel: data.addressLabel ?? null
   };
@@ -53,6 +55,7 @@ const verifyAddress = async (
     };
 
     const addressData = {
+      id: addressFormData.id,
       streetAddress: addressFormData.streetAddress,
       secondaryAddress: addressFormData.secondaryAddress ?? '',
       city: addressFormData.city,
@@ -135,6 +138,28 @@ const addAddress = async (formData: AddressForm) => {
   return { success: true, message: 'Address successfully added to db' };
 };
 
+const updateAddress = async (addressId: number, formData: AddressForm) => {
+  const user = await getSessionUser();
+
+  if (!user || !user.id) {
+    return {
+      success: false,
+      message: 'You must be logged in to update an address'
+    };
+  }
+
+  const addressData = {
+    ...formData,
+    userId: user.id,
+    isDefault: !!formData.isDefault,
+    addressLabel: formData.addressLabel ?? 'home'
+  };
+
+  await modifyAddress(addressId, addressData);
+  revalidatePath('/addresses');
+  return { success: true, message: 'Address updated successfully' };
+};
+
 const updateDefaultAddress = async (addressId: number) => {
   const user = await getSessionUser();
 
@@ -156,4 +181,10 @@ const deleteAddress = async (addressId: number) => {
   return { success: true, message: 'Address deleted successfully' };
 };
 
-export { verifyAddress, addAddress, updateDefaultAddress, deleteAddress };
+export {
+  verifyAddress,
+  addAddress,
+  updateAddress,
+  updateDefaultAddress,
+  deleteAddress
+};
