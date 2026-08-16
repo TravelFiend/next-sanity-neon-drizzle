@@ -8,6 +8,7 @@ type ButtonProps = {
   onClick: () => void;
   ariaLabel: string;
   className?: string;
+  type?: 'submit' | 'reset' | 'button';
   disabled?: boolean;
 };
 
@@ -16,6 +17,7 @@ const Button = ({
   onClick,
   ariaLabel,
   className,
+  type = 'button',
   disabled = false
 }: ButtonProps) => {
   return (
@@ -24,7 +26,7 @@ const Button = ({
         'cursor-pointer rounded-lg bg-primary-dark p-2 shadow-md hover:bg-gray-200',
         className
       )}
-      type="button"
+      type={type}
       onClick={onClick}
       aria-label={ariaLabel}
       disabled={disabled}

@@ -6,12 +6,14 @@ import ModalWrapper from '../common/ModalWrapper';
 import { verifyAddress } from '@/_actions/address/addressActions';
 import { isVerifiedAddress } from '@/types/address';
 import VerifiedAddressSelector from './VerifiedAddressSelector';
+import { AddressInsert } from '@/lib/zod/addressZod';
 
 type AddressFormModalProps = {
   onClose: () => void;
+  initialData?: AddressInsert;
 };
 
-const AddressFormModal = ({ onClose }: AddressFormModalProps) => {
+const AddressFormModal = ({ initialData, onClose }: AddressFormModalProps) => {
   const [showSelector, setShowSelector] = useState<boolean>(false);
   const [addressState, addressAction, isPending] = useActionState(
     verifyAddress,
@@ -42,6 +44,7 @@ const AddressFormModal = ({ onClose }: AddressFormModalProps) => {
         />
       ) : (
         <AddressForm
+          initialData={initialData}
           externalState={addressState}
           externalAction={addressAction}
           externalIsPending={isPending}

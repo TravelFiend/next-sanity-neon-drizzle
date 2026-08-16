@@ -4,17 +4,26 @@ import { useTransition } from 'react';
 import { updateDefaultAddress } from '@/_actions/address/addressActions';
 
 type SetDefaultButtonProps = {
-  addressId: number;
+  id: number;
+  item: 'address' | 'artist' | 'musician';
 };
 
-const SetDefaultButton = ({ addressId }: SetDefaultButtonProps) => {
+const SetDefaultButton = ({ id, item }: SetDefaultButtonProps) => {
   const [isPending, startTransition] = useTransition();
 
   const handleSetDefault = () => {
     startTransition(async () => {
-      const result = await updateDefaultAddress(addressId);
-      if (!result.success) {
-        console.error(result.message);
+      if (item === 'address') {
+        const result = await updateDefaultAddress(id);
+        if (!result.success) {
+          console.error(result.message);
+        }
+      } else if (item === 'artist') {
+        // TODO: allows musicians to select default artists (maybe not, favorites is better)
+        return;
+      } else {
+        // TODO: allows artists to select default musicians (maybe not, favorites is better)
+        return;
       }
     });
   };

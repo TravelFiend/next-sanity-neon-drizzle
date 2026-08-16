@@ -3,13 +3,12 @@ import AddAddressButton from '@/components/addresses/AddAddressButton';
 import conditionalClasses from '@/lib/utils/conditionalClasses';
 import SetDefaultButton from '@/components/common/SetDefaultButton';
 import DeleteButton from '@/components/common/DeleteButton';
+import EditButton from '@/components/common/EditButton';
 
 // type AddressesPageProps = {};
 
 export default async function AddressesPage() {
   const addresses = await getUserAddresses();
-
-  // TODO: add functionality for address update
 
   return (
     <>
@@ -43,15 +42,14 @@ export default async function AddressesPage() {
 
               <div className="flex justify-end">
                 {!address.isDefault && (
-                  <SetDefaultButton addressId={address.id} />
+                  <SetDefaultButton id={address.id} item="address" />
                 )}
 
-                <button
-                  type="button"
-                  className="mr-4 text-accent-light underline"
-                >
-                  Edit
-                </button>
+                <EditButton
+                  item="address"
+                  ariaLabel="Edit address"
+                  initialData={address}
+                />
 
                 <DeleteButton addressId={address.id} />
               </div>

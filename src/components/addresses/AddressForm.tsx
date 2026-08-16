@@ -14,8 +14,10 @@ import type { AddressForm as AddressFormType } from '@/lib/zod/frontend/addressF
 import VerifiedAddressSelectorModal from './VerifiedAddressSelectorModal';
 import { isVerifiedAddress } from '@/types/address';
 import FormErrors from '../form/FormErrors';
+import { AddressInsert } from '@/lib/zod/addressZod';
 
 type AddressFormProps = {
+  initialData?: AddressInsert;
   externalState?: AddressActionState | null;
   externalAction?: (formData: FormData) => void;
   externalIsPending?: boolean;
@@ -23,6 +25,7 @@ type AddressFormProps = {
 };
 
 const AddressForm = ({
+  initialData,
   externalState,
   externalAction,
   externalIsPending,
@@ -54,28 +57,34 @@ const AddressForm = ({
   }
 
   const getDefault = (key: keyof AddressFormType, fallback?: string) => {
-    if (!addressState) return fallback;
+    if (addressState) {
+      if (addressState.success && isVerifiedAddress(addressState)) {
+        const { recipientData, addressData } = addressState.data;
+        const originalInput: Partial<AddressFormType> = {
+          ...recipientData,
+          ...addressData
+        };
+        const val = originalInput[key];
+        return val !== undefined ? String(val) : fallback;
+      }
 
-    if (addressState.success && isVerifiedAddress(addressState)) {
-      const { recipientData, addressData } = addressState.data;
-      const originalInput: Partial<AddressFormType> = {
-        ...recipientData,
-        ...addressData
-      };
-      const val = originalInput[key];
-      return val !== undefined ? String(val) : fallback;
+      if (!addressState.success && addressState.data) {
+        const val = (addressState.data as Partial<AddressFormType>)[key];
+        return val !== undefined ? String(val) : fallback;
+      }
     }
 
-    if (!addressState.success && addressState.data) {
-      const val = (addressState.data as Partial<AddressFormType>)[key];
-      return val !== undefined ? String(val) : fallback;
-    }
+    return initialData?.[key] ? initialData[key].toString() : fallback;
   };
 
   return (
     <>
       <form className="flex flex-col px-10" action={addressAction}>
         <div className="mb-3 flex w-full gap-6">
+          {initialData?.id && (
+            <input type="hidden" name="id" value={initialData.id} />
+          )}
+
           <div className="w-full">
             <InputWLabel
               forIdName="recipientFirstName"
