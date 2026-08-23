@@ -1,15 +1,10 @@
 import conditionalClasses from '@/lib/utils/conditionalClasses';
+import type { InputHTMLAttributes } from 'react';
 
-type InputProps = {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   name: string;
-  type?: string;
-  placeholder?: string;
-  defaultValue?: string;
-  className?: string;
-  pattern?: string;
-  required?: boolean;
-};
+}
 
 export const INPUT_STYLE =
   'rounded border bg-secondary p-2 text-primary-light placeholder:text-secondary-dark focus:outline-2 focus:outline-tertiary';
@@ -18,20 +13,18 @@ const Input = ({
   id,
   name,
   type = 'text',
-  placeholder,
-  defaultValue,
   className,
-  required = true
+  required = true,
+  ...props
 }: InputProps) => {
   return (
     <input
       id={id}
       name={name}
       type={type}
-      placeholder={placeholder}
-      defaultValue={defaultValue}
-      className={conditionalClasses(INPUT_STYLE, className)}
       required={required}
+      className={conditionalClasses(INPUT_STYLE, className)}
+      {...props}
     />
   );
 };

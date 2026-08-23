@@ -63,7 +63,8 @@ const SITE_SETTINGS_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
 const getSiteSettings = async () => {
   try {
     const { data } = await sanityFetch({
-      query: SITE_SETTINGS_QUERY
+      query: SITE_SETTINGS_QUERY,
+      stega: false
     });
 
     return data;

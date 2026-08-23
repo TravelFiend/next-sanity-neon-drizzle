@@ -20,7 +20,14 @@ const eslintConfig = defineConfig([
     ...tseslint.configs.recommended[0],
     rules: {
       'no-redeclare': 'off',
-      '@typescript-eslint/no-redeclare': ['error']
+      '@typescript-eslint/no-redeclare': ['error'],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_'
+        }
+      ]
     }
   },
   ...nextVitals,
@@ -88,6 +95,12 @@ const eslintConfig = defineConfig([
       quotes: ['error', 'single', { avoidEscape: true }],
       semi: ['error', 'always'],
       'space-before-blocks': ['error', 'always']
+    }
+  },
+  {
+    files: ['src/db/seeds/**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      'no-console': 'off'
     }
   },
   ...storybook.configs['flat/recommended'],

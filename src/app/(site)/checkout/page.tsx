@@ -1,9 +1,11 @@
 import AddressForm from '@/components/addresses/AddressForm';
 
-type CheckoutPageProps = {
-  isOpen: boolean;
-};
-
-export default function CheckoutPage({ isOpen = false }: CheckoutPageProps) {
-  return <AddressForm isEmbedded={true} />;
+export default function CheckoutPage() {
+  return (
+    <section className="flex h-full w-full flex-row justify-center">
+      <div className="flex h-full items-center justify-center">
+        <AddressForm isEmbedded={true} />
+      </div>
+    </section>
+  );
 }

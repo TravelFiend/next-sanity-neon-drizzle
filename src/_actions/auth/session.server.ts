@@ -3,11 +3,11 @@
 //  Functions in this file will cause edge runtime errors if used in proxy/api routes
 import { cookies } from 'next/headers';
 import { redis } from '@/redis/redis';
-import { type UserSession, sessionSchema } from '@/_zodSchemas/oAuthZod';
-import { db } from '@/_drizzle/db';
+import { type UserSession, sessionSchema } from '@/lib/zod/oAuthZod';
+import { db } from '@/db/db';
 import { eq } from 'drizzle-orm';
 import { getSessionUser } from './session.edge';
-import { usersTable } from '@/_drizzle/schemas';
+import { usersTable } from '@/db/schemas';
 import { redirect } from 'next/navigation';
 import { cache } from 'react';
 import { NextResponse } from 'next/server';

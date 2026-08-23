@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function AboutUsPage() {
   return (
-    <ContentWrapper>
+    <ContentWrapper justify="start">
       <p className="">About us page</p>
     </ContentWrapper>
   );

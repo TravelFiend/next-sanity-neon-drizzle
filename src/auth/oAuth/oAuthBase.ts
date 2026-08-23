@@ -7,8 +7,8 @@ import createGoogleOAuthClient from './google';
 import createGithubOAuthClient from './github';
 import createFacebookOAuthClient from './facebook';
 import getSessionCookieOptions from './sessionCookieOptions';
-import type { OAuthProvider } from '@/_drizzle/schemas';
-import { tokenSchema } from '@/_zodSchemas/oAuthZod';
+import type { OAuthProvider } from '@/db/schemas';
+import { tokenSchema } from '@/lib/zod/oAuthZod';
 
 const STATE_COOKIE_KEY = 'oAuthState';
 const CODE_VERIFIER_COOKIE_KEY = 'oAuthCodeVerifier';

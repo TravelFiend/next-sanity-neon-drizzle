@@ -6,5 +6,5 @@ export default async function MusicGenrePage({
   params: Promise<{ genre: string }>;
 }) {
   const { genre } = await params;
-  return <ContentWrapper>{genre}</ContentWrapper>;
+  return <ContentWrapper justify="start">{genre}</ContentWrapper>;
 }

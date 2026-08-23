@@ -57,7 +57,7 @@ const Footer = ({ footerData }: FooterProps) => {
                   }
                 >
                   <div
-                    className="size-10 sm:size-15"
+                    className="size-10 text-white sm:size-15"
                     dangerouslySetInnerHTML={{ __html: cleanSVG(icon) }}
                   />
                 </a>

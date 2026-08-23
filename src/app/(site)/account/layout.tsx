@@ -10,8 +10,8 @@ export default async function AccountPageLayout({
   children
 }: AccountPageLayoutProps) {
   return (
-    <ContentWrapper>
-      <section className="my-16 flex h-5/6 w-full">
+    <ContentWrapper justify="center">
+      <section className="flex h-5/6 w-full justify-center">
         <ul className="w-1/4 p-10">
           <li className="my-4">
             <Link href={'/account'}>Profile</Link>

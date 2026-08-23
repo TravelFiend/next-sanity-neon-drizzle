@@ -1,59 +1,32 @@
-import { AddressActionState } from '@/_actions/address/addressActions';
-import { Recipient } from '@/_zodSchemas/recipientZod';
+import { protos } from '@googlemaps/addressvalidation';
+import type { AddressActionState } from '@/_actions/address/addressActions';
+import type { AddressInsert } from '@/lib/zod/addressZod';
 
-type InputAddress = {
-  streetAddress: string;
-  secondaryAddress: string;
-  city: string;
-  state: string;
-  ZIPCode: string;
-};
+type AddressRecipient = Pick<
+  AddressInsert,
+  'recipientFirstName' | 'recipientLastName' | 'recipientEmail' | 'phoneNumber'
+>;
 
-type USPSAddressSuccessResponse = {
-  firm: string;
-  address: {
-    streetAddress: string;
-    streetAddressAbbreviation: string;
-    secondaryAddress: string;
-    cityAbbreviation: string;
-    city: string;
-    state: string;
-    ZIPCode: string;
-    ZIPPlus4: string;
-    urbanization: string;
-  };
-  additionalInfo: {
-    deliveryPoint: string;
-    carrierRoute: string;
-    DPVConfirmation: string;
-    DPVCMRA: string;
-    business: string;
-    centralDeliveryPoint: string;
-    vacant: string;
-  };
-  corrections: {
-    code: string;
-    text: string;
-  }[];
-  matches: {
-    code: string;
-    text: string;
-  }[];
-};
+type AddressLocation = Pick<
+  AddressInsert,
+  | 'id'
+  | 'streetAddress'
+  | 'secondaryAddress'
+  | 'city'
+  | 'state'
+  | 'ZIPCode'
+  | 'addressLabel'
+  | 'isDefault'
+>;
 
-type USPSAddressErrorResponse = {
-  apiVersion: string;
-  error: {
-    code: string;
-    message: string;
-    errors: Record<string, string>[];
-  };
-};
+type GoogleAddressValidatorResponse =
+  protos.google.maps.addressvalidation.v1.IValidationResult | undefined | null;
 
 type VerifiedAddress = {
-  formUser: Recipient;
-  formAddress: InputAddress;
-  uspsResponse: USPSAddressSuccessResponse;
+  // userId: string;
+  recipientData: AddressRecipient;
+  addressData: AddressLocation;
+  addressResponse: GoogleAddressValidatorResponse;
 };
 
 // typeguard
@@ -68,11 +41,11 @@ const isVerifiedAddress = (
   const hasData = typeof stateRecord.data === 'object' && !!stateRecord.data;
 
   if (!!stateRecord.success && !!stateRecord.fromAPI && hasData) {
-    const dataObj = stateRecord.data as Record<string, object>;
+    const dataObj = stateRecord.data as Record<string, unknown>;
     return (
-      typeof dataObj.uspsResponse === 'object' &&
-      'uspsResponse' in dataObj &&
-      dataObj.uspsResponse !== null
+      typeof dataObj.addressResponse === 'object' &&
+      'addressResponse' in dataObj &&
+      dataObj.addressResponse !== null
     );
   }
 
@@ -80,9 +53,9 @@ const isVerifiedAddress = (
 };
 
 export {
-  type InputAddress,
-  type USPSAddressSuccessResponse,
-  type USPSAddressErrorResponse,
+  type AddressRecipient,
+  type AddressLocation,
+  type GoogleAddressValidatorResponse,
   type VerifiedAddress,
   isVerifiedAddress
 };

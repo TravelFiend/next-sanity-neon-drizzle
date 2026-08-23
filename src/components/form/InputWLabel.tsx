@@ -3,23 +3,31 @@ import Label from './Label';
 
 type InputWLabelProps = {
   forIdName: string;
-  labelText: string;
-  inputType?: string;
+  name?: string;
   placeholder?: string;
   defaultValue?: string;
+  defaultChecked?: boolean;
+  labelText: string;
+  labelClassName?: string;
   inputClassName?: string;
   inputPattern?: string;
+  inputValue?: string;
+  inputType?: string;
   required?: boolean;
 };
 
 const InputWLabel = ({
   forIdName,
-  labelText,
-  inputType,
+  name,
   placeholder,
   defaultValue,
+  defaultChecked,
+  labelText,
+  labelClassName,
   inputClassName,
   inputPattern,
+  inputValue,
+  inputType = 'text',
   required = true
 }: InputWLabelProps) => {
   return (
@@ -27,15 +35,18 @@ const InputWLabel = ({
       <Label
         htmlFor={forIdName}
         labelText={labelText}
-        className="mb-2"
+        className={labelClassName}
         required={required}
+        inputType={inputType}
       />
       <Input
         type={inputType}
         id={forIdName}
-        name={forIdName}
+        name={name ?? forIdName}
+        value={inputValue}
         placeholder={placeholder}
         defaultValue={defaultValue}
+        defaultChecked={defaultChecked}
         className={inputClassName}
         pattern={inputPattern}
         required={required}

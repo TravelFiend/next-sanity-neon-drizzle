@@ -24,7 +24,7 @@ const ColorPreviewRadio = ({
   const list = schemaType.options?.list ?? [];
 
   return (
-    <Stack space={2}>
+    <Stack gap={2}>
       {list.map(item => {
         const val = typeof item === 'string' ? item : item.value;
         const title = typeof item === 'string' ? item : item.title;

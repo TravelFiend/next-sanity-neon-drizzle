@@ -35,6 +35,7 @@ const MobileThirdLinks = ({
                 <Link
                   href={`/${parentLink}/${childSlug}`}
                   className="font-semibold"
+                  tabIndex={isOpen ? undefined : -1}
                 >
                   BROWSE ALL {childText?.toUpperCase()}
                 </Link>
@@ -42,6 +43,7 @@ const MobileThirdLinks = ({
               <li>
                 <Link
                   href={`/${parentLink}/${childSlug}/${internalLink?.slug?.current || ''}`}
+                  tabIndex={isOpen ? undefined : -1}
                 >
                   {internalLink?.linkText}
                 </Link>
@@ -51,6 +53,7 @@ const MobileThirdLinks = ({
             <li>
               <Link
                 href={`/${parentLink}/${childSlug}/${internalLink?.slug?.current || ''}`}
+                tabIndex={isOpen ? undefined : -1}
               >
                 {internalLink?.linkText}
               </Link>

@@ -52,3 +52,9 @@ storybook-static
 
 # linting
 .eslintcache
+
+# ai
+/.agents/
+/.pi/
+/piolium/
+/.continue/
