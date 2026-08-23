@@ -15,6 +15,7 @@ import {
 import CTAButton from './reusableTypes/ctaButton';
 import { RichImage } from './reusableTypes/images';
 import Font from './reusableTypes/font';
+import InlineSVG from './reusableTypes/inlineSvg';
 import { BasicLink, LinkWithIcon } from './reusableTypes/links';
 import SEO from './reusableTypes/seo';
 import {
@@ -46,6 +47,7 @@ const schemaTypes = [
   HeroBlock,
   HorizontalAlign,
   ImageTextBlock,
+  InlineSVG,
   LinkWithIcon,
   RichImage,
   SecondLevelLinks,

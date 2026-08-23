@@ -1,6 +1,5 @@
 import { Box, Text } from '@sanity/ui';
 import type { PreviewProps } from 'sanity';
-import { InlineSvgPreviewComponent } from '@focus-reactive/sanity-plugin-inline-svg-input';
 
 const LinkWithIconPreview = (props: PreviewProps) => {
   const { icon, title, subtitle } = props as unknown as {
@@ -14,9 +13,10 @@ const LinkWithIconPreview = (props: PreviewProps) => {
       padding={3}
       style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
     >
-      <Box style={{ width: 32, height: 32 }}>
-        <InlineSvgPreviewComponent value={icon} />
-      </Box>
+      <Box
+        style={{ width: 32, height: 32 }}
+        dangerouslySetInnerHTML={icon ? { __html: icon } : undefined}
+      />
       <Box>
         <Box marginBottom={2}>
           <Text weight="semibold">{title}</Text>
